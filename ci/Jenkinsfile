@@ -13,9 +13,9 @@ node('aws-codebuild') {
         sh "auto_config"
     }	
 
-//     stage('Config') {
-//         sh 'cp common.env.dist common.env'
-//     }
+     stage('Config') {
+         sh 'cp common.env.dist common.env'
+     }
 
     stage('Docker Ship') {
 		sh "sudo docker build --no-cache --rm -t hub.nasajon.com.br/otimizador:${buildName} ."
