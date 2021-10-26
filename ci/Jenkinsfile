@@ -16,13 +16,6 @@ node('aws-codebuild') {
         sh "auto_config"
     }
 
-    stage('Config'){
-        sh 'mkdir app/logs'
-        sh 'touch app/logs/test.log'
-//        sh 'cp app/config/parameters.yml.dist app/config/parameters.yml'
-//        sh 'cp common.env.dist common.env'
-    }
-
     if (env.BRANCH_NAME == 'development') {
         stage('Deploy Dev'){
             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=dev'"
