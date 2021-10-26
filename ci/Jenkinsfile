@@ -6,9 +6,8 @@ node('aws-codebuild') {
         }
     }
 
-     def PLAYBOOK = "/opt/devops/Ansible/ci.yml"
-   
- 
+
+	
      if (env.BRANCH_NAME == 'master') {
 	     stage('Deploy QA'){
              sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
