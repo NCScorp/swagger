@@ -1,4 +1,3 @@
-
 FROM python
 # Adjust Time Zone
 ENV TZ=America/Sao_Paulo
