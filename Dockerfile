@@ -21,6 +21,13 @@ RUN pip install --upgrade pip
 # test, lint and coverage packages
 RUN pip install pytest pytest-cov coverage pylint
 # app dependencies
+<<<<<<< HEAD
 RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 5000
 CMD [ "gunicorn", "--bind" , "0.0.0.0:5000", "routing:app" ]
+=======
+
+RUN pip install --no-cache-dir -r requirements.txt
+EXPOSE 5000
+CMD [ "gunicorn", "--bind" , "0.0.0.0:5000", "routing:app" ]
+>>>>>>> 2283fe6a1b739bd58d8b7a5c49ddc4730ddb8f67
