@@ -1,5 +1,10 @@
 node('aws-codebuild') {
 
+    stage('Clean') {
+        deleteDir()
+    }
+
+
    stage('Fetch') {
         timeout(time: 60, unit: 'SECONDS') {
             checkout scm
@@ -7,7 +12,6 @@ node('aws-codebuild') {
     }
 
     def PLAYBOOK = "/opt/devops/Ansible/ci.yml"
-    def buildName = (env.BRANCH_NAME != 'production') ? "${env.BRANCH_NAME}-${BUILD_NUMBER}" : "${BUILD_NUMBER}"
     
     stage('Environment Config') {
         sh "auto_config"
@@ -17,21 +21,28 @@ node('aws-codebuild') {
 //         sh 'cp common.env.dist common.env'
 //     }
 
-    stage('Docker Ship') {
-		sh "sudo docker build --no-cache --rm -t hub.nasajon.com.br/otimizador:${buildName} ."
-		sh "sudo docker push hub.nasajon.com.br/otimizador:${buildName}"
-		sh "sudo docker rmi -f hub.nasajon.com.br/otimizador:${buildName}"
-	}
+
  
-     if (env.BRANCH_NAME == 'master') {
-	     stage('Deploy QA'){
-             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
-         }
-     }
-	
-     if (env.BRANCH_NAME == 'production') {
-	     stage('Deploy PROD'){
-             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
-         }
-     }
+   stage('Composer'){
+        docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
+            sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --no-dev --ignore-platform-reqs'
+        }
+    }
+
+    else if (env.BRANCH_NAME == 'master') {
+        stage('Deploy QA'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
+        }
+    }
+    else if (env.BRANCH_NAME == 'production') {
+        stage('Pipeline Prod'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
+        }
+    }
+    else {
+        stage('Build Docker Image'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
+        }
+    }
+    
 }
