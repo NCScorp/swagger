@@ -18,20 +18,25 @@ node('aws-codebuild') {
 //     }
 
     stage('Docker Ship') {
-		sh "sudo docker build --no-cache --rm -t hub.nasajon.com.br/nsj-otimizador:${buildName} ."
-		sh "sudo docker push hub.nasajon.com.br/nsj-otimizador:${buildName}"
-		sh "sudo docker rmi -f hub.nasajon.com.br/nsj-otimizador:${buildName}"
+		sh "sudo docker build --no-cache --rm -t hub.nasajon.com.br/otimizador:${buildName} ."
+		sh "sudo docker push hub.nasajon.com.br/otimizador:${buildName}"
+		sh "sudo docker rmi -f hub.nasajon.com.br/otimizador:${buildName}"
 	}
  
-     if (env.BRANCH_NAME == 'master') {
-	     stage('Deploy QA'){
-             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
-         }
-     }
-	
-     if (env.BRANCH_NAME == 'production') {
-	     stage('Deploy PROD'){
-             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
-         }
-     }
+    else if (env.BRANCH_NAME == 'master') {
+        stage('Deploy QA'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
+        }
+    }
+    else if (env.BRANCH_NAME == 'production') {
+        stage('Pipeline Prod'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
+        }
+    }
+    else {
+        stage('Build Docker Image'){
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
+        }
+    }
+    
 }
