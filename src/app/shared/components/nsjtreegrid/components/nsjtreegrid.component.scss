@@ -1,0 +1,99 @@
+table.ns-tree-grid {
+    // Classes de alinhamento.
+    .h-align-center {
+        text-align: center;
+    }
+    .h-align-left {
+        text-align: left;
+    }
+    .h-align-right {
+        text-align: right;
+    }
+
+    // Headers
+    th {
+        background: #dddddd !important;
+        color: #595959 !important;
+    }
+
+    th, td {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    // Células
+    td {
+        // Coluna de Ações
+        &:last-child {
+            border-right: none;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        &:nth-last-child(2) {
+            border-right: none;
+        }
+
+        border-right: 1px solid #ccc;
+
+        .col-container {
+            display: block;
+            
+            .icons-left, .icons-right, .col-valor {
+                display: inline-block;
+            }
+
+            &.col-expand-colapse {
+                display: flex;
+                flex-direction: row;
+                min-width: 130px;
+                align-items: center;
+
+                .icons-left {
+                    .icon-expand-colapse {
+                        font-size: 18px;
+                        color: #595959;
+                    }
+                }
+                .col-valor {
+                    margin-left: 5px;
+                }
+            }
+
+            // Quando o tipo da coluna for botões
+            .botoes {
+                .col-botao {
+                    display: inline-block;
+                    margin-right: 5px;
+
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    // Espaçamento na coluna de expansão de acordo com os levels. Adicionar 25px a cada level
+    tr {
+        &.level-1 {
+            td .col-container.col-expand-colapse {
+                padding-left: 0;
+            }
+        }
+        &.level-2 {
+            td .col-container.col-expand-colapse {
+                padding-left: 25px;
+            }
+        }
+        &.level-3 {
+            td .col-container.col-expand-colapse {
+                padding-left: 50px;
+            }
+        }
+        &.level-4 {
+            td .col-container.col-expand-colapse {
+                padding-left: 75px;
+            }
+        }
+    }
+}

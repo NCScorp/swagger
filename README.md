@@ -1,56 +1,97 @@
-# Planejador de Rotas Nasajon
-![banner](https://user-images.githubusercontent.com/2954659/132579084-0e3ccafc-d8c0-42f4-80d0-2145d0142ea7.png)
-## Objetivo:
+# Monitor Financeiro
 
-Construir uma API REST que recebe um conjunto de locais e um conjunto de veículos com as suas respectivas restrições e retorne uma rota viável e boa para atender as demandas. 
+Este projeto apresenta dados de contratos gerados pelo Diário Único.
+<br>A estrutura do projeto foi criada a partir do projeto Serviços Front-end, onde foram removidos todos os modulos presentes na pasta **src/app/modules**
 
-Encontrar a solução ótima é uma problema muito custoso, inviável para casos mais complexos. A API busca uma solução próxima da ótima dentro das restrições de recurso para a busca da solução.
+## Configuração
+As configurações do sistema, que no momento se resume a url da api do back-end, se encontra em **src/config/config.json**.
+<br>O ideal é que esse arquivo não seja persistido e somente seja montado no momento do deploy, de acordo com o ambiente.
+<br>Este arquivo é utilizado principalmente pela pasta **src/app/core**, comum a alguns projetos como Serviços Front-end e Atendimento Comercial. Essa pasta visa unificar o processo inicial das aplicações, autenticação, busca dos arquivos de rotas das apis e o que mais vier a ser comum entre aplicações.
+<br> Exemplo do arquivo de configuração
+```json
+{ 
+    "api": {
+        "url": "http://34.135.106.60/:tenant/diario_unico/"
+    },
+    "routing": { 
+        "url": "https://api.dev.nasajonsistemas.com.br/fosrouting/js/routing"
+    },
+    "auth" : {
+        "url": "https:\/\/auth.dev.nasajonsistemas.com.br\/auth",
+        "realm":"DEV",
+        "clientId":"monitor"
+    }
+}
+```
+Explicando o arquivo:
+  - api > url: URL base utilizada na criação de rotas pelo serviço rotas.service.ts, que será apresentado num tópico abaixo. 
+  - routing > url: URL utilizada para buscar rotas do back-end PHP/Symfony pela pasta **src/app/core**. Só será possível remover quando o código for refatorado para não buscar o profile da api neste endereço.
+  - auth: Configuração passada diretamente para o Keycloak ao ser iniciado.
 
-## Manual técnico do código
+## Levantando ambiente
+A aplicação vai ser levantada no endereço localhost:9000. A porta está configurada no arquivo **docker-compose.yml**, no serviço **webpack**.
+  - Para instalar as dependências, rode:
+  ``` make yarn_install```
+  - Para levantar a aplicação, rode:
+  ``` make start```
+  - Para visualizar os logs, rode:
+  ``` make logs```
 
-### Estrutura de pastas e arquivos
+## Telas do sistema
+  - [Home](docs/home.md)
+  - [Contratos](docs/contratos.md)
 
-O código está dividido em duas pastas importantes, a pasta `routing/` que contem a implementação da API e a pasta `test/` com a implementação dos testes
+## Rotas para api do back-end.
+As API's dos projetos em PHP/Symfony costumam disponibilizar uma url contendo todas as rotas do sistema, e o front-end utiliza uma biblioteca para montar as rotas.
+<br>Como este não é o caso, foi necessario criar um service configurando todas as rotas a serem utilizadas pelo sistema.
+<br>O service se encontra em **src/app/shared/rotas/rotas.service.ts**
 
-Dentro da pasta `routing/` temos as seguintes pastas e arquivos:
+### Configurando nova rota
+Para configurar uma nova rota, no construtor do serviço de rotas adicione um novo item ao array **this.rotas**, exemplo:
+<br>
+```
+this.rotas.push({
+    nome: 'contratos_buscar',
+    url: 'contratos/:id',
+    urlParams: ['id']
+});
+```
+<br> Neste exemplo, quando for gerar a url desta rota, deve-se passar o parametro "id" para ser substituido na url. Ao gerar a rota, parâmetros que não estejam no "urlParams" serão considerados query params.
 
-`routing/entities/` pasta com as entidades do sistema, responsável por armazenar e encapsular informações  
-`routing/entities/location.py` informações sobre um local  
-`routing/entities/vehicle.py` informações sobre um veículo  
-`routing/entities/system_entities.py` informações do sistemas como locais, veículos e configurações  
-`routing/entities/routing_solution.py` informações da solução encontrada pelo sistema  
-`routing/entities/exception.py` exceptions do sistemas
+### Gerando url a partir do nome da rota
+Considere a api base **www.monitor.nasajon.com/**
+
+#### Exemplo 1
+Rota configurada como exemplo:
+```
+{
+    nome: 'contratos_totais',
+    url: 'contratos-estatisticas',
+    urlParams: []
+}
+```
+Seria possível gerar uma url com a seguinte chamada:
+```
+const url = this.rotasService.getRota('contratos_totais', { limit: 5 });
+```
+Isso geraria a rota: **www.monitor.nasajon.com/contratos-estatisticas?limit=5**
+
+#### Exemplo 2
+Rota configurada como exemplo:
+```
+{
+    nome: 'contratos_listar',
+    url: 'contratos',
+    urlParams: []
+}
+```
+Seria possível gerar uma url com a seguinte chamada:
+```
+const url = this.rotasService.getRota('contratos_listar', { expand: ['pessoa', 'itemContrato'] });
+```
+Isso geraria a rota: **www.monitor.nasajon.com/contratos?expand=pessoa&expand=itemContrato**
 
 
-`routing/services` pasta com os serviços do sistema.  
-`routing/services/locations.py` serviço responsável pelos locais e suas lógicas. Esse serviço conhece como criar uma cópia de um depósito, como permitir múltiplas visitas de um carro ao depósito, como encontrar um depósito etc  
-`routing/services/vehicles.py` serviço responsável pelos veículos e seus lógicas. Esse serviço conhece qual a maior carga do conjunto de veículos e quais veículos são acessíveis em um local  
-`routing/services/input_parser.py` serviço responsável em construir as entidades de entrada para o sistema a partir do JSON no corpo da mensagem HTTP  
-`routing/services/routing.py` serviço responsável por montar o problema no otimizador  
-`routing/services/ortools.py` serviço responsável em fazer as chamadas para a biblioteca/solucionador ORTOOLS  
-`routing/services/penalty.py` implementação das funções de penalidade que podem ser utilizadas no sistema  
-`routing/services/solution_verifier.py` serviço responsável em verificar se a solução encontrada é viável  
-`routing/services/exception.py` construtor/acumulador de exceptions  
-`routing/services/logging.py` logging
-
-`test/` pasta com os testes para as entidades e arquivos descritos acima
-
-### Bibliotecas utilizadas
-
-`ortools` biblioteca de otimização  
-`python-intervals` biblioteca para fazer operação de conjuntos  
-`flask-restful` biblioteca para criar a API REST, baseado em flask  
-`gunicorn` servidor http
-
-### Como montar o ambiente
-
-O repositório tem um arquivo Makefile com o código para subir a aplicação usando docker.  
-Para subir o servidor http `make infra`
-
-### Como executar os testes
-Antes de executar os teste é necessário instalar as dependência especificas dos testes `requirements_for_testing.txt`
-O repositório tem um arquivo Makefile com o código para execução dos teste.  
-Para executar os testes `make test` para os testes rápidos ou `make test_slow` para executar também os testes que são mais lentos, como testes que vão executar o otimizador e podem demorar.
-
-### Documentação Open API
-A documentação está no caminho /apidocs, se estiver executando pelo docker-compose localmente, está em http://localhost:5000/apidocs/
+## Requisições HTTP
+As requisições HTTP devem ser feitas a partir do serviço de api localizado em  **src/app/shared/api/api.service.ts**
+<br>Caso o serviço não possua o método que você precisa, crie!

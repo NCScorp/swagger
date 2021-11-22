@@ -1,21 +1,29 @@
-.PHONY: test test_slow clean infra
-
-APP_PATH = routing
-
-
-
+.PHONY: clean down start yarn_install end_alert logs init
 
 clean:
-	$(info Cleaning repository)
-	find . -type d -name __pycache__ -exec rm -rfv {} +
-	find . -type d -name .pytest_cache -exec rm -rfv {} +
+	docker-compose down
+	sudo rm -rf node_modules/
 
+down:
+	docker-compose down
 
-test:
-	@pytest --cache-clear --cov=${APP_PATH}
+config_json:
+	touch src/config/config.json
+	cp src/config/config.json.dist src/config/config.json
 
-test_slow:
-	@pytest --cache-clear --cov=${APP_PATH} --runslow
+start:
+	docker-compose up -d webpack
 
-infra:
-	docker-compose up
+gerarprod:
+	docker-compose up gerarprod
+
+yarn_install:
+	yarn
+
+end_alert:
+	notify-send 'Serviços Web' 'Aplicação Iniciada'
+
+logs:
+	docker-compose logs -f
+
+init: clean config_json yarn_install start end_alert

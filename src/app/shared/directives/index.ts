@@ -1,0 +1,1 @@
+export {resizerModule} from './resizer';

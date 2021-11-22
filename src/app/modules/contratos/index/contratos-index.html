@@ -1,0 +1,96 @@
+<div class="contratos-index nsj-loading-page">
+    <!-- Cards de contratos -->
+    <div class="contratos-card-container">
+        <div ng-repeat="card in ctt_lst_cntrllr.cardsContrato"
+            class="contrato-card {{ card.codigo }}">
+            <div class="contrato-card-header">
+                <div class="contrato-card-header-dados">
+                    <div class="contrato-card-header-dados-titulo">{{ card.titulo }}</div>
+                    <div class="contrato-card-header-dados-qtd">{{ ctt_lst_cntrllr.zeroAEsquerda(card.qtd) }}</div>
+                </div>
+                <div class="contrato-card-header-progresso">
+                    <div class="contrato-card-header-progresso-realizado" ng-style="{
+                        'width': card.perc + '%'
+                    }"></div>
+                </div>
+            </div>
+            <div class="contrato-card-footer"></div>
+        </div>
+    </div>
+    <!-- Container de informações -->
+    <div class="dados-container">
+        <!-- Filtros -->
+        <div class="filtros-container">
+            <div class="filtros">
+                <div class="filtro filtro-busca">
+                    <span class="icone-busca">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" id="flttexto" placeholder="Buscar..." 
+                        ng-model="ctt_lst_cntrllr.filtros.texto" 
+                        ng-model-options="{ debounce: 1000 }"
+                        ng-change="ctt_lst_cntrllr.onFiltroToolbarChange()"
+                    />
+                </div>
+                <!-- @TODO: Definir situação financeira do contrato
+                <div class="filtro filtro-select filtro-situacao-financeira">
+                    <div class="titulo">
+                        Situação financeira do contrato
+                    </div>
+                    <select id="fltsituacaocontrato" class="form-control"
+                        ng-model="ctt_lst_cntrllr.filtros.situacaoContrato"
+                        ng-change="ctt_lst_cntrllr.onFiltroToolbarChange()">
+                        <option ng-value="null">Selecione...</option>
+                        <option ng-value="ctt_lst_cntrllr.ESituacaoFinanceiraContrato.scEmDia">Em dia</option>
+                        <option ng-value="ctt_lst_cntrllr.ESituacaoFinanceiraContrato.scQuitado">Quitado</option>
+                        <option ng-value="ctt_lst_cntrllr.ESituacaoFinanceiraContrato.scVencido">Vencido</option>
+                    </select>                    
+                </div>
+                -->
+                <!-- @TODO: Aguardar filtro por período ser implementado no back-end
+                <div class="filtro filtro-periodo">
+                    <div class="titulo">
+                        Período
+                    </div>
+                    <input type="date" id="fltdatainicio"
+                        ng-model="ctt_lst_cntrllr.filtros.periodo.inicio"
+                        ng-change="ctt_lst_cntrllr.onFiltroToolbarChange()"
+                        max="ctt_lst_cntrllr.filtros.periodo.fim">
+                    <span> até </span>
+                    <input type="date" id="fltdatafim"
+                        ng-model="ctt_lst_cntrllr.filtros.periodo.fim"
+                        ng-change="ctt_lst_cntrllr.onFiltroToolbarChange()"
+                        min="ctt_lst_cntrllr.filtros.periodo.inicio">
+                </div>
+                -->
+            </div>
+            <div class="btn-busca">
+                <nsj-button icon="fas fa-sync-alt fa-fw"
+                    ng-click="ctt_lst_cntrllr.onFiltroToolbarChange()">
+                </nsj-button>
+            </div>
+        </div>
+        <!-- Tabela -->
+        <div class="tabela-container">
+            <!-- Tree de informações de contratos -->
+            <nsj-tree-grid
+                ng-if="ctt_lst_cntrllr.arrContratosPorClientes.length > 0"
+                config="ctt_lst_cntrllr.treeContratosConfig"
+                class="tree-contratos" >
+            </nsj-tree-grid>
+            <!-- Mensagem sem Dados -->
+            <div class="sem-dados-container" ng-if="!ctt_lst_cntrllr.busy && ctt_lst_cntrllr.arrContratosPorClientes.length == 0">
+                <p>
+                    Não existem dados a apresentar no momento
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- Loading de carregamento -->
+    <div class="content-loading" ng-if="ctt_lst_cntrllr.busy">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            {{ ctt_lst_cntrllr.busyMensagem }}
+        </div>
+    </div>
+</div>

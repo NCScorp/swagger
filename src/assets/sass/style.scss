@@ -1,0 +1,24 @@
+/*
+* APPLICATION VARIABLES
+*/
+
+$custom-color-1: #1ea4c0;//#6F4688;
+$custom-color-2: #2ec6e5;//#9F72B8;
+$custom-color-3: #1c7e92;//#421C5B;
+$custom-color-4: #1ea4c0;//#64164E;
+
+/*
+* NASAJON UI 
+*/
+
+@import '~nasajon-ui/lib/nasajon-ui';
+@import '~nasajon-ui/lib/theme';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+/*
+* Para seu próprio css descomente a linha de import abaixo e crie na pasta de templates o arquivo referente com o nome do seu projeto
+*/
+
+/*@import 'templates/projetonome';*/
+@import 'templates/financasweb';
+@import 'templates/components';
