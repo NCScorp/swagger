@@ -14,12 +14,6 @@ node('aws-codebuild') {
     stage('Tests') {
 		
     }
-    
-    stage('Webpack'){
-        docker.image("nasajon/yarn:1.9.4").inside("-v /root/.ssh:/root/.ssh -e NODE_ENV=production") {
-            sh "node node_modules/.bin/webpack"
-        }
-    }
 
     if (env.BRANCH_NAME == 'master') {
 	stage('Deploy QA'){
