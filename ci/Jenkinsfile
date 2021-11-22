@@ -1,61 +1,31 @@
 node('aws-codebuild') {
 
-    stage('Fetch') {
+   stage('Fetch') {
         timeout(time: 60, unit: 'SECONDS') {
             checkout scm
         }
     }
-    
     def PLAYBOOK = "/opt/devops/Ansible/ci.yml"
     
     stage('Environment Config') {
         sh "auto_config"
+    }	
+	
+    stage('Tests') {
+		
     }
 
-    stage('Config') {
-        sh "cp config/config.json.dist config/config.json"
-        if (env.BRANCH_NAME == 'production') {
-            sh "sed -i 's?api.dev.meurh.app?api.meurh.app?g' config/config.json"
-            sh "sed -i 's?auth.dev.nasajonsistemas.com.br?auth.nasajon.com.br?g' config/config.json"
-            sh "sed -i 's?DEV?master?g' config/config.json"
-        }
-        else if (env.BRANCH_NAME == 'master') {
-            sh "sed -i 's?api.dev.meurh.app?api.qa.meurh.app?g' config/config.json"
-            sh "sed -i 's?auth.dev.nasajonsistemas.com.br?auth.nasajonsistemas.com.br?g' config/config.json"
-            sh "sed -i 's?DEV?QA?g' config/config.json"
-        }
-    }
-
-    stage('Build'){
-        docker.image("nasajon/yarn:1.9.4").inside("-v /root/.ssh:/root/.ssh") {
-            sh "yarn install"
-        }
-    }
-    
-    stage('Webpack'){
-        docker.image("nasajon/yarn:1.9.4").inside("-v /root/.ssh:/root/.ssh -e NODE_ENV=production") {
-            sh "node node_modules/.bin/webpack"
-        }
-    }
-
-    if (env.BRANCH_NAME == 'development') {
-        stage('Deploy Dev'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=dev'"
-        }
-    }
-    else if (env.BRANCH_NAME == 'master') {
-        stage('Deploy QA'){
+    if (env.BRANCH_NAME == 'master') {
+	stage('Deploy QA'){
             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
         }
     }
-    else if (env.BRANCH_NAME == 'production') {
-        stage('Pipeline Prod'){
+	
+    if (env.BRANCH_NAME == 'production') {
+	stage('Deploy PROD'){
             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
         }
     }
-    else {
-        stage('Build Docker Image'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
-        }
-    }
+   
+	
 }
