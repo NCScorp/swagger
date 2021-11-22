@@ -1,31 +1,31 @@
 node('aws-codebuild') {
 
-    stage('Fetch') {
+   stage('Fetch') {
         timeout(time: 60, unit: 'SECONDS') {
             checkout scm
         }
     }
-    
     def PLAYBOOK = "/opt/devops/Ansible/ci.yml"
-    def TAG = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
     
     stage('Environment Config') {
         sh "auto_config"
+    }	
+	
+    stage('Tests') {
+		
     }
 
-    else if (env.BRANCH_NAME == 'master') {
-        stage('Deploy QA'){
+    if (env.BRANCH_NAME == 'master') {
+	stage('Deploy QA'){
             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
         }
     }
-    else if (env.BRANCH_NAME == 'production') {
-        stage('Pipeline Prod'){
+	
+    if (env.BRANCH_NAME == 'production') {
+	stage('Deploy PROD'){
             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
         }
     }
-    else {
-        stage('Build Docker Image'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
-        }
-    }
+   
+	
 }
