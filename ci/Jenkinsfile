@@ -6,15 +6,34 @@ node('aws-codebuild') {
         }
     }
     def PLAYBOOK = "/opt/devops/Ansible/ci.yml"
+    def TAG = sh(returnStdout: true, script: "git tag --sort version:refname | tail -1").trim()
     
     stage('Environment Config') {
         sh "auto_config"
     }	
 	
-    stage('Tests') {
-		
+    stage('Config') {
+        sh "cp src/config/config.json.dist src/config/config.json"
+        if (env.BRANCH_NAME == 'production') {
+            sh "sed -i 's?api.dev.nasajonsistemas.com.br?api.nasajon.com.br?g' src/config/config.json"
+            sh "sed -i 's?auth.dev.nasajonsistemas.com.br?auth.nasajon.com.br?g' src/config/config.json"
+            sh "sed -i 's?DEV?master?g' src/config/config.json"
+        }
+        else if (env.BRANCH_NAME == 'master') {
+            sh "sed -i 's?api.dev.nasajonsistemas.com.br?api.nasajonsistemas.com.br?g' src/config/config.json"
+            sh "sed -i 's?auth.dev.nasajonsistemas.com.br?auth.nasajonsistemas.com.br?g' src/config/config.json"
+            sh "sed -i 's?DEV?QA?g' src/config/config.json"
+        }
     }
-
+    docker.image("nasajon/yarn:1.9.4").inside("-v /root/.ssh:/root/.ssh") {
+        stage('Build'){
+            sh "yarn install"
+        }
+        stage('Webpack'){
+            sh "node node_modules/.bin/webpack"
+        }
+    }
+    
     if (env.BRANCH_NAME == 'master') {
 	stage('Deploy QA'){
             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
