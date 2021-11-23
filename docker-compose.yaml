@@ -1,10 +1,23 @@
-version: '3'
+version: '2'
+
 services:
-    app:
-        build:
-            context: .
+    
+    webpack:
+        image: "nasajon/yarn"
+        working_dir: /home/node/app
+        environment:
+        - NODE_ENV=development        
         volumes:
-            - .:/app
-        command: gunicorn --bind 0.0.0.0:5000 routing:app
+        - ./:/home/node/app
         ports:
-        - 5000:5000
+        - "9000:9000"
+        command: "node node_modules/.bin/webpack-dev-server"
+        
+    gerarprod:
+        image: "nasajon/yarn"
+        working_dir: /home/node/app
+        environment:
+        - NODE_ENV=production        
+        volumes:
+        - ./:/home/node/app
+        command: "node node_modules/.bin/webpack-dev-server"
