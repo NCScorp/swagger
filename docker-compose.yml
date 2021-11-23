@@ -20,4 +20,4 @@ services:
         - NODE_ENV=production        
         volumes:
         - ./:/home/node/app
-        command: "node node_modules/.bin/webpack"
+        command: "node node_modules/.bin/webpack-dev-server"
