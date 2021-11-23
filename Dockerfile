@@ -1,26 +1,35 @@
-FROM python
+# FROM nasajon/php:7.1-fpm-symfony
+# MAINTAINER Jefferson Santos <jeffersonsantos@nasajon.com.br>
+
+# ENV ENV "production"
+# USER nginx
+# COPY . /var/www/html/
+# USER root
+
+# RUN mkdir -p /var/www/html/var/cache /var/www/html/var/logs && chown -R nginx:www-data /var/www/html/var
+
+
+FROM nginx:alpine
+
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY dist /usr/share/nginx/html
+
+FROM nasajon/yarn
+
 # Adjust Time Zone
 ENV TZ=America/Sao_Paulo
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN addgroup --system app && adduser --system --group app
-USER app
-ENV PATH="$PATH:/home/app/.local/bin"
 
 # Add files
-COPY . /app
+# COPY . /home/node/app
 
+# Setting environment vars
+# ENV NODE_ENV=production
 
-# Go to working directory
-WORKDIR /app
+# Setting working directory
+WORKDIR /home/node/app
 
-# Install requirements
-# RUN apk add --update py-pip
+USER root
 
-RUN pip install --upgrade pip
-# test, lint and coverage packages
-RUN pip install pytest pytest-cov coverage pylint
-# app dependencies
-
-RUN pip install --no-cache-dir -r requirements.txt
-EXPOSE 5000
-CMD [ "gunicorn", "--bind" , "0.0.0.0:5000", "routing:app" ]
+# Running webpack build
+CMD node node_modules/.bin/webpack
