@@ -9,10 +9,10 @@
 # RUN mkdir -p /var/www/html/var/cache /var/www/html/var/logs && chown -R nginx:www-data /var/www/html/var
 
 
-FROM nginx:alpine
+#FROM nginx:alpine
 
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY dist /usr/share/nginx/html
+#COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+#COPY dist /usr/share/nginx/html
 
 FROM nasajon/yarn
 
