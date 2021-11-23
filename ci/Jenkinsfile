@@ -11,6 +11,10 @@ node('aws-codebuild') {
         sh "auto_config"
     }	
 	
+    stage('Tests') {
+		
+    }
+
     if (env.BRANCH_NAME == 'master') {
 	stage('Deploy QA'){
             sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
