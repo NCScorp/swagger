@@ -1,0 +1,37 @@
+{% extends  '@NasajonMDABundle/Resources/js/Ns/Clientes/index.html.twig' %}
+
+{%- block viewedit_view_list_item %}
+<a href ui-sref='ns_clientes_show({cliente : entity.cliente})'  class="list-group-item" ng-repeat="entity in ns_clnts_lst_cntrllr.entities" ui-sref-active="active">                                                <h4 class="list-group-item-heading" ng-bind-html="entity.nome | highlight : ns_clnts_lst_cntrllr.filter.key"></h4>
+    <p class="list-group-item-text">
+        <strong>Código:</strong>
+        <span ng-bind-html="entity.codigo | highlight : ns_clnts_lst_cntrllr.filter.key"></span>
+    </p>
+    <p class="list-group-item-text">
+        <strong>CPF/CNPJ:</strong>
+        <span ng-bind-html="(entity.cnpj || entity.cpf) | highlight : ns_clnts_lst_cntrllr.filter.key"></span>
+    </p>
+</a>
+{%- endblock viewedit_view_list_item %}
+
+
+{% block index_filter -%}
+<form id="list_filter">
+    <div class="col-xs-8">
+        <div>
+            <input type="text" name="key" class="form-control campo-busca"
+                ng-model="ns_clnts_lst_cntrllr.campoParaBusca"
+                ng-change="ns_clnts_lst_cntrllr.search()" ng-model-options='{ debounce: 500 }'
+                placeholder="Buscar..." />
+        </div><!-- /input-group -->
+    </div>
+    <div class="col-xs-4">
+        {% block index_toolbar -%}
+        <div class="dropdown dropdown-order  pull-right">
+        </div>
+        <button type="button" class="btn btn-default pull-right" title="Atualizar"
+            ng-click="ns_clnts_lst_cntrllr.reload()"><i class="el el-refresh"
+                aria-hidden="true"></i></button>
+        {% endblock index_toolbar -%}
+    </div>
+</form>
+{% endblock index_filter -%}

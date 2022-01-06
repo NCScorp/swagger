@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="enderecos" label="enderecos" project="ns" >
+    <entity schema="ns" table="vwenderecos" >
+        <fieldmodel name="endereco" datatype="guid" isid="true" column="endereco"/>
+        <fieldmodel name="tipologradouro" datatype="string" column="tipologradouro"/>
+        <fieldmodel name="logradouro" datatype="string" column="logradouro"/>
+        <fieldmodel name="numero" datatype="string" column="numero"/>
+        <fieldmodel name="complemento" datatype="string" column="complemento"/>
+        <fieldmodel name="cep" datatype="string" column="cep"/>
+        <fieldmodel name="bairro" datatype="string" column="bairro"/>
+        <fieldmodel name="tipoendereco" datatype="integer" column="tipoendereco"/>
+        <fieldmodel name="ufexterior" datatype="string" column="ufexterior"/>
+        <fieldmodel name="enderecopadrao" datatype="integer" column="enderecopadrao"/>
+        <fieldmodel name="uf" datatype="string" column="uf"/>
+        <fieldmodel name="pais" datatype="string" column="pais"/>
+        <fieldmodel name="municipio" datatype="string" column="municipio"/>
+        <fieldmodel name="cidade" datatype="string" column="cidade"/>
+        <fieldmodel name="referencia" datatype="string" column="referencia"/>
+        <fieldmodel name="cliente" datatype="guid" column="id_pessoa"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+        <constructoritem required="false">tipoendereco</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table">
+        <fieldsbrowser>
+            <fieldbrowser alias="endereco" entitylink="endereco" isid="true" />
+            <fieldbrowser alias="enderecopadrao" entitylink="enderecopadrao" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipoendereco" entitylink="tipoendereco" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipologradouro" entitylink="tipologradouro" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="logradouro" entitylink="logradouro" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="numero" entitylink="numero" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="complemento" entitylink="complemento" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="cep" entitylink="cep" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="bairro" entitylink="bairro" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="uf" entitylink="uf" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="pais" entitylink="pais" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="municipio" entitylink="municipio" width="80" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <!--<viewedit mode="view" label="Endereço">
+        <layout>
+            <headerform>
+                <row>
+                    <mode>rmHor</mode>
+                    <cell name="endereco" controltype="textedit" entitylink="Endereco" colspan="8">
+                        <validates>
+                            <validate type="vnull" displaytext="O endereco não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>EnderecoNovo</name>
+                <fromto valueapi="tipologradouro" valueentity="tipologradouro"/>
+                <fromto valueapi="logradouro" valueentity="logradouro"/>
+                <fromto valueapi="numero" valueentity="numero"/>
+                <fromto valueapi="complemento" valueentity="complemento"/>
+                <fromto valueapi="cep" valueentity="cep"/>
+                <fromto valueapi="bairro" valueentity="bairro"/>
+                <fromto valueapi="tipoendereco" valueentity="tipoendereco"/>
+                <fromto valueapi="ufexterior" valueentity="ufexterior"/>
+                <fromto valueapi="enderecopadrao" valueentity="enderecopadrao"/>
+                <fromto valueapi="uf" valueentity="uf"/>
+                <fromto valueapi="pais" valueentity="pais"/>
+                <fromto valueapi="ibge" valueentity="ibge"/>
+                <fromto valueapi="cidade" valueentity="cidade"/>
+                <fromto valueapi="referencia" valueentity="referencia"/>
+                <fromto valueapi="id_pessoa" datatype="guid" valueentity="cliente"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>EnderecoAlterar</name>
+                <fromto valueapi="endereco" valueentity="endereco"/>
+                <fromto valueapi="tipologradouro" valueentity="tipologradouro"/>
+                <fromto valueapi="logradouro" valueentity="logradouro"/>
+                <fromto valueapi="numero" valueentity="numero"/>
+                <fromto valueapi="complemento" valueentity="complemento"/>
+                <fromto valueapi="cep" valueentity="cep"/>
+                <fromto valueapi="bairro" valueentity="bairro"/>
+                <fromto valueapi="tipoendereco" valueentity="tipoendereco"/>
+                <fromto valueapi="ufexterior" valueentity="ufexterior"/>
+                <fromto valueapi="enderecopadrao" valueentity="enderecopadrao"/>
+                <fromto valueapi="uf" valueentity="uf"/>
+                <fromto valueapi="pais" valueentity="pais"/>
+                <fromto valueapi="ibge" valueentity="ibge"/>
+                <fromto valueapi="cidade" valueentity="cidade"/>
+                <fromto valueapi="referencia" valueentity="referencia"/>
+                <fromto valueapi="id_pessoa" datatype="guid" valueentity="cliente"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>EnderecoExcluir</name>
+                <fromto valueapi="endereco" valueentity="endereco"/>
+            </api>
+        </action>
+    </actions>-->
+</nsjusecase>

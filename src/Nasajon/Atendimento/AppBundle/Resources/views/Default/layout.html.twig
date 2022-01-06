@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" ng-app="Atendimento" ng-cloak>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google" content="notranslate">
+        <meta name="google-site-verification" content="WLiBKeagj2m3KR3ZpBDEDonsG1F46Vj_yh75asZkDeE" />
+        {% block metadata %}
+
+        {% endblock %}
+
+        <title>{% block headerpagetitle %}{{ nsj_module_name() }} - {{ nsj_application_name() }}{% endblock %}</title>
+
+        {% block stylesheet %}
+
+            <link rel="shortcut icon" href="//s3-us-west-2.amazonaws.com/static.nasajon/img/favicon.ico" type="image/x-icon" />
+
+            <link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+            <!-- Bootstrap -->
+            <link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/css/bootstrap.css" />
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+            {% stylesheets
+
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/estilo.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/header.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/nasajon.css'
+
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/common.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/menu.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/menuitem.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/menuseparator.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/menubutton.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/imagelessbutton.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/imagelessmenubutton.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/autocomplete.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/datepicker.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/popupdatepicker.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/dialog.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/tab.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/js/google-closure/closure/goog/css/tabbar.css'
+
+
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/loading.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/fotoupload.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/autocomplete.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/datepicker.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/dialog.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/form.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/list.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/button.css'
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/tab.css'
+
+
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+
+            {% block ie_css %}
+                <!--[if lt IE 9]>
+                {% stylesheets
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/ie8.css'
+                %}
+                <link rel="stylesheet" href="{{ asset_url }}" />
+                {% endstylesheets %}
+                <![endif]-->
+            {% endblock %}
+
+        {% endblock stylesheet %}
+
+        {% if nsj_google_analytics() is not empty %}
+            {% block google_analytics %}
+                <script>
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+                    ga('create', '{{ nsj_google_analytics() }}', 'auto');
+                    ga('send', 'pageview');
+                </script>
+            {% endblock google_analytics %}
+        {% endif %}
+    </head>
+    <body fixed-sidebar ng-app="Atendimento" translate="no" class="notranslate">
+        {% block ie_html %}
+            <!--[if lt IE 9]>
+            <div class="alerta-navegador">
+              <h1>{% block ie_html_title %}{{ nsj_module_name() }}{% endblock %}</h1>
+
+              <h2>Seu navegador está desatualizado!</h2>
+              <p>Versões antigas podem apresentar problemas de segurança e, por <br />isso, não são compatíveis com os sistemas Nasajon.</p>
+              <p>Para sua comodidade e segurança, copie o link: <br />
+              <a class="url-sistema" href="{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}">{{ app.request.schemeAndHttpHost ~ app.request.requestUri }}</a><br />
+              e cole na barra de endereço de um dos navegadores indicados<br /> abaixo. Se não tiver nenhum deles, clique e baixe para continuar.</p>
+              <div class="navegadores">
+                <div class="browser">
+                    <div class="img-b"><img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/navegadores/ico-chrome.png" alt="Google Chrome"></div>
+                    Google Chrome<br />
+                    <a href="https://www.google.com.br/chrome/browser/desktop/" target="_blank" title="Baixe o Google Chrome">download</a>
+                </div>
+                <div class="browser">
+                  <div class="img-b"><img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/navegadores/ico-firefox.png" alt="Mozilla Firefox"></div>
+                  Mozilla Firefox<br />
+                  <a href="https://www.mozilla.org/pt-BR/firefox/new/" target="_blank" title="Baixe o Mozilla Firefox">download</a>
+                </div>
+              </div>
+              <div class="clear"></div>
+            </div>
+            <![endif]-->
+        {% endblock ie_html %}
+
+        <div ng-init="remove()" class="app-load"></div>
+
+        <div id="wrap">
+            {% block pre_header %}
+            {% endblock %}
+
+            {% block header %}
+            {% endblock %}
+
+            <div ng-controller="MenuCtrl as menuctrl">
+                <nsj-menu>
+
+                    <user-info ng-if="!menuctrl.isAnonimous">
+                        {% if 'admin' in app.request.pathInfo %}
+                            <div class="switch switch-sm" ng-controller="MenuCtrl as controller">
+                                <input id="status_usuario" name="status_usuario" type="checkbox" ng-checked="controller.usuarioDisponivel" ng-model="controller.usuarioDisponivel" ng-change="controller.alterarDisponibilidade(controller.usuarioDisponivel)">
+                                <label for="status_usuario" class="label-success"></label>
+                                <small class="text-uppercase" ng-if="controller.usuarioDisponivel">{{'usuariodisponivel'|trans}}</small>
+                                <small class="text-uppercase" ng-if="!controller.usuarioDisponivel">{{'usuarioindisponivel'|trans}}</small>
+                            </div>
+                        {% endif %}
+                    </user-info>
+
+                    <nsj-menu-list>
+
+                        {% block menusidebar %}
+                        {% endblock %}
+
+                    </nsj-menu-list>
+                </nsj-menu>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+
+            {% block footer %}
+            {% endblock %}
+        </div>
+
+        {% block javascripts %}
+            <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+            <script src="{{ asset('bundles/nasajoncomponentesinterface/js/lib/nsj/header/header.min.js') }}"></script>
+            <script src="{{ asset('bundles/nasajoncomponentesinterface/js/lib/nsj/globals/globals.min.js') }}"></script>
+        {% endblock %}
+
+    </body>
+</html>

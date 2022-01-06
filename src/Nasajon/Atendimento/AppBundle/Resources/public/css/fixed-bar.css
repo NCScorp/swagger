@@ -1,0 +1,56 @@
+/* Fixed Bar - Botões de ação, etc */
+
+.fixed-bar {
+  padding: 5px 15px;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.fixed-bar.headline-sub {
+  margin-bottom: 0;
+}
+
+.fixed-bar .msg-salvo {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+@media screen and (min-width: 992px) {
+  .fixed-bar {
+    background: rgba(249, 249, 249, 0.9);
+    padding: 6px 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  .box-with-head {
+    position: relative;
+    overflow-y: hidden;
+  }
+
+  .box-with-head > div > .forms {
+    position: absolute;
+    overflow-y: auto;
+    height: calc(100% - 35px);
+    width: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .box-with-head .fixed-bar {
+    position: fixed;
+    background: #fff;
+    width: 100%;
+    z-index: 100;
+    margin-top: -1px;
+  }
+
+  .box-with-head > div > .forms {
+    padding-top: 65px;
+  }
+}
+
+@media (min-width: 768px) {
+  #nsj-header .navbar-header {
+    margin-left: 0;
+  }
+}

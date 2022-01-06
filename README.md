@@ -1,56 +1,76 @@
-# Planejador de Rotas Nasajon
-![banner](https://user-images.githubusercontent.com/2954659/132579084-0e3ccafc-d8c0-42f4-80d0-2145d0142ea7.png)
-## Objetivo:
+# Atendimento
 
-Construir uma API REST que recebe um conjunto de locais e um conjunto de veículos com as suas respectivas restrições e retorne uma rota viável e boa para atender as demandas. 
+Sistema de atendimento que otimiza a comunicação com os clientes.
 
-Encontrar a solução ótima é uma problema muito custoso, inviável para casos mais complexos. A API busca uma solução próxima da ótima dentro das restrições de recurso para a busca da solução.
+------------
 
-## Manual técnico do código
+## Sumario
 
-### Estrutura de pastas e arquivos
+#### Para Desenvolvedores:
 
-O código está dividido em duas pastas importantes, a pasta `routing/` que contem a implementação da API e a pasta `test/` com a implementação dos testes
+* [Instalação](docs/instalacao.md)
+* [Comandos](docs/comandos.md)
+* [Evolução dos Scripts no Banco de Dados](docs/scriptBD.md)
+* [Evolução do Código](docs/evolucao.md)
 
-Dentro da pasta `routing/` temos as seguintes pastas e arquivos:
+#### Manual do Usuário:
 
-`routing/entities/` pasta com as entidades do sistema, responsável por armazenar e encapsular informações  
-`routing/entities/location.py` informações sobre um local  
-`routing/entities/vehicle.py` informações sobre um veículo  
-`routing/entities/system_entities.py` informações do sistemas como locais, veículos e configurações  
-`routing/entities/routing_solution.py` informações da solução encontrada pelo sistema  
-`routing/entities/exception.py` exceptions do sistemas
+##### Área do Atendente / Administrador
 
+###### Configurações
 
-`routing/services` pasta com os serviços do sistema.  
-`routing/services/locations.py` serviço responsável pelos locais e suas lógicas. Esse serviço conhece como criar uma cópia de um depósito, como permitir múltiplas visitas de um carro ao depósito, como encontrar um depósito etc  
-`routing/services/vehicles.py` serviço responsável pelos veículos e seus lógicas. Esse serviço conhece qual a maior carga do conjunto de veículos e quais veículos são acessíveis em um local  
-`routing/services/input_parser.py` serviço responsável em construir as entidades de entrada para o sistema a partir do JSON no corpo da mensagem HTTP  
-`routing/services/routing.py` serviço responsável por montar o problema no otimizador  
-`routing/services/ortools.py` serviço responsável em fazer as chamadas para a biblioteca/solucionador ORTOOLS  
-`routing/services/penalty.py` implementação das funções de penalidade que podem ser utilizadas no sistema  
-`routing/services/solution_verifier.py` serviço responsável em verificar se a solução encontrada é viável  
-`routing/services/exception.py` construtor/acumulador de exceptions  
-`routing/services/logging.py` logging
+* [Configurações gerais](docs/manual/admin/configuracoes/gerais.md)
+* [Customizações](docs/manual/admin/configuracoes/customizacoes.md)
+* [Filas de chamados](docs/manual/admin/configuracoes/filas.md)
+* [Campos customizados](docs/manual/admin/configuracoes/camposcustomizados.md)
+* [Regras](docs/manual/admin/configuracoes/regras.md)
+* [Endereços de e-mail](docs/manual/admin/configuracoes/enderecosemail.md)
+* [Configurações de disponibilidade](docs/manual/admin/configuracoes/configuracoesdisponibilidade.md)
+* [Disponibilidade dos Usuários](docs/manual/admin/configuracoes/disponibilidadeusuarios.md)
+* [Categorias de artigos](docs/manual/admin/configuracoes/categorias.md)
+* [Avisos de clientes](docs/manual/admin/configuracoes/avisosclientes.md)
+* [Equipes](docs/manual/admin/configuracoes/equipes.md)
+* [Boletos e faturas](docs/manual/admin/configuracoes/titulos.md)
+* [Arquivos](docs/manual/admin/configuracoes/arquivos.md)
+* [Feriados](docs/manual/admin/configuracoes/feriados.md)
+* [Horários de Atendimento](docs/manual/admin/configuracoes/horariosatendimento.md)
 
-`test/` pasta com os testes para as entidades e arquivos descritos acima
+###### Chamados
 
-### Bibliotecas utilizadas
+* [Criando e Alterando um chamado](docs/manual/admin/chamados/chamados.md)
+* [Enviando uma resposta e um comentário interno](docs/manual/admin/chamados/followups.md)
+* [Criar artigo através de uma resposta](docs/manual/admin/chamados/artigos.md)
+* [Enviando um artigo como resposta](docs/manual/admin/chamados/respostaartigo.md)
+* [Usando o filtro avançado](docs/manual/admin/chamados/filter.md)
 
-`ortools` biblioteca de otimização  
-`python-intervals` biblioteca para fazer operação de conjuntos  
-`flask-restful` biblioteca para criar a API REST, baseado em flask  
-`gunicorn` servidor http
+###### Clientes
 
-### Como montar o ambiente
+* [Clientes](docs/manual/admin/clientes/clientes.md)
 
-O repositório tem um arquivo Makefile com o código para subir a aplicação usando docker.  
-Para subir o servidor http `make infra`
+###### Base de Conhecimento
 
-### Como executar os testes
-Antes de executar os teste é necessário instalar as dependência especificas dos testes `requirements_for_testing.txt`
-O repositório tem um arquivo Makefile com o código para execução dos teste.  
-Para executar os testes `make test` para os testes rápidos ou `make test_slow` para executar também os testes que são mais lentos, como testes que vão executar o otimizador e podem demorar.
+* [Base de Conhecimento](docs/manual/admin/artigos/artigos.md)
 
-### Documentação Open API
-A documentação está no caminho /apidocs, se estiver executando pelo docker-compose localmente, está em http://localhost:5000/apidocs/
+###### Gerência de equipes
+
+* [Gerência de equipes](docs/manual/admin/equipes/equipes.md)
+
+###### Relatórios
+
+* [Introspecção](docs/manual/admin/relatorios/introspeccao.md)
+* [Backlog](docs/manual/admin/relatorios/backlog.md)
+* [Resposta](docs/manual/admin/relatorios/resposta.md)
+* [Base de conhecimento](docs/manual/admin/relatorios/baseconhecimento.md)
+
+###### Agenda de contatos
+
+* [Agenda de contatos](docs/manual/admin/agenda/agenda.md)
+
+##### Área do Cliente
+
+* [Página inicial](docs/manual/cliente/dashboard.md)
+* [Chamados](docs/manual/cliente/chamados.md)
+* [Base de Conhecimento](docs/manual/cliente/artigos.md)
+* [Usuários](docs/manual/cliente/usuarios.md)
+* [Downloads](docs/manual/cliente/downloads.md)
+* [Títulos](docs/manual/cliente/titulos.md)

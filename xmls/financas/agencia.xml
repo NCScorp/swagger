@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="Manutencão de Agências" label="Agencia" project="financas" >
+    <entity schema="financas" table="Agencias">
+        <fieldmodel name="id" datatype="guid" isid="true" column="agencia"/>
+        <fieldmodel name="idbanco" datatype="guid" column="banco" useCaseLink="financas\banco" entityJoinType="left"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="numero" datatype="string" column="agencianumero"/>
+        <fieldmodel name="digitoverificador" datatype="string" column="digitoverificador"/>
+        <fieldmodel name="logradouro" datatype="string" column="logradouro"/>
+        <fieldmodel name="numerologradouro" datatype="string" column="numero"/>
+        <fieldmodel name="complementologradouro" datatype="string" column="complemento"/>
+        <fieldmodel name="bairrologradouro" datatype="string" column="bairro"/>
+        <fieldmodel name="ceplogradouro" datatype="cep" column="cep"/>
+        <fieldmodel name="cidadelogradouro" datatype="string" column="cidade"/>
+        <fieldmodel name="uflogradouro" datatype="string" column="estado"/>
+        <fieldmodel name="contato" datatype="string" column="contato"/>
+        <fieldmodel name="dddcontato" datatype="string" column="dddtel"/>
+        <fieldmodel name="telefonecontato" datatype="string" column="telefone"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">idbanco</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false">
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="id" isid="true" />
+            <fieldbrowser alias="ID Banco" entitylink="idbanco" unique="true"/>
+            <fieldbrowser alias="Código" entitylink="codigo" width="16" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Nome" entitylink="nome" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Número" entitylink="numero" width="16" cansearch="true" visible="true" avaliable="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit>
+        <layout>
+            <headerform>
+                <row>
+                    <cell>
+                        <groupbox>
+                            <caption text="Identificação" />
+                            <row>
+                                <cell name="te_codigo" controltype="textedit" label="Código" charcase="upper" colspan="1" entitylink="codigo">
+                                    <validates>
+                                        <validate type="vnull" displaytext="O campo código não pode ser vazio."/>
+                                    </validates>
+                                </cell>
+                                <cell name="te_numero" controltype="textedit" label="Número" colspan="1" entitylink="numero">
+                                    <validates>
+                                        <validate type="vnull" displaytext="O campo número não pode ser vazio."/>
+                                    </validates>
+                                </cell>
+                                <cell name="te_dv" controltype="textedit" label="DV" colspan="1" entitylink="digitoverificador">
+                                    <validates>
+                                        <validate type="vnull" displaytext="O campo dígito verificador não pode ser vazio."/>
+                                    </validates>
+                                </cell>
+                                <cell name="te_nome" controltype="textedit" label="Nome" colspan="2" entitylink="nome">
+                                    <validates>
+                                        <validate type="vnull" displaytext="O campo nome não pode ser vazio."/>
+                                    </validates>
+                                </cell>
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <groupbox>
+                            <row>
+                                <cell>
+                                    <groupbox mode="V">
+                                        <caption text="Endereço" />
+                                        <row>
+                                            <cell name="te_logradouro" controltype="textedit" label="Logradouro" colspan="2" entitylink="logradouro"/>
+                                            <cell name="te_numerologradouro" controltype="textedit" label="Número" colspan="1" entitylink="numerologradouro"/>
+                                            <cell name="te_complementologradouro" controltype="textedit" label="Complemento" colspan="2" entitylink="complementologradouro"/>
+                                        </row>
+                                        <row>
+                                            <cell name="te_bairrologradouro" controltype="textedit" label="Bairro" colspan="1" entitylink="bairrologradouro"/>
+                                            <cell name="te_ceplogradouro" controltype="textedit" label="CEP" colspan="1" entitylink="ceplogradouro"/>
+                                            <cell name="te_cidadelogradouro" controltype="textedit" label="Cidade" colspan="2" entitylink="cidadelogradouro"/>
+                                            <cell name="cb_uflogradouro" controltype="combobox" label="UF" colspan="1" entitylink="uflogradouro">
+                                                    <itenscombobox type="json">{"AC":"AC","AL":"AL"}</itenscombobox>
+                                            </cell>
+                                        </row>
+                                    </groupbox>
+                                </cell>
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <groupbox>
+                            <caption text="Contato" />
+                            <row>
+                                <cell name="te_contato" controltype="textedit" label="Responsável" colspan="3" entitylink="contato"/>
+                                <cell name="te_ddd" controltype="textedit" label="DDD" colspan="1" entitylink="dddcontato"/>
+                                <cell name="te_telefonecontato" controltype="textedit" label="Telefone" colspan="1" entitylink="telefonecontato"/>
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AgenciaNovo</name>
+                <fromto valueapi="idagencia" valueentity="id"/>
+                <fromto valueapi="banco" valueentity="idbanco"/>
+                <fromto valueapi="codigo" valueentity="codigo"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="numero" valueentity="numero"/>
+                <fromto valueapi="digitoverificador" valueentity="digitoverificador"/>
+            </api>
+            <api>
+                <name>AgenciaAlterarDadosEndereco</name>
+                <fromto valueapi="agencia" valueentity="id"/>
+                <fromto valueapi="banco" valueentity="idbanco"/>
+                <fromto valueapi="logradouro" valueentity="logradouro"/>
+                <fromto valueapi="numero" valueentity="numerologradouro"/>
+                <fromto valueapi="complemento" valueentity="complementologradouro"/>
+                <fromto valueapi="bairro" valueentity="bairrologradouro"/>
+                <fromto valueapi="cidade" valueentity="cidadelogradouro"/>
+                <fromto valueapi="estado" valueentity="uflogradouro"/>
+                <fromto valueapi="cep" valueentity="ceplogradouro"/>
+                <fromto valueapi="contato" valueentity="contato"/>
+                <fromto valueapi="dddtelefone" valueentity="dddcontato"/>
+                <fromto valueapi="telefone" valueentity="telefonecontato"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>AgenciaAlterarDadosGerais</name>
+                <fromto valueapi="agencia" valueentity="id"/>
+                <fromto valueapi="banco" valueentity="idbanco"/>
+                <fromto valueapi="codigo" valueentity="codigo"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="numero" valueentity="numero"/>
+                <fromto valueapi="digitoverificador" valueentity="digitoverificador"/>
+            </api>
+            <api>
+                <name>AgenciaAlterarDadosEndereco</name>
+                <fromto valueapi="agencia" valueentity="id"/>
+                <fromto valueapi="banco" valueentity="idbanco"/>
+                <fromto valueapi="logradouro" valueentity="logradouro"/>
+                <fromto valueapi="numero" valueentity="numerologradouro"/>
+                <fromto valueapi="complemento" valueentity="complementologradouro"/>
+                <fromto valueapi="bairro" valueentity="bairrologradouro"/>
+                <fromto valueapi="cidade" valueentity="cidadelogradouro"/>
+                <fromto valueapi="estado" valueentity="uflogradouro"/>
+                <fromto valueapi="cep" valueentity="ceplogradouro"/>
+                <fromto valueapi="contato" valueentity="contato"/>
+                <fromto valueapi="dddtelefone" valueentity="dddcontato"/>
+                <fromto valueapi="telefone" valueentity="telefonecontato"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>AgenciaExcluir</name>
+                <fromto valueapi="agencia" valueentity="id"/>
+                <fromto valueapi="banco" valueentity="idbanco"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

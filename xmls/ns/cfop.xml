@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="cfop" label="cfop" project="ns">
+    <entity schema="ns" table="cfop">
+        <fieldmodel name="id" datatype="guid" column="id" isid="true" />
+        <fieldmodel name="cfop" datatype="string" column="cfop" />
+        <fieldmodel name="tipo" datatype="integer" column="tipo" />
+        <fieldmodel name="grupo" datatype="integer" column="grupo" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="retorno" datatype="boolean" column="retorno" />
+        <fieldmodel name="statusicms" datatype="integer" column="statusicms" />
+        <fieldmodel name="statusipi" datatype="integer" column="statusipi" />
+        <fieldmodel name="rapis" datatype="integer" column="rapis" />
+        <fieldmodel name="remas" datatype="integer" column="remas" />
+        <fieldmodel name="tipomov" datatype="integer" column="tipomov" />
+        <fieldmodel name="soposse" datatype="boolean" column="soposse" />
+        <fieldmodel name="transporte" datatype="boolean" column="transporte" />
+        <fieldmodel name="cnae" datatype="string" column="cnae" />
+        <fieldmodel name="codserv" datatype="string" column="codserv" />
+        <fieldmodel name="cpsrb" datatype="string" column="cpsrb" />
+        <fieldmodel name="observacao" datatype="string" column="observacao" />
+        <fieldmodel name="discriminacaorps" datatype="string" column="discriminacaorps" />
+        <fieldmodel name="retempis" datatype="boolean" column="retempis" />
+        <fieldmodel name="retemcofins" datatype="boolean" column="retemcofins" />
+        <fieldmodel name="retemcsll" datatype="boolean" column="retemcsll" />
+        <fieldmodel name="retemirrf" datatype="boolean" column="retemirrf" />
+        <fieldmodel name="ibptaxa" datatype="float" column="ibptaxa" />
+        <fieldmodel name="aliquotaiss" datatype="float" column="aliquotaiss" />
+        <fieldmodel name="cfopservico" datatype="boolean" column="cfopservico" />
+        <fieldmodel name="reducaobase" datatype="float" column="reducaobase" />
+        <fieldmodel name="ibptaxamunicipal" datatype="boolean" column="ibptaxamunicipal" />
+        <fieldmodel name="ibptaxafederal" datatype="boolean" column="ibptaxafederal" />
+        <fieldmodel name="incluirdeducoes" datatype="boolean" column="incluirdeducoes" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser>
+        <fieldsbrowser>
+            <fieldbrowser alias="id" entitylink="id" isid="true" />
+            <fieldbrowser alias="Código" entitylink="cfop" cansearch="true" visible="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" cansearch="true" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="CFOPS">
+        <layout>
+            <headerform>
+            </headerform>
+        </layout>
+    </viewedit>
+</nsjusecase>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentosfilasobservadores" label="atendimentosfilasobservadores" project="servicos" >
+    <entity schema="servicos" table="atendimentosfilasobservadores">
+        <fieldmodel name="atendimentofilaobservador" datatype="guid" isid="true" column="atendimentofilaobservador"/>
+        <fieldmodel name="atendimentofila" datatype="guid" column="atendimentofila" />
+        <fieldmodel name="usuario" datatype="string" column="usuario"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">atendimentofila</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Observadores de Filas de Chamados">
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimentofilaobservador" entitylink="atendimentofilaobservador" isid="true" visible="false" />
+            <fieldbrowser alias="atendimentofila" entitylink="atendimentofila" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="usuario" entitylink="usuario" cansearch="false" visible="true" avaliable="true" alloworder="true" direction="ASC" indefaultorder="true"/>
+            <fieldbrowser alias="tenant" entitylink="tenant" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="atendimentofila" controltype="textedit" entitylink="atendimentofila" label="Fila de Atendimento"></cell>
+                </row>
+                <row>
+                    <cell name="usuario" controltype="textedit" entitylink="usuario" label="Usuário"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoFilaObservadorNovo</name>
+                <fromto valueapi="atendimentofila" valueentity="atendimentofila"/>
+                <fromto valueapi="usuario" valueentity="usuario"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>AtendimentoFilaObservadorExcluir</name>
+                <fromto valueapi="atendimentofilaobservador" valueentity="atendimentofilaobservador"/>
+            </api>
+        </action>
+    </actions>
+
+</nsjusecase>

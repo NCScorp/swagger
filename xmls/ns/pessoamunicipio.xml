@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="pessoamunicipio" label="pessoamunicipio" project="ns">
+    <entity schema="ns" table="pessoasmunicipios">
+        <fieldmodel name="pessoamunicipio" column="pessoamunicipio" isid="true" datatype="guid" />
+        <fieldmodel name="ibge" column="ibge" datatype="string" useCaseLink="ns\municipio" entityJoinType="left" />
+        <fieldmodel name="pessoa" column="pessoa" datatype="guid" />
+        <fieldmodel name="lastupdate" column="lastupdate" datatype="datetime" />
+        <fieldmodel name="tenant" column="tenant" datatype="integer" />
+    </entity>
+    <constructors> 
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">pessoa</constructoritem>
+    </constructors>
+    <viewbrowser label="Pessoas Municípios" layout="list" paginate="false" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="pessoamunicipio" entitylink="pessoamunicipio" isid="true" />
+            <fieldbrowser alias="ibge" entitylink="ibge" visible="true" />
+            <fieldbrowser alias="pessoa" entitylink="pessoa" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

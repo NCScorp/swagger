@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="tipoOrdensServico" label="tipoOrdensServico" project="Servicos">
+    <entity table="tiposordensservicos" schema="servicos">
+        <fieldmodel name="tipoordemservico" datatype="guid" column="tipoordemservico" isid="true" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity> 
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser layout="table" paginate="true"  target="builtin" label="Tipos de ordens de serviço">
+        <fieldsbrowser>
+            <fieldbrowser alias="tipoordemservico" entitylink="tipoordemservico" isid="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" cansearch="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Tipo de ordens de serviço">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="descricao" entitylink="descricao" controltype="textedit" colspan="8" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>tipoOrdemServicoNovo</name>
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>tipoOrdemServicoAlterar</name>
+                <fromto valueapi="tipoordemservico" valueentity="tipoordemservico" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>tipoOrdemServicoExcluir</name>
+                <fromto valueapi="tipoordemservico" valueentity="tipoordemservico" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

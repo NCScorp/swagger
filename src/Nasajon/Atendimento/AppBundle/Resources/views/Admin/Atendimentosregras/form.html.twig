@@ -1,0 +1,139 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/Atendimentosregras/form.html.twig' %}
+
+{% block viewedit_edit %}
+
+    {{ parent() }}
+
+    <div class="row">
+        <div class="col-sm-12 panel-rules">
+          <h5><strong>Condições:</strong></h5>
+          <div class="panel panel-default">
+            <div class="panel-heading">Combinar todas as condições a seguir:</div>
+
+            <table class="table table-condensed">
+                <tbody>
+                    <tr ng-if="srvcs_tndmntsrgrs_frm_cntrllr.entity.condicoes_ex.length == 0">
+                        <td colspan="4">Nenhuma</td>
+                    </tr>
+                    <tr ng-repeat="opcao in srvcs_tndmntsrgrs_frm_cntrllr.entity.condicoes_ex track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                        <td width="25%">
+                            <select class="form-control"
+                                    ng-model="opcao.campo"
+                                    ng-options="key as op.label group by op.category for (key,op) in srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes"
+                                    ng-change="srvcs_tndmntsrgrs_frm_cntrllr.selecionaCampo(opcao)">
+                            </select>
+                        </td>
+                        <td colspan="3" ng-if="opcao.desativado">
+                            <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="28%">
+                            <select class="form-control"
+                                    ng-model="opcao.operador"
+                                    ng-if="opcao.operador != null" 
+                                    ng-options="key as op.label for (key,op) in srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options"
+                                    ng-change="srvcs_tndmntsrgrs_frm_cntrllr.selecionaOperador(opcao)">
+                            </select>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="35%">
+                            <select class="form-control" ng-model="opcao.valor" ng-if="srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options"></select>
+                            <input class="form-control" type="text" ng-model="opcao.valor" ng-if="srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                        </td>
+                        <td width="12%" ng-if="!opcao.desativado" class="text-right">
+                            <a href ng-click="srvcs_tndmntsrgrs_frm_cntrllr.removeCondicaoEx($index)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4"><a href ng-click="srvcs_tndmntsrgrs_frm_cntrllr.addCondicaoEx()">Adicionar Condição</a></th>
+                    </tr>
+                </tfoot>
+            </table>
+          </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">E combinar com qualquer uma das seguintes condições:</div>
+
+            <table class="table table-condensed">
+                <tbody>
+                    <tr ng-if="srvcs_tndmntsrgrs_frm_cntrllr.entity.condicoes_in.length == 0">
+                        <td colspan="4">Nenhuma</td>
+                    </tr>
+                    <tr ng-repeat="opcao in srvcs_tndmntsrgrs_frm_cntrllr.entity.condicoes_in track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                        <td width="25%">
+                            <select class="form-control"
+                                    ng-model="opcao.campo"
+                                    ng-options="key as op.label group by op.category for (key,op) in srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes"
+                                    ng-change="srvcs_tndmntsrgrs_frm_cntrllr.selecionaCampo(opcao)">
+                            </select>
+                        </td>
+                        <td colspan="3" ng-if="opcao.desativado">
+                            <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="28%">
+                            <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null" ng-options="key as op.label for (key,op) in srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options" ng-change="srvcs_tndmntsrgrs_frm_cntrllr.selecionaOperador(opcao)"></select>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="35%">
+                            <select class="form-control" ng-model="opcao.valor" ng-if="srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options"></select>
+                            <input class="form-control" type="text" ng-model="opcao.valor" ng-if="srvcs_tndmntsrgrs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                        </td>
+                        <td width="12%" ng-if="!opcao.desativado" class="text-right">
+                            <a href ng-click="srvcs_tndmntsrgrs_frm_cntrllr.removeCondicaoIn($index)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4"><a href ng-click="srvcs_tndmntsrgrs_frm_cntrllr.addCondicaoIn()">Adicionar Condição</a></th>
+                    </tr>
+                </tfoot>
+            </table>
+          </div>
+
+          <h5><strong>Ações:</strong></h5>
+          <div class="panel panel-default">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr ng-if="srvcs_tndmntsrgrs_frm_cntrllr.entity.acoes.length == 0">
+                        <td colspan="3">Nenhuma</td>
+                    </tr>
+                    <tr ng-repeat="opcao in srvcs_tndmntsrgrs_frm_cntrllr.entity.acoes track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                        <td width="40%">
+                            <select class="form-control" ng-model="opcao.acao" ng-options="key as op.label for (key,op) in srvcs_tndmntsrgrs_frm_cntrllr.optionsacoes" ng-change="srvcs_tndmntsrgrs_frm_cntrllr.selecionaAcao(opcao)"></select>
+                        </td>
+                        <td colspan="2" ng-if="opcao.desativado">
+                            <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                        </td>
+                        <td width="48%" ng-if="!opcao.desativado">
+                            <select class="form-control" ng-model="opcao.valor" ng-if="srvcs_tndmntsrgrs_frm_cntrllr.optionsacoes[opcao.acao].type=='select'"  ng-options="op.value as op.label group by op.grupo for op in srvcs_tndmntsrgrs_frm_cntrllr.optionsacoes[opcao.acao].options"></select>
+                            <input class="form-control" type="text" ng-model="opcao.valor" ng-if="srvcs_tndmntsrgrs_frm_cntrllr.optionsacoes[opcao.acao].type=='text'" />
+                            <textarea class="form-control" ng-model="opcao.valor" ng-if="srvcs_tndmntsrgrs_frm_cntrllr.optionsacoes[opcao.acao].type=='textarea'"></textarea>
+                       </td>
+                        <td width="12%" class="text-right" ng-if="!opcao.desativado">
+                            <a href ng-click="srvcs_tndmntsrgrs_frm_cntrllr.removeAcao($index)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3"><a href ng-click="srvcs_tndmntsrgrs_frm_cntrllr.addAcao()">Adicionar Ação</a></th>
+                    </tr>
+                </tfoot>
+            </table>
+          </div>
+        </div>
+    </div>
+
+    {% block viewedit_form_naoexecutarregrasubsequente %}{% endblock viewedit_form_naoexecutarregrasubsequente %}
+
+    <div class="row">
+        <div class="col-sm-12 text-danger">
+            <div class="form-group">
+                <div class="checkbox">
+                    <label for="naoexecutarregrasubsequente">
+                        <input type="checkbox" ng-model="srvcs_tndmntsrgrs_frm_cntrllr.entity.naoexecutarregrasubsequente" name="naoexecutarregrasubsequente" value="1">
+                        Parar de verificar as próximas regras.</label>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

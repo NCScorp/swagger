@@ -1,0 +1,171 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Solicitacoes/form.html.twig' %}
+
+{% set form_name = form.vars.original_type %}
+
+{% block viewedit_toolbar_btn_area %}
+    <a href  ui-sref="atendimento_cliente_solicitacoes({})" class="btn btn-sm btn-link btn-cancel btn-geral" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length == 0">
+        <span class="hidden-lg hidden-md"><i class="el el-remove"></i></span>  
+        <span class="hidden-xs hidden-sm">Cancelar</span>
+    </a>
+    <a href class="btn btn-sm btn-link btn-cancel btn-geral" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length > 0" ng-click="tndmnt_clnt_slctcs_frm_cntrllr.voltar()">
+        <span class="hidden-lg hidden-md"><i class="el el-remove"></i></span>  
+        <span class="hidden-xs hidden-sm">Voltar</span>
+    </a>
+
+    <button type="submit" class="btn btn-xs btn-primary btn-open hidden-xs hidden-sm"  ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length == 0" ng-disabled="tndmnt_clnt_slctcs_frm_cntrllr.submitting">
+        <span class="hidden-lg hidden-md"><i class="el el-ok"></i></span>  
+        <span class="hidden-xs">{{'criarchamado'|trans}}</span>
+    </button>
+    <button ng-click="tndmnt_clnt_slctcs_frm_cntrllr.criarChamado()" class="btn btn-xs btn-primary btn-open hidden-xs hidden-sm" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length > 0 && !tndmnt_clnt_slctcs_frm_cntrllr.selecionouArtigo">
+        <span class="hidden-lg hidden-md"><i class="el el-ok"></i></span>  
+        <span class="hidden-xs">Pular e criar chamado</span>
+    </button>
+    <button ng-click="tndmnt_clnt_slctcs_frm_cntrllr.artigoRespondeuDuvida()" class="btn btn-xs btn-primary btn-open hidden-xs hidden-sm"ng-if="tndmnt_clnt_slctcs_frm_cntrllr.selecionouArtigo">
+        <span class="hidden-lg hidden-md"><i class="el el-ok"></i></span>  
+        <span class="hidden-xs">Isso responde minha dúvida</span>
+    </button>
+{% endblock viewedit_toolbar_btn_area %}
+
+{% block viewedit_edit -%}
+
+    <div class="clearfix">
+        <div class="col-sm-12 row">
+
+            <div class="panel panel-border" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length > 0 && !tndmnt_clnt_slctcs_frm_cntrllr.selecionouArtigo">
+                <div class="list-group" ng-init="tndmnt_clnt_slctcs_frm_cntrllr.scrollToTop()">
+                    <a href="#" class="list-group-item">
+                        <b>Antes de criar este chamado, veja os artigos que separamos pra você. Certamente um deles poderá te ajudar!</b>
+                        <p class="list-group-item-text" style="white-space: unset;">Caso não consiga resolver seu problema através dos artigos, prossiga criando o chamado ao clicar no botão de "Pular e Criar Chamado."</p>
+                    </a> 
+                    <a href class="list-group-item" ng-repeat="artigo in tndmnt_clnt_slctcs_frm_cntrllr.artigos" ng-click="tndmnt_clnt_slctcs_frm_cntrllr.abrirArtigo(artigo)">
+                        <h4 class="list-group-item-heading">{{'{{artigo.titulo}}'}}</h4>
+                        <p class="list-group-item-text">{{'{{ artigo.resumo }}'}}</p>
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="panel panel-border padding-content content-responsive" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.selecionouArtigo">
+                <h4><a href ui-sref="atendimento_cliente_artigos_show({artigo: tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.artigo})">{{'{{tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.titulo}}'}}</a></h4>
+                <p ng-bind-html="tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.conteudo" ng-init="tndmnt_clnt_slctcs_frm_cntrllr.scrollToTop()"></p>
+                
+                <div class="category">
+                    <small>Categoria:</small><br />
+                    <span class="label label-default">
+                      {{ "{{tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.categoriatitulo}}" }} /
+                      {{ "{{tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.subcategoriatitulo}}" }} / 
+                      {{ "{{tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.secaotitulo}}" }}
+                    </span>
+                </div>
+                <div class="tags-show small" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.tags">
+                    <div>
+                      Tags:
+                    </div>
+                    <span class="label label-info" ng-repeat="tag in tndmnt_clnt_slctcs_frm_cntrllr.artigoEscolhido.tags">
+                      <a href ui-sref="atendimento_cliente_artigos({tags: tag, categoria: null})" 
+                        class="label label-info">{{ "{{tag}}" }}
+                      </a>
+                    </span>
+                </div>
+            </div>
+
+            <div class="clearfix area-text" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length == 0">
+                <div class="form-group">
+                    <label class="control-label" for="cliente">Criar como</label>
+                    <select id="cliente" name="cliente" ng-model="tndmnt_clnt_slctcs_frm_cntrllr.entity.cliente.cliente" ng-disabled="tndmnt_clnt_slctcs_frm_cntrllr.submitting" class="form-control" ng-options="item.value as item.label for item in tndmnt_clnt_slctcs_frm_cntrllr.criarComo">
+                    </select>
+                </div>
+
+                <div class="form-group" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.habilitarAssunto == 2">
+                    <label class="control-label" for="resumo">{{'{{tndmnt_clnt_slctcs_frm_cntrllr.tituloAssunto}}'}}</label>
+                    <input type="text" id="resumo" required="required" name="resumo" ng-model="tndmnt_clnt_slctcs_frm_cntrllr.entity.resumo" 
+                           ng-disabled="tndmnt_clnt_slctcs_frm_cntrllr.entity.submitting" placeholder="{{'{{tndmnt_clnt_slctcs_frm_cntrllr.placeholderAssunto}}'}}" 
+                           class="form-control ng-pristine ng-valid ng-empty ng-touched">
+
+                    <div ng-messages="tndmnt_clnt_slctcs_frm_cntrllr.form.resumo.$error"  ng-if='tndmnt_clnt_slctcs_frm_cntrllr.form.resumo.$dirty || tndmnt_clnt_slctcs_frm_cntrllr.submitted'>
+                        <div class="alert alert-danger" role="alert" ng-message="required">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O campo Assunto deve ser preenchido.
+                        </div>
+                    </div>
+                </div>
+
+                <label class="control-label" for="sintoma">{{'{{ tndmnt_clnt_slctcs_frm_cntrllr.sintomaLabel }}'}}</label>
+                <p ng-if="tndmnt_clnt_slctcs_frm_cntrllr.sintomaObs">
+                    <small>{{'{{ tndmnt_clnt_slctcs_frm_cntrllr.sintomaObs }}'}}</small>
+                </p>
+                <ng-ckeditor skin="moono-lisa" class="col-sm-12 row" placeholder="{{'sintomaclienteplaceholder'|trans}}" remove-plugins=",link,autolink,elementspath" ng-model="tndmnt_clnt_slctcs_frm_cntrllr.entity.sintoma" required name="sintoma" ng-disable="tndmnt_dmn_slctcs_frm_cntrllr.submitting"></ng-ckeditor>
+                <div ng-messages="tndmnt_clnt_slctcs_frm_cntrllr.form.sintoma.$error"  ng-if='tndmnt_clnt_slctcs_frm_cntrllr.form.sintoma.$dirty || tndmnt_clnt_slctcs_frm_cntrllr.submitted'>
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        {{'sintomaclienteObrigatoriomsg'|trans}}
+                    </div>
+                </div>
+
+                <div class="form-group" ng-repeat="campocustomizado in tndmnt_clnt_slctcs_frm_cntrllr.camposcustomizados">
+                    <label for="{{'{{campocustomizado.nome}}'}}">{{'{{campocustomizado.label}}'}}</label>
+
+                    <input id="{{'{{campocustomizado.nome}}'}}"
+                           name="{{'{{campocustomizado.nome}}'}}" 
+                           ng-if="campocustomizado.tipo == 'TE'" 
+                           type="text" 
+                           class="form-control" 
+                           ng-model="tndmnt_clnt_slctcs_frm_cntrllr.entity.camposcustomizados[campocustomizado.atendimentocampocustomizado]"
+                           ng-required="{{'{{campocustomizado.obrigatorio}}'}}">
+
+                    <select id="{{'{{campocustomizado.nome}}'}}" 
+                            name="{{'{{campocustomizado.nome}}'}}" 
+                            ng-if="campocustomizado.tipo == 'CB'" 
+                            class="form-control"
+                            ng-model="tndmnt_clnt_slctcs_frm_cntrllr.entity.camposcustomizados[campocustomizado.atendimentocampocustomizado]"
+                            ng-options="item for item in campocustomizado.opcoes"
+                            ng-required="{{'{{campocustomizado.obrigatorio}}'}}">
+                    </select>
+
+                    <div ng-messages="tndmnt_clnt_slctcs_frm_cntrllr.form[campocustomizado.nome].$error"  ng-if="tndmnt_clnt_slctcs_frm_cntrllr.form[campocustomizado.nome].$dirty || tndmnt_clnt_slctcs_frm_cntrllr.submitted">
+                        <div class="alert alert-danger" role="alert" ng-message="required">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O campo {{'{{campocustomizado.nome}}'}} não pode ser vazio.
+                        </div>
+                    </div>
+                </div>
+
+                <anexos model='tndmnt_clnt_slctcs_frm_cntrllr.entity.anexos' can-edit='true'></anexos>
+                <br />
+
+            </div>
+            <div class="form-group clearfix">
+                <div class="btns-area pull-right">
+                    <a href  ui-sref="atendimento_cliente_solicitacoes({})" class="btn btn-md btn-default btn-open btn-fixed" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length == 0">
+                        <span class="hidden-lg hidden-md"><i class="el el-remove"></i></span>  
+                        <span class="hidden-xs hidden-sm">Cancelar</span>
+                    </a>
+                    <a href class="btn btn-md btn-default btn-open btn-fixed" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length > 0" ng-click="tndmnt_clnt_slctcs_frm_cntrllr.voltar()">
+                        <span class="hidden-lg hidden-md"><i class="el el-remove"></i></span>  
+                        <span class="hidden-xs hidden-sm">Voltar</span>
+                    </a>
+
+
+                    <button type="submit" class="btn btn-md btn-primary btn-open btn-fixed" ng-disabled="tndmnt_clnt_slctcs_frm_cntrllr.submitting" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length == 0">
+                        <span class="hidden-lg hidden-md"><i class="el el-ok"></i></span>  
+                        <span class="hidden-sm hidden-xs">{{'criarchamado'|trans}}</span>
+                    </button>
+                    <button ng-click="tndmnt_clnt_slctcs_frm_cntrllr.criarChamado()" class="btn btn-md btn-primary btn-open btn-fixed" ng-disabled="tndmnt_clnt_slctcs_frm_cntrllr.submitting" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.artigos.length > 0 && !tndmnt_clnt_slctcs_frm_cntrllr.selecionouArtigo">
+                        <span class="hidden-lg hidden-md"><i class="el el-ok"></i></span>  
+                        <span class="hidden-sm hidden-xs">Pular e criar chamado</span>
+                    </button>
+                    <button ng-click="tndmnt_clnt_slctcs_frm_cntrllr.artigoRespondeuDuvida()" class="btn btn-md btn-primary btn-open btn-fixed" ng-disabled="tndmnt_clnt_slctcs_frm_cntrllr.submitting" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.selecionouArtigo">
+                        <span class="hidden-lg hidden-md"><i class="el el-ok"></i></span>  
+                        <span class="hidden-sm hidden-xs">Isso responde minha dúvida</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock viewedit_edit -%}
+
+{% block viewedit_footer_toolbar -%}
+{% endblock viewedit_footer_toolbar -%}

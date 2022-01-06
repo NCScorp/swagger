@@ -1,0 +1,64 @@
+
+<div class="height-full col-md-12 article-area row">
+    <div class="headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail pull-left"><a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page"> Disponibilidades</span></strong></div>
+            <div class="btns-area pull-right">
+            </div>
+        </div>
+
+    </div>
+    <div class="headline-sub clearfix hidden-lg hidden-md">
+        <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar à lista" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> Disponibilidades</h2>
+            <div class="btns-area pull-right">
+            </div>
+    </div>
+<div class="height-full-calc">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <input name="key" class="form-control campo-busca" ng-model="busca.$" placeholder="Busca por Nome, Equipe ou Função" type="text">
+  </div>
+  <div class="panel-body">
+    <div class="table-default">
+        <div ng-if="!tndmnt_srs_dspnbldds_lst_cntrllr.isBusy()">
+            <table class="table table-striped table-default">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Equipe</th>
+                    <th>Função</th>
+                    <th>Disponibilidade</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="tndmnt_srs_dspnbldds_lst_cntrllr.contas.length == 0">
+                        <td colspan="5" class="text-center">Nenhum dado encontrado</td>
+                    </tr>
+                    <tr ng-repeat="conta in tndmnt_srs_dspnbldds_lst_cntrllr.contas | filter:busca track by $index">
+                        <td>{{'{{conta.nome}}'}}</td>
+                        <td>{{'{{conta.email}}'}}</td>
+                        <td>{{'{{conta.equipe}}'}}</td>
+                        <td>{{'{{conta.usuariotipo}}'}}</td>
+                        <td class="text-right">
+                            <div class="switch switch-sm pull-left">
+                                <input id="status_conta_{{'{{$index}}'}}" name="status_conta_{{'{{$index}}'}}" type="checkbox" ng-checked="conta.status == 1" ng-model="conta.status" ng-change="tndmnt_srs_dspnbldds_lst_cntrllr.setStatus(conta)">
+                                <label for="status_conta_{{'{{$index}}'}}" class="label-success"></label>&nbsp;&nbsp;
+                                <small class="text-uppercase" ng-if="conta.status == 1">{{'disponível'|trans}}</small>
+                                <small class="text-uppercase" ng-if="conta.status == 0">{{'indisponível'|trans}}</small>
+                            </div>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-default" ng-click="tndmnt_srs_dspnbldds_lst_cntrllr.abrirHistorico(conta)"><i class="fa fa-calendar" aria-hidden="true"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div ng-class="{'onloading' : tndmnt_srs_dspnbldds_lst_cntrllr.isBusy() }" class="text-center"></div>
+    </div>
+  </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,81 @@
+<div style="padding: 0px 40px 20px 40px;">
+    <div class="headline-sub"><h3>Deslocamento Extra</h3></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+              <label class="control-label">Hora Saída</label>
+              <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                  {#{{ form_widget(form.visitas.vars.prototype.hora_saida_deslocamento,{
+                  'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_saida_deslocamento',
+                       'ui-mask':'99:99:99',
+                      'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                  })
+                  }}#}
+              </div>
+              <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_saida_deslocamento}}'}}</div>
+            </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">KM Saída</label>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                {#{{ form_widget(form.visitas.vars.prototype.km_saida_deslocamento,{
+                'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_saida_deslocamento',
+                          'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                })
+                }}#}
+            </div>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_saida_deslocamento}}'}}</div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">Hora Chegada</label>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                {#{{ form_widget(form.visitas.vars.prototype.hora_chegada_deslocamento,{
+                'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_chegada_deslocamento',
+                          'ui-mask':'99:99:99',
+                          'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                })
+                }}#}
+            </div>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_chegada_deslocamento}}'}}</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label">KM Chegada</label>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                {#{{ form_widget(form.visitas.vars.prototype.km_chegada_deslocamento,{
+                'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_chegada_deslocamento',
+                          'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                })
+                }}#}
+            </div>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_chegada_deslocamento}}'}}</div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="control-label">Motivo Deslocamento</label>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                {#{{ form_widget(form.visitas.vars.prototype.motivo_deslocamento,{
+                'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].motivo_deslocamento',
+                'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                })
+                }}#}
+            </div>
+            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].motivo_deslocamento}}'}}</div>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a class="btn btn-default" ng-click="srvcs_rdns_srvc_frm_cntrllr.modalDeslocamentoExtra.close()">Fechar e salvar</a>
+        </div>
+    </div>
+</div>

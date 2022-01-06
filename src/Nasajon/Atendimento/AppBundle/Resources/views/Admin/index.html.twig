@@ -1,0 +1,158 @@
+{% extends 'NasajonAtendimentoAppBundle:Default:main.html.twig' %}
+
+{% block menusidebar %}
+    <nsj-menu-item ng-if="menuctrl.showButton" ui-sref-active="active-line" data-icon="el el-inbox" ui-sref="atendimento_admin_solicitacoes({ situacao: 0, atribuidoa: 'mim', order: 'asc', adiado: 'false' })" data-label="{{'Chamados'|trans}}">
+        <span class="badge ng-binding" ng-bind="menuctrl.abertos.mim">0</span>
+    </nsj-menu-item>
+    <nsj-menu-item ng-if="menuctrl.showButton && menuctrl.exibe_cliente == 1" ui-sref-active="active-line" data-icon="el el-torso" ui-sref="ns_clientes" data-label="Clientes"></nsj-menu-item>
+    <nsj-menu-item ui-sref-active="active-line" data-icon="el el-info-circle" ui-sref="atendimento_admin_artigos_list" data-label="{{'baseconhecimento'|trans}}"></nsj-menu-item>
+    <nsj-menu-item ng-if="menuctrl.showButton" ui-sref-active="active-line" data-icon="el el-graph" ui-sref="atendimento_admin_relatorios_performance" data-label="Relatórios"></nsj-menu-item>
+    <nsj-menu-item ng-if="menuctrl.gerenciaEquipe && menuctrl.equipe != undefined" ui-sref-active="active-line" data-icon="el el-group" ui-sref="atendimento_admin_gerenciaequipe_show({equipe : menuctrl.equipe})" data-label="Gerenciar Equipe"></nsj-menu-item>
+    <nsj-menu-item ng-if="menuctrl.gerenciaEquipe && menuctrl.equipe == undefined" ui-sref-active="active-line" data-icon="el el-group" ui-sref="atendimento_admin_gerenciaequipe" data-label="Gerenciar Equipe"></nsj-menu-item>
+    <nsj-menu-item ng-if="menuctrl.showButton" ui-sref-active="active-line" data-icon="glyphicon glyphicon-calendar" ui-sref="crm_proximoscontatos" data-label="Agenda de Contatos">
+        <span class="badge ng-binding" ng-bind="menuctrl.meusContatosPendentes">0</span>
+    </nsj-menu-item>
+
+    {% if provisao().funcaoCodigo | lower == 'admin' %}
+        <nsj-menu-item class="config" ui-sref-active="active-line" data-icon="el el-cog" ui-sref="atendimento_admin_configuracoes_list" data-label="Configurações"></nsj-menu-item>
+    {% endif %}
+{% endblock %}
+
+
+{% block metadata %}
+    <base href="{{ url('index', { tenant : tenant }, true) }}/">
+    {{ parent() }}
+{% endblock %}
+
+
+{% block stylesheet %}
+    {{ parent() }}
+    {% stylesheets
+        '@NasajonAtendimentoAppBundle/Resources/css/ng-tree-grid.css'
+        '%kernel.project_dir%/node_modules/angular-xeditable/dist/css/xeditable.min.css'
+        '%kernel.project_dir%/node_modules/angular-hotkeys/build/hotkeys.min.css'
+        '%kernel.project_dir%/node_modules/angular-ui-tree/dist/angular-ui-tree.min.css'
+        filter='?uglifycss'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    
+
+    {% javascripts
+        '%kernel.project_dir%/node_modules/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js'
+        '%kernel.project_dir%/node_modules/highcharts/highcharts.js'
+        '%kernel.project_dir%/node_modules/angular-ui-mask/dist/mask.min.js'
+        '%kernel.project_dir%/node_modules/ngclipboard/dist/ngclipboard.min.js'
+        '%kernel.project_dir%/node_modules/angular-xeditable/dist/js/xeditable.min.js'
+        '%kernel.project_dir%/node_modules/angular-hotkeys/build/hotkeys.min.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/filters/*.js'
+
+        '@NasajonComponentesInterfaceBundle/Resources/public/angular-modules/modules/nsjMenu/nsjMenu.js'
+        '@NasajonComponentesInterfaceBundle/Resources/public/angular-modules/modules/appLoad/appLoad.js'
+        '@NasajonComponentesInterfaceBundle/Resources/public/angular-modules/modules/nsjHeader/nsjHeader.js'
+
+        '@NasajonComponentesInterfaceBundle/Resources/js/objectlist.js'
+        '@NasajonComponentesInterfaceBundle/Resources/js/auto-save-form.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/ng-tree-grid.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/autocomplete.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/historicos.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/valida-caractere.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/nsjRedux.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/middleware/loggerMiddleware.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/middleware/promiseMiddleware.js'
+
+        '%kernel.project_dir%/node_modules/angular-ui-tree/dist/angular-ui-tree.min.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/artigos.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/solicitacoes.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/configuracoes.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/camposcustomizados.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/atendimentosregras.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/followups.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/clientes.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/categorias.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/atendimentosfilas.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/relatorios.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/flagcliente.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/equipes.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/enderecosemails.js'       
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/usuariosdisponibilidades.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/arquivos.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/gerenciaequipe.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/proximoscontatos.js'
+
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/redux/artigosActions.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/redux/artigosReducer.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/feriados.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Feriados/index.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Feriados/factory.js' 
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/horariosatendimento/config.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Horariosatendimento/index.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/horariosatendimento/edit.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Horariosatendimento/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Solicitacoes/edit.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Solicitacoes/index.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Solicitacoes/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Artigos/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Categorias/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Flagcliente/index.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Flagcliente/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Vendedor/factory.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Representantecomercial/factory.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Representantetecnico/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/ServicosCatalogo/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Ns/Clientes/edit.js'
+        '@NasajonMDABundle/Resources/js/Ns/Clientes/factory.js'
+
+
+        '@NasajonMDABundle/Resources/js/Servicos/Atendimentosfilas/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Servicos/Atendimentoscamposcustomizados/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Servicos/Atendimentosregras/factory.js'
+
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Equipes/index.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Equipes/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Arquivos/factory.js'
+        
+        '@NasajonMDABundle/Resources/js/Crm/Assuntos/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Crm/Proximoscontatos/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Enderecosemails/index.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Enderecosemails/factory.js'
+        
+
+        '@NasajonMDABundle/Resources/js/Ns/Classificadores/factory.js'
+        
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/slas.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Admin/Slas/factory.js'
+        
+        '@NasajonAtendimentoAppBundle/Resources/js/Admin/app.js'
+
+        filter='?uglifyjs2'
+
+    %}
+    <script src='{{ asset_url }}'></script>
+    {% endjavascripts %}
+{% endblock %}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="representantecomercial" label="representantecomercial" project="atendimento" >
+    <entity schema="ns" table="vwrepresentantescomerciais_atendimento">
+        <fieldmodel name="representantecomercial" datatype="guid" isid="true" column="representantecomercial"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="bloqueado" datatype="boolean" column="bloqueado"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">bloqueado</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="representantecomercial" isid="true" />
+            <fieldbrowser entitylink="nome" visible="true" avaliable="true"  indefaultorder="true" />
+            <fieldbrowser entitylink="bloqueado" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

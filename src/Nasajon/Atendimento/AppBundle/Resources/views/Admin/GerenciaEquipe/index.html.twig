@@ -1,0 +1,48 @@
+{% if index_layout_size is not defined %}
+    {% set index_layout_size = 4%}
+{% endif %} 
+
+{% block index_header -%}
+    <div class="col-md-12 headline-page">
+        <div class="headline clearfix">
+            <h2 class="pull-left">Gerenciamento de Equipes</h2>
+        </div>
+    </div>
+{% endblock index_header -%}
+
+<div class='atendimento_equipes height-full'> 
+    {% block index_layout -%}
+        <div class="height-full-calc col-md-{{index_layout_size}}" ng-class="{ 'hidden-sm hidden-xs' : (('atendimento_admin_gerenciaequipe_show'| isStateEq))}">
+            <div class='row height-full'>
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        {% block index_list -%}
+
+                            <div class="list-group" id="atendimento_gerenciaequipes_list" >
+                                {%- block viewedit_view_list_item %}
+                                <a href ui-sref='atendimento_admin_gerenciaequipe_show({equipe : entity.equipe})' class="list-group-item" ng-repeat="entity in tndmnt_dmn_grncqp_lst_cntrllr.entities" ui-sref-active="active">
+                                    <h4 class="list-group-item-heading" ng-bind-html="entity.nome"></h4>
+                                </a>
+                                {%- endblock viewedit_view_list_item %}
+                                <p class="text-center article-loading height-full" ng-class="{'onloading' : tndmnt_qps_lst_cntrllr.isBusy() }" ng-if="tndmnt_qps_lst_cntrllr.isBusy()"></p>
+                                <p class="text-center nfound" ng-if="tndmnt_qps_lst_cntrllr.entities.length == 0 && !tndmnt_qps_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+                            </div>
+
+                        {% endblock index_list -%}
+                    </div><!--/panel-body-->
+
+                </div><!--/panel-->
+            </div>
+        </div>
+    {% endblock index_layout -%}
+
+    {% block index_builltin_form -%}
+        <div class='col-md-{{12 - index_layout_size}} article-area height-full-calc row' ui-view>
+            <div class="bt-new-article new-article text-center height-full">
+
+            </div>
+
+        </div>
+    {% endblock index_builltin_form -%}
+</div>

@@ -1,0 +1,55 @@
+<div class="headline-sub clearfix headline-mobile">
+    <h3>
+        Histórico de disponibilidade
+        <div class="pull-right">
+        <button type="button" class="btn btn-default" ui-sref="atendimento_usuariosdisponibilidades_lista">Voltar</button>
+        </div>
+    </h3>
+    
+    <h4 class="top-buffer"><b>{{'{{tndmnt_srs_dspnbldds_hstrc_cntrllr.nome}}'}}</b></h4>
+    <ul class="list-group">
+        <span class="link-categoria"><label>E-mail:</label> {{'{{tndmnt_srs_dspnbldds_hstrc_cntrllr.email}}'}}</span>
+        <div ng-if="tndmnt_srs_dspnbldds_hstrc_cntrllr.equipe">
+            <span class="link-categoria"><label>Equipe:</label> {{'{{tndmnt_srs_dspnbldds_hstrc_cntrllr.equipe}}'}}</span>
+            <span class="link-categoria"><label>Função:</label> {{'{{tndmnt_srs_dspnbldds_hstrc_cntrllr.funcao}}'}}</span>
+        </div>
+        <div ng-if="!tndmnt_srs_dspnbldds_hstrc_cntrllr.equipe">
+            <span class="link-categoria"><label>Equipe:</label> Usuário sem equipe</span>
+            <span class="link-categoria"><label>Função:</label> Usuário sem equipe</span>
+        </div>
+    </ul>
+    
+    <table class="table table-striped table-bordered top-buffer" ng-if="tndmnt_srs_dspnbldds_hstrc_cntrllr.historicos.length > 0">
+        <thead>
+            <th>Indisponível de</th>
+            <th>Até</th>
+            <th>Tempo indisponível</th>
+        </thead>
+        <tbody ng-repeat="historico in tndmnt_srs_dspnbldds_hstrc_cntrllr.historicos">
+            <td>{{'{{historico.created_at | convertToDate}}'}} <b>{{'{{historico.created_at | convertToTime}}'}}</b></td>
+            
+            <td ng-if="historico.updated_at !== null">{{'{{historico.updated_at | convertToDate}}'}} <b>{{'{{historico.updated_at | convertToTime}}'}}</td>
+            <td ng-if="historico.updated_at === null">-</td>
+            
+            <td ng-if="historico.updated_at !== null">
+                <span ng-if="historico.intervalo.dias === 1">{{'{{historico.intervalo.dias}}'}} dia</span>
+                <span ng-if="historico.intervalo.dias > 1">{{'{{historico.intervalo.dias}}'}} dias </span>
+
+                <span ng-if="historico.intervalo.horas === 1">{{'{{historico.intervalo.horas}}'}} hora</span>
+                <span ng-if="historico.intervalo.horas > 1">{{'{{historico.intervalo.horas}}'}} horas </span>
+                
+                <span ng-if="historico.intervalo.minutos === 1">{{'{{historico.intervalo.minutos}}'}} minuto</span>
+                <span ng-if="historico.intervalo.minutos > 1">{{'{{historico.intervalo.minutos}}'}} minutos </span>
+
+                <span ng-if="historico.intervalo.dias === 0 && historico.intervalo.horas === 0 && historico.intervalo.minutos === 0">-</span>
+            </td>
+            <td ng-if="historico.updated_at === null">Usuário indisponível</td>
+        </tbody>
+    </table>
+    <p class="onloading" ng-if="tndmnt_srs_dspnbldds_hstrc_cntrllr.busy"></p>
+    <p ng-if="!tndmnt_srs_dspnbldds_hstrc_cntrllr.finished">
+        <a href="" ng-click="tndmnt_srs_dspnbldds_hstrc_cntrllr.loadMore()">Ver mais...</a>
+    </p>
+    
+    <h5 class="text-center" ng-if="tndmnt_srs_dspnbldds_hstrc_cntrllr.historicos.length === 0">Nenhum dado encontrado</h5>
+</div>

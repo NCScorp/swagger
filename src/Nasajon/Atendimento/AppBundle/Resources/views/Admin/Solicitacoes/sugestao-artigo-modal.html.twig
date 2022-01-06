@@ -1,0 +1,35 @@
+<div ng-controller="AtendimentoAdminFollowupsFormController as respostaController">
+    <div class="headline-sub clearfix" style="margin:0;">
+        
+        <h3 class='col-md-11'>Pesquisar artigos na Base de Conhecimento</h3>
+        <a href class='bt-close col-md-1' ng-click='sugestoesArtigosModal.fechar()'>
+            <i class='el el-remove'></i>
+        </a>
+    </div>
+    <hr>
+    <div class="modal-body reset-top" id="modal-body">
+      <input id="txtRespostaAutomatica" type='text' class='form-control campo-busca' ng-model='sugestoesArtigosModal.searchArtigo' ng-change='sugestoesArtigosModal.buscarArtigos(sugestoesArtigosModal.searchArtigo);sugestoesArtigosModal.escolheuArtigo = false' />
+        <p class="text-center article-loading height-full" ng-class="{'onloading' : sugestoesArtigosModal.isBusy() }" ng-if="sugestoesArtigosModal.isBusy() || sugestoesArtigosModal.artigos.length !== 0"></p>
+        <p class="text-center nfound" ng-if="sugestoesArtigosModal.artigos.length == 0 && !sugestoesArtigosModal.isBusy() && (sugestoesArtigosModal.filter.key !== '')">Nenhum artigo encontrado.</p>
+        <div class="opcoes" ng-if="!sugestoesArtigosModal.escolheuArtigo">
+            <a href class="list-group-item" ng-repeat="artigo in sugestoesArtigosModal.artigos" ui-sref-active="active" ng-click="sugestoesArtigosModal.escolheuArtigo = true;sugestoesArtigosModal.artigo = artigo;">
+                <h4 class="list-group-item-heading"><span ng-bind-html="artigo.titulo"></span></h4>
+                <p class="list-group-item-text" ng-bind-html="artigo.resumo"></p>
+                <small ng-bind-html="artigo.categoria.titulo"></small>
+            </a>
+        </div>
+        <div ng-if="sugestoesArtigosModal.escolheuArtigo">
+            <div class="headline-sub clearfix" style="margin:20px;">
+                <h3 class="text-center">O que você deseja fazer?</h3>
+            </div>
+            <div class="btn-group btn-group-justified" role="group">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" ng-click="sugestoesArtigosModal.inserirLinkArtigo(sugestoesArtigosModal.artigo)">Inserir link</button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default" ng-click="sugestoesArtigosModal.inserirArtigo(sugestoesArtigosModal.artigo)">Inserir texto do artigo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

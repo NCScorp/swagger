@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentosregras" label="atendimentosregras" project="servicos">
+    <entity schema="servicos" table="atendimentosregras">
+        <fieldmodel name="atendimentoregra" datatype="guid" isid="true" column="atendimentoregra"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+        <fieldmodel name="naoexecutarregrasubsequente" datatype="boolean" column="naoexecutarregrasubsequente" />
+        <fieldmodel name="condicoes_ex" datatype="objectlist" column="atendimentoregra" useCaseLink="servicos\atendimentosregrascondicoes" entityJoinType="left" notMapped="true" />
+        <fieldmodel name="condicoes_in" datatype="objectlist" column="atendimentoregra" useCaseLink="servicos\atendimentosregrascondicoes" entityJoinType="left" notMapped="true" />
+        <fieldmodel name="acoes" datatype="objectlist" column="atendimentoregra" useCaseLink="servicos\atendimentosregrasacoes" entityJoinType="left" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="updated_at" datatype="date" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Regras">
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimentoregra" entitylink="atendimentoregra" isid="true" />
+            <fieldbrowser alias="nome" entitylink="nome" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="ordem" entitylink="ordem" width="2" cansearch="false" visible="false" avaliable="true" indefaultorder="true" direction="asc" />
+            <fieldbrowser alias="naoexecutarregrasubsequente" entitylink="naoexecutarregrasubsequente" width="5" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Regra">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="nome" controltype="textedit" entitylink="nome" label="Nome">
+                        <validates>
+                            <validate type="vnull" displaytext="O nome da regra não pode ser vazio."/>
+                            <validate type="maxlength" value="40" displaytext="O campo Nome não deve exceder 40 caracteres."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="naoexecutarregrasubsequente" controltype="checkbox" entitylink="naoexecutarregrasubsequente" label="Parar de verificar as próximas regras."/>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoRegraNovo</name>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="naoexecutarregrasubsequente" valueentity="naoexecutarregrasubsequente"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>AtendimentoRegraAlterar</name>
+                <fromto valueapi="atendimentoregra" valueentity="atendimentoregra"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="naoexecutarregrasubsequente" valueentity="naoexecutarregrasubsequente"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>AtendimentoRegraExcluir</name>
+                <fromto valueapi="atendimentoregra" valueentity="atendimentoregra"/>
+            </api>
+        </action>
+        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>AtendimentoRegraReordenar</name>
+                <fromto valueapi="atendimentoregra" valueentity="atendimentoregra"/>
+                <fromto valueapi="posicaonova" valueentity="ordem"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

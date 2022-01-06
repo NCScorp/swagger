@@ -1,0 +1,79 @@
+<div class="headline-sub clearfix">
+    <h3 class="pull-left">
+        Termos de serviço
+    </h3>
+</div>
+<div class="row clearfix article">
+    <div class="col-md-12">
+        <div class="forms col-md-12">
+            <div class="col-md-12">
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-sm btn-default btn-fixed" data-export-report ng-click="dmn_rltrs_cntrllr.exportarParaCsv()">
+                        <i class="el el-download-alt"></i>
+                        <span class="hidden-xs">Exportar</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-default btn-fixed pull-right" onclick="window.print();">
+                        <i class="el el-print"></i>
+                        <span class="hidden-xs">Imprimir</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="row clearfix col-md-12">
+                <div class="panel-rules" ngsf-fullscreen>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">&nbsp;
+                            <button class="btn btn-xs btn-default pull-right" ngsf-toggle-fullscreen show-if-fullscreen-enabled>
+                                <i show-if-fullscreen="false" class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                <i show-if-fullscreen="true" class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                            <div class="btn-group pull-right columnbtn" uib-dropdown auto-close="outsideClick">
+                                <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                                    <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                    <li class="checkbox padding-content" role="menuitem">
+                                        <label for="nome"><input class="form-check-input" type="checkbox" ng-model="dmn_rltrs_cntrllr.colunas.nome" id="nome" checked="true"> Nome</label>
+                                    </li>
+                                    <li class="checkbox padding-content" role="menuitem">
+                                        <label for="conta"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.conta" id="conta" checked="true"> E-mail</label>
+                                    </li>
+                                    <li class="checkbox padding-content" role="menuitem">
+                                        <label for="created_at"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.created_at" id="created_at" checked="true">Data
+                                        </label>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li role="menuitem"><a href="#" ng-click="dmn_rltrs_cntrllr.mostrarTodasColunas()">Mostrar
+                                        todos</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="height-full" ng-class="{'onloading' : dmn_rltrs_cntrllr.loading }">
+                            <div class="table-responsive" ng-if="!dmn_rltrs_cntrllr.loading">
+                                <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                                    <thead>
+                                        <tr>
+                                            <th ts-criteria="nome|lowercase" width="25%" ng-show="dmn_rltrs_cntrllr.colunas.nome"> Nome</th>
+                                            <th ts-criteria="conta|lowercase" ts-default="descending" ng-show="dmn_rltrs_cntrllr.colunas.conta">E-mail</th>
+                                            <th ts-criteria="created_at|asDate" ng-show="dmn_rltrs_cntrllr.colunas.created_at">Data</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in dmn_rltrs_cntrllr.tableData" ts-repeat>
+                                            <th scope="row" ng-show="dmn_rltrs_cntrllr.colunas.nome">
+                                                {{'{{data.nome}}'}}
+                                            </th>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.conta">{{'{{data.conta}}'}}</td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.created_at">{{'{{data.created_at| asDate |
+                                                amDateFormat:"DD/MM/YYYY HH:mm:ss"}}'}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

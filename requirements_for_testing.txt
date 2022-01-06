@@ -1,8 +1,0 @@
-ortools
-pyyaml
-python-intervals
-flask-restful
-gunicorn
-pytest
-pytest-cov
-pyyaml

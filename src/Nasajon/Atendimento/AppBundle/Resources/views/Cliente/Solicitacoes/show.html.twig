@@ -1,0 +1,117 @@
+<div class="height-full" ng-class="{'onloading' : tndmnt_clnt_slctcs_frm_cntrllr.isBusy()}">
+    <div ng-if="!tndmnt_clnt_slctcs_frm_cntrllr.isBusy()">
+
+        {% embed '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Solicitacoes/show.html.twig' %}
+            {% block viewedit_toolbar -%}
+                <div class="headline-sub clearfix fixed-bar">
+                    <h3 class="pull-left">
+                        <a href ui-sref="atendimento_cliente_solicitacoes({'tenant' : controller.constructors.tenant,})" title="Voltar à lista" class="hidden-md hidden-print hidden-lg">
+                            <i class="el el-chevron-left"></i>
+                        </a>
+                        #{{ "{{tndmnt_clnt_slctcs_frm_cntrllr.entity.numeroprotocolo}}" }}
+                    </h3>
+                    <button type="button" class="btn btn-sm btn-default btn-fixed pull-right hidden-print" onclick="window.print();">
+                        <i class="el el-print"></i>
+                        <span class="hidden-xs">Imprimir</span>
+                    </button>
+                    <div class="pull-right">
+                        <span class="label label-info" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.entity.mesclado_a_numeroprotocolo" >
+                            Mesclado ao chamado #{{ '{{ tndmnt_clnt_slctcs_frm_cntrllr.entity.mesclado_a_numeroprotocolo }}' }}
+                        </span>
+                    </div>
+                </div>
+            {% endblock viewedit_toolbar -%}
+
+            {% block viewedit_view -%}
+                <div class="published-article">
+                    <div class="row clearfix article ticket-block">
+                    <div class="label label-info info-mesclado col-md-12" ng-if="tndmnt_clnt_slctcs_frm_cntrllr.entity.mesclado_a_numeroprotocolo">
+                        <p class="pull-left">
+                            <i class="fa fa-info-circle"></i> O chamado "#{{'{{tndmnt_clnt_slctcs_frm_cntrllr.entity.numeroprotocolo}}'}}" foi mesclado ao chamado principal "#{{'{{tndmnt_clnt_slctcs_frm_cntrllr.entity.mesclado_a_numeroprotocolo}}'}}" e agora a página atual encontra-se disponível <strong>apenas para consulta </strong>
+                        </p>
+                        <div class="pull-right  " >
+                            <a href ui-sref='atendimento_admin_solicitacoes_show({atendimento : tndmnt_clnt_slctcs_frm_cntrllr.entity.mesclado_a })' class="btn btn-primary"><i class="fa fa-edit"></i> Ir para chamado principal</a>
+                        </div>
+                    </div>
+                        <div class="col-sm-12">
+                            <dl class="dl-horizontal small text-overflow">
+                                <dt>Criado em:</dt>
+                                <dd tooltip-placement="top-left" uib-tooltip="{{'{{tndmnt_clnt_slctcs_frm_cntrllr.entity.created_at | asDate | amDateFormat:\'DD/MM/YYYY HH:mm\' }}'}}">{{ "{{tndmnt_clnt_slctcs_frm_cntrllr.entity.created_at | asDate | amCalendar}}" }}</dd>
+                                <dt>Criado por:</dt>
+                                <dd>{{ "{{tndmnt_clnt_slctcs_frm_cntrllr.entity.created_by.nome}}" }}</dd>
+
+                                <div ng-if="tndmnt_clnt_slctcs_frm_cntrllr.habilitarAssunto == 2">
+                                    <dt>Assunto</dt>
+                                    <dd>{{ "{{tndmnt_clnt_slctcs_frm_cntrllr.entity.resumo}}" }}</dd>
+                                </div>
+
+                                <dt ng-if="tndmnt_clnt_slctcs_frm_cntrllr.entity.chamadosmesclados.length > 0">Mesclados:</dt>
+                                <dd ng-if="tndmnt_clnt_slctcs_frm_cntrllr.entity.chamadosmesclados.length > 0">
+                                    <a ng-repeat="chamadosmesclados in tndmnt_clnt_slctcs_frm_cntrllr.entity.chamadosmesclados" class="chamados-mesclados"
+                                    href ui-sref="atendimento_cliente_solicitacoes_show({atendimento : chamadosmesclados.atendimento })">
+                                        <span class="label label-info chamados-mesclados" 
+                                        > 
+                                            Mesclado #{{ '{{ chamadosmesclados.numeroprotocolo }}' }} 
+                                        </span>
+                                    </a>
+                                </dd>
+
+                                {% for campo in camposcustomizados if campo.exibidoformcontato %}
+                                    <dt>{{campo.label}}:</dt>
+                                    <dd>{{ "{{tndmnt_clnt_slctcs_frm_cntrllr.entity.camposcustomizados['"~campo.atendimentocampocustomizado~"']}}" }}</dd>
+                                {% endfor %}
+
+                            </dl>
+                        </div>
+                        <div class="col-md-12 ticket-replies clearfix">
+                            <div class="ticket">
+                                <div class="reply-text">
+                                    <p dynamic="tndmnt_clnt_slctcs_frm_cntrllr.entity.sintoma"></p>
+                                    <div class="anexos-reply">
+                                        <anexos model='tndmnt_clnt_slctcs_frm_cntrllr.entity.anexos' can-edit='false' ></anexos>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ticket reply" ng-repeat='followup in tndmnt_clnt_slctcs_frm_cntrllr.entity.followups' ng-class="{ 'reply-client' : followup.criador, 'received' : !followup.criador}">
+                                <div class="reply-header">
+                                    <span class="reply-ico"><i class="el el-share-alt"></i></span>
+                                    <span class="name-user">{{ "{{followup.created_by.nome}}" }}</span>
+                                    <span ng-if="followup.mesclado_a && tndmnt_clnt_slctcs_frm_cntrllr.entity.atendimento == followup.mesclado_a"> 
+                                    | <strong>Origem</strong> 
+                                        <a href ui-sref='atendimento_cliente_solicitacoes_show({atendimento : followup.atendimento })'> 
+                                            Chamado #{{ '{{ tndmnt_clnt_slctcs_frm_cntrllr.getNumeroChamado(followup.atendimento) }}' }} 
+                                        </a>
+                                    </span>
+                                    <span class="info-post pull-right"  tooltip-placement="top" uib-tooltip="{{'{{followup.created_at | asDate | amDateFormat:\'DD/MM/YYYY HH:mm\' }}'}}">{{ "{{followup.created_at | asDate | amCalendar}}" }}</span>
+                                </div>
+                                <div class="reply-text">
+                                    <div dynamic="followup.historico"></div>
+                                    <div class="anexos-reply">
+                                        <anexos model='followup.anexos' can-edit='false' ></anexos>
+                                    </div>
+                                    {#<div class="like-button clearfix" ng-if='followup.criador == 0'>
+                                        <button type="button" class="btn btn-sm btn-default"><i class="el el-thumbs-down"></i> Não Gostei</button>
+
+                                        <button type="button" class="btn btn-sm btn-primary"><i class="el el-thumbs-up"></i> Gostei</button>
+                                    </div>#}
+                                    <div class="text-right" ng-show="followup.url_avaliacao">
+                                        <a href="{{ "{{followup.url_avaliacao}}" }}" target="_blank" title="Clique para avaliar a resposta" class="btn btn-warning btn-fixed btn-new-ticket btn-sm"><i class="el el-thumbs-up"></i> Avalie essa resposta</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ticket resposta-comentario" 
+                            ng-controller='ClienteFollowupsFormController as tndmnt_clnt_fllwps_frm_cntrllr' 
+                            ng-if="!tndmnt_clnt_fllwps_frm_cntrllr.entity.mesclado_a_numeroprotocolo && !tndmnt_clnt_fllwps_frm_cntrllr.removerFollowup && !tndmnt_clnt_slctcs_frm_cntrllr.habilitarFollowup">
+                                {% include 'NasajonAtendimentoAppBundle:Cliente:Followups/form.html.twig' %}
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                {% endblock viewedit_view -%}
+            {% endembed %}
+        </div>
+    </div>
+</div>

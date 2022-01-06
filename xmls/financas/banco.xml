@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="Manutencão de Bancos" label="Banco" project="financas">
+    <entity schema="financas" table="bancos">
+        <fieldmodel name="id" datatype="guid" isid="true" column="banco"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="numero" datatype="string" column="numero"/>
+    </entity>
+    <viewbrowser paginate="false">
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="id" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="1" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Nome" entitylink="nome"  width="8" unique="false" indefaultorder="false" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Número" entitylink="numero"  width="1" unique="true" indefaultorder="false" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit>
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="te_codigo" controltype="textedit" label="Código" charcase="upper" colspan="1" entitylink="codigo" disablenotempty="true">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo código não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                    <cell name="te_nome" controltype="textedit" label="Nome" colspan="2" entitylink="nome">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo nome não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                    <cell name="te_numero" controltype="textedit" label="Número" colspan="1" entitylink="numero">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo número não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>BancoNovo</name>
+                <fromto valueapi="idbanco" valueentity="id"/>
+                <fromto valueapi="codigo" valueentity="codigo"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="numero" valueentity="numero"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>BancoAlterar</name>
+                <fromto valueapi="banco" valueentity="id"/>
+                <fromto valueapi="codigo" valueentity="codigo"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="numero" valueentity="numero"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>BancoExcluir</name>
+                <fromto valueapi="banco" valueentity="id"/>
+            </api>
+        </action>
+        <action>
+            <name>Agencia</name>
+            <openbrowser project="financas" usecase="agencia">
+                <openbrowserparam entitylink="id" constructoritem="idbanco" />
+            </openbrowser>
+        </action>
+    </actions>
+</nsjusecase>

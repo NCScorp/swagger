@@ -1,0 +1,234 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Admin/Arquivos/form.html.twig' %}
+{% block viewedit_edit -%}
+    <div class="row" >
+        <div class="col-sm-12" >
+            {% block viewedit_form_titulo %}
+                <div class="form-group">
+                    <label class="control-label" for="titulo">Título</label>
+                    <span class="info-post">(Máx. 40 caracteres)</span>
+                    <input type="text" id="titulo" name="titulo" required="required" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.titulo" ng-disabled="tndmnt_dmn_rqvs_frm_cntrllr.entity.submitting" placeholder="Título" maxlength="40" class="form-control" style="">
+                </div>             
+                <div ng-messages="tndmnt_dmn_rqvs_frm_cntrllr.form.titulo.$error"  ng-if="tndmnt_dmn_rqvs_frm_cntrllr.form.titulo.$dirty || tndmnt_dmn_rqvs_frm_cntrllr.submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo título não pode ser vazio.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        Título não deve exceder 40 caracteres.
+                    </div>
+                </div>
+            {% endblock viewedit_form_titulo %}
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12" >
+            {% block viewedit_form_nomearquivo %}
+                <div class="form-group">
+                    <label class="control-label" for="nomearquivo">Nome do Arquivo</label>
+                    <span class="info-post">(Máx. 30 caracteres)</span>
+                    <input type="text" id="nomearquivo" name="nomearquivo" required="required" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.nomearquivo" ng-disabled="tndmnt_dmn_rqvs_frm_cntrllr.entity.submitting" placeholder="Nome do Arquivo" maxlength="30" class="form-control">
+                </div>
+                <div ng-messages="tndmnt_dmn_rqvs_frm_cntrllr.form.nomearquivo.$error"  ng-if="tndmnt_dmn_rqvs_frm_cntrllr.form.nomearquivo.$dirty || tndmnt_dmn_rqvs_frm_cntrllr.submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo nome do arquivo não pode ser vazio.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        Nome do arquivo não deve exceder 30 caracteres.
+                    </div>
+                </div>
+            {% endblock viewedit_form_nomearquivo %}
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12" >
+            {% block viewedit_form_caminho %}
+                <div class="form-group">
+                    <label class="control-label" for="caminho">Url</label>
+                    <input type="text" id="caminho" name="caminho" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.caminho" ng-disabled="tndmnt_dmn_rqvs_frm_cntrllr.entity.submitting" placeholder="Caminho do arquivo" class="form-control" required="true">
+                </div>
+                <div ng-messages="tndmnt_dmn_rqvs_frm_cntrllr.form.caminho.$error"  ng-if="tndmnt_dmn_rqvs_frm_cntrllr.form.caminho.$dirty || tndmnt_dmn_rqvs_frm_cntrllr.submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo caminho não pode ser vazio.
+                    </div>
+                </div>
+            {% endblock viewedit_form_caminho %}
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-1">
+            {% block viewedit_form_tamanho %}
+                <div class="form-group">
+                    <label class="control-label" for="tamanho">Tamanho</label>
+                    <input type="text" id="tamanho" name="tamanho" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.tamanho" 
+                           ng-disabled="tndmnt_dmn_rqvs_frm_cntrllr.entity.submitting" placeholder="Tamanho" 
+                           class="form-control" required="true">
+                </div>
+                <div ng-messages="tndmnt_dmn_rqvs_frm_cntrllr.form.tamanho.$error"  ng-if="tndmnt_dmn_rqvs_frm_cntrllr.form.tamanho.$dirty || tndmnt_dmn_rqvs_frm_cntrllr.submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo tamanho não pode ser vazio.
+                    </div>
+                </div>
+            {% endblock viewedit_form_tamanho %}
+        </div>
+
+        <div class="col-sm-1">
+            
+            <div class="form-group">
+                <label class="control-label required" for="tamanho_multiplicador">&nbsp;</label>
+                <select id="tamanho_multiplicador" name="tamanho_multiplicador" required="required" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.multiplicador_tamanho" class="form-control">
+                    <option value="1">KB</option>
+                    <option value="1024">MB</option>
+                    <option value="1048576">GB</option>
+                    <option value="1073741824">TB</option>
+                </select>
+            </div>
+            
+            <div ng-messages="tndmnt_dmn_rqvs_frm_cntrllr.form.tamanho_multiplicador.$error"  ng-if="tndmnt_dmn_rqvs_frm_cntrllr.form.tamanho_multiplicador.$dirty || tndmnt_dmn_rqvs_frm_cntrllr.submitted">
+                <div class="alert alert-danger" role="alert" ng-message="required">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Erro:</span>
+                    O campo unidade não pode ser vazio.
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-12" >
+                
+                {% block viewedit_form_todosclientes %}
+                    <div class="form-group">
+                        <label class="control-label">Regra de Visualização</label>
+                        <div id="todosclientes" ng-disabled="tndmnt_dmn_rqvs_frm_cntrllr.entity.submitting" inline="1">
+                            <label for="todosclientes_0" class="radio-inline">
+                                <input type="radio" id="todosclientes_0" name="todosclientes" ng-value="1" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.todosclientes">
+                                Todos Visualizam
+                            </label>
+                            <label for="todosclientes_1" class="radio-inline">
+                                <input type="radio" id="todosclientes_1" name="todosclientes" ng-value="0" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.todosclientes">
+                                Apenas clientes que respeitem as condições
+                            </label>
+                        </div>
+                    </div>
+                {% endblock viewedit_form_todosclientes %}
+                
+            </div>
+        </div>
+        <div class="row" ng-if="tndmnt_dmn_rqvs_frm_cntrllr.entity.todosclientes==0">
+            <div class="col-sm-12 panel-rules">
+                <h5><strong>Condições:</strong></h5>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Combinar todas as condições a seguir:</div>
+                    <table class="table">
+                        <tbody>
+                            <tr ng-if="tndmnt_dmn_rqvs_frm_cntrllr.entity.arquivosregrasex.length == 0">
+                                <td colspan="4">Nenhuma</td>
+                            </tr>
+                            <tr ng-repeat="opcao in tndmnt_dmn_rqvs_frm_cntrllr.entity.arquivosregrasex track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                                <td width="25%">
+                                    <select class="form-control" ng-model="opcao.campo" ng-options="key as op.label group by op.category for (key,op) in tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes" ng-change="tndmnt_dmn_rqvs_frm_cntrllr.selecionaCampo(opcao)"></select>
+                                </td>
+                                <td colspan="3" ng-if="opcao.desativado">
+                                    <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                                </td>
+                                <td width="28%" ng-if="!opcao.desativado">
+                                    <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null" ng-options="key as op.label for (key,op) in tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options" ng-change="tndmnt_dmn_rqvs_frm_cntrllr.selecionaOperador(opcao)"></select>
+                                </td>
+                                <td width="35%" ng-if="!opcao.desativado">
+                                    <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options">
+                                        <option disabled="disabled" selected="selected" value="">Selecione</option>
+                                    </select>
+                                    <input class="form-control" type="text" ng-model="opcao.valor" ng-if="tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                                     <div class="input-group"
+                                    locale="pt-br"
+                                    moment-picker="opcao.valor"
+                                    format="DD/MM/YYYY HH:mm"
+                                    ng-if="tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='datetime'"
+                                    >
+                                    <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                    </span>
+                                    <input class="form-control"
+                                    placeholder="Select a date"
+                                    ng-model="opcao.valor"
+                                    ng-model-options="{ updateOn: 'blur' }">
+                            </div>
+                                </td>
+                                <td width="12%" class="text-right" ng-if="!opcao.desativado">
+                                    <a href ng-click="tndmnt_dmn_rqvs_frm_cntrllr.removeregrasEx($index)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4"><a href ng-click="tndmnt_dmn_rqvs_frm_cntrllr.addregrasEx()">Adicionar Condição</a></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">E combinar com qualquer uma das seguintes condições:</div>
+                    <table class="table">
+                        <tbody>
+                            <tr ng-if="tndmnt_dmn_rqvs_frm_cntrllr.entity.arquivosregrasin.length == 0">
+                                <td colspan="4">Nenhuma</td>
+                            </tr>
+                            <tr ng-repeat="opcao in tndmnt_dmn_rqvs_frm_cntrllr.entity.arquivosregrasin track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                                <td width="25%">
+                                    <select class="form-control" ng-model="opcao.campo" ng-options="key as op.label group by op.category for (key,op) in tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes" ng-change="tndmnt_dmn_rqvs_frm_cntrllr.selecionaCampo(opcao)"></select>
+                                </td>
+                                <td colspan="3" ng-if="opcao.desativado">
+                                    <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                                </td>
+                                <td width="28%" ng-if="!opcao.desativado">
+                                    <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null" ng-options="key as op.label for (key,op) in tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options" ng-change="tndmnt_dmn_rqvs_frm_cntrllr.selecionaOperador(opcao)"></select>
+                                </td>
+                                <td width="35%" ng-if="!opcao.desativado">
+                                    <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options">
+                                        <option disabled="disabled" selected="selected" value="">Selecione</option>
+                                    </select>
+                                    <input class="form-control" type="text" ng-model="opcao.valor" ng-if="tndmnt_dmn_rqvs_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                                </td>
+                                <td width="12%" class="text-right" ng-if="!opcao.desativado">
+                                    <a href ng-click="tndmnt_dmn_rqvs_frm_cntrllr.removeregrasIn($index)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4"><a href ng-click="tndmnt_dmn_rqvs_frm_cntrllr.addregrasIn()">Adicionar Condição</a></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" >
+            <div class="col-sm-12" >
+                {% block viewedit_form_descricao %}
+                    <div class="form-group">
+                        <label class="control-label" for="descricao">Descrição do Arquivo</label>
+                        <ng-ckeditor id="descricao" name="descricao" placeholder="Descrição do arquivo" remove-plugins=",nsjimage,youtube" ng-model="tndmnt_dmn_rqvs_frm_cntrllr.entity.descricao" ng-disable="tndmnt_dmn_rqvs_frm_cntrllr.entity.submitting" skin="moono-lisa"></ng-ckeditor>
+                    </div>
+                {% endblock viewedit_form_descricao %}
+            </div>
+        </div>
+
+    {% block viewedit_form_tipo %}{% endblock viewedit_form_tipo %}
+{% block viewedit_form_origem %}{% endblock viewedit_form_origem %}
+</div>
+{% endblock viewedit_edit -%}

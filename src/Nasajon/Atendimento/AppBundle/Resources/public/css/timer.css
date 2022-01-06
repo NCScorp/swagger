@@ -1,0 +1,31 @@
+/* Timer - Folha de Horas */
+
+.timer {
+    text-align: center;
+}
+
+.timer .topo-timer {
+    display: inline-block;
+    background: #494949;
+    width: 23px;
+    height: 7px;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    margin-bottom: -2px;
+}
+
+.timer .content-timer {
+    border: 5px solid #494949;
+    border-radius: 40px;
+    -moz-border-radius: 40px;
+    -webkit-border-radius: 40px;
+    height: 84px;
+    width: 84px;
+    margin: 0 auto;
+    padding-top: 15px;
+}
+
+.timer .btn-play-pause {
+    margin: 4px 0 0 2px;
+}

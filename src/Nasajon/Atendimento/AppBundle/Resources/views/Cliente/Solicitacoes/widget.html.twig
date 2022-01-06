@@ -1,0 +1,59 @@
+<wizard hide-indicators="true">
+    <wz-step title="Form">
+
+        <form name="criar_solicitacao" novalidate="novalidate" role="form" ng-submit="crr_slctc_ctrllr.criarSolicitacao(criar_solicitacao)">
+            <div>
+                <div class="form-group">
+                    <textarea name="editor1" class="form-control" style="height: 250px;" ng-model="crr_slctc_ctrllr.entity.conteudo" required></textarea>
+                </div>
+                <!--div>
+                    <span>
+                        <a href title="Anexar imagem"><i class="fa fa-2x fa-picture-o"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href title="Anexar arquivo"><i class="fa fa-2x fa-paperclip"></i></a>
+                    </span>
+
+                </div-->
+            </div>
+            <div>
+                <button class="btn btn-primary pull-right popover-button" type="submit">Próximo Passo</button>
+            </div>
+        </form>
+
+    </wz-step>
+    <wz-step title="{{'Artigos'|trans}}">
+        <h4 class="h4 artigos-title">{{'artigosuteismsg'|trans}}</h4>
+        <div style="min-height: 50px; background-attachment: initial; background-color: rgb(255, 255, 255); background-size: initial; background-origin: initial; background-clip: initial; background-position: 50% 50%; background-repeat: no-repeat;">
+            <a href ng-click="crr_slctc_ctrllr.verArtigo(artigo.artigo)" class="console-search-result faq-item canned-response-item" ng-repeat="artigo in crr_slctc_ctrllr.artigos">
+                <h4 class="faq-item-subject">{{'{{artigo.titulo}}'}}</h4>
+                <div class="faq-item-excerpt">{{'{{artigo.conteudo}}'}}</div>
+
+            </a>
+
+        </div>
+        <div class="ticket-reply-footer mb1" style="padding: 10px;">
+
+            <button wz-previous class="btn btn-default pull-left popover-button" type="reset" style="margin-right: 5px">
+                <span class="ticket-submit-close" >Voltar</span>
+            </button>
+            <button wz-finish class="btn btn-primary pull-right popover-button" type="submit" style="margin-right: 5px" ng-click="crr_slctc_ctrllr.submit()">
+                <span class="ticket-submit-close" >Enviar</span>
+            </button>
+
+
+        </div>
+    </wz-step>
+    <wz-step title="{{'Artigo'|trans}}">
+        <div style="min-height: 50px; background-attachment: initial; background-color: rgb(255, 255, 255); background-size: initial; background-origin: initial; background-clip: initial; background-position: 50% 50%; background-repeat: no-repeat;">
+            <h4 class="h4  artigos-title">{{'{{crr_slctc_ctrllr.artigoAberto.titulo}}'}}</h4>
+            <p style="margin: 10px;">{{'{{crr_slctc_ctrllr.artigoAberto.conteudo}}'}}</p>
+
+        </div>
+        <div class="ticket-reply-footer mb1" style="padding: 10px;">
+
+            <button wz-previous class="btn btn-default pull-left popover-button" type="reset" style="margin-right: 5px">
+                <span class="ticket-submit-close" >Voltar</span>
+            </button>
+
+        </div>
+    </wz-step>
+</wizard>

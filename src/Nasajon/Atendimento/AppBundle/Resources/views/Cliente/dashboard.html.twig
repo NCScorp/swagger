@@ -1,0 +1,63 @@
+<div class="col-md-12 welcome-text">
+    <div class="row">
+      <div class="clearfix">
+        <div class="col-md-12 initial text-center">
+
+          <!-- Altera para pegar os valores a partir do angular, ao invés de pegar da api -->
+            <h2>{{ '{{controller.titulo}}' }}</h2>
+        </div>
+      </div>
+      <div class="clearfix col-md-12">
+        <p dynamic="controller.descricao"></p>
+      </div>
+    </div>
+</div> <!--/.welcome-text-->
+
+<div class="col-md-12 home-infos">
+    <div class="row">
+        <div class="col-md-4 col-sm-5 feeds" ng-if="!controller.UsuarioLogado.podeCriarChamado && !controller.UsuarioLogado.isAnonimous">
+            
+            {% include 'NasajonAtendimentoAppBundle:Cliente:vinculo.html.twig' %}
+            
+        </div>
+      <!--/.feeds-->
+
+
+
+        <div class="col-md-8 col-sm-7 geral-infos">
+            <div class="base-conhecimento-index">
+                <section class="content-box">
+                    <form role="form">
+                      <div class="busca-artigo">
+                        <div class="input-group">
+                            <input type="text" placeholder="{{'{{controller.placeholderBuscaArtigos}}'}}" class="form-control input-lg" ng-model='termobuscaartigo'>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-lg" ui-sref='atendimento_cliente_artigos({categoria: NULL, tags: null, q : termobuscaartigo})'>
+                                    <i class="el el-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                      </div>
+                    </form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <section class="content-box-body">
+                                <ul class="topics list-unstyled">
+                                    <li class="topic" ng-repeat="categoria in controller.categorias">
+                                        <h4 class="topic-title"><a href ui-sref="atendimento_cliente_artigos({categoria: categoria.categoria, tags: ''})">{{'{{ categoria.titulo }}'}}</a></h4>
+                                    </li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                    <p class="text-center article-loading height-full" ng-class="{'onloading' : controller.isBusy() }" ng-if="controller.isBusy()"></p>
+                    <a href ui-sref="atendimento_cliente_artigos({ categoria: null, tags: null })" class="btn btn-primary">{{'{{controller.botaoBaseConhecimento}}'}}</a>
+                </section>
+            </div><!--/.base-conhecimento-index-->
+        </div><!--/.geral-infos-->
+
+
+
+
+    </div>
+</div><!--/.home-infos-->

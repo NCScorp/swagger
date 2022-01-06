@@ -1,0 +1,330 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    
+framework:
+    #esi:             ~
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%env(secret)%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        handler_id: ~
+    fragments:       ~
+    cache:
+        pools:
+            cache.profile:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 60 #tempo do cache em segundos
+            cache.keycloak:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 60 # tempo do cache em segundos
+
+    http_method_override: true
+    assets:
+       version: "%assets_version%"
+       version_format: '%%s?version=%%s'
+       base_path: ~
+       
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    paths:
+        '%kernel.project_dir%/src/Nasajon/MDABundle/': 'NasajonMDABundle'        
+        
+# Assetic Configuration
+assetic:
+    debug:          "%kernel.debug%"
+    use_controller: true
+    bundles:        [ NasajonAtendimentoAppBundle, NasajonComponentesInterfaceBundle, NasajonLoginBundle ]
+    java: /usr/java/latest/jre/bin/java
+    filters:
+        less: ~        
+        cssrewrite: ~
+        uglifyjs2:
+            compress: true
+            mangle: true
+            bin: "%kernel.project_dir%/node_modules/.bin/uglifyjs"
+        uglifycss:
+            bin: "%kernel.project_dir%/node_modules/.bin/uglifycss"
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_pgsql
+        host:     "%env(database_host)%"
+        port:     "%env(database_port)%"
+        dbname:   "%env(database_name)%"
+        user:     "%env(database_user)%"
+        password: "%env(database_password)%"
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        naming_strategy: doctrine.orm.naming_strategy.underscore
+        auto_mapping: true
+
+light_saml_symfony_bridge:
+    own:
+        entity_id: "%env(entity_id)%"
+        credentials:
+            -
+                certificate: "%env(sp_certificate_crt)%"
+                key:         "%env(sp_certificate_pem)%"
+                password:    ~
+    party:
+        idp:
+            files:
+                - "%env(sp_metadata)%"
+    store:
+        id_state: id_store  # name of id store service created in step 6
+
+nasajon_login:
+    pg_semprovisao: redirect_nasajon
+    permission_format: tenant
+    permission_type: 'provisao'
+    diretorio_sistema_id: '%env(diretorio_sistema_id)%'
+    cache:
+        keycloak: 'cache.keycloak'
+        profile: 'cache.profile'
+
+    keycloak:
+        realm: "%env(keycloak_realm)%"
+        client_id: "%env(keycloak_client_id)%"
+        server_url: "%env(keycloak_url)%"
+
+nasajon_componentes_interface:
+    google_analytics: 'UA-26375873-7'
+    module_name: 'Atendimento Web'
+    application_name: 'Nasajon Sistemas'
+    closure:
+        root: ~
+        externs: ~
+
+braincrafted_bootstrap:
+    output_dir:
+    assets_dir: ~
+    jquery_path: ~
+    css_preprocessor: none
+    fonts_dir: ~
+    auto_configure:
+        assetic: false
+        twig: true
+        knp_menu: false
+        knp_paginator: false
+
+fos_rest:
+    view:
+        # only relevant when using the JMS serializer for serialization
+        default_engine:       twig
+    routing_loader:
+        include_format:       false
+        default_format: json
+    exception:
+        enabled: true
+        codes:
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Doctrine\ORM\OptimisticLockException' : true
+#        exception_controller: 'Nasajon\MDABundle\Controller\ExceptionController::showAction'
+
+knp_gaufrette:
+    adapters:
+        imagens:
+            aws_s3:
+                service_id: 'aws.s3'
+                bucket_name: "%env(s3_bucket_name)%"
+                options:
+                    directory: "%imagens_adapter_path%"
+                    acl: 'public-read'
+        anexos:
+            aws_s3:
+                service_id: 'aws.s3'
+                bucket_name: "%env(s3_bucket_name)%"
+                options:
+                    directory: "%anexos_adapter_path%"
+    filesystems:
+        anexos:
+            adapter: anexos
+        imagens:
+            adapter: imagens
+
+oneup_uploader:
+    orphanage:
+        maxage:               86400
+        directory:            ~
+    twig:                 true
+    mappings:
+        imagens:
+            frontend: fancyupload
+            storage:
+                type: gaufrette
+                filesystem: gaufrette.imagens_filesystem
+                sync_buffer_size: 1M
+            use_orphanage:        false
+            enable_progress:      false
+            enable_cancelation:   false
+            allowed_mimetypes:
+                - 'image/png'
+                - 'image/gif'
+                - 'image/jpg'
+                - 'image/jpeg'
+                - 'image/bmp'
+        anexos:
+#            max_size:        1024
+            frontend: fancyupload
+            storage:
+                type: gaufrette
+                filesystem: gaufrette.anexos_filesystem
+                sync_buffer_size: 1M
+            use_orphanage:        false
+            enable_progress:      false
+            enable_cancelation:   false
+
+exercise_html_purifier:
+    default:
+        Cache.SerializerPath: '%kernel.cache_dir%/htmlpurifier'
+        HTML.TargetBlank:   true
+        HTML.SafeIframe: true
+        URI.SafeIframeRegexp: '#.#'
+        URI.AllowedSchemes:
+         - data
+         - http
+         - https
+         - mailto
+         - ftp
+         - nntp
+         - news
+         - tel
+
+aws:
+    version: latest
+    region: '%env(amazon_region)%'
+    credentials:
+        key: '%env(amazon_key)%'
+        secret: '%env(amazon_secret)%'
+    S3:
+        version: '2006-03-01'
+    CloudWatchLogs:
+        version: '2014-03-28'
+
+ekreative_health_check:
+    doctrine:
+        - 'default'
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     '%env(rabbitmq_host)%'
+            port:     '%env(rabbitmq_port)%'
+            user:     '%env(rabbitmq_user)%'
+            password: '%env(rabbitmq_password)%'
+            vhost:    '%env(rabbitmq_vhost)%'
+            lazy:     true
+            connection_timeout: 3
+            read_write_timeout: 3
+
+            # requires php-amqplib v2.4.1+ and PHP5.4+
+            keepalive: false
+
+            # requires php-amqplib v2.4.1+
+            heartbeat: 0
+
+            #requires php_sockets.dll
+#            use_socket: true # default false
+    producers:
+        slas:
+            connection:       default
+            exchange_options: {name: 'slas', type: direct}
+            queue_options:    {name: 'slas'}
+            service_alias:    slas # no alias by default
+        chamados_regras:
+            connection:       default
+            exchange_options: {name: 'chamados-regras', type: direct}
+            queue_options:    {name: 'chamados-regras'}
+            service_alias:    chamados_regras # no alias by default
+        chamados_slas:
+            connection:       default
+            exchange_options: {name: 'chamados-slas', type: direct}
+            queue_options:    {name: 'chamados-slas'}
+            service_alias:    chamados_slas # no alias by default
+        chamados_slas_violacao:
+            connection:       default
+            exchange_options: {name: 'chamados-slas-violacao', type: direct}
+            queue_options:    {name: 'chamados-slas-violacao'}
+            service_alias:    chamados_slas_violacao # no alias by default
+        chamados_slas_violados:
+            connection:        default
+            exchange_options: {name: 'chamados-slas-violados', type: direct}
+            queue_options:    {name: 'chamados-slas-violados'}
+            service_alias:    chamados_slas_violados # no alias by default
+        emails_processar:
+            connection:       default
+            exchange_options: {name: 'emails_processar', type: direct}
+            queue_options:    {name: 'emails_processar'}
+            service_alias:    emails_processar # no alias by default
+        emails_enviar:
+            connection:       default
+            exchange_options: {name: 'emails_enviar', type: direct}
+            queue_options:    {name: 'emails_enviar'}
+            service_alias:    emails_processar # no alias by default
+    consumers:
+        slas:
+            connection:       default
+            exchange_options: {name: 'slas', type: direct}
+            queue_options:    {name: 'slas'}
+            callback:         nasajon_atendimento_app_bundle.slas_consumer
+            enable_logger: true
+        chamados_regras:
+            connection:       default
+            exchange_options: {name: 'chamados-regras', type: direct}
+            queue_options:    {name: 'chamados-regras'}
+            callback:         nasajon_atendimento_app_bundle.chamados_regras_consumer
+            enable_logger: true
+        chamados_slas:
+            connection:       default
+            exchange_options: {name: 'chamados-slas', type: direct}
+            queue_options:    {name: 'chamados-slas'}
+            callback:         nasajon_atendimento_app_bundle.chamados_slas_consumer
+            enable_logger: true
+        chamados_slas_violacao:
+            connection:       default
+            exchange_options: {name: 'chamados-slas-violacao', type: direct}
+            queue_options:    {name: 'chamados-slas-violacao'}
+            callback:         nasajon_atendimento_app_bundle.chamados_slas_violacao_consumer
+            enable_logger: true
+        chamados_sla_registra_violacao_sla:
+            connection:       default
+            exchange_options: {name: 'chamados-slas-violados', type: direct}
+            queue_options:    {name: 'chamados-slas-violados'}
+            callback:         nasajon_atendimento_app_bundle.chamados_sla_registra_violacao_sla_consumer
+            enable_logger: true
+        emails_processar:
+            connection:       default
+            exchange_options: {name: 'emails_processar', type: direct}
+            queue_options:    {name: 'emails_processar'}
+            callback:         nasajon_atendimento_app_bundle.emails_processar_consumer
+            enable_logger: true
+        emails_enviar:
+            connection:       default
+            exchange_options: {name: 'emails_enviar', type: direct}
+            queue_options:    {name: 'emails_enviar'}
+            callback:         nasajon_atendimento_app_bundle.emails_enviar_consumer
+            enable_logger: true

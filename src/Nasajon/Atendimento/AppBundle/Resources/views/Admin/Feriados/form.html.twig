@@ -1,0 +1,18 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Feriados/form.html.twig' %}
+
+{% block viewedit_form_data %}
+    <div class="form-group">
+        <label class="control-label" for="data">Data</label>
+        
+        <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" id="data" ng-model="tndmnt_frds_frm_cntrllr.entity.data" ng-disabled="tndmnt_frds_frm_cntrllr.entity.$$__submitting" date-input="" name="data" ng-click="data.open=true" is-open="data.open" datepicker-options="dateOptions" close-text="Close" alt-input-formats="altInputFormats" ng-required="true" required="required" clear-text='Limpar' current-text='Hoje' placeholder="Data" autocomplete="off">
+        <div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" template-url="uib/template/datepickerPopup/popup.html"></div>
+        
+        <div ng-messages="tndmnt_frds_frm_cntrllr.form.data.$error"  ng-if="tndmnt_frds_frm_cntrllr.form.data.$dirty || tndmnt_frds_frm_cntrllr.submitted">        
+            <div class="alert alert-danger" role="alert" ng-message="required">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Erro:</span>
+                Campo data deve ser preenchido
+            </div>
+        </div>
+    </div>
+{% endblock viewedit_form_data %}

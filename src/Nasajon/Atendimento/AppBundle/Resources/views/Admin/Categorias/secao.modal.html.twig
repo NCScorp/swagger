@@ -1,0 +1,71 @@
+<div>
+    <div class="headline-sub clearfix custom">
+        <h3 class="pull-left">
+            Seção
+        </h3>
+    </div>
+
+    <div class="modal-body modal-date" id="modal-body"> 
+        <form name="tndmnt_ctgrs_lst_cntrllr.form" ng-model="form" novalidate="novalidate" role="form"  class="form-vertical height-full" ng-submit="submit(form)" ng-disabled="submitting">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label" for="titulo">Nome da Seção</label>
+                        <input type='text' class="form-control" id="titulo" name="titulo" placeholder="Nome da Seção" required="true" maxlength="25" ng-model="entity.titulo" ng-disabled="entity.$$__submitting" />
+                        <div ng-messages="form.titulo.$error" ng-if="form.titulo.$dirty || submitted">
+                            <div class="alert alert-danger" role="alert" ng-message="required">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span>
+                                Campo título deve ser preenchido
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label" for="titulo">Mostra na subcategoria:</label>
+                    <ui-select class="print-visible" 
+                               ng-model="entity.categoriapai"
+                               ng-disabled="submitting"
+                               required="true">
+                        <ui-select-match 
+                            allow-clear="true"
+                            placeholder="Selecione ou busque">
+                                {{'{{entity.categoriapai.titulo}}'}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="option in tndmnt_ctgrs_lst_cntrllr.subcategorias | filter: $select.search">
+                            <div class="row">
+                                <div ng-init="option.tituloTratado = (option.categoriapai.titulo + ' - ' + option.titulo)"
+                                    class="col-md-12" ng-bind-html="(option.tituloTratado) | highlight: $select.search"></div>
+                            </div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label" for="tipoordenacao">Ordenar artigos por:</label>
+                    <select id="add-tipoordenacao" name="add-tipoordenacao" class="form-control" required ng-model="entity.tipoordenacao" ng-options="key as op.label disable when op.disabled for (key,op) in tiposordenacao">
+                        <option value="" disabled="disabled">Selecione</option>
+                    </select>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label" for="descricao">Descrição</label>
+                    <textarea rowspan="5" type="text" class="form-control" id="descricao" placeholder="Descrição" ng-model="entity.descricao" ng-disabled="entity.$$__submitting"></textarea>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label" for="status">
+                        <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-model="entity.status" name="status">
+                        Publicar seção
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn btn-default" type="button" ng-click="tndmnt_ctgrs_lst_cntrllr.modalClose()">Cancelar</button>
+        <button class="btn btn-primary" type="button" ng-click="tndmnt_ctgrs_lst_cntrllr.salvarCategoria(3)" >Salvar</button>
+    </div>
+</div>

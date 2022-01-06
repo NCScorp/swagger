@@ -1,0 +1,56 @@
+<div>
+    <div class="headline-sub clearfix custom">
+        <h3 class="pull-left">
+            Subcategoria
+        </h3>
+    </div>
+
+    <div class="modal-body modal-date" id="modal-body"> 
+        <form name="tndmnt_ctgrs_lst_cntrllr.form" ng-model="form" novalidate="novalidate" role="form"  class="form-vertical height-full" ng-submit="submit(form)" ng-disabled="submitting">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label" for="titulo">Nome da subcategoria:</label>
+                          <input type='text' class="form-control" id="titulo" name="titulo" placeholder="Nome da categoria" required="true" maxlength="25" ng-model="entity.titulo" ng-disabled="entity.$$__submitting" />
+                        <div ng-messages="form.titulo.$error" ng-if="form.titulo.$dirty || submitted">
+                            <div class="alert alert-danger" role="alert" ng-message="required">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span>
+                                Campo título deve ser preenchido
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label" for="titulo">Mostra na categoria:</label>
+                    <mda-ui-select
+                    class="print-visible"
+                    service="AtendimentoCategorias"
+                    constructors="{ 'tipo' : 1  }"
+                    opts='{ "attr" : { "ng-model" : "entity.categoriapai", "ng-disabled" : "submitting", "placeholder" : "Selecione ou busque",  } , "required" : true, "match" : "titulo" }'
+                    fields='["titulo"]'
+                    ></mda-ui-select>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label" for="descricao">Descrição:</label>
+                    <textarea rowspan="5" type="text" class="form-control" id="descricao" placeholder="Descrição" ng-model="entity.descricao" ng-disabled="entity.$$__submitting"></textarea>
+                </div>
+                <div class="col-sm-12">
+                    <label class="control-label" for="status">
+                        <input type="checkbox" ng-true-value="1"  ng-false-value="0" ng-model="entity.status" name="status">
+                        Publicar subcategoria
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="tndmnt_ctgrs_lst_cntrllr.modalClose()">Cancelar</button>
+        <button class="btn btn-primary" ng-click="tndmnt_ctgrs_lst_cntrllr.salvarCategoria(2)" >Salvar</button>
+    </div>
+</div>

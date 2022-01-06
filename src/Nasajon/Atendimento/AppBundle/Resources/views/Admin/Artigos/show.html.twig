@@ -1,0 +1,102 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Admin/Artigos/show.html.twig' %}
+{% block viewedit_view -%}
+    <p class="onloading" ng-if="tndmnt_dmn_rtgs_frm_cntrllr.isBusy()"></p>
+    
+    <div class="row clearfix article">
+        <div class="col-md-12">
+            <h4 class="title">{{ "{{tndmnt_dmn_rtgs_frm_cntrllr.entity.titulo}}" }}</h4>
+        </div>
+        <div class="col-md-12 publish-article clearfix">
+            <div class="switch switch-lg pull-left">
+                <input id="status_artigo" name="status_artigo" type="checkbox" ng-checked="tndmnt_dmn_rtgs_frm_cntrllr.entity.status == 1" ng-model="tndmnt_dmn_rtgs_frm_cntrllr.entity.status" ng-change="tndmnt_dmn_rtgs_lst_cntrllr.setStatus(tndmnt_dmn_rtgs_frm_cntrllr.entity)">
+                <label for="status_artigo" class="label-success"></label>
+                <small class="text-uppercase" ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.status == 1">{{'artigopublicado'|trans}}</small>
+                <small class="text-uppercase" ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.status == 0">{{'artigonaopublicado'|trans}}</small>
+            </div>
+
+        </div>
+        <div class="col-md-12">
+
+            <div ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao === 1" >
+                <div ng-bind-html="tndmnt_dmn_rtgs_frm_cntrllr.conteudoTratado"></div>
+            </div>
+
+            <div ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao === 2"
+                 ng-init="tndmnt_dmn_rtgs_frm_cntrllr.renderizarVideo()" >
+                <div id="render-video">
+
+                </div>       
+            </div>
+
+            <div class="modified-by">
+                <small>Criado <span am-time-ago="tndmnt_dmn_rtgs_frm_cntrllr.entity.created_at | asDate "></span> por <span ng-bind="tndmnt_dmn_rtgs_frm_cntrllr.entity.created_by.nome" tooltip-animation='false' uib-tooltip="{{ "{{tndmnt_dmn_rtgs_frm_cntrllr.entity.created_by.email}}" }}"></span>.</small>
+                <br />
+                <small ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.created_at != tndmnt_dmn_rtgs_frm_cntrllr.entity.updated_at">Última modificação: <span am-time-ago="tndmnt_dmn_rtgs_frm_cntrllr.entity.updated_at | asDate"></span> por <span ng-bind="tndmnt_dmn_rtgs_frm_cntrllr.entity.updated_by.nome" uib-tooltip="{{ "{{tndmnt_dmn_rtgs_frm_cntrllr.entity.updated_by.email}}" }}"></span>.</small>
+            </div>
+            
+            <div class="modified-by">
+                <small ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.gostaram == 1"><i class="el el-thumbs-up el-2"></i> {{'{{tndmnt_dmn_rtgs_frm_cntrllr.entity.gostaram}}'}} gostou &nbsp;</small>
+                <small ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.gostaram > 1"><i class="el el-thumbs-up el-2"></i> {{'{{tndmnt_dmn_rtgs_frm_cntrllr.entity.gostaram}}'}} gostaram &nbsp;</small>
+                <small ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.naogostaram == 1">&nbsp; <i class="el el-thumbs-down el-2"></i> {{'{{tndmnt_dmn_rtgs_frm_cntrllr.entity.naogostaram}}'}} não gostou</small>
+                <small ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.naogostaram > 1">&nbsp; <i class="el el-thumbs-down el-2"></i> {{'{{tndmnt_dmn_rtgs_frm_cntrllr.entity.naogostaram}}'}} não gostaram</small>
+            </div>
+            
+            <div class="category">
+              <div class="small">
+                Categoria:
+              </div>
+              <span class="label label-default">
+                {{ "{{tndmnt_dmn_rtgs_frm_cntrllr.entity.categoriatitulo}}" }} /
+                {{ "{{tndmnt_dmn_rtgs_frm_cntrllr.entity.subcategoriatitulo}}" }} / 
+                {{ "{{tndmnt_dmn_rtgs_frm_cntrllr.entity.secaotitulo}}" }}
+              </span></div>
+            <div class="tags-show small" ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.tags">
+              <div>
+                Tags:
+              </div>
+              <span class="label label-info" ng-repeat="tag in tndmnt_dmn_rtgs_frm_cntrllr.entity.tags">
+                <a  
+                  href ui-sref="atendimento_admin_artigos_list({tags: tag})" 
+                  ui-sref-opts="{inherit:false}"
+                  class="label label-info">{{ "{{tag}}" }}
+                </a>
+              </span>
+            </div>
+        </div>
+    </div><!--/article-->
+{% endblock viewedit_view -%}
+
+
+{% block viewedit_toolbar_btn_area %}
+    <button id="btnEditar" type="button" class="btn btn-sm btn-warning btn-edit btn-fixed" ui-sref="atendimento_admin_artigos_edit({ 'artigo' : tndmnt_dmn_rtgs_frm_cntrllr.entity.artigo})"><i class="el el-pencil"></i> <span class="hidden-xs">Editar</span></button>
+    <div class="btn-group pull-right dropbutton-geral" uib-dropdown role="group">
+        <button id="single-button" type="button" class="btn btn-sm btn-default" uib-dropdown-toggle ng-disabled="disabled">
+            <span class="icon xs-icon ret-icon"></span>
+        </button>
+        <ul class="dropdown-menu drop-padrao" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+            <li role="menuitem">
+                <a id="linkEditar" href ui-sref="atendimento_admin_artigos_edit({ 'artigo' : tndmnt_dmn_rtgs_frm_cntrllr.entity.artigo})">Editar</a>
+            </li>
+            <li role="menuitem">
+                <a id="linkDespublicar" href ng-click="tndmnt_dmn_rtgs_frm_cntrllr.entity.status = false;tndmnt_dmn_rtgs_lst_cntrllr.setStatus(tndmnt_dmn_rtgs_frm_cntrllr.entity, undefined)" ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.status == 1">{{'Despublicar'|trans}}</a>
+                <a id="linkPublicar" href ng-click="tndmnt_dmn_rtgs_frm_cntrllr.entity.status = true;tndmnt_dmn_rtgs_lst_cntrllr.setStatus(tndmnt_dmn_rtgs_frm_cntrllr.entity, undefined)" ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.status == 0">{{'Publicar'|trans}}</a>
+            </li>
+            <li role="menuitem">
+                <a id="linkDeletar" href ng-click="tndmnt_dmn_rtgs_frm_cntrllr.delete()" ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.artigo">Deletar</a>
+            </li>
+            <li class="divider"></li>
+            <li ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.status == 1">
+                <a id="linkPublicoCopiar" href ng-click="tndmnt_dmn_rtgs_frm_cntrllr.confirmacaoCopia()" ngclipboard data-clipboard-text="{{'{{tndmnt_dmn_rtgs_frm_cntrllr.entity.linkPublico}}'}}" ><i class="el el-link"></i> Copiar link público</a>
+            </li>
+            <li>
+                <a id="estatisticas" href ng-click="tndmnt_dmn_rtgs_frm_cntrllr.abrirEstatisticas()"><i class="el el-graph"></i> Estatísticas</a>
+            </li>
+            <li>
+                <a href onclick="window.print();"><i class="el el-print"></i> Imprimir</a>
+            </li>
+            <li>
+                <a href ng-click="tndmnt_dmn_rtgs_frm_cntrllr.abreModalArtigo()"><i class="el el-th-list"></i> Mudar Seção</a>
+            </li>
+        </ul>
+    </div>
+{% endblock viewedit_toolbar_btn_area %}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="estabelecimento" label="estabelecimento" project="ns" >
+    <entity schema="ns" table="estabelecimentos">
+        <fieldmodel name="id" datatype="guid" isid="true" column="estabelecimento"/>
+        <fieldmodel name="idempresa" datatype="guid" column="empresa" />
+        <fieldmodel name="codigo" datatype="string" column="codigo" />
+        <fieldmodel name="nomefantasia" datatype="string" column="nomefantasia" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="raizcnpj" datatype="string" column="raizcnpj" />
+        <fieldmodel name="ordemcnpj" datatype="string" column="ordemcnpj" />
+        <fieldmodel name="cpf" datatype="string" column="cpf" />
+        <fieldmodel name="codigocnae" datatype="string" column="cnae" />
+        <fieldmodel name="tipologradouro" datatype="string" column="tipologradouro" />
+        <fieldmodel name="logradouro" datatype="string" column="logradouro" />
+        <fieldmodel name="numerologradouro" datatype="string" column="numero" />
+        <fieldmodel name="complementologradouro" datatype="string" column="complemento" />
+        <fieldmodel name="bairrologradouro" datatype="string" column="bairro" />
+        <fieldmodel name="ceplogradouro" datatype="cep" column="cep" />
+        <fieldmodel name="cidadelogradouro" datatype="string" column="cidade" />
+        <fieldmodel name="codigomunicipio" datatype="string" column="ibge" />
+        <fieldmodel name="email" datatype="string" column="email" />
+        <fieldmodel name="dddtelefone" datatype="string" column="dddtel" />
+        <fieldmodel name="telefone" datatype="string" column="telefone" />
+        <fieldmodel name="dddfax" datatype="string" column="dddfax" />
+        <fieldmodel name="fax" datatype="string" column="fax" />
+        <fieldmodel name="site" datatype="string" column="site" />
+        <fieldmodel name="cei" datatype="string" column="cei" />
+        <fieldmodel name="fazpartepat" datatype="boolean" column="fazpartepat" />
+        <fieldmodel name="pagapis" datatype="boolean" column="pagapis" />
+        <fieldmodel name="idfpas" datatype="string" column="fpas" />
+        <fieldmodel name="codigoterceiros" datatype="string" column="codigoterceiros" />
+        <fieldmodel name="inscricaomunicipal" datatype="string" column="inscricaomunicipal" />
+        <fieldmodel name="inscricaoestadual" datatype="string" column="inscricaoestadual" />
+        <fieldmodel name="datainicioatividades" datatype="date" column="inicio_atividades" />
+        <fieldmodel name="datafimatividades" datatype="date" column="final_atividades" />
+        <fieldmodel name="capitalsocial" datatype="float" column="capitalsocial" />
+        <fieldmodel name="numeroproprietarios" datatype="integer" column="numeroproprietarios" />
+        <fieldmodel name="numerofamiliares" datatype="integer" column="numerofamiliares" />
+        <fieldmodel name="codigopessoajuridicaalelo" datatype="float" column="alelocodigopessoajuridica" />
+        <fieldmodel name="tipocontroleponto" datatype="integer" column="tipocontroleponto"/>
+        <fieldmodel name="tipoporte" datatype="integer" column="porte"/>
+        <fieldmodel name="numerofilialalelo" datatype="string" column="alelonumerofilial"/>
+        <fieldmodel name="idagencia" datatype="guid" column="agencia"/>
+        <fieldmodel name="tipocontafgts" datatype="integer" column="tipoconta"/>
+        <fieldmodel name="numerocontafgts" datatype="string" column="numeroconta"/>
+        <fieldmodel name="idsindicato" datatype="guid" column="sindicato"/>
+        <fieldmodel name="centralizacontribuicaosindical" datatype="boolean" column="centralizacontribuicaosindical"/>
+        <fieldmodel name="nomerepresentante" datatype="string" column="representante"/>
+        <fieldmodel name="cpfrepresentante" datatype="string" column="cpfrepresentante"/>
+        <fieldmodel name="datanascimentorepresentante" datatype="date" column="datanascimentorepresentante"/>
+        <fieldmodel name="sexorepresentante" datatype="integer" column="sexorepresentante"/>
+        <fieldmodel name="nisrepresentante" datatype="string" column="nisrepresentante"/>
+        <fieldmodel name="dddtelrepresentante" datatype="string" column="dddtelrepresentante"/>
+        <fieldmodel name="telefonerepresentante" datatype="string" column="telefonerepresentante"/>
+        <fieldmodel name="ramalrepresentante" datatype="string" column="ramalrepresentante"/>
+        <fieldmodel name="dddfaxrepresentante" datatype="string" column="dddfaxrepresentante"/>
+        <fieldmodel name="faxrepresentante" datatype="string" column="faxrepresentante"/>
+        <fieldmodel name="emailrepresentante" datatype="string" column="emailrepresentante"/>
+        <fieldmodel name="observacoes" datatype="string" column="observacao"/>
+    </entity>
+    <constructors>
+        <constructoritem required="false">idempresa</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Estabelecimentos">
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="id" isid="true" />
+            <fieldbrowser alias="ID Empresa" entitylink="idempresa" unique="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="16" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Nome Fantasia" entitylink="nomefantasia" width="80" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

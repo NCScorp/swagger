@@ -1,0 +1,77 @@
+<div ng-if="!tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.isBusy()" class="height-full col-md-12 article-area row">
+    {% set form_name = form.vars.original_type %}
+
+    <form name="{{form_name}}" novalidate="novalidate" role="form"  ng-submit="tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.submit({{form_name}})" class="config-grs">
+        <div class="headline-page ng-scope">
+            <div class="headline clearfix">
+                <div class="breadcrumb-trail pull-left">
+                    <a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page"> Termo de serviço</span></strong></div>
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-xs btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                    <button type="submit" class="btn btn-xs btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="headline-sub clearfix hidden-lg hidden-md">
+            <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar à lista" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> Termo de serviço</h3>
+            <div class="btns-area pull-right">
+                <button type="button" class="btn btn-sm btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                <button type="submit" class="btn btn-sm btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+            </div>
+        </div>
+
+        <div class="forms">
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="TERMO_HABILITADO">Habilitar termo de serviço:</label><br />
+                        <label for="TERMO_DESABILITADO" class="radio-inline">
+                            <input type="radio" id="TERMO_DESABILITADO" name="TERMO_HABILITADO" value="0"
+                               ng-model="tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.entity.TERMO_HABILITADO" 
+                               required="required"
+                               ng-disabled="tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.entity.submitting">
+                            Não
+                        </label><br />
+                        <label for="TERMO_HABILITADO" class="radio-inline">
+                            <input type="radio" id="TERMO_HABILITADO" name="TERMO_HABILITADO" value="1"
+                               ng-model="tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.entity.TERMO_HABILITADO"
+                               required="required"
+                               ng-disabled="tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.entity.submitting">
+                            Sim
+                        </label>
+                    </div>
+                </div>
+            </div>
+          
+          <div class="row">
+              <div class="col-sm-12">
+                  <strong>Texto termo de serviço </strong>
+                  <ng-ckeditor items="Source" name="TERMO_TEXTO" ng-required="tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.entity.TERMO_HABILITADO=='1'" ng-model="tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.entity.TERMO_TEXTO" skin="moono-lisa"></ng-ckeditor>
+                  <div ng-messages="termo.TERMO_TEXTO.$error"  ng-if='termo.icone.$dirty || tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.submitted'>
+                        <div class="alert alert-danger" role="alert" ng-message="required">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O Texto do termo não pode ser vazio.
+                        </div>
+                  </div>
+              </div>
+          </div>
+
+
+            <br />
+
+            <ul class="list-unstyled list-inline pull-right">
+                <li>
+                    <button type="submit" id="salvar" name="salvar" class="pull-right btn btn-primary" >Salvar</button>
+                </li>
+            </ul>
+
+        </div>
+
+        {{ form_end(form, {'render_rest': false}) }}
+
+</div>
+
+<div ng-class="{'onloading' : tndmnt_dmn_cnfgrcs_trm_frm_cntrllr.isBusy() }" class="text-center"></div>

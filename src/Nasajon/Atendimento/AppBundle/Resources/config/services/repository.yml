@@ -1,0 +1,337 @@
+services:
+    nasajon_mda.atendimento_cliente_solicitacoes_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\SolicitacoesRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_atendimento_app_bundle.upload_service"
+            - "@nasajon_mda.atendimento_cliente_followups_repository"
+            - "@modelbundle.service.configuracoes"
+            - "@nasajon_mda.servicos_atendimentoscamposcustomizados_repository"
+            - "@old_sound_rabbit_mq.chamados_regras_producer"
+            - "@event_dispatcher"
+
+    nasajon_mda.atendimento_cliente_artigos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\ArtigosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.atendimento_cliente_artigosuteis_repository"
+
+    nasajon_mda.atendimento_cliente_usuarios_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\UsuariosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.atendimento_cliente_titulos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\TitulosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.financas_configuracoesbancarias_repository"
+            - "@nasajon_mda.ns_estabelecimento_repository"
+            - "@nasajon_mda.financas_contas_repository"
+            - "@nasajon_mda.ns_enderecos_repository"
+            - "@router"
+            - "@doctrine.orm.entity_manager"
+            - "@modelbundle.service.configuracoes"
+            - "%env(sentry_env)%"
+
+    nasajon_mda.atendimento_cliente_followups_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\FollowupsRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_atendimento_app_bundle.upload_service"
+            - "@old_sound_rabbit_mq.chamados_slas_violacao_producer"
+            - "@jms_serializer"
+            - "@event_dispatcher"
+            - "@nasajon_atendimento_app_bundle.usuarios_dispinibilidades_service"
+            - "@modelbundle.service.configuracoes"
+            - "@old_sound_rabbit_mq.emails_processar_producer"
+            - "@service_container"
+
+    nasajon_mda.servicos_atendimentosregras_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\AtendimentosregrasRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.servicos_atendimentosregrascondicoes_repository"
+            - "@nasajon_mda.servicos_atendimentosregrasacoes_repository"
+
+    nasajon_mda.servicos_atendimentosobservadores_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\AtendimentosobservadoresRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.atendimento_admin_artigos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\ArtigosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+#    nasajon_mda.atendimento_admin_atendimentosfilas_repository:
+#        class: Nasajon\Atendimento\AppBundle\Repository\Admin\AtendimentosfilasRepository
+#        arguments:
+#            - "@database_connection"
+#            - "@nasajon_mda.servicos_atendimentosfilasobservadores_repository"
+
+    nasajon_mda.servicos_atendimentosfilas_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\AtendimentosfilasRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.servicos_atendimentosfilasobservadores_repository"
+
+    nasajon_mda.atendimento_admin_followups_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\FollowupsRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_atendimento_app_bundle.upload_service"
+            - "@old_sound_rabbit_mq.chamados_slas_violacao_producer"
+            - "@jms_serializer"
+            - "@event_dispatcher"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_mda.atendimento_admin_solicitacoes_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\SolicitacoesRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.atendimento_admin_followups_repository"
+            - "@nasajon_mda.servicos_atendimentos_historico_repository"
+            - "@nasajon_atendimento_app_bundle.upload_service"
+            - "@nasajon_mda.servicos_atendimentosfilas_repository"
+            - "@nasajon_mda.servicos_atendimentosobservadores_repository"
+            - "@security.token_storage"
+            - "@nasajon_atendimento_app_bundle.equipe_cliente_filter_service"
+            - "@event_dispatcher"
+            - "@modelbundle.service.configuracoes"
+            - "@nasajon_mda.crm_proximoscontatos_repository"
+            - "@nasajon_sdk.diretorio"
+            - "@nasajon_mda.atendimento_admin_slas_repository"
+            - "@old_sound_rabbit_mq.chamados_slas_producer"
+            - "@old_sound_rabbit_mq.emails_processar_producer"
+            - "@old_sound_rabbit_mq.chamados_regras_producer"
+
+    nasajon_mda.ns_anexosmodulos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Ns\AnexosmodulosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.servicos_ativos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Servicos\AtivosRepository
+        arguments:
+            - "@database_connection"
+
+#    nasajon_atendimento_app_bundle.tenant_repository:
+#        class: Doctrine\ORM\EntityRepository
+#        factory_service: doctrine.orm.default_entity_manager
+#        factory_method: getRepository
+#        arguments:
+#            - Nasajon\ModelBundle\Entity\Ns\Tenants
+
+    nasajon_mda.ns_clientes_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Ns\ClientesRepository
+        lazy: true
+        public: tue
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.atendimento_cliente_usuarios_repository"
+            - "@nasajon_mda.ns_clientes_classificadores_repository"
+            - "@nasajon_mda.ns_contatos_repository"
+            - "@nasajon_mda.ns_telefones_repository"
+            - "@nasajon_mda.ns_contatosemails_repository"
+            - "@nasajon_mda.servicos_ativos_repository"
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - "@nasajon_mda.ns_enderecos_repository"
+            - "@nasajon_atendimento_app_bundle.flagcliente_service"
+            - "@nasajon_atendimento_app_bundle.equipe_cliente_filter_service"
+            - "@nasajon_mda.crm_proximoscontatos_repository"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_mda.atendimento_admin_enderecosemails_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\EnderecosemailsRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.atendimento_admin_flagcliente_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\FlagclienteRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.atendimento_admin_flagclientecondicao_repository"
+
+    nasajon_atendimento_app_bundle.admin_relatorios_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\RelatoriosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_atendimento_app_bundle.equipe_cliente_filter_service"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_atendimento_app_bundle.admin_relatorios_backlog_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\RelatoriosBacklogRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_atendimento_app_bundle.equipe_cliente_filter_service"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_mda.atendimento_equipes_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\EquipesRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.atendimento_equipesclientesregras_repository"
+            - "@nasajon_mda.atendimento_equipesusuarios_repository"
+
+    nasajon_mda.servicos_visita_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Servicos\VisitaRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.servicos_visita_tecnico_repository"
+
+    nasajon_mda.servicos_servicotecnico_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Servicos\ServicoTecnicoRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.servicos_servicotecnico_checklist_repository"
+
+    nasajon_mda.servicos_ordensservico_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Servicos\OrdensServicoRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.servicos_ordensservico_item_repository"
+            - "@nasajon_mda.servicos_visita_repository"
+
+    nasajon_mda.servicos_atendimentosfilasobservadores_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\AtendimentosfilasobservadoresRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_atendimento_app_bundle.usuariosdisponibilidades_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\UsuariosDisponibilidadesRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    #257 - Apontamento de repositorio para bundle Nasajon
+    nasajon_mda.atendimento_admin_arquivos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\ArquivosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.atendimento_admin_arquivosregras_repository"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_mda.atendimento_cliente_arquivos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\ArquivosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_mda.crm_proximoscontatos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Crm\ProximoscontatosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@modelbundle.service.configuracoes"
+    
+    nasajon_mda.atendimento_categorias_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Atendimento\CategoriasRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+    
+    nasajon_mda.atendimento_admin_artigosuteis_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\ArtigosuteisRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            
+    nasajon_mda.servicos_atendimentosemailsoriginais_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Servicos\AtendimentosemailsoriginaisRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.atendimento_horariosatendimento_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\HorariosatendimentoRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            
+    nasajon_mda.atendimento_equipesusuarios_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\EquipesusuariosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_atendimento_app_bundle.termos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\TermosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.atendimento_admin_slas_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\SlasRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.atendimento_admin_slascondicoes_repository"
+            - "@old_sound_rabbit_mq.slas_producer"
+
+    nasajon_mda.atendimento_admin_slascondicoes_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\SlascondicoesRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.atendimento_admin_resumos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Admin\ResumosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.servicos_atendimentos_historico_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Servicos\HistoricoRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_mda.atendimento_cliente_contatos_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Cliente\ContatosRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+            - "@nasajon_mda.ns_contatos_repository"
+            - "@nasajon_mda.ns_contatosemails_repository"
+            - "@nasajon_mda.ns_telefones_repository"
+            - "@nasajon_mda.atendimento_historicoscontatosclientes_repository"
+            - "@modelbundle.service.configuracoes"
+            - "@nasajon_mda.fixed_attributes"
+
+    nasajon_mda.ns_clientes_classificadores_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Ns\Clientes\ClassificadoresRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+
+    nasajon_mda.servicos_atendimentosregrasacoes_repository:
+        class: Nasajon\Atendimento\AppBundle\Repository\Servicos\AtendimentosregrasacoesRepository
+        lazy: true
+        arguments:
+            - "@database_connection"
+

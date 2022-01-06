@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="tipi" label="tipi" project="ns">
+    <entity schema="ns" table="tipi">
+<!--        <fieldmodel name="id" datatype="guid" column="id" isid="true" /> -->
+        <fieldmodel name="ncm" datatype="string" column="ncm" isid="true"  />
+        <fieldmodel name="texto" datatype="string" column="texto" />
+    </entity>
+    <viewbrowser layout="list" paginate="false" label="NCMs" target="builtin" >
+        <fieldsbrowser>
+<!--            <fieldbrowser alias="id" entitylink="id" isid="true" /> -->
+            <fieldbrowser alias="NCM" entitylink="ncm" cansearch="true" visible="true" />
+            <fieldbrowser alias="Texto" entitylink="texto" cansearch="true" visible="true" />            
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>
+

@@ -1,0 +1,169 @@
+<div ng-if="!tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.isBusy()" class="height-full col-md-12 article-area row">
+    {% set form_name = form.vars.original_type %}
+
+    <form name="{{form_name}}" novalidate="novalidate" role="form"  ng-submit="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.submit({{form_name}})" class="config-grs">
+
+        <div class="headline-page ng-scope">
+            <div class="headline clearfix">
+                <div class="breadcrumb-trail pull-left">
+                    <a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page">Customizações do Portal</span></strong></div>
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-xs btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                    <button type="submit" class="btn btn-xs btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="headline-sub clearfix hidden-lg hidden-md">
+            <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar à lista" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> Customizações do Portal</h3>
+            <div class="btns-area pull-right">
+                <button type="button" class="btn btn-sm btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                <button type="submit" class="btn btn-sm btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+            </div>
+        </div>
+
+        <uib-tabset active="active">
+            <uib-tab index="0" heading="Página inicial">
+
+                <div class="forms">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="PORTAL_TITULO">Título do Portal</label>
+                                <input type="text" id="PORTAL_TITULO" name="PORTAL_TITULO" maxlength="200" ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.PORTAL_TITULO" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <strong>Descrição do Portal</strong>
+                            <ng-ckeditor 
+                                permitirPlugins="Source,Iframe"
+                                ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.PORTAL_DESCRICAO"
+                                skin="moono-lisa" >
+                            </ng-ckeditor>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label no-margin" for="PLACEHOLDER_BUSCA_ARTIGOS_CLIENTE">Mensagem do campo de busca</label>
+                                <br /><small>Escreva a mensagem que você deseja que seja exibida no espaço do campo de busca de artigo.</small>
+                                <input type="text" id="PLACEHOLDER_BUSCA_ARTIGOS_CLIENTE" name="PLACEHOLDER_BUSCA_ARTIGOS_CLIENTE" maxlength="50" ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.PLACEHOLDER_BUSCA_ARTIGOS_CLIENTE" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label no-margin" for="TEXTO_BOTAO_BASE_CONHECIMENTO_CLIENTE">Botão da base de conhecimento</label>
+                                <br /><small>Escreva o texto que você deseja que seja exibido no botão que redireciona para a base de conhecimento.</small>
+                                <input type="text" id="TEXTO_BOTAO_BASE_CONHECIMENTO_CLIENTE" name="TEXTO_BOTAO_BASE_CONHECIMENTO_CLIENTE" maxlength="50" ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.TEXTO_BOTAO_BASE_CONHECIMENTO_CLIENTE" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </uib-tab>
+
+            <uib-tab index="1" heading="Chamados">
+                <div class="forms">
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <strong>Descrição de Chamados</strong>
+                            <ng-ckeditor 
+                                permitirplugins="Source,Iframe" 
+                                ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.CHAMADOS_DESCRICAO" 
+                                skin="moono-lisa">
+                            </ng-ckeditor>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="TITULO_ASSUNTO">Título do campo assunto</label>
+                                <input type="text" id="TITULO_ASSUNTO" name="TITULO_ASSUNTO" maxlength="50" ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.TITULO_ASSUNTO" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label no-margin" for="PLACEHOLDER_ASSUNTO">Mensagem do campo assunto</label>
+                                <br /><small>Escreva a mensagem que você deseja que seja exibida no espaço do campo de assunto.</small>
+                                <input type="text" id="PLACEHOLDER_ASSUNTO" name="PLACEHOLDER_ASSUNTO" maxlength="50" ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.PLACEHOLDER_ASSUNTO" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>    
+            </uib-tab>
+            
+            <uib-tab index="2" heading="Artigos">
+                <div class="forms">
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <strong>Descrição de Artigos</strong>
+                            <ng-ckeditor 
+                                permitirPlugins="Source,Iframe"
+                                ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.ARTIGO_DESCRICAO">
+                            </ng-ckeditor>
+                        </div>
+                    </div>
+                    
+                </div>    
+            </uib-tab>
+
+            <uib-tab index="3" heading="Títulos">
+                <div class="forms">
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <strong>Descrição de Títulos</strong>
+                            <ng-ckeditor 
+                                permitirPlugins="Source,Iframe" 
+                                ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.TITULOS_DESCRICAO">
+                            </ng-ckeditor>
+                        </div>
+                    </div>
+                    
+                </div>    
+            </uib-tab>
+
+            <uib-tab index="4" heading="Downloads">
+                <div class="forms">
+                    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <strong>Descrição de Downloads</strong>
+                            <ng-ckeditor 
+                                permitirPlugins="Source,Iframe"
+                                ng-model="tndmnt_dmn_cstmzcs_prtl_frm_cntrllr.entity.DOWNLOADS_DESCRICAO">
+                            </ng-ckeditor>
+                        </div>
+                    </div>
+                    
+                </div>    
+            </uib-tab>
+        </uib-tabset>
+
+        <br />
+
+        <ul class="list-unstyled list-inline pull-right">
+            <li>
+                <button type="submit" id="salvar" name="salvar" class="pull-right btn btn-primary" >Salvar</button>
+            </li>
+        </ul>
+
+        {{ form_end(form, {'render_rest': false}) }}
+
+</div>
+        
+<div ng-class="{'onloading' : tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.isBusy() }" class="text-center"></div>

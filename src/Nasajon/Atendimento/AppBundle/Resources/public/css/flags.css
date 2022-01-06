@@ -1,0 +1,219 @@
+/** FLAGS/BOOKMARKS DE CLIENTES **/
+
+.bookmarks {
+  position:absolute;top:0;right:5px;
+}
+
+.bookmarks .bookmark {
+  cursor: pointer;
+}
+
+.bookmark {
+  width:24px;
+  height:46px;
+  margin-right: 10px;
+  position: relative;
+  display: inline-block;
+  float: left;
+}
+
+@media screen and (max-width: 991px) {
+    .bookmarks {
+        top: 33px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .bookmarks {
+        top: 31px;
+    }
+}
+
+.bookmark:after { content:''; display:block; border:12px solid transparent; border-bottom-color:#fff; position:absolute; bottom:0;}
+
+.bookmark.bookmark-infos:after {
+  display: none; visibility: hidden;
+}
+
+.bookmark.bookmark-infos {
+  border-radius:15px;
+  -moz-border-radius:15px;
+  -webkit-border-radius:15px;
+  width: 25px;
+  height: 25px;
+}
+
+.bookmark i {margin:10px 5px; font-size:14px;}
+
+.bookmark.bookmark-infos i {margin:5px 6px;}
+
+/* cores */
+
+.bookmark.corffc000 {
+  background: #ffc000;
+}
+
+.bookmark.corffe79c {
+  background: #ffe79c;
+}
+
+.bookmark.corbf0c0c {
+  background: #bf0c0c;
+}
+
+.bookmark.cord9aeae {
+  background: #d9aeae;
+}
+
+.bookmark.cor436470 {
+  background: #436470;
+}
+
+.bookmark.coradbcc2 {
+  background: #adbcc2;
+}
+
+.bookmark.cor5cb85c {
+  background: #5cb85c;
+}
+
+.bookmark.corbcd9bc {
+  background: #bcd9bc;
+}
+
+.bookmark.corcdcdcd {
+  background: #cdcdcd;
+}
+
+.bookmark.cor393939 {
+  background: #393939;
+}
+
+.bookmark.corff9c00 {
+  background: #ff9c00;
+}
+
+.bookmark.corffe3b7 {
+  background: #ffe3b7;
+}
+
+.bookmark.cor00afe9 {
+  background: #00afe9;
+}
+
+.bookmark.cora4dbed {
+  background: #a4dbed;
+}
+
+.bookmark.core90079 {
+  background: #e90079;
+}
+
+.bookmark.corebaece {
+  background: #ebaece;
+}
+
+.bookmark.cor6714b5 {
+  background: #6714b5;
+}
+
+.bookmark.corac99be {
+  background: #ac99be;
+}
+
+.bookmark.cor1445b5 {
+  background: #1445b5;
+}
+
+.bookmark.cor98a6c4 {
+  background: #98a6c4;
+}
+
+.bookmark.corFFFFFF {
+  background: #ffffff;
+}
+
+.el-bookmark.corffc000,
+.bookmark i.corffc000 {
+  color: #ffc000;
+}
+
+.bookmark i.corffe79c {
+  color: #ffe79c;
+}
+
+.bookmark i.corbf0c0c {
+  color: #bf0c0c;
+}
+
+.bookmark i.cord9aeae {
+  color: #d9aeae;
+}
+
+.bookmark i.corcor436470 {
+  color: #436470;
+}
+
+.bookmark i.coradbcc2 {
+  color: #adbcc2;
+}
+
+.bookmark i.cor5cb85c {
+  color: #5cb85c;
+}
+
+.bookmark i.corbcd9bc {
+  color: #bcd9bc;
+}
+
+.bookmark i.corcdcdcd {
+  color: #cdcdcd;
+}
+
+.bookmark i.cor393939 {
+  color: #393939;
+}
+
+.bookmark i.corff9c00 {
+  color: #ff9c00;
+}
+
+.bookmark i.corffe3b7 {
+  color: #ffe3b7;
+}
+
+.bookmark i.cor00afe9 {
+  color: #00afe9;
+}
+
+.bookmark i.cora4dbed {
+  color: #a4dbed;
+}
+
+.bookmark i.core90079 {
+  color: #e90079;
+}
+
+.bookmark i.corebaece {
+  color: #ebaece;
+}
+
+.bookmark i.cor6714b5 {
+  color: #6714b5;
+}
+
+.bookmark i.corac99be {
+  color: #ac99be;
+}
+
+.bookmark i.cor1445b5 {
+  color: #1445b5;
+}
+
+.bookmark i.cor98a6c4 {
+  color: #98a6c4;
+}
+
+.bookmark i.corFFFFFF {
+  color: #ffffff;
+}

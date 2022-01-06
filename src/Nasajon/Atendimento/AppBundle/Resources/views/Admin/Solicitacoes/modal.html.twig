@@ -1,0 +1,73 @@
+<div>
+    <div class="headline-sub clearfix" style="margin:0;">
+        <h3>Mensagem original</h3>
+        <br>
+        <table class="table table-bordered break-line">
+            <tbody>
+                <tr>
+                    <th>ID Mensagem</th>
+                    <td ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal['Message-Id']"></td>
+                </tr>
+                <tr>
+                    <th>Criado em:</th>
+                    <td ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.created_at | date: 'dd/MM/yyyy HH:mm:ss'"></td>
+                </tr>
+                <tr>
+                    <th>De:</th>
+                    <td ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.from"></td>
+                </tr>
+                <tr>
+                    <th>Para:</th>
+                    <td ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.To"></td>
+                </tr>
+                <tr>
+                    <th>Assunto:</th>
+                    <td ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.subject"></td>
+                </tr>
+                <tr ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal['X-Mailgun-Spf']">
+                    <th>SPF:</th>
+                    <td ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal['X-Mailgun-Spf']"></td>
+                </tr>
+                <tr ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal['X-Mailgun-Dkim-Check-Result']">
+                    <th>DKIM:</th>
+                    <td ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal['X-Mailgun-Dkim-Check-Result']"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal-body" id="modal-body"> 
+        <label>Delivered-To:</label> <p><span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.sender"></span></p>
+        
+        <label>Received:</label> <p><span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.Received"></span></p>
+        
+        <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.Cc">
+            <label>Cc:</label> 
+            <p><span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.Cc"></span></p>
+        </div>
+        
+        <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.Bcc">
+            <label>Bcc:</label> 
+            <p><span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.Bcc"></span></p>
+        </div>
+        
+        <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.Subject">
+            <label>Subject:</label> 
+            <p><span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.Subject"></span></p>
+        </div>
+        
+        <label>Content-Type:</label> <p><span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal['Content-Type']"></span></p>
+        
+        <label>Body-html:</label> <p><span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal['body-html']"></span></p>
+        
+        <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.attachments">
+            <label>Attachments:</label>
+            <div ng-repeat="anexo in tndmnt_dmn_slctcs_shw_cntrllr.entity.emailOriginal.emailoriginal.attachments">
+                <p>
+                    <label>name:</label> <span ng-bind="anexo.name"></span><br/>
+                    <label>content-type:</label> <span ng-bind="anexo['content-type']"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

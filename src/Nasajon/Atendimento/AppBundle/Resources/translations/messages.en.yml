@@ -1,0 +1,73 @@
+## YAML Template. 
+---
+nomesistema: Atendimento Web
+visualizarnosistema: Visualizar no Sistema de Atendimento Web
+chamado: chamado
+Chamado: Chamado
+chamados: chamados
+Chamados: Chamados
+chamadosrelacionados: Chamados(s) relacionado(s).
+chamadoatribuir: Atribuir esse chamado a você para responder.
+chamadonaoexisteparacliente: Não existem chamados para esse cliente.
+chamadonaoexiste: Este chamado não existe!
+detalheschamado: Detalhes do chamado
+meuschamados: Meus Chamados
+todoschamados: Todos os Chamados
+filaschamados: Filas de Chamados
+novochamado: Novo Chamado
+novoschamados: Novo(s) Chamado(s)
+nenhumoutrochamadoencontrado: Nenhum outro chamado encontrado para o cliente.
+criarchamado: Criar Chamado
+fecharchamado: Fechar Chamado
+abrirchamado: Reabrir Chamado
+adicionarusuario: Adicionar Usuário
+naoespam: Não é SPAM
+definirspam: Definir como SPAM
+visualizarchamado: Visualizar Chamado
+baseconhecimento: Base de Conhecimento
+Artigos: Artigos
+artigos: artigos
+Artigo: Artigo
+artigo: artigo
+criarartigo: Criar Artigo
+todosartigos: Todos os Artigos
+buscarartigo: Tire suas dúvidas
+atualizarartigos: Atualizar Artigos
+artigopublicado: Artigo Publicado
+artigonaopublicado: Artigo não publicado
+artigoinfomsg: Selecione um artigo ao lado para começar!
+artigosuteismsg: Esses artigos são Úteis?
+Categorias: Categorias
+respostaadmin: Resposta
+respostaadminplaceholder: Escreva uma resposta visível para todos que visualizam este chamado...
+respostaadminObrigatoriomsg: A Resposta não pode ser vazia.
+respostacliente: Resposta
+respostaclienteplaceholder: Escreva uma resposta visível para todos que visualizam este chamado...
+respostaclienteObrigadoriomsg: A resposta não pode ser vazia.
+comentario: Comentário
+comentarioplaceholder: Escreva um comentário que não poderá ser visualizado pelo cliente...
+comentarioObrigatoriomsg: O comentário não pode ser vazio.
+Aberto: Aberto
+Fechado: Fechado
+Abertos: Abertos
+Fechados: Fechados
+observarchamado: Observar esse chamado
+naoobservarchamado: Deixar de Observar esse chamado
+ultimasatividades: Últimas atividades
+sintomaclienteObrigatoriomsg: O campo descrição da situação não pode ser vazio.
+sintomaclienteplaceholder: Digite a descrição...
+baseconhecimentoinfo: Tire suas dúvidas na nossa base de conhecimento.
+proximoscontatos: Agenda de Contatos
+adicionarproximoscontatos: Criar Agendamento
+pendente: Pendente
+concluido: Concluído
+cancelado: Cancelado
+ematraso: Em atraso
+duplicaragendamento: Duplicar Agendamento
+cancelar: Cancelar
+excluir: Excluir
+concluir: Concluir
+editar: Editar
+reabrir: Reabrir
+usuariodisponivel: Usuário disponível
+usuarioindisponivel: Usuário indisponível

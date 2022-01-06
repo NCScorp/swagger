@@ -1,0 +1,46 @@
+.text-area .cke_ltr .cke_button__undo_icon,
+.area-text .cke_ltr .cke_button__undo_icon {
+  background: url(//s3-us-west-2.amazonaws.com/static.nasajon/img/common/icons-undo-redo.png) center -24px !important;
+}
+
+.text-area .cke_ltr .cke_button__redo_icon,
+.area-text .cke_ltr .cke_button__redo_icon {
+  background: url(//s3-us-west-2.amazonaws.com/static.nasajon/img/common/icons-undo-redo.png) center top !important;
+}
+
+.text-area .cke_chrome,
+.area-text .cke_chrome {
+  border:none;
+  box-shadow: none;
+}
+
+.text-area .cke_top,
+.area-text .cke_top  {
+  background: none;
+  background-image: none;
+}
+
+.text-area .cke_top,
+.area-text .cke_top {
+  padding: 0;
+  box-shadow: none;
+  background: none;
+  background-image: none;
+  border: none;
+}
+
+.text-area .cke_contents,
+.area-text .cke_contents {
+  border: 1px solid #dddddd;
+  margin-bottom: 5px;
+}
+
+.text-area .cke_editable,
+.area-text .cke_editable {
+  margin: 10px !important;
+}
+
+.text-area .cke_editable p,
+.area-text .cke_editable p {
+  margin-top: 0;
+}

@@ -1,0 +1,156 @@
+{% extends'@NasajonMDABundle/Resources/js/Atendimento/Cliente/Contatos/form.html.twig' %}
+
+{% block viewedit_header_toolbar %}
+    {% block viewedit_header_toolbar_title %} 
+        <div class="row div-row-titulo-edit">
+            <div class="col-sm-10 ">
+                <span ng-if="!tndmnt_clnt_cntts_frm_cntrllr.entity.id" class="span-info-clientes">Criar contato</span>
+                <span ng-if="tndmnt_clnt_cntts_frm_cntrllr.entity.id" class="span-info-clientes">Editar contato</span>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="pull-right">
+                    <a ng-click="tndmnt_clnt_cntts_frm_cntrllr.cancelar()" class="btn btn-default" style="" ng-disabled="tndmnt_clnt_cntts_frm_cntrllr.isSaving">Cancelar</a>
+                    <a ng-click="tndmnt_clnt_cntts_frm_cntrllr.salvar()" ng-disabled="!tndmnt_clnt_cntts_frm_cntrllr.podeSalvar() || tndmnt_clnt_cntts_frm_cntrllr.isSaving" class="btn btn-primary" style="">Salvar</a>
+                </div>
+            </div>
+        </div>
+
+    {% endblock viewedit_header_toolbar_title %} 
+{% endblock viewedit_header_toolbar %}
+
+{% block viewedit_edit %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>Nome do contato</label>
+                <input type="text" class="form-control" maxlength="150" ng-model="tndmnt_clnt_cntts_frm_cntrllr.entity.nome" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>Cargo do contato</label>
+                <input type="text" class="form-control" maxlength="100" ng-model="tndmnt_clnt_cntts_frm_cntrllr.entity.cargo" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <fieldset class="fieldset-email">
+                <legend>E-mail</legend>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="row" ng-repeat="contatoEmail in tndmnt_clnt_cntts_frm_cntrllr.entity.contatosemails">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>E-mail do contato</label>
+                <input type="text" class="form-control" maxlength="100" ng-model="contatoEmail.email" />
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Tipo de e-mail</label>
+                <select class="form-control" ng-model="contatoEmail.tipo" ng-init="contatoEmail.tipo = contatoEmail.principal ? '1' : contatoEmail.recebe_boleto ? '2' : '0'" ng-change="tndmnt_clnt_cntts_frm_cntrllr.validaTipoEmail(contatoEmail)">
+                    <option value="1" selected="">Principal</option>
+                    <option value="2" selected="">Cobrança</option>
+                </select>
+            </div>  
+        </div>
+
+        <div class="col-sm-3"></div>
+
+        <div class="col-sm-1" ng-if="$index == 0">
+             <a ng-click="tndmnt_clnt_cntts_frm_cntrllr.addNovoEmail()" class="btn btn-default pull-right" style="margin-right: 15px; width: 150px;" ng-disabled="tndmnt_clnt_cntts_frm_cntrllr.isSaving"><i class="fa fa-plus"></i> Adicionar e-mail</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <fieldset class="fieldset-email">
+                <legend>Telefones</legend>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="row" ng-repeat="telefone in tndmnt_clnt_cntts_frm_cntrllr.entity.telefones">
+        <div class="col-sm-1">
+            <div class="form-group">
+                <label>DDI</label>
+                <input type="text" class="form-control" maxlength="3" ng-model="telefone.ddi" ng-keydown="tndmnt_clnt_cntts_frm_cntrllr.validarInput($event, 'int', null)"/>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="form-group">
+                <label>DDD</label>
+                <input type="text" class="form-control" maxlength="3" ng-model="telefone.ddd" ng-keydown="tndmnt_clnt_cntts_frm_cntrllr.validarInput($event, 'int', null)"/>
+            </div>
+        </div>
+
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Telefone</label>
+                <input type="phone" class="form-control" maxlength="9" ng-model="telefone.telefone" 
+                ng-keydown="tndmnt_clnt_cntts_frm_cntrllr.validarInput($event, 'int', telefone)"/>
+            </div>
+        </div>
+
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Ramal</label>
+                <input type="text" class="form-control" maxlength="5" ng-model="telefone.ramal" ng-keydown="tndmnt_clnt_cntts_frm_cntrllr.validarInput($event, 'int', telefone)"/>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Tipo de telefone</label>
+                <select class="form-control" ng-model="telefone.tptelefone">
+                    <option value="0" selected="">RESIDENCIAL</option>
+                    <option value="1" selected="">COMERCIAL</option>
+                    <option value="2" selected="">CELULAR</option>
+                    <option value="3" selected="">FAX</option>
+                    <option value="4" selected="">PAGER</option>
+                    <option value="5" selected="">VIRTUAL</option>
+                    <option value="6" selected="">RECADO</option>
+                    <option value="7" selected="">TELEFAX</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-sm-3"></div>
+
+        <div class="col-sm-1" ng-if="$index == 0">
+            <a ng-click="tndmnt_clnt_cntts_frm_cntrllr.addNovoTelefone()" class="btn btn-default pull-right" style="margin-right: 15px; width: 150px;" ng-disabled="tndmnt_clnt_cntts_frm_cntrllr.isSaving"><i class="fa fa-plus"></i> Adicionar telefone</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label>Observações</label>
+                <textarea class="form-control" maxlength="255" ng-model="tndmnt_clnt_cntts_frm_cntrllr.entity.observacao"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <input type="checkbox" class="form-check-input" ng-model="tndmnt_clnt_cntts_frm_cntrllr.entity.principal"/> <strong>Contato Principal</strong>
+                (Apenas um contato por cliente pode ser definido como principal, se este for definido, o anterior deixa de ser um Contato Pricipal)
+            </div>
+        </div>
+    </div>
+{% endblock viewedit_edit %}
+
+{% block viewedit_footer_toolbar %}{% endblock viewedit_footer_toolbar %}

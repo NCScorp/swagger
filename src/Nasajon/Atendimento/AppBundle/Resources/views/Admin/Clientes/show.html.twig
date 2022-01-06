@@ -1,0 +1,582 @@
+{% extends'@NasajonMDABundle/Resources/js/Ns/Clientes/show.html.twig' %}
+
+{% block viewedit_toolbar_btn_area %}
+  <div class="bookmarks">
+    <div class="bookmark hidden-sm hidden-xs" ng-class="'cor'+flag.corfundo" uib-popover-html="'<h4>{{"{{flag.titulo}}"}}</h4><p>{{"{{flag.descricao}}"}}</p>'" popover-placement="left" popover-append-to-body="true" popover-animation='false' popover-trigger="'outsideClick'" ng-repeat='flag in ns_clnts_frm_cntrllr.entity.flags'>
+      <i class="el" ng-class="'cor'+flag.cor+' el-'+flag.icone" ></i>
+    </div>
+    <div ng-click="ns_clnts_frm_cntrllr.openModal()" class="bookmark corcdcdcd hidden-lg hidden-md" ng-if="ns_clnts_frm_cntrllr.entity.flags.length > 0" style="z-index: 1;">
+      <i class="el el-plus-sign cor393939"></i>
+    </div>
+  </div>
+  <script type="text/ng-template" id="avisosDoClienteModal.tmpl.html">
+    <div class="modal-header">
+    <h3>Avisos do Cliente</h3>
+    </div>
+    <div class="modal-body">
+    <div class="item-bookmark item" ng-repeat='flag in ns_clnts_frm_cntrllr.entity.flags'>
+    <div class="bookmark" ng-class="'cor'+flag.corfundo">
+    <i class="el" ng-class="'cor'+flag.cor+' el-'+flag.icone" ></i>
+    </div>
+    <h4 class="title-flag">{{"{{flag.titulo}}"}}</h4>
+    <p>{{"{{flag.descricao}}"}}</p>
+    </div>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Fechar</button>
+    </div>
+  </script>
+{% endblock viewedit_toolbar_btn_area %}
+
+
+{% block viewedit_form_codigo %}
+  <div class="row">
+    <label class="col-sm-4 control-label">Código</label>
+    <div class="col-sm-8">
+      <p class="form-control-static">{{ "{{ns_clnts_frm_cntrllr.entity.codigo}}" }}</p>
+    </div>
+  </div>
+{% endblock viewedit_form_codigo %}
+
+{% block viewedit_form_nome %}
+  <div class="row">
+    <label class="col-sm-4 control-label">Nome</label>
+    <div class="col-sm-8">
+      <p class="form-control-static">{{ "{{ns_clnts_frm_cntrllr.entity.nome}}" }}</p>
+    </div>
+  </div>
+{% endblock viewedit_form_nome %}
+{% block viewedit_form_nomefantasia %}
+  <div class="row">
+    <label class="col-sm-4 control-label">Nome Fantasia</label>
+    <div class="col-sm-8">
+      <p class="form-control-static">{{ "{{ns_clnts_frm_cntrllr.entity.nomefantasia}}" }}</p>
+    </div>
+  </div>
+{% endblock viewedit_form_nomefantasia %}
+
+{% block viewedit_form_cnpj %}
+  <div class="row" ng-if="ns_clnts_frm_cntrllr.entity.cnpj">
+    <label class="col-sm-4 control-label">CNPJ</label>
+    <div class="col-sm-8">
+      <p class="form-control-static" ng-bind="ns_clnts_frm_cntrllr.entity.cnpj"></p>
+    </div>
+  </div>
+  <div class="row" ng-if="ns_clnts_frm_cntrllr.entity.cpf">
+    <label class="col-sm-4 control-label">CPF</label>
+    <div class="col-sm-8">
+      <p class="form-control-static" ng-bind="ns_clnts_frm_cntrllr.entity.cpf"></p>
+    </div>
+  </div>
+{% endblock viewedit_form_cnpj %}
+
+{% block viewedit_form_datacliente %}
+  <div class='row'>
+    <label class="col-sm-4 control-label">Cliente Desde</label>
+    <div class="col-sm-8">
+      <p class="form-control-static">{{ "{{ns_clnts_frm_cntrllr.entity.datacliente | date:'dd/MM/yyyy' }}" }}</p>
+    </div>
+  </div>
+{% endblock viewedit_form_datacliente %}
+
+{% block viewedit_form_bloqueado %}
+  <div class='row'>
+    <label class="col-sm-4 control-label">Bloqueado</label>
+    <div class="col-sm-8">
+      <p class="form-control-static">{{ "{{ns_clnts_frm_cntrllr.entity.bloqueado ? 'Sim' : 'Não' }}" }}</p>
+    </div>
+  </div>
+{% endblock viewedit_form_bloqueado %}
+
+{% block viewedit_form_pagamento %}{% endblock viewedit_form_pagamento %}
+
+{% block viewedit_form_restricaocobranca1 %}
+<div class='row'>
+    <label class="col-sm-4 control-label">Situação</label>
+    <div class="col-sm-8">
+      <div>
+        <span class="label label-success" ng-if="!ns_clnts_frm_cntrllr.entity.restricaocobranca1 && !ns_clnts_frm_cntrllr.entity.restricaocobranca2">
+          {{'{{ns_clnts_frm_cntrllr.situacaoSuporte}}'}}
+        </span>
+        <span class="label label-danger label-codigo-restricao" ng-if="ns_clnts_frm_cntrllr.entity.restricaocobranca1">
+          {{'{{ns_clnts_frm_cntrllr.entity.restricaocobranca1.codigo}}'}}
+        </span>
+        <span class="label label-danger label-codigo-restricao" ng-if="ns_clnts_frm_cntrllr.entity.restricaocobranca2">
+          {{'{{ns_clnts_frm_cntrllr.entity.restricaocobranca2.codigo}}'}}
+        </span>
+        <a ng-click="ns_clnts_frm_cntrllr.openDetalhesSuporte()" href class="small" 
+{#           ng-if="ns_clnts_frm_cntrllr.entity.restricaocobranca1 || ns_clnts_frm_cntrllr.entity.restricaocobranca2"  #}
+           >
+          saiba mais
+        </a>
+      </div>
+    </div>
+  </div>  
+{% endblock viewedit_form_restricaocobranca1 %}
+
+{% block viewedit_form_suporte %}
+    <div class='row'>
+        <label class="col-sm-4 control-label">Suporte</label>
+        <div class="col-sm-8">
+            <span class="label label-success" ng-show="ns_clnts_frm_cntrllr.entity.status_suporte == 'Ativo'">Ativo</span>
+            <div ng-show="ns_clnts_frm_cntrllr.entity.status_suporte == 'Bloqueado'">
+                <span class="label label-danger">Bloqueado</span>
+            </div>
+        </div>
+    </div>
+{% endblock viewedit_form_suporte %}
+
+{% block viewedit_form_vendedor %}
+  <div class='row'>
+    <label class="col-sm-4 control-label">Vendedor</label>
+    <div class="col-sm-8">
+      <p class="form-control-static"  ng-bind="ns_clnts_frm_cntrllr.entity.vendedor.nome || 'Não informado.'"></p>
+    </div>
+  </div>
+{% endblock viewedit_form_vendedor %}
+
+{% block viewedit_form_representante %}
+  <div class='row'>
+    <label class="col-sm-4 control-label">Representante</label>
+    <div class="col-sm-8">
+      <p class="form-control-static" ng-bind="ns_clnts_frm_cntrllr.entity.representante.nome || 'Não informado.'"></p>
+    </div>
+  </div>
+{% endblock viewedit_form_representante %}
+{% block viewedit_form_representante_tecnico %}
+  <div class='row'>
+    <label class="col-sm-4 control-label">Representante Técnico</label>
+    <div class="col-sm-8">
+      <p class="form-control-static" ng-bind="ns_clnts_frm_cntrllr.entity.representante_tecnico.nome || 'Não informado.'"></p>
+    </div>
+  </div>
+{% endblock viewedit_form_representante_tecnico %}
+
+{% block viewedit_form_observacao %}
+  <div class="observacao alert alert-warning" ng-show="ns_clnts_frm_cntrllr.entity.observacao">
+    <p><label class="control-label">Observação:</label>
+      {{ "{{ns_clnts_frm_cntrllr.entity.observacao}}" }}</p>
+  </div>
+{% endblock viewedit_form_observacao %}
+
+{% block viewedit_form_tab_chmds %}
+  <div class="clearfix">
+    <div class="pull-left"><h4><i class="el el-inbox"></i> <a href ui-sref="atendimento_admin_solicitacoes({ 'cliente' : ns_clnts_frm_cntrllr.entity.cliente})">{{'Chamados'|trans}}</a></h4></div>
+    <div class="pull-right">
+      <a href ng-class="{'btn btn-default desabilitado btn-new-ticket':ns_clnts_frm_cntrllr.entity.bloqueado,'btn btn-warning btn-new-ticket':!ns_clnts_frm_cntrllr.entity.bloqueado}"  ng-click="ns_clnts_frm_cntrllr.novoChamado()">
+        <i class="el el-plus"></i> <span class="hidden-xs">{{'criarchamado'|trans}}</span>
+      </a>
+    </div>
+  </div>
+  <div id="solicitacoes-abertas" class="painel-solicitacoes-respostas">
+    <section class="content-box">
+      <div class="content-box-body" ng-if="ns_clnts_frm_cntrllr.entity.solicitacoes.length > 0">
+        <div class="table-default">
+          <table class="table table-condensed table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Número</th>
+                <th>Assunto</th>
+                <th>Atribuído a</th>
+                <th>Criado</th>
+                <th>Situação</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr ng-repeat="atendimento in ns_clnts_frm_cntrllr.entity.solicitacoes track by $index">
+                <td>
+                  <a href ui-sref="atendimento_admin_solicitacoes_show({atendimento : atendimento.atendimento})" >
+                    <strong>{{'{{atendimento.numeroprotocolo}}'}}</strong>
+                  </a>
+                </td>
+                <td><a href ui-sref="atendimento_admin_solicitacoes_show({atendimento : atendimento.atendimento})" ng-bind-html="atendimento.resumo | limitTo: 100"></a></td>
+                <td>
+                  <a href ui-sref="atendimento_admin_solicitacoes({atribuidoa : atendimento.responsavel_web, situacao : 0})">{{'{{atendimento.responsavel_web_nome || atendimento.responsavel_web}}'}}</a>
+                </td>
+                <td><span class="info-post">{{'{{atendimento.created_at | asDate | amCalendar}}'}}</span></td>
+                <td>
+                  <span class="label label-success" ng-if="atendimento.situacao == 0">
+                    {{'Aberto'|trans}}
+                  </span>
+                  <span class="label label-default" ng-if="atendimento.situacao == 1">
+                    {{'Fechado'|trans}}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center col-md-12" ng-if="ns_clnts_frm_cntrllr.entity.solicitacoes.length > 0 && (ns_clnts_frm_cntrllr.entity.solicitacoes.length % 20 === 0)">
+            <a href ng-click="ns_clnts_frm_cntrllr.carregaMaisChamados()" class="btn-primary btn btn-sm" ng-disabled="ns_clnts_frm_cntrllr.buscandoChamados" />{{'{{ns_clnts_frm_cntrllr.tituloBusca}}'}}</a>
+          </div>
+        </div>
+
+      </div><!--/.content-box-body-->
+      <p class="text-center no-content" ng-if="ns_clnts_frm_cntrllr.entity.solicitacoes.length == 0">
+        {{'chamadonaoexisteparacliente'|trans}}
+      </p>
+    </section>
+  </div>
+{% endblock  %}
+{% block viewedit_form_tab_ndr_s %}
+  <div class="clearfix">
+    <div class="pull-left"><h4><i class="el el-address-book"></i> Endereços</h4></div>
+  </div>
+
+  <div class="table-clients table-default">
+    <table class="table table-condensed table-striped table-bordered table-hover" ng-if="ns_clnts_frm_cntrllr.entity.enderecos.length > 0">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Logradouro</th>
+          <th>Num.</th>
+          <th>Compl.</th>
+          <th>CEP</th>
+          <th>Bairro</th>
+          <th>Município</th>
+          <th>UF</th>
+          <th ng-if="!ns_clnts_frm_cntrllr.entity.enderecosnobrasil">País</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="endereco in ns_clnts_frm_cntrllr.entity.enderecos">
+          <td>{{"{{ endereco.tipo }}"}}</td>
+          <td>{{"{{ endereco.tipologradouro }}"}} {{"{{ endereco.logradouro }}"}}</td>
+          <td>{{"{{ endereco.numero }}"}}</td>
+          <td>{{"{{ endereco.complemento }}"}}</td>
+          <td>{{"{{ endereco.cep }}"}}</td>
+          <td>{{"{{ endereco.bairro }}"}}</td>
+          <td>{{"{{ endereco.municipio }}"}}</td>
+          <td>{{"{{ endereco.uf }}"}}</td>
+          <td ng-if="!ns_clnts_frm_cntrllr.entity.enderecosnobrasil">{{"{{ endereco.pais }}"}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-center no-content" ng-if="ns_clnts_frm_cntrllr.entity.enderecos.length == 0">
+    Não existem endereços cadastrados.
+  </p>
+{% endblock viewedit_form_tab_ndr_s %}
+{% block viewedit_form_tab_cntts %}
+  {# ABA: Contatos #}
+  <div class="clearfix">
+    <div class="pull-left">
+      <h4><i class="el el-address-book"></i> Contatos</h4>
+    </div>
+  </div>
+
+  <div class="email-principal-cobranca_AbaContatos">
+    <div>
+      <span class="email-principal-cobranca_title_AbaContatos">E-mail Principal: </span> 
+      <span class="email-principal-cobranca_text_AbaContatos">
+        {{'{{ ns_clnts_frm_cntrllr.entity.email ? ns_clnts_frm_cntrllr.entity.email : "Não há e-mail principal cadastrado." }}'}}
+      </span>
+    </div>
+    <div>
+      <span class="email-principal-cobranca_title_AbaContatos">E-mail de Cobrança: </span> 
+      <span class="email-principal-cobranca_text_AbaContatos">
+        {{'{{ ns_clnts_frm_cntrllr.entity.emailcobranca ? ns_clnts_frm_cntrllr.entity.emailcobranca : "Não há e-mail de cobrança cadastrado." }}'}}
+      </span>
+    </div>
+  </div>
+
+  <hr>
+
+  {# Contatos #}
+  <div ng-if="ns_clnts_frm_cntrllr.entity.contatos.length > 0"> 
+
+    <div ng-repeat="contato in ns_clnts_frm_cntrllr.entity.contatos">
+
+      <div class="nome_AbaContatos">
+       {{"{{ contato.nome }}"}}
+        <span class="cargo_AbaContatos">({{"{{ contato.cargo }}"}})</span>
+      </div>
+
+      <div class="classificador-contato_AbaContatos" ng-if="contato.principal">
+        Principal - {{"{{ contato.cargo }}"}}
+      </div>
+      
+      {# Emails #}
+
+      <table class="table_AbaContatos">
+          <tr ng-repeat="contatoemail in contato.contatosemails">
+              <td width="23" ng-class="$last ? 'espaco-top-bottom_AbaContatos' : ''">
+                  <i class="el el-envelope icon_AbaContatos" ng-if="$first"></i> 
+              </td>
+              <td ng-class="$last ? 'espaco-top-bottom_AbaContatos' : ''">
+                  <span class="email_AbaContatos">{{"{{ contatoemail.email }}"}}</span>
+              </td>
+          </tr>
+
+      </table>
+      {# Cada contato atualmente só tem um e-mail. Caso tenha-se mais no futuro basta implementar um ng-repeat com os e-mails e utilizar um ng-if="$first" para exibição correta do icone de e-mail apenas no primeiro item #}
+
+      {# Telefones #}
+      <table class="table_AbaContatos" ng-if="contato.telefones.length > 0">
+        <tr ng-repeat="telefone in contato.telefones">
+          <td width="23">
+            <i class="el el-phone icon_AbaContatos" ng-if="$first"></i>
+          </td>
+          <td>
+            <span>{{"{{ telefone.ddi }}"}} {{"{{ telefone.ddd }}"}} {{"{{ telefone.telefone }}"}} {{"{{ telefone.ramal }}"}}</span>
+            <span class="tel-descricao_AbaContatos">
+            <span ng-if="telefone.tptelefone == 0">RESIDENCIAL</span>
+            <span ng-if="telefone.tptelefone == 1">COMERCIAL</span>
+            <span ng-if="telefone.tptelefone == 2">CELULAR</span>
+            <span ng-if="telefone.tptelefone == 3">FAX</span>
+            <span ng-if="telefone.tptelefone == 4">PAGER</span>
+            <span ng-if="telefone.tptelefone == 5">VIRTUAL</span>
+            <span ng-if="telefone.tptelefone == 6">RECADO</span>
+            <span ng-if="telefone.tptelefone == 7">TELEFAX</span>
+            </span>
+          </td>
+        </tr>
+      </table>
+
+      <div class="obs-title_AbaContatos espaco-top_AbaContatos">
+        Observações:
+        <span class="obs-text_AbaContatos">{{"{{ contato.observacao }}"}}.</span>
+      </div>
+      {# As observações vem da tabela contato, pois atualmente não existem em telefone #}
+    <hr ng-if="!$last">
+    </div>
+   
+  </div>
+{% endblock viewedit_form_tab_cntts %}
+
+{% block viewedit_form_tab_tvs %}
+  {#<uib-tab-heading>
+      <i class="el el-list"></i> <span class="hidden-xs">Ativos</span>
+  </uib-tab-heading>#}
+
+  <div class="clearfix">
+    <div class="pull-left"><h4><i class="el el-list"></i> Ativos</h4></div>
+  </div>
+  <div class="table-clients table-default" ng-if="ns_clnts_frm_cntrllr.entity.ativos.length > 0">
+    <div ng-repeat="ativo in ns_clnts_frm_cntrllr.entity.ativos" class="box-ativo" href="#">
+      <div class="navbar navbar-default row">
+        <div class="pull-left"><span class="caret" ng-show="ativo.children.length > 0"></span></div>
+        <div class="col-xs-11">
+          <div class="col-md-12"><h5>{{"{{ ativo.servico_descricao }}"}}</h5></div>
+          <div class="row">
+            <div class="col-md-3" ng-show="ativo.servico_codigo">
+              <p><strong>Código:</strong> {{"{{ ativo.servico_codigo }}"}}</p>
+            </div>
+            <div class="col-md-3" ng-show="ativo.contrato_codigo">
+              <p><strong>Contrato:</strong> {{"{{ ativo.contrato_codigo }}"}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="box-ativo-body">
+        <ul ng-if="ativo.children.length > 0" ng-repeat="oferta_pai in ativo.children">
+          <li ng-class="{'ativo-item-inativo': !oferta_pai.oferta_ativa}"><strong>{{"{{ oferta_pai.oferta_descricao }}"}}</strong> - {{"{{ oferta_pai.oferta_codigo }}"}}
+            <ul ng-if="oferta_pai.children.length > 0" ng-repeat="componente_oferta_pai in oferta_pai.children">
+              <li ng-class="{'ativo-item-inativo': !componente_oferta_pai.componente_ativa}"><strong>{{"{{ componente_oferta_pai.componente_codigo }}"}}</strong> - {{"{{ componente_oferta_pai.componente_descricao }}"}} <span ng-if="componente_oferta_pai.componente_quantidade > 0">(Quantidade: {{"{{ componente_oferta_pai.componente_quantidade }}"}})</span></li>
+            </ul>
+            <ul ng-if="oferta_pai.ofertas.length > 0" ng-repeat="oferta in oferta_pai.ofertas">
+              <li ng-class="{'ativo-item-inativo': !oferta.oferta_ativa}"><strong>{{"{{ oferta.oferta_codigo }}"}}</strong> - {{"{{ oferta.oferta_descricao }}"}}
+                <ul ng-if="oferta.componentes.length > 0" ng-repeat="componente in oferta.componentes">
+                  <li ng-class="{'ativo-item-inativo': !componente.componente_ativa}"><strong>{{"{{ componente.componente_codigo }}"}}</strong> - {{"{{ componente.componente_descricao }}"}} <span ng-if="componente.componente_quantidade > 0">(Quantidade: {{"{{ componente.componente_quantidade }}"}})</span></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <p class="text-center no-content" ng-if="ns_clnts_frm_cntrllr.entity.ativos.length == 0">
+    Não existem ativos para esse cliente.
+  </p>
+
+{% endblock viewedit_form_tab_tvs %}
+
+{% block viewedit_form_tab_s_rs %}
+  {#<uib-tab-heading>
+      <i class="el el-group"></i> <span class="hidden-xs">Usuários</span>
+  </uib-tab-heading>#}
+  <div class="clearfix">
+    <div class="pull-left"><h4><i class="el el-group"></i> Usuários</h4></div>
+    <div class="pull-right">
+      <button type="button" ng-class="{'btn btn-default desabilitado btn-new-user':ns_clnts_frm_cntrllr.entity.bloqueado,'btn btn-warning btn-new-user':!ns_clnts_frm_cntrllr.entity.bloqueado}" ng-click="ns_clnts_frm_cntrllr.addUsuario()">
+        <i class="el el-plus"></i> <span class="hidden-xs">{{'adicionarusuario'|trans}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="table-clients table-default">
+    <table class="table table-condensed table-striped table-bordered table-hover" ng-if="ns_clnts_frm_cntrllr.entity.usuarios.length > 0">
+      <thead>
+        <tr>
+          <th width="60%">Conta</th>
+          <th width="15%">Função</th>
+          <th class="text-center">Notificar</th>
+          <th width="155">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="usuario in ns_clnts_frm_cntrllr.entity.usuarios">
+          <td>
+            <span e-name="clientefuncao" e-form="usuarioform" e-class="hidden" ng-show="false">
+              {{"{{usuario.clientefuncao}}"}}
+            </span>
+            <span editable-email="usuario.conta" e-name="conta" e-form="usuarioform" e-required ng-if="!usuario.clientefuncao">
+              {{"{{usuario.conta || ''}}"}}
+            </span>
+            <span ng-if="usuario.clientefuncao">
+              {{"{{usuario.conta || ''}}"}}
+            </span>
+            <span class="label label-danger" ng-if="usuario.pendente">PENDENTE</span>
+          </td>
+          <td>
+            <span editable-select="usuario.funcao" e-name="funcao" e-form="usuarioform" e-ng-options="f.value as f.label for f in ns_clnts_frm_cntrllr.funcoes" e-required>
+              {{"{{ ns_clnts_frm_cntrllr.mostraFuncao(usuario.funcao) }}"}}
+            </span>
+          </td>
+          <td class="check-nomargin text-center">
+            <span editable-checkbox="usuario.notificar" e-name="notificar" e-form="usuarioform">
+              <span class="label label-success" ng-if="usuario.notificar">Sim</span>
+              <span class="label label-default" ng-if="!usuario.notificar">Não</span>
+            </span>
+          </td>
+          <td class="text-right" style="white-space: nowrap">
+            <!-- form -->
+            <form editable-form name="usuarioform" onaftersave="ns_clnts_frm_cntrllr.salvarUsuario(usuario, $index)" oncancel="ns_clnts_frm_cntrllr.cancelarAcao($index)" ng-show="usuarioform.$visible" class="form-buttons form-inline" shown="ns_clnts_frm_cntrllr.usuario == usuario">
+              <button type="button" ng-disabled="usuarioform.$waiting" ng-click="usuarioform.$cancel()" class="btn btn-default btn-sm btn-link" title="Cancelar">
+                Cancelar
+              </button>
+              <button type="submit" ng-disabled="usuarioform.$waiting" class="btn btn-sm btn-primary" title="Salvar">
+                Salvar
+              </button>
+            </form>
+            <div class="buttons" ng-show="!usuarioform.$visible">
+              <button class="btn btn-success btn-sm btns-acoes" ng-click="ns_clnts_frm_cntrllr.aprovarUsuaro(usuario, $index)" ng-if="usuario.pendente" title="Aprovar">
+                <i class="el el-ok"></i>
+              </button>
+              <button class="btn btn-warning btn-sm btns-acoes" ng-click="ns_clnts_frm_cntrllr.editarUsuario($index)" title="Editar">
+                <i class="el el-pencil"></i>
+              </button>
+              <button class="btn btn-danger btn-sm btns-acoes" ng-click="ns_clnts_frm_cntrllr.removeUsuario($index)" title="Remover">
+                <i class="el el-remove"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-center no-content" ng-if="ns_clnts_frm_cntrllr.entity.usuarios.length == 0">
+    Não existem usuários cadastrados.
+  </p>
+
+{% endblock viewedit_form_tab_s_rs %}
+
+{% block viewedit_form_tab_clssfcdrs %}
+
+  <div class="clearfix">
+    <div class="pull-left"><h4><i class="el el-tags"></i> Classificadores</h4></div>
+  </div>
+  <div class="table-clients table-default">
+    <table class="table table-condensed table-striped table-bordered table-hover" ng-if="ns_clnts_frm_cntrllr.entity.classificadores.length > 0">
+      <thead>
+        <tr>
+          <th width="50%">Label</th>
+          <th width="50%">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="classificador in ns_clnts_frm_cntrllr.entity.classificadores">
+          <td ng-bind="classificador.label"></td>
+          <td ng-bind="classificador.valor"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-center no-content" ng-if="ns_clnts_frm_cntrllr.entity.classificadores.length == 0">
+    Não existem classificadores cadastrados.
+  </p>
+
+
+{% endblock viewedit_form_tab_clssfcdrs %}
+
+{% block viewedit_form_tab_nt_s %}
+  <div class="clearfix">
+    <div class="pull-left"><h4><i class="el el-list-alt"></i> Anotações</h4></div>
+  </div>
+
+  <div class="table-clients table-default">
+    <span ng-if="ns_clnts_frm_cntrllr.entity.anotacao.length > 0"
+        ng-bind-html="ns_clnts_frm_cntrllr.entity.anotacaoHTML">
+    </span>
+    <p class="text-center no-content" ng-if="ns_clnts_frm_cntrllr.entity.anotacao == null || ns_clnts_frm_cntrllr.entity.anotacao.length == 0">
+      Não existem anotações cadastradas.
+    </p>
+  </div>
+
+{% endblock viewedit_form_tab_nt_s %}
+{% block viewedit_form_tab_gnd_d_cntts %}
+  <div class="clearfix">
+    <div class="pull-left"><h4><i class="glyphicon glyphicon-calendar"></i> Agenda de Contatos</h4></div>
+    <div class="pull-right">
+      <button type="button" ng-class="{'btn btn-default desabilitado btn-proximoscontatos':ns_clnts_frm_cntrllr.entity.bloqueado,'btn btn-warning btn-proximoscontatos':!ns_clnts_frm_cntrllr.entity.bloqueado}" ng-click="ns_clnts_frm_cntrllr.novoProximoContato()">
+        <i class="el el-plus"></i> <span class="hidden-xs">{{'adicionarproximoscontatos'|trans}}</span>
+      </button>
+    </div>
+  </div>
+  <div class="table-clients table-default">
+    <table class="table table-condensed table-striped table-bordered table-hover" ng-if="ns_clnts_frm_cntrllr.entity.proximoscontatos.length > 0">
+      <thead>
+        <tr>
+          <th width="10%">Data</th>
+          <th width="10%">Horário</th>
+          <th width="20%">Responsável</th>
+          <th width="35%">Assunto</th>
+          <th width="10%">Situação</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-click="ns_clnts_frm_cntrllr.mostraProximoContato(proximocontato.proximocontato)" ng-repeat="proximocontato in ns_clnts_frm_cntrllr.entity.proximoscontatos">
+          <td>
+            <span  >
+              {{"{{ proximocontato.data | date:'dd/MM/yyyy'}}"}}
+            </span>
+          </td>
+          <td>
+            <span  >
+              {{"{{ proximocontato.hora | toTime }}"}}
+            </span>
+          </td>
+          <td>
+            <span  >
+              {{"{{ proximocontato.responsavel_web }}"}}
+            </span>
+          </td>
+          <td>
+            <span>
+              {{"{{ proximocontato.assunto.descricao }}"}}
+            </span>
+          </td>
+          <td>
+            <span class="label label-warning" ng-if="proximocontato.situacao == 0 && !proximocontato.ematraso">
+              {{'pendente'|trans}}
+            </span>
+            <span class="label label-danger" ng-if="proximocontato.situacao == 0 && proximocontato.ematraso">
+              {{'ematraso'|trans}}
+            </span>
+            <span class="label label-success" ng-if="proximocontato.situacao == 1">
+              {{'concluído'|trans}}
+            </span>
+            <span class="label label-default" ng-if="proximocontato.situacao == 2">
+              {{'cancelado'|trans}}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-center no-content" ng-if="ns_clnts_frm_cntrllr.entity.proximoscontatos.length == 0">
+    Não existem agendamentos.
+  </p>
+
+
+{% endblock viewedit_form_tab_gnd_d_cntts %}

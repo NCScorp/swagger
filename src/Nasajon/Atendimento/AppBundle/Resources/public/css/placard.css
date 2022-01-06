@@ -1,0 +1,30 @@
+/* Box Home (Client) - Atendimentos e respostas */
+
+.placard {
+    padding: 10px 5px 20px;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border: 1px solid #dddddd;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.placard-value {
+    font-size: 3.0em;
+    color: #df7d60;
+    line-height: 1.2em;
+}
+
+.placard-description {
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.placard .percent {
+  font-size: 0.8em;
+}
+
+.placard .percent i {
+  font-size: 0.6em;
+}

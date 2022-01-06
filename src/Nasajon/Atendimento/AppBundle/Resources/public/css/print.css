@@ -1,0 +1,227 @@
+/*CSS para impressão*/
+
+@media print {
+  * {
+    background:transparent !important;
+    color:#000 !important;
+    text-shadow:none !important;
+    filter:none !important;
+    -ms-filter:none !important;
+    font-family: Arial, "Trebuchet", sans-serif !important;
+    font-size: 11pt;
+  }
+
+  body {
+    margin:0;
+    padding:0;
+    line-height: 1.4em;
+    color: #000;
+  }
+
+  @page {
+    margin: 0.8cm 1.2cm 1.2cm 1.2cm;
+    size:landscape;
+  }
+
+  nav, footer, video, audio, object, embed {
+    display:none;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  h1 {
+    font-size: 24pt;
+  }
+
+  h2 {
+    font-size: 20pt;
+  }
+
+  h3, h3 span {
+    font-size: 18pt;
+    margin: 0;
+  }
+
+  a, a:visited {
+    text-decoration: none;
+  }
+
+  a:link:after, a:visited:after {
+    content: " " attr(href) " ";
+  }
+
+  a:after, a[href^="javascript:"]:after, a[href^="#"]:after {
+    content: "";
+  }
+
+  p a {
+    word-wrap: break-word;
+  }
+
+  p {
+    widows: 3;
+    orphans: 3;
+  }
+
+  input {
+    padding: 0px !important;
+  }
+
+  .form-control {
+    padding: 0;
+  }
+
+  .article-area {
+    width: 100%;
+    margin: 0;
+    float: none !important;
+    height: auto;
+  }
+
+  .height-full-calc, .height-full {
+    height: auto;
+  }
+
+  .view-solicitacao,
+  .article-area,
+  .panel-default,
+  .vertical-menu {
+      overflow-x: inherit;
+      overflow-y: inherit;
+  }
+
+  .nav-tabs>li.active>a {
+    border: none;
+    background: none;
+    padding: initial;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .nav-tabs {
+    padding: 0;
+    border: none;
+  }
+
+  .chart {
+    font-size: 10pt !important;
+  }
+
+  .form-control {border: none; padding: none;}
+
+  .nav-atendimento-system,
+  .headline-page, .lista-artigos,
+  .input-group-btn .btn-default,
+  .input-group-btn .btn-default img,
+  .nav-tabs .nav-item,
+  #add-filtro.ng-empty,
+  .ns_relatorios .filter table td:last-child,
+  .btn,
+  .btn-group,
+  .dropdown,
+  .fixed-bar .hidden-md.hidden-lg,
+  table .tablesort-sortable:after,
+  table .tablesort-asc:after,
+  table .tablesort-desc:after,
+  .ta-toolbar,
+  .btn-toolbar,
+  .hidden-print  {
+    display: none;
+    visibility: hidden;
+  }
+
+  .nav-tabs .nav-item.active {
+    display: block;
+    visibility: visible;
+  }
+
+  .ns_relatorios .filter td {
+    border: 1px solid #dddddd;
+  }
+
+  .forms .col-xs-1, .forms .col-sm-1, .forms .col-md-1, .forms .col-lg-1, .forms .col-xs-2, .forms .col-sm-2, .forms .col-md-2, .forms .col-lg-2, .forms .col-xs-3, .forms .col-sm-3, .forms .col-md-3, .forms .col-lg-3, .forms .col-xs-4, .forms .col-sm-4, .forms .col-md-4, .forms .col-lg-4, .forms .col-xs-5, .forms .col-sm-5, .forms .col-md-5, .forms .col-lg-5, .forms .col-xs-6, .forms .col-sm-6, .forms .col-md-6, .forms .col-lg-6, .forms .col-xs-7, .forms .col-sm-7, .forms .col-md-7, .forms .col-lg-7, .forms .col-xs-8, .forms .col-sm-8, .forms .col-md-8, .forms .col-lg-8, .forms .col-xs-9, .forms .col-sm-9, .forms .col-md-9, .forms .col-lg-9, .forms .col-xs-10, .forms .col-sm-10, .forms .col-md-10, .forms .col-lg-10, .forms .col-xs-11, .forms .col-sm-11, .forms .col-md-11, .forms .col-lg-11, .forms .col-xs-12, .forms .col-sm-12, .forms .col-md-12, .forms .col-lg-12,
+  .nav-tabs>li>a, a, .ns_relatorios .nav-tabs, .headline-sub
+  {
+    padding: initial;
+  }
+
+  .highcharts-container tspan {
+    font-size: 10pt !important;
+  }
+
+  .ta-scroll-window>.ta-bind {
+    padding: 0px !important;
+  }
+
+  .resposta-comentario {
+    display: none;
+    visibility: hidden;
+  }
+
+  .box-with-head {
+    overflow-y: visible;
+  }
+
+  .box-with-head > div > .forms {
+    position:inherit !important;
+    overflow-y:visible !important;
+    height: auto !important;
+    width: auto !important;
+  }
+
+  .reply-text a {
+    display: none;
+    visibility: hidden;
+  }
+
+  .dl-horizontal dt {
+    float: none;
+    overflow: visible;
+    text-align: left;
+    width: auto;
+    text-overflow: unset;
+    white-space: inherit;
+  }
+
+  .dl-horizontal dd {
+    margin-left: 0;
+  }
+
+  .ui-select-container.dropdown {
+    display:block !important;
+    visibility: visible !important;
+  }
+
+  .fixed-bar.headline-sub {
+    position: inherit;
+  }
+
+  .print-visible,
+  .print-visible.dropdown,
+  .print-visible .btn,
+  .print-visible .btn-default  {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  .print-visible .btn,
+  .print-visible .form-control {
+    padding:0 !important;
+  }
+
+  .print-visible .ui-select-match > .ui-select-toggle span {
+    left:0 !important;
+  }
+
+  .ui-select-match i {
+    display: none;
+    visibility: hidden;
+  }
+
+  .attachments .block-attach {
+    margin:0 15px;
+  }
+  
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="configuracoesbancarias" label="configuracoesbancarias" project="financas" >
+    <entity schema="financas" table="configuracoesbancarias">
+        <fieldmodel name="configuracaobancaria" column="configuracaobancaria" datatype="guid" isid="true" />
+        <fieldmodel name="nome" column="nome" datatype="string" />
+        <fieldmodel name="valor" column="valor" datatype="string" />
+        <fieldmodel name="versao" column="versao" datatype="integer" />
+        <fieldmodel name="layoutcobranca" column="layoutcobranca" datatype="guid" />
+        <fieldmodel name="lastupdate" column="lastupdate" datatype="datetime" />
+        <fieldmodel name="tenant" column="tenant" datatype="integer" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">layoutcobranca</constructoritem>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser>
+        <fieldsbrowser>
+            <fieldbrowser  alias="configuracaobancaria" entitylink="configuracaobancaria" isid="true" visible="false" />
+            <fieldbrowser  alias="Nome" entitylink="nome" visible="true"  alloworder="true" />
+            <fieldbrowser  alias="Valor" entitylink="valor" visible="true" />
+            <fieldbrowser  alias="Versão" entitylink="versao" visible="true" />
+            <fieldbrowser  alias="layout Cobrança" entitylink="layoutcobranca" visible="true" />
+            <fieldbrowser  alias="Última Atualização" entitylink="lastupdate" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="historicoscontatosclientes" label="historicoscontatosclientes" project="atendimento" >
+    <entity schema="atendimento" table="historicoscontatosclientes" >        
+        <fieldmodel name="historicocontatocliente"  column="historicocontatocliente" datatype="guid" isid="true" />
+        <fieldmodel name="cliente"  column="cliente" datatype="guid" />
+        <fieldmodel name="contato"  column="contato" datatype="guid" />
+        <fieldmodel name="acao"  column="acao" datatype="integer" />
+        <fieldmodel name="valorantigo"  column="valorantigo" datatype="boolean" />
+        <fieldmodel name="valornovo"  column="valornovo" datatype="boolean" />
+        <fieldmodel name="tenant"  column="tenant" datatype="boolean" />
+        <fieldmodel name="responsavel"  column="responsavel" datatype="json" />
+        <fieldmodel name="data"  column="data" datatype="datetime" />
+        <fieldmodel name="tenant"  column="tenant" datatype="integer" />        
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table">
+        <fieldsbrowser>
+            <fieldbrowser alias="historicocontatocliente" entitylink="historicocontatocliente" isid="true" />            
+            <fieldbrowser alias="cliente" entitylink="cliente" visible="false" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="contato" entitylink="contato" visible="false" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="acao" entitylink="acao" visible="false" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="valorantigo" entitylink="valorantigo" visible="false" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="valornovo" entitylink="valornovo" visible="false" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="tenant" entitylink="tenant" visible="false" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="responsavel" entitylink="responsavel" visible="false" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="data" entitylink="data" visible="false" cansearch="true" avaliable="true" />
+            
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Artigo">
+        <layout>
+            <headerform>
+                <row>
+                    
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>historicoscontatosclientesnovo</name>
+                <fromto valueapi="cliente" valueentity="cliente"/>
+                <fromto valueapi="contato" valueentity="contato"/>
+                <fromto valueapi="acao" valueentity="acao"/>
+                <fromto valueapi="valorantigo" valueentity="valorantigo"/>
+                <fromto valueapi="valornovo" valueentity="valornovo"/>
+                <fromto valueapi="responsavel" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

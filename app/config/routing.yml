@@ -1,0 +1,26 @@
+options_api:
+    resource: "routing/options.yml"
+    type: rest
+    prefix: /api
+    options:
+        expose: true
+
+ekreative_health_check:
+    resource: "@EkreativeHealthCheckBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+nasajon_login_bundle:
+    resource: "@NasajonLoginBundle/Resources/config/routing.yml"
+    options:
+        expose: true
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+nasajon_atendimento_app:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/app.yml"
+    type:     rest
+    prefix:   /
+    options:
+        expose: true

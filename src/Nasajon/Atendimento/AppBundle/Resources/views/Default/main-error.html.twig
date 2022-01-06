@@ -1,0 +1,53 @@
+{% extends 'NasajonComponentesInterfaceBundle:Layout:layout.html.twig' %}
+{% use 	'NasajonComponentesInterfaceBundle:Layout:header.html.twig' %}
+
+{% block metadata %}
+    <meta name="msapplication-config" content="none"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid sistema-atendimento" ng-app="Atendimento" ng-cloak>
+    <div class="nav-atendimento-system">
+        <div class="col-md-1 nav-atendimento">
+            {% block menusidebar %}
+
+            {% endblock %}
+        </div><!--/nav-atendimento-->
+    </div><!--/row-->
+    <toaster-container toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-center'}"></toaster-container>
+    <div ng-class="{ 'geral clearfix' : !('home'| isStateEq), 'home' : ('home'| isStateEq)}" ui-view>
+        {% block mainpage %}
+        {% endblock %}
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block stylesheet %}
+<link rel="icon" href="//s3-us-west-2.amazonaws.com/static.nasajon/img/favicon.ico" />
+
+<link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/css/bootstrap.css" />
+<link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/lib/elusive-icons/2.0.0/elusive-icons.min.css">
+
+    {% stylesheets
+
+        '@NasajonComponentesInterfaceBundle/Resources/public/css/header.css'
+        '@NasajonComponentesInterfaceBundle/Resources/public/css/nasajon.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/default.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/botoes.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/atendimento.css'        
+        '@NasajonAtendimentoAppBundle/Resources/public/css/page-error.css'    
+    %}
+<link rel="stylesheet" href="{{ asset_url }}" />
+{% endstylesheets %}
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" href="{{ asset('bundles/nasajoncomponentesinterface/css/ie8.css') }}" />
+<![endif]-->
+
+{% endblock stylesheet %}
+
+{% block javascripts %}
+{% endblock %}

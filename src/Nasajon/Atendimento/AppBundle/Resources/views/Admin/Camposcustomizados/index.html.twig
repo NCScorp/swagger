@@ -1,0 +1,40 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/Atendimentoscamposcustomizados/index.html.twig' %}
+{% block index_header -%}
+<div class="col-md-12 headline-page ng-scope">
+    <div class="headline clearfix">
+        <div class="breadcrumb-trail hidden-xs hidden-sm pull-left"><a ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Configurações">Configurações</a> > <span class="select-page">Campos customizados</span></strong></div>
+        <a class="btn btn-xs btn-warning" ui-sref="servicos_atendimentoscamposcustomizados_new({})" href="#/configuracoes/camposcustomizados/new">
+                <i class="el el-plus"></i> Criar
+            </a>
+    </div>
+</div>
+{% endblock %}
+{% block index_panel_header -%}
+     <div class="headline-sub clearfix hidden-lg hidden-md">
+         <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Voltar às configurações" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> Campos customizados</h3>
+    </div>
+{% endblock %}
+
+{% block index_list -%}
+  <div class="height-full" ng-class="{'onloading' : srvcs_tndmntscmpscstmzds_lst_cntrllr.isBusy() }">
+    <ul class="list-group reorder" id="servicos_atendimentoscamposcustomizados_list" dnd-list="srvcs_tndmntscmpscstmzds_lst_cntrllr.entities">
+        {%- block viewedit_view_list_item %}
+        <li href ui-sref='servicos_atendimentoscamposcustomizados_edit({tenant : controller.constructors.tenant,atendimentocampocustomizado : entity.atendimentocampocustomizado})'  class="list-group-item"
+            ng-repeat="entity in srvcs_tndmntscmpscstmzds_lst_cntrllr.entities"
+            ng-drop="true"
+            ng-drop-success="srvcs_tndmntscmpscstmzds_lst_cntrllr.order($index, $data)"
+            ui-sref-active="active"
+            ng-class="{'selected': selected === entity}"
+            ng-drag="true" ng-drag-data="entity" ng-class="obj.nome">
+            <span class="ico-move pull-right"><i class="el el-move"></i></span>
+            <h4 class="list-group-item-heading">{{'{{ entity.label }} '}}</h4>
+            <p class="list-group-item-text"><strong>Tipo:</strong> {{"{{ {'CB': 'Combobox', 'TE' : 'Campo de texto'}[entity.tipo]}}"}}</p>
+            <p class="list-group-item-text"><strong>Exibido pro cliente:</strong> {{'{{ entity.exibidoformcontato? "Sim" : "Não"  }} '}} {{'{{ entity.obrigatorio ? "(Obrigatório)" : "" }} '}}</p>
+        </li>
+        {%- endblock viewedit_view_list_item %}
+        <p class="text-center nfound" ng-if="srvcs_tndmntscmpscstmzds_lst_cntrllr.entities.length == 0 && !srvcs_tndmntscmpscstmzds_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+
+    </ul>
+  </div>
+
+{% endblock index_list -%}

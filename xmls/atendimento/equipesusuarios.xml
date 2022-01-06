@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="equipesusuarios" label="equipesusuarios" project="atendimento" >
+    <entity schema="atendimento" table="equipesusuarios">
+        <fieldmodel name="equipeusuario" datatype="guid" column="equipeusuario" isid="true" />
+        <fieldmodel name="equipe" datatype="guid" column="equipe" />
+        <fieldmodel name="usuario" datatype="string" column="usuario" />
+        <fieldmodel name="usuariotipo" datatype="string" column="usuariotipo" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">equipe</constructoritem>
+        <constructoritem required="false">usuariotipo</constructoritem>
+    </constructors>
+    <viewbrowser layout="table" paginate="false" label="Equipes Usuários" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="equipeusuario" visible="false" entitylink="equipeusuario" isid="true" />
+            <fieldbrowser alias="usuario" visible="true" cansearch="true" entitylink="usuario" />
+            <fieldbrowser alias="usuariotipo" visible="true" cansearch="true" entitylink="usuariotipo" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Equipe usuário" mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="usuario" entitylink="usuario" controltype="textedit">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo usuário deve ser preenchido." />
+                        </validates>
+                    </cell>
+                    <cell name="usuariotipo" entitylink="usuariotipo" controltype="textedit">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo tipo de usuário deve ser preenchido." />
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>EquipeUsuarioNovo</name>
+                <fromto valueapi="equipe" valueentity="equipe" />
+                <fromto valueapi="usuario" valueentity="usuario" />
+                <fromto valueapi="usuariotipo" valueentity="usuariotipo" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>EquipeUsuarioExcluir</name>
+                <fromto valueapi="equipe" valueentity="equipe" />
+                <fromto valueapi="usuario" valueentity="usuario" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

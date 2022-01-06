@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="ServicosCatalogo" label="ServicosCatalogo" project="Servicos" orphan="true">
+    <config>
+        <autosave>false</autosave>
+    </config>
+    <entity schema="servicos" table="vw_servicoscatalogo">
+        <fieldmodel name="servicocatalogo" datatype="guid" isid="true" column="servicocatalogo"/>            
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />        
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser layout="list" paginate="false" label="Ofertas Comerciais" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser alias="servicocatalogo" entitylink="servicocatalogo" isid="true" visible="false" cansearch="true"/>
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" cansearch="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

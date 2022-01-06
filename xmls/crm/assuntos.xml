@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="assuntos" label="assuntos" project="crm" >
+    <entity schema="crm" table="assuntos">
+        <fieldmodel name="assunto" datatype="guid" column="assunto" isid="true" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Assuntos">
+        <fieldsbrowser>
+            <fieldbrowser alias="assunto" visible="true" entitylink="assunto" isid="true" />
+            <fieldbrowser alias="descricao" visible="true" entitylink="descricao" />
+            <fieldbrowser alias="tenant" visible="true" entitylink="tenant" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

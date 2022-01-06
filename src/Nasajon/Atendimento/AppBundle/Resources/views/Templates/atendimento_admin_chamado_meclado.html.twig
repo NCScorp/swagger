@@ -1,0 +1,27 @@
+<div>
+    <div class="headline-sub clearfix" style="margin:0;">
+        <h3>Atenção!</h3>
+        
+    </div>
+
+    <hr>
+
+    <div class="modal-body encaminhar-email reset-top" id="modal-body"> 
+      <p>
+        <strong>
+            <i class="fa fa-info-circle"></i> O chamado "#{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.numeroprotocolo}}'}}" 
+            foi mesclado ao chamado principal "#{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a_numeroprotocolo}}'}}" 
+            e agora a página atual encontra-se disponível apenas para consulta
+        </strong>
+      </p>
+      <p>
+        Deseja acessar o chamado principal "#{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a_numeroprotocolo}}'}}" para editar as 
+        informações referentes ao chamado "#{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.numeroprotocolo}}'}}"  e obter detalhes de todo 
+        chamado mesclado a este?
+      </p>
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.modalAvisoMeslcado.close()" data-dismiss="modal">Fechar</button>
+        <a href ui-sref='atendimento_admin_solicitacoes_show({atendimento : tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a })' class="btn btn-primary"><i class="fa fa-edit"></i> Ir para chamado principal</a>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div>
+    <div class="headline-sub clearfix" style="margin:0;">
+        <h3>Mesclar Chamados à</h3>
+        
+    </div>
+
+    <hr>
+
+    <div class="modal-body encaminhar-email reset-top" id="modal-body"> 
+      <p>
+        <strong>Mesclar chamados: 
+          <span class="label label-success numeroprotocolo" ng-repeat="chamados in mesclarModal.chamados">
+            #{{'{{chamados.numeroprotocolo}}'}} 
+          </span>
+          ao chamado:
+        </strong>
+      </p>
+      <div class="row">
+        <div class="col-md-12">
+          <mda-ui-select 
+              service="AtendimentoAdminSolicitacoes" 
+              constructors="{}"
+              opts='{"attr": {"id": "atendimentoadminsolicitacoes",
+                              "name" : "atendimento",
+                              "ng-model" : "mesclarModal.chamadodestino",
+                              "ng-disabled" : "mesclarModal.submitting",
+                              "placeholder" : "Selecione um chamado",
+                              "required" : "true"},
+                      "match": "numeroprotocolo"}'
+              fields='["numeroprotocolo.toString()"]'    
+          ></mda-ui-select>
+        </div>
+      </div>
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="mesclarModal.close()" data-dismiss="modal">Fechar</button>
+        <button
+        type="button"
+        name="submit"
+        class="btn btn-primary"
+        ng-click="mesclarModal.save()"
+        ng-disabled="">
+        Salvar
+        </button>
+    </div>
+</div>

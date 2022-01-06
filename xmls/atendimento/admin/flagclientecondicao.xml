@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="flagclientecondicao" label="flagclientecondicao" project="atendimento/admin"  orphan="false">
+    <entity schema="atendimento" table="flagsclientescondicoes">
+        <fieldmodel name="flagclientecondicao" datatype="guid" isid="true" column="flagclientecondicao"/>
+        <fieldmodel name="flagcliente" datatype="guid" column="flagcliente" useCaseLink="atendimento\admin\flagcliente" entityJoinType="left" />
+        <fieldmodel name="campo" datatype="string" column="campo"/>
+        <fieldmodel name="tipo" datatype="integer" column="tipo" />
+        <fieldmodel name="operador" datatype="string" column="operador"/>
+        <fieldmodel name="valor" datatype="string" column="valor"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />        
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">flagcliente</constructoritem>
+        <constructoritem required="true">tipo</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser entitylink="flagclientecondicao" isid="true" />            
+            <fieldbrowser entitylink="tenant" cansearch="false" visible="false" avaliable="false" />
+            <fieldbrowser alias="campo" entitylink="campo" width="20" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipo" entitylink="tipo" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="operador" entitylink="operador" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="valor" entitylink="valor" width="80" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="flagclientecondicao" controltype="hidden" entitylink="flagclientecondicao" />
+                    <cell name="campo" controltype="textedit" entitylink="campo" label="Campo">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="operador" controltype="textedit" entitylink="operador" label="Operador">
+                        <validates>
+                            <validate type="vnull" displaytext="Operador não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="valor" controltype="textedit" entitylink="valor" label="Valor"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>FlagClienteCondicaoNova</name>
+                <fromto valueapi="flagcliente" valueentity="flagcliente"/>
+                <fromto valueapi="tipo" valueentity="tipo"/>
+                <fromto valueapi="campo" valueentity="campo"/>                
+                <fromto valueapi="operador" valueentity="operador"/>
+                <fromto valueapi="valor" valueentity="valor"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>FlagClienteCondicaoAlterar</name>
+                <fromto valueapi="flagclientecondicao" valueentity="flagclientecondicao"/>
+                <fromto valueapi="campo" valueentity="campo"/>
+                <fromto valueapi="operador" valueentity="operador"/>
+                <fromto valueapi="valor" valueentity="valor"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>FlagClienteCondicaoExcluir</name>
+                <fromto valueapi="flagclientecondicao" valueentity="flagclientecondicao"/>                
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

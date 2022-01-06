@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="titulos" label="titulos" project="atendimento/cliente">
+    <entity schema="atendimento" table="vwtitulos_v2">
+        <fieldmodel name="id" datatype="guid" column="id" isid="true" />        
+        <fieldmodel name="numero" datatype="string" column="numero" />
+        <fieldmodel name="linhadigitavel" datatype="string" column="linhadigitavel" />
+        <fieldmodel name="vencimento" datatype="date" column="vencimento" />        
+        <fieldmodel name="emissao" datatype="date" column="emissao" />
+        <fieldmodel name="valorbruto" datatype="float" column="valorbruto" />        
+        <fieldmodel name="valor" datatype="float" column="valor" />
+        <fieldmodel name="situacao" datatype="integer" column="situacao" />   
+        <fieldmodel name="situacaotexto" datatype="string" column="situacaotexto" />   
+        <fieldmodel name="origem" datatype="integer" column="origem" />  
+        <fieldmodel name="pisretido" datatype="float" column="pisretido" />    
+        <fieldmodel name="aliquotapis" datatype="float" column="aliquotapis" />
+        <fieldmodel name="cofinsretido" datatype="float" column="cofinsretido" />
+        <fieldmodel name="aliquotacofins" datatype="float" column="aliquotacofins" />    
+        <fieldmodel name="csllretido" datatype="float" column="csllretido" />
+        <fieldmodel name="aliquotacsll" datatype="float" column="aliquotacsll" />        
+        <fieldmodel name="irretido" datatype="float" column="irretido" />   
+        <fieldmodel name="aliquotair" datatype="float" column="aliquotair" />       
+        <fieldmodel name="aliquotaiss" datatype="float" column="aliquotaiss" />
+        <fieldmodel name="issretido" datatype="float" column="issretido" /> 
+        <fieldmodel name="inssretido" datatype="float" column="inssretido" />
+        
+        <fieldmodel name="nossonumero" datatype="string" column="nossonumero" />        
+        <fieldmodel name="sinal" datatype="integer" column="sinal" />
+        <fieldmodel name="codigobanco" datatype="integer" column="codigo_banco" />
+        <fieldmodel name="chaveseguranca" datatype="json" column="chaveseguranca" />
+        <fieldmodel name="layoutcobranca" datatype="guid" column="layoutcobranca" />
+        <fieldmodel name="formapagamento" datatype="integer" column="formapagamento" />
+        <fieldmodel name="tipopagamento" datatype="integer" column="tipopagamento" />        
+        <fieldmodel name="desconto" datatype="float" column="desconto" />
+        <fieldmodel name="datalimitedesconto" datatype="date" column="datalimitedesconto" />
+        <fieldmodel name="multa" datatype="float" column="multa" />        
+        <fieldmodel name="percentualmulta" datatype="float" column="percentualmulta" />
+        <fieldmodel name="juros" datatype="float" column="juros" />
+        <fieldmodel name="percentualjurosdiario" datatype="float" column="percentualjurosdiario" />
+        <fieldmodel name="observacao" datatype="string" column="observacao" />        
+        
+        <!--
+        <fieldmodel name="emissaoanomes" datatype="string" column="emissaoanomes" />
+        <fieldmodel name="emissaodia" datatype="string" column="emissaodia" />        
+        <fieldmodel name="vencimentoanomes" datatype="string" column="vencimentoanomes" />
+        <fieldmodel name="vencimentodia" datatype="string" column="vencimentodia" />         
+        
+        
+        <fieldmodel name="valorliquido" datatype="float" column="valorliquido" />-->
+                
+        <fieldmodel name="configuracoesbancarias" datatype="json" notMapped="true" />              
+        <fieldmodel name="cliente" datatype="guid" column="id_pessoa" useCaseLink="ns\clientes" entityJoinType="left" />
+        <fieldmodel name="conta" datatype="guid" column="conta" useCaseLink="financas\contas" entityJoinType="left" />
+        <fieldmodel name="enderecocobranca" datatype="guid" useCaseLink="ns\enderecos" entityJoinType="left" notMapped="true" />
+        
+        <fieldmodel name="tipo" datatype="integer" column="tipo" />
+        <fieldmodel name="modelo" datatype="string" column="modelo" />
+        <fieldmodel name="id_conjunto_anexo" datatype="guid" column="id_conjunto_anexo" />
+        
+        <!--        <fieldmodel name="id_rps" datatype="guid" column="id_rps" />
+        <fieldmodel name="id_docfis" datatype="guid" column="id_docfis" />-->
+        <fieldmodel name="estabelecimento" datatype="guid" column="id_estabelecimento" useCaseLink="ns\estabelecimento" entityJoinType="left" />
+        
+        <fieldmodel name="lastupdate" datatype="date" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" label="Boletos e Faturas" layout="table" target="window">
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="id" isid="true" />
+            <fieldbrowser alias="Número" entitylink="numero" visible="true" cansearch="false" />
+            <fieldbrowser alias="Linha digitável" entitylink="linhadigitavel" visible="true" cansearch="false" />
+            <fieldbrowser alias="Data" entitylink="emissao" visible="true" cansearch="false" alloworder="true" />
+            <fieldbrowser alias="Vencimento" entitylink="vencimento" visible="true" cansearch="false" alloworder="true" />
+            <fieldbrowser alias="Valor" entitylink="valorbruto" visible="true" cansearch="false" alloworder="true" />
+            <fieldbrowser entitylink="situacao" visible="false" cansearch="false" alloworder="true" />
+            <fieldbrowser alias="Situação" entitylink="situacaotexto" visible="true" cansearch="false" alloworder="true" />
+            <fieldbrowser alias="Tipo" entitylink="tipo" visible="true" cansearch="false" alloworder="true" />
+            <fieldbrowser alias="Modelo" entitylink="modelo" visible="true" cansearch="false" alloworder="true" />
+            <fieldbrowser alias="nossonumero" entitylink="nossonumero" visible="false" cansearch="false" alloworder="false" />
+            <fieldbrowser alias="codigobanco" entitylink="codigobanco" visible="false" cansearch="false" alloworder="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

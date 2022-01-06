@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="telefones" label="telefones" project="ns" >
+    <entity schema="ns" table="telefones">
+        <fieldmodel name="id" datatype="guid" isid="true" column="id"/>
+        <fieldmodel name="cliente" datatype="guid" column="id_pessoa"/>
+        <fieldmodel name="contato" datatype="guid" column="contato"/>
+        <fieldmodel name="ddd" datatype="string" column="ddd"/>
+        <fieldmodel name="telefone" datatype="string" column="telefone"/>
+        <fieldmodel name="chavetel" datatype="string" column="chavetel"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="ramal" datatype="string" column="ramal"/>
+        <fieldmodel name="tptelefone" datatype="string" column="tptelefone"/> 
+        <!--0-Residencial,1-Comercial,2-Celular,3-Fax,4-Pager,5-Virtual,6-Recado,7-Telefax -->
+        <fieldmodel name="ddi" datatype="string" column="ddi"/>
+        <fieldmodel name="ordemimportancia" datatype="integer" column="ordemimportancia"/>
+        <fieldmodel name="tenant" datatype="string" column="tenant"/>
+        <fieldmodel name="principal" datatype="string" column="principal"/>
+        <fieldmodel name="contato" datatype="guid" column="contato"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table">
+        <fieldsbrowser>
+            <fieldbrowser alias="id" entitylink="id" isid="true" />
+            <fieldbrowser alias="ddd" entitylink="ddd" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="ddi" entitylink="ddi" width="20" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="telefone" entitylink="telefone" width="40" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="descricao" entitylink="descricao" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="ramal" entitylink="ramal" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="principal" entitylink="principal" width="20" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="contato" entitylink="contato" width="20" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="tptelefone" entitylink="tptelefone" width="20" cansearch="false" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Telefone">
+        <layout>
+            <headerform>                
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>TelefoneNovo_v2</name>
+                <fromto valueapi="contato" valueentity="contato"/>
+                <fromto valueapi="id_pessoa" valueentity="cliente"/>
+                <fromto valueapi="ddd" valueentity="ddd"/>
+                <fromto valueapi="telefone" valueentity="telefone"/>
+                <fromto valueapi="chavetel" valueentity="chavetel"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="ramal" valueentity="ramal"/>
+                <fromto valueapi="tptelefone" valueentity="tptelefone"/>
+                <fromto valueapi="ddi" valueentity="ddi"/>
+                <fromto valueapi="ordemimportancia" valueentity="ordemimportancia"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="principal" valueentity="principal"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>TelefoneAlterar_v2</name>
+                <fromto valueapi="id" valueentity="id"/>
+                <fromto valueapi="contato" valueentity="contato"/>
+                <fromto valueapi="id_pessoa" valueentity="cliente"/>
+                <fromto valueapi="ddd" valueentity="ddd"/>
+                <fromto valueapi="telefone" valueentity="telefone"/>
+                <fromto valueapi="chavetel" valueentity="chavetel"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="ramal" valueentity="ramal"/>
+                <fromto valueapi="tptelefone" valueentity="tptelefone"/>
+                <fromto valueapi="ddi" valueentity="ddi"/>
+                <fromto valueapi="ordemimportancia" valueentity="ordemimportancia"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="principal" valueentity="principal"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>TelefoneExcluir</name>
+                <fromto valueapi="id" valueentity="id"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

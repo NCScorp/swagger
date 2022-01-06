@@ -1,0 +1,37 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Arquivos/index.html.twig' %}
+{% block index_panel_header -%}{% endblock index_panel_header -%}
+
+{% block index_list -%}
+    {% if descricao != null %}
+        <div class='center-board col-lg-12 article-area' ui-view>
+            <div class="center-board col-lg-12 article-area" ui-view>
+                <div class="panel panel-gray arquivo">
+                    <div class="bt-new-article new-article">
+                        <div class="info-post" dynamic="tndmnt_clnt_rqvs_lst_cntrllr.downloadsDescricao">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="col-md-4 col-sm-6" ng-repeat="entity in tndmnt_clnt_rqvs_lst_cntrllr.entities">
+        <div class="panel panel-gray arquivo">
+            <div class="panel-body">
+                <div>
+                    <a href="{{'{{entity.caminho}}'}}" target="_blank"><h4 class="descricao">{{'{{ entity.titulo }} '}}</h4></a>
+                    <span class="info-post descricao"><a href="{{'{{entity.caminho}}'}}" target="_blank">{{'{{ entity.nomearquivo }}'}}</a> ({{'{{entity.tamanho | Filesize}}'}})</span>
+                    <span class="info-post"><strong>Data de atualização:</strong> {{'{{entity.updated_at | asDate | date: "dd/MM/yyyy"}}'}}</span>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <p class="descricao" ng-bind-html='entity.resumo'></p>
+                            <p ng-if="entity.descricao.length > 90"><a href="#" ng-click="tndmnt_clnt_rqvs_lst_cntrllr.openmodal(entity)">Ver mais</a></p>
+                            <p ng-if="entity.descricao.length <= 90"><a href="#" ng-click="tndmnt_clnt_rqvs_lst_cntrllr.openmodal(entity)">&nbsp</a></p>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="text-right"><a href="{{'{{entity.caminho}}'}}" target="_blank" class="btn btn-primary"><i class="el el-download-alt"></i> Baixar</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>   
+{% endblock index_list -%}

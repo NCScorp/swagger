@@ -1,0 +1,75 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/Atendimentoscamposcustomizados/form.html.twig' %}
+
+{% block viewedit_form_tipo %}
+    <div class="form-group">
+        <label class="control-label required">Tipo</label>
+        <div id="tipo">
+            <label for="tipo_0" class="radio-inline required">
+                <input type="radio" id="tipo_0" name="tipo" required="required" ng-model="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.tipo" ng-disabled="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.submitting" inline="1" value="TE" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+                Campo de texto
+            </label>
+            <label for="tipo_1" class="radio-inline required">
+                <input type="radio" id="tipo_1" name="tipo" required="required" ng-model="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.tipo" ng-disabled="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.submitting" inline="1" value="CB" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required">
+                Combobox
+            </label>
+        </div>
+        <div ng-messages="srvcs_tndmntscmpscstmzds_frm_cntrllr.form.tipo.$error"  ng-if='srvcs_tndmntscmpscstmzds_frm_cntrllr.form.tipo.$dirty || srvcs_tndmntscmpscstmzds_frm_cntrllr.submitted'>
+            <div class="alert alert-danger" role="alert" ng-message="required">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Erro:</span>
+                O campo tipo não pode ser vazio.
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="panel-rules">
+        <div class="panel panel-default" ng-show="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.tipo == 'CB'">
+            <div class="panel-heading">Valores customizados</div>
+
+            <table class="table table-condensed" dnd-list="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.opcoes" >
+                <tbody>
+                    <tr ng-if="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.opcoes.length == 0">
+                        <td>Nenhum</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="opcao in srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.opcoes track by $index"
+                        ng-drop="true"
+                        ng-drop-success="srvcs_tndmntscmpscstmzds_frm_cntrllr.order($index, $data)"
+                        ui-sref-active="active"
+                        ng-class="{'selected': selected === opcao}"
+                        ng-drag="true" ng-drag-data="opcao" ng-class="obj.nome"
+                        >
+                        <td width="5%" class="text-center ico-move"><i class="el el-move"></i></td>
+                        <td width="87%">
+                            <input type="text" required="required" ng-model="srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.opcoes[$index]" class="form-control" ng-cancel-drag  valida-caractere/>
+                            <div class="alert alert-danger" ng-if="!srvcs_tndmntscmpscstmzds_frm_cntrllr.entity.opcoes[$index] && srvcs_tndmntscmpscstmzds_frm_cntrllr.submitted">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span> Este campo não pode ser vazio
+                            </div>
+                        </td>
+                        <td width="8%" class="text-right">
+                            <a class="btn btn-danger btn-sm btns-acoes" ng-cancel-drag href ng-click="srvcs_tndmntscmpscstmzds_frm_cntrllr.removeOpcao($index)"><i class="el el-remove"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3"><a href ng-click="srvcs_tndmntscmpscstmzds_frm_cntrllr.addOpcao()">Adicionar valor</a></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block viewedit_footer_toolbar -%}
+    <ul class="list-unstyled list-inline pull-right">
+        <li>
+            <div class="form-group">
+                <button type="submit" id="submit" name="submit" class="btn btn-primary">Salvar</button>
+            </div>
+        </li>
+    </ul>
+{% endblock viewedit_footer_toolbar -%}

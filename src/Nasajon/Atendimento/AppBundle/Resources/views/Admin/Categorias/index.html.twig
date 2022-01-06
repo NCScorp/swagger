@@ -1,0 +1,142 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Categorias/index.html.twig' %}
+
+{% block index_panel_header -%}
+{% endblock index_panel_header -%}
+
+{% block index_header -%}
+     <div class="col-md-12 headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail hidden-xs hidden-sm pull-left">
+                <a ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Configurações">Configurações</a> > <span class="select-page">{{'Categorias de Artigos'|trans}}</span>
+            </div>
+            <div class="btn-group" uib-dropdown role="group">
+              <a id="single-button" type="button" class="btn btn-xs btn-warning dropdown-toggle" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
+                      <i class="el el-plus"></i> Criar
+              </a>
+              <ul class="dropdown-menu" uib-dropdown-menu="" role="menu">
+                  <li role="menuitem" ui-sref-active="active" class="ng-scope">
+                      <a href="" ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalCategoria()">
+                          <span>Criar Categoria</span>
+                      </a>
+                  </li>
+                  <li role="menuitem" ui-sref-active="active" class="ng-scope">
+                      <a href="" ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalSubCategoria()">
+                          <span>Criar Subcategoria</span>
+                      </a>
+                  </li>
+                  <li role="menuitem" ui-sref-active="active" class="ng-scope">
+                      <a href=""  ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalSecao()">
+                          <span>Criar Seção</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block index_layout -%}
+  
+
+<!-- Nested node template -->
+<script type="text/ng-template" id="nodes_renderer.html"> 
+  	<div class="tree-node">
+    	<div class="pull-left tree-handle" ui-tree-handle ng-if="node.ordenacaoSecaoPai == 1 || node.tipo < 4">
+			<i class="el el-move"></i>
+		</div>
+
+        <div class="pull-left tree-handle angular-ui-tree-handle drag-and-drop-disabled" ng-if="node.ordenacaoSecaoPai != 1 && node.tipo == 4" 
+             style="cursor: not-allowed">
+			<i class="el el-move"></i>
+		</div>
+
+    	<div class="tree-node-content">
+      		<a class="btn btn-xs collapseBtn" ng-if="node.tipo < 4"  data-nodrag ng-click="tndmnt_ctgrs_lst_cntrllr.toggle(node, true)">
+        		<span ng-class="{ 'fa fa-caret-right': node.fechada, 'fa fa-caret-down': !node.fechada }"></span>
+      		</a>         
+          	{{'{{node.titulo}}'}}  
+          	<span class="artigo-lista-status" ng-class="{ 'publicado': node.status  }"><i class="el el-file-alt"></i></span>
+			<span  ng-if="node.tipo == 1">
+				<a class="action-edit" href ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalCategoria(node)"> 
+					<i class="fa fa-pencil" aria-hidden="true"></i>
+				</a>
+			</span>
+			<span  ng-if="node.tipo == 2"> 
+				<a class="action-edit" href ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalSubCategoria(node)"> 
+				<i class="fa fa-pencil" aria-hidden="true"></i>
+				</a>
+			</span>
+			<span  ng-if="node.tipo == 3">
+				<a class="action-edit" href ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalSecao(node)"> 
+				<i class="fa fa-pencil" aria-hidden="true"></i>
+				</a>
+			</span>
+			<span ng-if="node.tipo == 4">
+				<a class="action-edit" href ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalArtigo(node)"> 
+					<i class="fa fa-pencil" aria-hidden="true"></i>
+				</a>
+			</span>    
+			<span  ng-if="node.tipo != 4">
+				<a class="action-delete" ng-click="tndmnt_ctgrs_lst_cntrllr.deleteCategoria(node);"> 
+				<i class="fa fa-trash" aria-hidden="true"></i>
+				</a>
+			</span>
+			<div ng-if="tndmnt_ctgrs_lst_cntrllr.artigos.constructors.secao == node.id"
+				ng-class="{'onloading' : tndmnt_ctgrs_lst_cntrllr.artigos.isBusy }" class="text-center">
+			</div>
+			<ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
+				<li ng-repeat="node in node.nodes" data-collapsed="node.fechada" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+			</ol>
+      	</div>
+  	</div>
+</script>
+
+<div class="row lista-cartegorias">
+    <p class="text-center article-loading height-full" ng-class="{'onloading' : tndmnt_ctgrs_lst_cntrllr.isBusy() }" ng-if="tndmnt_ctgrs_lst_cntrllr.isBusy()"></p>
+    <div class="col-sm-12" ng-if="!tndmnt_ctgrs_lst_cntrllr.isBusy()">
+        <div data-ui-tree="tndmnt_ctgrs_lst_cntrllr.treeOptions" id="tree-root">
+          <h5>Categorias</h5>
+            <ol data-ui-tree-nodes data-empty-placeholder-enabled="false" data-dropzone-enabled="true" ng-if="tndmnt_ctgrs_lst_cntrllr.listaCategorias.length > 0" ng-model="tndmnt_ctgrs_lst_cntrllr.listaCategorias">
+                <li data-ng-repeat="node in tndmnt_ctgrs_lst_cntrllr.listaCategorias" data-collapsed="node.fechada" data-ui-tree-node ng-include="'nodes_renderer.html'"></li>
+            </ol>
+          <div ng-if="tndmnt_ctgrs_lst_cntrllr.listaCategorias.length == 0" >
+              Não há categorias para exibir
+          </div>
+        </div>
+    </div>
+</div>
+  
+  
+{% endblock index_layout -%}
+
+{% block index_builltin_form -%}
+    <div class='col-md-12 article-area height-full-calc row' ui-view>
+        <div class="bt-new-article new-article text-center height-full">
+            <div class="btn-group" uib-dropdown role="group">
+			  <a id="single-button" class="btn btn-sm btn-fixed btn-warning dropdown-toggle menu-mobile" uib-dropdown-toggle="" aria-haspopup="true" aria-expanded="true">
+            	<i class="el el-plus"></i> 
+				<span class="hidden-xs hidden-sm">Criar</span>
+            </a>
+              <ul class="dropdown-menu menu-mobile" uib-dropdown-menu="" role="menu">
+                  <li role="menuitem" ui-sref-active="active" class="ng-scope">
+                      <a href="" ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalCategoria()">
+                          <span>Criar Categoria</span>
+                      </a>
+                  </li>
+                  <li role="menuitem" ui-sref-active="active" class="ng-scope">
+                      <a href="" ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalSubCategoria()">
+                          <span>Criar Subcategoria</span>
+                      </a>
+                  </li>
+                  <li role="menuitem" ui-sref-active="active" class="ng-scope">
+                      <a href=""  ng-click="tndmnt_ctgrs_lst_cntrllr.abreModalSecao()">
+                          <span>Criar Seção</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+        </div>           
+    </div>
+{% endblock index_builltin_form -%}

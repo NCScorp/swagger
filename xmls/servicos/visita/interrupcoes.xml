@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="interrupcoes" label="interrupcoes" project="Servicos/Visita">
+    <entity schema="servicos" table="ordensservicosvisitasinterrupcoes">
+        <fieldmodel name="ordemservicovisitainterrupcao" column="ordemservicovisitainterrupcao" datatype="guid" isid="true" />
+        <fieldmodel name="ordemservicovisita" column="ordemservicovisita" datatype="guid" />
+        <fieldmodel name="hora_inicio_interrupcao" column="hora_inicio_interrupcao" datatype="time" />
+        <fieldmodel name="hora_termino_interrupcao" column="hora_termino_interrupcao" datatype="time" />
+        <fieldmodel name="ordemservicovisitainterrupcaocausa" column="ordemservicovisitainterrupcaocausa" datatype="guid" />
+        <fieldmodel name="observacoes" column="observacoes" datatype="string" />
+        <fieldmodel name="tenant" column="tenant" datatype="integer" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">ordemservicovisita</constructoritem>
+    </constructors>
+    <viewbrowser label="Interrupções" paginate="false" layout="list" target="inline">
+        <fieldsbrowser>
+            <fieldbrowser alias="ordemservicovisitainterrupcao" entitylink="ordemservicovisitainterrupcao" isid="true" visible="false"  />
+            <fieldbrowser alias="ordemservicovisita" entitylink="ordemservicovisita" visible="false"  />
+            <fieldbrowser alias="hora_inicio_interrupcao" entitylink="hora_inicio_interrupcao" visible="true"  />
+            <fieldbrowser alias="hora_termino_interrupcao" entitylink="hora_termino_interrupcao" visible="true"  />
+            <fieldbrowser alias="ordemservicovisitainterrupcaocausa" entitylink="ordemservicovisitainterrupcaocausa" visible="true"  />
+            <fieldbrowser alias="observacoes" entitylink="observacoes" visible="true"  />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Interrupção" mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="hora_inicio_interrupcao" entitylink="hora_inicio_interrupcao"  controltype="textedit" placeholder="Hora Início" label="Hora Início" colspan="4" />
+                    <cell name="hora_termino_interrupcao" entitylink="hora_termino_interrupcao"  controltype="textedit" placeholder="Hora Termino" label="Hora Termino" colspan="4" />
+                    <cell name="ordemservicovisitainterrupcaocausa" entitylink="ordemservicovisitainterrupcaocausa" controltype="textedit" placeholder="Causa" label="Causa" colspan="4" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+</nsjusecase>

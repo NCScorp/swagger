@@ -1,0 +1,151 @@
+<div class="hidden-md hidden-sm hidden-xs col-md-4 height-full open-close slide-in" ng-if="controller.entity.cliente.cliente" ng-class="{'slide-out' : controller.hideCliente }">
+    <div class="client-infos height-full">
+        <div class="clearfix head-client">
+            <h4>
+                <a href class="pull-right bt-close" ng-click="controller.hideCliente = true"><i class="el el-remove"></i></a>
+                <a href ui-sref="ns_clientes_show({cliente : controller.cliente.cliente})">{{ "{{controller.cliente.nome}}" }}</a>
+            </h4>
+            <span class="small">
+                {{"{{controller.cliente.endereco.cidade || controller.cliente.endereco.municipio}}"}}
+                <span ng-if="(controller.cliente.endereco.cidade || controller.cliente.endereco.municipio) && controller.cliente.endereco.uf">, </span>
+                {{"{{controller.cliente.endereco.uf}}"}}
+            </span>
+            <div ng-if="controller.cliente.status_suporte == 'Ativo'">
+                <span class="label label-success"><i class="el el-comment-alt"></i> Suporte Ativo</span>
+            </div>
+            <div ng-if="controller.cliente.status_suporte == 'Bloqueado'">
+                <span class="label label-danger"><i class="el el-comment-alt"></i> Suporte Bloqueado</span>
+                <a ng-click="controller.openDetalhesSuporte(controller.cliente)" href class="small">
+                    saiba mais
+                </a> 
+            </div>
+
+        </div>
+
+        <div class="feeds-client toggle-cliente" ng-if="controller.cliente.flags.length > 0">
+            <h5><label for="toggle-6">Avisos</label></h5>
+            <input type="checkbox" id="toggle-6" class="toggle-infos">
+            <section class="infos-content">
+                <ul class="list-unstyled">
+                    <li ng-repeat='flag in controller.cliente.flags'>
+                        <p>
+                            <span class="bookmark bookmark-infos" ng-class="'cor'+flag.corfundo">
+                                <i class="el" ng-class="'cor'+flag.cor+' el-'+flag.icone"></i>
+                            </span>
+                            <strong>{{"{{flag.titulo}}"}}</strong><br /> {{"{{flag.descricao}}"}}
+                        </p>
+                    </li>
+                </ul>
+            </section>
+        </div>
+
+        <div class="feeds-client toggle-cliente">
+            <h5><label for="toggle-1">{{'ultimasatividades'|trans}}</label></h5>
+            <input type="checkbox" id="toggle-1" class="toggle-infos">
+            <section class="infos-content" ng-class="{'onloading': controller.loadingCliente}">
+                <ul class="list-unstyled ">
+                    <li class="clearfix" ng-repeat="solicitacao in solicitacoesFiltered = (controller.cliente.solicitacoes | limitTo: controller.cliente_solicitacoes_qtd)">
+                        <a href ui-sref='atendimento_admin_solicitacoes_show({atendimento : solicitacao.atendimento})' ng-if="controller.cliente.atendimento != solicitacao.atendimento">
+                            <span class="limite-infos" ng-if="controller.entity.numeroprotocolo != solicitacao.numeroprotocolo">
+                                <i class="el el-inbox"></i> #{{"{{ solicitacao.numeroprotocolo }}"}}  <span ng-bind="solicitacao.resumo | limitTo:35"></span>
+                            </span>
+
+                            <span class="limite-infos" ng-if="controller.entity.numeroprotocolo == solicitacao.numeroprotocolo">
+                                <strong><i class="el el-inbox"></i> #{{"{{ solicitacao.numeroprotocolo }}"}} <span ng-bind="solicitacao.resumo | limitTo:35"></span></strong>
+                            </span>
+
+                            <span class="info-post pull-left">{{"{{ solicitacao.created_at | asDate | amCalendar }}"}}</span>
+
+                            <span class="label pull-right label-success" ng-if="solicitacao.situacao==0">Aberto</span>
+
+                            <span class="label pull-right label-default" ng-if="solicitacao.situacao==1">Fechado</span>
+                        </a>
+                        <p ng-if="controller.cliente.atendimento == solicitacao.atendimento">
+                            <span class="limite-infos">
+                                <i class="el el-inbox"></i> #{{"{{ solicitacao.numeroprotocolo }}"}} <span ng-bind="solicitacao.resumo | limitTo:35"></span>
+                            </span>
+
+                            <span class="info-post pull-left">{{"{{ solicitacao.created_at | asDate | amCalendar }}"}}</span>
+                            <span class="label pull-right label-success" ng-if="solicitacao.situacao==0">Aberto</span>
+                            <span class="label pull-right label-default" ng-if="solicitacao.situacao==1">Fechado</span>
+                        </p>
+                    </li>
+                </ul>
+                <p ng-show="solicitacoesFiltered.length==0">{{'nenhumoutrochamadoencontrado'|trans}}</p>
+                <a href title="Ver mais atividades desse cliente" class="info-post" ng-click="controller.verMaisSolicitacoesCliente()" ng-if="controller.cliente_solicitacoes_qtd < 15 && controller.cliente.solicitacoes.length > controller.cliente_solicitacoes_qtd">Ver mais...</a>
+            </section>
+        </div>
+
+        <div class="instalacoes toggle-cliente">
+            <h5><label for="toggle-2">Ativos</label></h5>
+            <input type="checkbox" id="toggle-2" class="toggle-infos">
+            <section class="infos-content" ng-class="{'onloading': controller.loadingCliente}">
+                <ol  class="list-unstyled">
+                    <li ng-repeat="ativo in controller.cliente.ativos" >
+                        <span>{{'{{ativo.servico_descricao}}'}}</span>
+                        <ul ng-if="ativo.ofertas.length > 0" ng-repeat="oferta_pai in ativo.ofertas">
+                            <li ng-class="{'ativo-item-inativo': !oferta_pai.oferta_ativa}"><strong>{{"{{ oferta_pai.oferta_descricao }}"}}</strong> - {{"{{ oferta_pai.oferta_codigo }}"}}
+                                <ul ng-if="oferta_pai.componentes.length > 0" ng-repeat="componente_oferta_pai in oferta_pai.componentes">
+                                    <li ng-class="{'ativo-item-inativo': !componente_oferta_pai.componente_ativa}"><strong>{{"{{ componente_oferta_pai.componente_codigo }}"}}</strong> - {{"{{ componente_oferta_pai.componente_descricao }}"}} <span ng-if="componente_oferta_pai.componente_quantidade > 0">(Quantidade: {{"{{ componente_oferta_pai.componente_quantidade }}"}})</span></li>
+                                </ul>
+                                <ul ng-if="oferta_pai.ofertas.length > 0" ng-repeat="oferta in oferta_pai.ofertas">
+                                    <li ng-class="{'ativo-item-inativo': !oferta.oferta_ativa}"><strong>{{"{{ oferta.oferta_codigo }}"}}</strong> - {{"{{ oferta.oferta_descricao }}"}}
+                                        <ul ng-if="oferta.componentes.length > 0" ng-repeat="componente in oferta.componentes">
+                                            <li ng-class="{'ativo-item-inativo': !componente.componente_ativa}"><strong>{{"{{ componente.componente_codigo }}"}}</strong> - {{"{{ componente.componente_descricao }}"}} <span ng-if="componente.componente_quantidade > 0">(Quantidade: {{"{{ componente.componente_quantidade }}"}})</span></li>
+                                        </ul>
+                                    </li>
+                                    <ul>
+                                        </li>
+                                    </ul>
+                            </li>
+                </ol>
+                <p ng-if="controller.cliente.ativos.length == 0">Nenhum ativo cadastrado.</p>
+            </section>
+        </div>
+        <div class="instalacoes toggle-cliente">
+            <h5><label for="toggle-3">Telefones</label></h5>
+            <input type="checkbox" id="toggle-3" class="toggle-infos">
+            <section class="infos-content" ng-class="{'onloading': controller.loadingCliente}">
+                <ul class="list-unstyled">
+                    <li ng-repeat="telefone in controller.cliente.telefones">{{"{{ telefone.ddd ? '('+telefone.ddd+')' : ''}}"}} {{"{{telefone.telefone}}"}} {{"{{ telefone.ramal ? 'Ramal: '+telefone.ramal : ''}}"}} </li>
+                </ul>
+                <p ng-if="controller.cliente.telefones.length == 0">Nenhum telefone cadastrado.</p>
+            </section>
+        </div>
+        <div class="instalacoes toggle-cliente">
+            <h5><label for="toggle-4">Contatos</label></h5>
+            <input type="checkbox" id="toggle-4" class="toggle-infos">
+            <section class="infos-content" ng-class="{'onloading': controller.loadingCliente}">
+                <ul class="list-unstyled">
+                    <li ng-repeat="contato in controller.cliente.contatos">{{"{{contato.nome}}"}} {{"{{ contato.cargo ? '('+contato.cargo+')' : ''}}"}} </li>
+                </ul>
+                <p ng-if="controller.cliente.contatos.length == 0">Nenhum contato cadastrado.</p>
+            </section>
+        </div>
+        <div class="more-infos toggle-cliente">
+            <h5><label for="toggle-5">Outras Informações</label></h5>
+            <input type="checkbox" id="toggle-5" class="toggle-infos">
+            <section class="infos-content">
+                <ul class="list-unstyled">
+                    <li><strong>Código:</strong> {{ "{{controller.cliente.codigo}}" }}</li>
+                    <li ng-show="controller.cliente.cnpj">
+                        <strong>CPF/CNPJ:</strong> {{ "{{controller.cliente.cnpj}}" }}
+                    </li>
+                    <li ng-show="controller.cliente.nomefantasia">
+                        <strong>Nome Fantasia:</strong> {{ "{{controller.cliente.nomefantasia}}" }}
+                    </li>
+                    <li ng-show="controller.cliente.vendedor.nome">
+                        <strong>Vendedor:</strong> {{ "{{controller.cliente.vendedor.nome}}" }}
+                    </li>
+                    {#<li><strong>Última Atualização:</strong> 4 horas atrás</li>#}
+                    <li ng-show="controller.cliente.observacao">
+                        <strong>Observação:</strong> {{"{{controller.cliente.observacao}}"}}
+                    </li>
+                </ul>
+            </section>
+        </div>
+        <div class="toggle-cliente">
+            <a href ui-sref="ns_clientes_show({cliente : controller.cliente.cliente})" class="btn btn-xs btn-primary">Ver mais informações</a>
+        </div>
+    </div>
+</div>

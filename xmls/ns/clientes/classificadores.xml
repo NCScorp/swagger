@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="Classificadores" label="Classificadores" project="Ns/Clientes" orphan="false">
+    <config>
+        <autosave>false</autosave>
+    </config>  
+    <entity schema="ns" table="vwclassificadores">
+        <fieldmodel name="classificador" datatype="guid" isid="true" column="classificador"/>
+        <fieldmodel name="classificado" datatype="guid" column="classificado"/>
+        <fieldmodel name="valorclassificadorlista" datatype="guid" column="valorclassificadorlista"/>
+        <fieldmodel name="cliente" datatype="guid" column="cliente"/>
+        <fieldmodel name="valor" datatype="string" column="valor"/>
+        <fieldmodel name="label" datatype="string" column="label"/>        
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table" target="window" label=" ">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="classificador" isid="true" />
+            <fieldbrowser entitylink="label" visible="true" cansearch="false" />        
+            <fieldbrowser entitylink="valor" visible="true" cansearch="false" />     
+        </fieldsbrowser>
+    </viewbrowser>        
+</nsjusecase>

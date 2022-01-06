@@ -1,0 +1,44 @@
+<div class="row filter col-md-8 clearfix">
+    <form name="dmn_rltrs_cntrllr.form_filtros_relatorios">
+        <table class="table">
+            <tbody>
+                <tr ng-repeat="filtro in dmn_rltrs_cntrllr.filtros track by $index">
+                    <td width="25%">
+                        <select id="add-filtro" name="add-filtro" class="form-control" required ng-model="filtro.campo" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro" ng-change="dmn_rltrs_cntrllr.reloadData()">
+                            <option value="" disabled="disabled">Selecione</option>
+                        </select>
+                    </td>
+                    <td width="28%">
+                        <select id="add-condicao" name="add-condicao" class="form-control" required ng-model="filtro.operador" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro[filtro.campo].options" ng-change="dmn_rltrs_cntrllr.reloadData()">
+                            <option value="" disabled="disabled">Condição</option>
+                        </select>
+                    </td>
+                    <td width="35%" ng-if="filtro.operador != 'is_set' 
+                                        && filtro.operador != 'is_not_set' 
+                                        && filtro.operador != 'includes'">
+                        <select id="add-resultado" name="add-resultado" class="form-control" required ng-model="filtro.valor" ng-options="op.value as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro[filtro.campo].options[filtro.operador].options" ng-change="dmn_rltrs_cntrllr.reloadData()">
+                            <option value="" disabled="disabled">Selecione</option>
+                        </select>
+                    </td>
+                    <td width="35%" ng-if="filtro.operador == 'includes'">
+                        <input class="form-control" ng-model="filtro.valor" ng-change="dmn_rltrs_cntrllr.reloadData()"></input>  
+                    </td>
+                    <td width="12%" class="text-left">
+                        <a href  ng-click="dmn_rltrs_cntrllr.removeFiltro($index);" class="btn btn-danger btn-md btns-acoes"><i class="el el-remove"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4">
+            <div class="col-sm-3">
+                <select id="add-filtro" name="add-filtro" class="form-control" ng-model="dmn_rltrs_cntrllr.novoFiltro" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro" ng-change="dmn_rltrs_cntrllr.addFiltros()">
+                    <option value="" disabled="disabled">Adicionar filtro</option>
+                </select>
+            </div>
+            </th>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+</div>

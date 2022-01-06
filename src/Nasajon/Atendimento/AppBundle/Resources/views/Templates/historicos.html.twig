@@ -1,0 +1,137 @@
+<div ng-class="{'onloading' : loading}">
+</div>
+<div class="ticket reply" ng-repeat='historico in atendimento.entity.historico'
+     ng-class="{
+        'historico-criacao' : historico.tipo == 1,
+        'historico-email-contato' : historico.tipo == 2 || historico.tipo === 10,
+        'historico-situacao' : historico.tipo == 3,
+        'historico-atribuicao' : historico.tipo == 4,
+        'historico-campocustomizado' : historico.tipo == 5,
+        'comment' : (historico.tipo == 6 && historico.valornovo.followup.tipo == 1),
+        'reply-client' : (historico.tipo == 6 && historico.valornovo.followup.criador == 0 && historico.valornovo.followup.tipo == 0),
+        'reply' : (historico.tipo == 6 && historico.valornovo.followup.criador == 1 && historico.valornovo.followup.tipo == 0),
+        'received' : (historico.valornovo.followup.criador && historico.tipo == 6)
+        }"
+     >
+    <div class="reply-header clearfix">
+        <span class="reply-ico" ng-if="historico.tipo == 6">
+            <i class="el" ng-class="{ 'el-comment-alt' : (historico.tipo == 6 && historico.valornovo.followup.tipo == 1), 'el-share-alt' : (historico.tipo == 6 && historico.valornovo.followup.tipo == 0) }"></i>
+        </span>
+        <span class="name-user" ng-bind="historico.created_by.nome" uib-tooltip="{{"{{historico.created_by.email}}"}}" tooltip-animation='false' tooltip-placement="right"></span>
+        <span ng-if="historico.mesclado_a && atendimento.entity.atendimento == historico.mesclado_a"> 
+           | <strong>Origem</strong> <a href ui-sref='atendimento_admin_solicitacoes_show({atendimento : historico.atendimento })'> Chamado #{{ '{{ atendimento.getNumeroChamado(historico.atendimento) }}' }} </a>
+        </span>
+        <div ng-if="historico.canal_email && (historico.tipo == 1 || historico.tipo == 6)" class="pull-right dropdown dropbutton-geral" uib-dropdown role="group">
+            <button id="single-button" type="button" class="btn btn-xs btn-maisxs btn-default dropdown-toggle" uib-dropdown-toggle >
+                <span class="icon xs-icon ret-icon"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                <li role="menuitem" ui-sref-active="active">
+                    <a href="" ng-if="historico.tipo == 1" ng-click="atendimento.openEmailModal(atendimento.entity.atendimento, historico.tipo)">Mostrar e-mail original</a>
+                    <a href="" ng-if="historico.tipo == 6" ng-click="atendimento.openEmailModal(historico.valornovo.followup.followup, historico.tipo)">Mostrar e-mail original</a>
+                </li>
+            </ul>
+        </div>
+        
+        <span class="info-post pull-right" ng-bind="historico.created_at | asDate | amCalendar" tooltip-placement="top" tooltip-animation='false' uib-tooltip="{{'{{historico.created_at | asDate | amDateFormat:\'DD/MM/YYYY HH:mm\' }}'}}"></span>
+
+    </div>
+
+    <div class="reply-text" ng-if="historico.tipo == 1"><!-- Criação -->
+        {#<dl class="dl-horizontal small text-overflow" ng-repeat="campo in historico.valornovo">
+            <dt ng-bind="campo.label"></dt>
+            <dd ng-bind="campo.valor || '(Vazio)'"></dd>
+        </dl>#}
+        <p dynamic="historico.valornovo.sintoma"></p>
+        <div class="anexos-reply">
+            <anexos model='atendimento.entity.anexos' can-edit='false' ></anexos>
+        </div>
+    </div>
+
+    <div class="reply-text" ng-if="historico.tipo == 2"><!-- Email contato -->
+        <dl class="dl-horizontal small text-overflow">
+            <dt>Email de contato:</dt>
+            <dd>{{"{{historico.valorantigo.email || '(Vazio)'}}"}} → {{"{{historico.valornovo.email || '(Vazio)'}}"}}</dd>
+        </dl>
+    </div>
+    <div class="reply-text" ng-if="historico.tipo == 3"><!-- Situação -->
+        <dl class="dl-horizontal small text-overflow">
+            <dt>Situação:</dt>
+            <dd>{{"{{['Aberto', 'Fechado', 'SPAM'][historico.valorantigo.situacao]}}"}} → {{"{{['Aberto', 'Fechado', 'SPAM'][historico.valornovo.situacao]}}"}}</dd>
+        </dl>
+    </div>
+    <div class="reply-text" ng-if="historico.tipo == 4"><!-- Atribuição -->
+        <dl class="dl-horizontal small text-overflow">
+            <dt>Atribuição:</dt>
+            <dd>{{"{{historico.valorantigo.nome || '(Vazio)'}}"}} → {{"{{historico.valornovo.nome || '(Vazio)'}}"}}</dd>
+        </dl>
+    </div>
+    <div class="reply-text" ng-if="historico.tipo == 5"><!-- Campo customizado -->
+        <dl class="dl-horizontal small text-overflow" ng-repeat="campo in historico.valornovo | filter: filterHistoricoCamposcustomizados">
+            <dt>{{"{{campo.label}}"}}:</dt>
+            <dd>{{"{{campo.valor_antigo || '(Vazio)'}}"}} → {{"{{campo.valor_novo || '(Vazio)'}}"}}</dd>
+        </dl>
+    </div>
+    <div class="reply-text" ng-if="historico.tipo == 6"><!-- Follow -->
+        <p dynamic="historico.valornovo.followup.historico"></p>
+        <div class="anexos-reply">
+            <anexos model='historico.valornovo.followup.anexos' can-edit='false' ></anexos>
+        </div>
+        <p class="text-right" ng-if='!historico.criado_por_artigo'>
+            <a href="" ng-click="atendimento.openModal(historico)" ng-if="(historico.tipo == 6 &amp;&amp; !historico.valornovo.followup.criador && historico.valornovo.followup.tipo == 0)" class="ng-scope"><i class="el el-file-new"></i> Criar artigo a partir dessa resposta</a>
+        </p>
+        <p class="text-right">
+          <dl class="dl-horizontal small text-overflow" ng-if="historico.valornovo.situacao==0">
+              <dt>Situação:</dt>
+              <dd>{{"{{['Aberto', 'Fechado', 'SPAM'][historico.valorantigo.situacao]}}"}} → {{"{{['Aberto', 'Fechado', 'SPAM'][historico.valornovo.situacao]}}"}}</dd>
+          </dl>
+        </p>
+    </div>
+    <div class="reply-text" ng-if="historico.tipo == 7"><!-- Clienteo -->
+        <dl class="dl-horizontal small text-overflow">
+            <dt>Cliente:</dt>
+            <dd>{{"{{historico.valorantigo.nome || '(Vazio)'}}"}} → {{"{{historico.valornovo.nome || '(Vazio)'}}"}}</dd>
+        </dl>
+    </div>
+    <div class="reply-text" ng-if="historico.tipo == 8"><!-- Visibilidade -->
+        <dl class="dl-horizontal small text-overflow">
+            <dt>Visível para cliente:</dt>
+            <dd>
+                {{"{{historico.valorantigo.visivelparacliente=='true'?'Sim':'Não'}}"}} → {{"{{historico.valornovo.visivelparacliente=='true'?'Sim':'Não'}}"}}</dd>
+        </dl>
+    </div>
+    <div class="reply-text" ng-if="historico.tipo == 9"><!-- Usuário está Indisponível -->
+        <dl class="dl-horizontal small text-overflow">
+            <dt>{{"{{historico.valornovo.usuario}}"}}</dt>
+            <dd>está indisponível</dd>
+        </dl>
+    </div>
+
+    <div class="reply-text" ng-if="historico.tipo == 10"><!-- encaminhamento e-mail -->
+      <dl class="dl-horizontal small text-overflow">
+        <dt></dt>
+        <dd>Histórico encaminhado para: <b>{{"{{historico.valornovo.historicoencaminhado}}"}}</b> </dd>
+      </dl>
+    </div>
+    
+    <div class="reply-text" ng-if="historico.tipo == 11"><!-- Adiamento do chamado -->
+         <dl class="dl-horizontal small text-overflow">
+            <dt>Adiamento:</dt>
+            <dd>{{"{{atendimento.exibeHistoricoAdiado(historico.valorantigo)}}"}} → {{"{{atendimento.exibeHistoricoAdiado(historico.valornovo)}}"}}</dd>
+        </dl>
+    </div>
+
+    <div class="reply-text" ng-if="historico.tipo == 12"><!-- Chamado Violou SLA -->
+        <dl class="dl-horizontal small text-overflow">
+           <dt></dt>
+           <dd>SLA Violado em {{"{{historico.valornovo.dataviolacao| amDateFormat:\'DD/MM/YYYY HH:mm\'}}" }} </dd>
+       </dl>
+   </div>
+
+   <div class="reply-text" ng-if="historico.tipo == 13"><!-- Assunto alterado -->
+        <dl class="dl-horizontal small text-overflow">
+           <dt>Assunto alterado:</dt>
+           <dd>{{"{{historico.valorantigo.resumo}}" }} → {{"{{historico.valornovo.resumo}}" }}  </dd>
+       </dl>
+   </div>
+</div>

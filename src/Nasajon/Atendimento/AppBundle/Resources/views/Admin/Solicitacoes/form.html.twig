@@ -1,0 +1,206 @@
+<form name="tndmnt_dmn_slctcs_frm_cntrllr.form" ng-model="tndmnt_dmn_slctcs_frm_cntrllr.form" novalidate="novalidate" role="form"  class="form-vertical height-full" ng-submit="tndmnt_dmn_slctcs_frm_cntrllr.submit(tndmnt_dmn_slctcs_frm_cntrllr.form)" ng-disabled="tndmnt_dmn_slctcs_frm_cntrllr.submitting">
+    <div class="headline-sub clearfix fixed-bar">
+        <h3 class="pull-left">
+            <a href ui-sref="atendimento_admin_solicitacoes" title="Voltar à lista" class="hidden-md hidden-lg">
+                <i class="el el-chevron-left"></i>
+            </a>
+            {{'novochamado'|trans}} </h3>
+        <div class="btns-area pull-right">
+            <a href  ui-sref="atendimento_admin_solicitacoes" class="btn btn-xs btn-link btn-cancel btn-geral"><span class="hidden-md hidden-lg"><i class="el el-remove"></i></span>  <span class="hidden-xs hidden-sm">Cancelar</span></a>
+            <button type="submit" class="btn btn-xs btn-primary btn-open hidden-sm hidden-xs" ng-disabled="tndmnt_dmn_slctcs_frm_cntrllr.submitting">
+                <span class="hidden-md hidden-lg">
+                    <i class="el el-ok"></i>
+                </span> 
+                <span class="hidden-xs hidden-sm">{{'criarchamado'|trans}}</span>
+            </button>
+        </div>
+    </div><!--/headline-sub-->
+
+    <div class="col-md-12 view-solicitacao height-full-calc">
+        <div class="bottom-buffer col-sm-12" ng-if="tndmnt_dmn_slctcs_frm_cntrllr.cliente_status_suporte == 'Bloqueado'">
+            <div class="alert alert-danger aviso-chamado" role="alert">
+                <div class="c-row">
+                    <div class="col-sm-12">Cliente com suporte bloqueado!</div>
+                </div>
+            </div>
+        </div>    
+        <div id="published-article">
+            <div class="forms">
+                <div class="clearfix">
+                    <div class="row col-md-12">
+                        <div class="form-group" ng-if="tndmnt_dmn_slctcs_frm_cntrllr.exibe_cliente == 1">
+                            <label id="top" for="cliente">Cliente</label>
+                            <div>
+                                <mda-ui-select
+                                    class="print-visible"
+                                    service="NsClientes"
+                                    constructors="{ 'bloqueado' : false  }"
+                                    opts='{ 
+                                        "attr" : { 
+                                            "ng-change" : "tndmnt_dmn_slctcs_frm_cntrllr.carregaUsuariosCliente($select.selected)",
+                                            "name" : "cliente",
+                                            "ng-model" : "tndmnt_dmn_slctcs_frm_cntrllr.entity.cliente", 
+                                            "ng-disabled" : "tndmnt_dmn_slctcs_frm_cntrllr.submitting", 
+                                            "placeholder" : "Selecione ou busque",
+                                            "ng-required" : "!tndmnt_dmn_slctcs_frm_cntrllr.atendente_cria_chamado_sem_cliente"
+                                        },
+                                        "match" : "nome" 
+                                    }'
+                                    fields='["codigo", "nome"]'
+                                ></mda-ui-select>
+                            </div>
+                            <div ng-messages="tndmnt_dmn_slctcs_frm_cntrllr.form.cliente.$error" ng-if='tndmnt_dmn_slctcs_frm_cntrllr.form.cliente.$dirty || tndmnt_dmn_slctcs_frm_cntrllr.submitted'>
+                                <div class="alert alert-danger" role="alert" ng-message="required" >
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Erro:</span>
+                                    O campo Cliente deve ser preenchido.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email do contato</label>
+                            <div>
+                                <autocomplete
+                                    click-activation ="true"
+                                    data ="tndmnt_dmn_slctcs_frm_cntrllr.cliente_usuarios"
+                                    ng-model ="tndmnt_dmn_slctcs_frm_cntrllr.entity.email"
+                                    >
+                                </autocomplete>
+                                <div ng-if='tndmnt_dmn_slctcs_frm_cntrllr.email_contato_invalido'>
+                                    <div class="alert alert-danger">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Erro:</span>
+                                        O email do contato deve ser um email válido.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="atribuicao">Atribuir a</label>
+                            <div>
+
+                                <ui-select id="atribuicao" ng-model="tndmnt_dmn_slctcs_frm_cntrllr.atribuidoa" on-select="tndmnt_dmn_slctcs_frm_cntrllr.atribuir($item)" ng-disabled="tndmnt_dmn_slctcs_frm_cntrllr.submitting">
+                                    <ui-select-match allow-clear="true" placeholder="Selecione ou busque">{{'{{tndmnt_dmn_slctcs_frm_cntrllr.exibeAtribuido }}'}}</ui-select-match>
+                                    <ui-select-choices group-by="tndmnt_dmn_slctcs_frm_cntrllr.agruparPorTipo" repeat="option in tndmnt_dmn_slctcs_frm_cntrllr.optionusuariologado.concat(tndmnt_dmn_slctcs_frm_cntrllr.contas).concat(tndmnt_dmn_slctcs_frm_cntrllr.filas)  | filter:$select.search">
+                                        <div class="row">
+                                            <div class="col-md-12" ng-bind-html="option.email? (option.nome + ' ('+option.email+')') : option.nome | highlight: $select.search"></div>
+                                        </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-repeat="campocustomizado in tndmnt_dmn_slctcs_frm_cntrllr.camposcustomizados">
+                            <label for="{{'{{campocustomizado.nome}}'}}">{{'{{campocustomizado.label}}'}}</label>
+                            
+                            <input id="{{'{{campocustomizado.nome}}'}}" 
+                                   ng-if="campocustomizado.tipo == 'TE'" 
+                                   type="text" 
+                                   class="form-control" 
+                                   ng-model="tndmnt_dmn_slctcs_frm_cntrllr.entity.camposcustomizados[campocustomizado.atendimentocampocustomizado]"
+                                   ng-required="{{'{{campocustomizado.obrigatorio}}'}}"
+                                   ng-change="tndmnt_dmn_slctcs_frm_cntrllr.removerAlerta(campocustomizado)">
+                            
+                            <select id="{{'{{campocustomizado.nome}}'}}" 
+                                    ng-if="campocustomizado.tipo == 'CB'" 
+                                    class="form-control"
+                                    ng-model="tndmnt_dmn_slctcs_frm_cntrllr.entity.camposcustomizados[campocustomizado.atendimentocampocustomizado]"
+                                    ng-options="item for item in campocustomizado.opcoes"
+                                    ng-required="{{'{{campocustomizado.obrigatorio}}'}}"
+                                    ng-change="tndmnt_dmn_slctcs_frm_cntrllr.removerAlerta(campocustomizado)">
+                            </select>
+
+                            <div ng-if="tndmnt_dmn_slctcs_frm_cntrllr.required[campocustomizado.atendimentocampocustomizado]">
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Erro:</span>
+                                    O campo {{'{{campocustomizado.label}}'}} não pode ser vazio.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label for="visivelparacliente">
+                                        <input type="checkbox" id="visivelparacliente" name="visivelparacliente" ng-model="tndmnt_dmn_slctcs_frm_cntrllr.entity.visivelparacliente" ng-disabled="tndmnt_dmn_slctcs_frm_cntrllr.entity.submitting" placeholder="" value="1">
+                                        Visível para o cliente ?
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-if="tndmnt_dmn_slctcs_frm_cntrllr.habilitarAssunto != 0">
+                            <label class="control-label" for="resumo">Assunto</label>
+                            <input id="resumo" type="text" required="required"
+                                   name="resumo" ng-model="tndmnt_dmn_slctcs_frm_cntrllr.entity.resumo"
+                                   ng-disabled="tndmnt_dmn_slctcs_frm_cntrllr.entity.submitting" placeholder="Assunto..."
+                                   class="form-control ng-valid ng-dirty ng-valid-parse ng-empty ng-touched">
+
+                            <div ng-messages="tndmnt_dmn_slctcs_frm_cntrllr.form.resumo.$error"  ng-if='tndmnt_dmn_slctcs_frm_cntrllr.form.resumo.$dirty || tndmnt_dmn_slctcs_frm_cntrllr.submitted'>
+                                <div class="alert alert-danger" role="alert" ng-message="required">
+                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                    <span class="sr-only">Erro:</span>
+                                    O campo Assunto deve ser preenchido.
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <div class="ticket-replies clearfix">
+                        <div class="ticket">
+                            <div class="reply-text resposta-comentario row clearfix">
+                                <ul class="nav nav-tabs">
+                                    <li ng-class="{active: (tndmnt_dmn_slctcs_frm_cntrllr.entity.tipo == 0)}" class="uib-tab nav-item tab-de-resposta" classes="tab-de-resposta">
+                                        <a title="Visível para todos" href ng-click="tndmnt_dmn_slctcs_frm_cntrllr.alteraTipo(0)" class="nav-link">
+                                            <i class="el el-share-alt"></i> {{'respostaadmin'|trans}}
+                                        </a>
+                                    </li>
+                                    <li ng-class="{active: (tndmnt_dmn_slctcs_frm_cntrllr.entity.tipo == 1)}" class="uib-tab nav-item tab-de-resposta" classes="tab-de-resposta">
+                                        <a title="Não é visível para o cliente" href ng-click="tndmnt_dmn_slctcs_frm_cntrllr.alteraTipo(1)" class="nav-link">
+                                            <i class="el el-comment-alt"></i> {{'comentario'|trans}}
+                                        </a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active">
+                                        <div class="ticket-reply-tabs-content-ta ticket-reply-tabs-content-ta-message form-group clearfix">
+                                            <div class="row forms">
+                                                <div class="row">
+                                                    <div class="text-area" ng-class="{'obs-text': (tndmnt_dmn_slctcs_frm_cntrllr.entity.tipo == 1)}" >
+                                                        <div>
+                                                            <ng-ckeditor ng-model="tndmnt_dmn_slctcs_frm_cntrllr.entity.sintoma" required name="sintoma" ng-disable="tndmnt_dmn_slctcs_frm_cntrllr.submitting"></ng-ckeditor>
+                                                        </div>
+                                                        <div ng-messages="tndmnt_dmn_slctcs_frm_cntrllr.form.sintoma.$error"  ng-if='tndmnt_dmn_slctcs_frm_cntrllr.form.sintoma.$dirty || tndmnt_dmn_slctcs_frm_cntrllr.submitted'>
+                                                            <div class="alert alert-danger" role="alert" ng-message="required">
+                                                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                                <span class="sr-only">Erro:</span>
+                                                                {{'respostaadminObrigatoriomsg'|trans}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="anexos"><anexos model='tndmnt_dmn_slctcs_frm_cntrllr.entity.anexos' can-edit='true' disabled='tndmnt_dmn_slctcs_frm_cntrllr.submitting'></anexos></div>
+                                            </div>
+                                            <div class="clearfix pull-right">
+                                                <a href  ui-sref="atendimento_admin_solicitacoes" class="btn btn-sm btn-link btn-cancel btn-geral hidden-sm hidden-xs">Cancelar</a>
+                                                <button type="submit" class="btn btn-md btn-primary btn-open btn-fixed" ng-disabled="tndmnt_dmn_slctcs_frm_cntrllr.submitting">
+                                                    <span class="hidden-md hidden-lg"><i class="el el-ok"></i></span>
+                                                    <span class="hidden-sm hidden-xs">{{'criarchamado'|trans}}</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

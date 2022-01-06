@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="equipesclientesregras" label="equipesclientesregras" project="atendimento" >
+    <entity schema="atendimento" table="equipesclientesregras">
+        <fieldmodel name="equipeclienteregra" datatype="guid" column="equipeclienteregra" isid="true" />
+        <fieldmodel name="equipe" datatype="guid" column="equipe" />
+        <fieldmodel name="campo" datatype="string" column="campo" />
+        <fieldmodel name="tipo" datatype="integer" column="tipo" />
+        <fieldmodel name="operador" datatype="string" column="operador" />
+        <fieldmodel name="valor" datatype="string" column="valor" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">equipe</constructoritem>
+        <constructoritem required="false">tipo</constructoritem>
+    </constructors>
+    <viewbrowser layout="table" paginate="false" label="Clientes Regras" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="equipeclienteregra" visible="false" entitylink="equipeclienteregra" isid="true" />
+            <fieldbrowser alias="campo" visible="true" entitylink="campo" cansearch="true" />
+            <fieldbrowser alias="tipo" visible="true" entitylink="tipo" />
+            <fieldbrowser alias="operador" visible="true" entitylink="operador" />
+            <fieldbrowser alias="valor" visible="true" entitylink="valor" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Equipe clientes regras" mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="campo" entitylink="campo" controltype="textedit" />
+                    <cell name="tipo" entitylink="tipo" controltype="spinedit" />
+                    <cell name="operador" entitylink="operador" controltype="textedit" />
+                    <cell name="valor" entitylink="valor" controltype="textedit" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action> 
+            <name>Insert</name>
+            <api>
+                <name>EquipeClienteRegraNovo</name>
+                <fromto valueapi="equipe" valueentity="equipe" />
+                <fromto valueapi="campo" valueentity="campo" />
+                <fromto valueapi="tipo" valueentity="tipo" />
+                <fromto valueapi="operador" valueentity="operador" />
+                <fromto valueapi="valor" valueentity="valor" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

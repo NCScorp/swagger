@@ -1,0 +1,88 @@
+{% extends 'NasajonAtendimentoAppBundle:Default:main.html.twig' %}
+
+{% block alerta_disponibilidade %}
+{% endblock %}
+
+{% block metadata %}
+    <base href="{{ url('atendimento_cliente_index', { tenant : tenant }, true) }}/">
+
+    {{ parent() }}
+{% endblock %}
+
+{% block google_analytics %}
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-26375873-10', 'auto');
+    </script>
+{% endblock google_analytics %}
+
+{% block menusidebar %}
+    <nsj-menu-item ui-sref-active="active-line" data-icon="glyphicon glyphicon-home" ui-sref="home" data-label="Página inicial"></nsj-menu-item>
+
+    {# <nsj-menu-item ng-if="menuctrl.podeCriarChamado || menuctrl.isAnonimous" ng-click="menuctrl.verificaProfile($event)" ui-sref-active="active-line" data-icon="el el-inbox" ui-sref="atendimento_cliente_solicitacoes({order: 'desc'})" data-label="{{'Chamados'|trans}}"></nsj-menu-item> #}
+    <nsj-menu-item ui-sref-active="active-line" data-icon="el el-info-circle" ui-sref="atendimento_cliente_artigos({ categoria: null, tags: '' })" data-label="{{'baseconhecimento'|trans}}"></nsj-menu-item>
+    {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% javascripts
+
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/filters/filesize.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/filters/totime.js'
+
+        '@NasajonComponentesInterfaceBundle/Resources/public/angular-modules/modules/nsjMenu/nsjMenu.js'
+        '@NasajonComponentesInterfaceBundle/Resources/public/angular-modules/modules/appLoad/appLoad.js'
+        '@NasajonComponentesInterfaceBundle/Resources/public/angular-modules/modules/nsjHeader/nsjHeader.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/solicitacoes.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Solicitacoes/index.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Solicitacoes/edit.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Solicitacoes/factory.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/artigos.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Artigos/factory.js'
+        
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/nsjRedux.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/middleware/loggerMiddleware.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/middleware/promiseMiddleware.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/redux/artigosActions.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/redux/artigosReducer.js'
+
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/titulos.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/usuariosedit.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Titulos/factory.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/usuarios.js'	
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Usuarios/index.js'	
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Usuarios/factory.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/vinculo.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/dashboard.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/arquivos.js'
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Arquivos/factory.js'
+
+        '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Contatos/factory.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/contatos.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/Cliente/app.js'
+
+        filter='?uglifyjs2'
+    %}
+    <script src='{{ asset_url }}'></script>
+    {% endjavascripts %}
+{% endblock %}

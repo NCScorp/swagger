@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="ordensServico" label="ordensServico" project="Servicos">
+
+    <config>
+        <autosave>true</autosave>
+        <context id="operacao">Servicos\OrdensServico\Operacao</context>
+
+    </config>   
+    <entity schema="servicos" table="ordensservicos">
+        <fieldmodel name="ordemservico" datatype="guid" isid="true" column="ordemservico"/>
+        <fieldmodel name="data_criacao" datatype="date" column="data_criacao"/>
+        <fieldmodel name="hora_criacao" datatype="time" column="hora_criacao"/>
+        <fieldmodel name="numero" datatype="integer" column="numero" />
+        <fieldmodel name="situacao" datatype="integer" column="situacao"/>
+        <fieldmodel name="observacao" datatype="string" column="observacao" />
+        <fieldmodel name="referenciaexterna" datatype="string" column="referenciaexterna"/>
+        <fieldmodel name="tipoordemservico_id" datatype="guid" column="tipoordemservico_id" useCaseLink="servicos\tipoOrdensServico" entityJoinType="left" />
+        <fieldmodel name="os_retorno" datatype="guid" column="ordemservicoretorno_id" useCaseLink="servicos\OrdensServico" entityJoinType="left" />
+        <fieldmodel name="origem" datatype="integer" column="origem"/>
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento_id" useCaseLink="ns\estabelecimento" entityJoinType="left" />
+        <fieldmodel name="cliente" datatype="guid" column="cliente_id" useCaseLink="ns\clientes" entityJoinType="left" />
+        <fieldmodel name="pessoamunicipio" datatype="guid" column="pessoamunicipio" useCaseLink="ns\pessoamunicipio" entityJoinType="left" />
+        <fieldmodel name="ativo" datatype="guid" column="objetoservico_id" useCaseLink="servicos\ativos" entityJoinType="left"/>
+        <fieldmodel name="enderecocliente" datatype="guid" column="enderecocliente_id" useCaseLink="ns\enderecos" entityJoinType="left" />
+        <fieldmodel name="ordemservico_vinculada" datatype="guid" column="ordemservicovinculada" useCaseLink="Servicos\OrdensServico" entityJoinType="left" />
+        <fieldmodel name="atendimento_vinculado" datatype="guid" column="chamadotecnico_id" useCaseLink="Atendimento\Admin\Solicitacoes" entityJoinType="left" />
+        <fieldmodel name="projeto" datatype="guid" column="projeto" useCaseLink="servicos\projetos" entityJoinType="left" />
+        <fieldmodel name="servicostecnicos" datatype="objectlist" useCaseLink="servicos\OrdensServico\Item" entityJoinType="left" />
+        <fieldmodel name="visitas" datatype="objectlist" useCaseLink="servicos\Visita" entityJoinType="left" />
+        <fieldmodel name="tabeladepreco_id" datatype="guid" column="tabeladepreco_id" />
+        <fieldmodel name="rascunho" datatype="boolean" column="rascunho" draft="true" />
+        <fieldmodel name="tipo_manutencao" datatype="guid" column="tipo_manutencao" useCaseLink="servicos\tipoManutencao" entityJoinType="left" />
+        <fieldmodel name="sintoma" datatype="string" column="sintoma" />
+        <fieldmodel name="causa" datatype="string" column="causa" />
+        <fieldmodel name="operacao" datatype="guid" column="operacaoordemservico_id" useCaseLink="servicos\OrdensServico\Operacao" entityJoinType="left"/>
+        <fieldmodel name="situacao_maquina_chamado" datatype="integer" column="situacao_maquina_chamado" />
+        <fieldmodel name="situacao_maquina_chegada" datatype="integer" column="situacao_maquina_chegada" />
+        <fieldmodel name="numero_orcamento" datatype="integer" column="numero_orcamento" />
+        <fieldmodel name="orcamento_gerado" datatype="boolean" column="orcamento_gerado" />
+        <fieldmodel name="responsavel_orcamento" datatype="string" column="responsavel_orcamento" />
+        <fieldmodel name="assinado_por" datatype="string" column="assinado_por" />
+        <fieldmodel name="situacao_maquina_saida" datatype="integer" column="situacao_maquina_saida" />
+        <fieldmodel name="horimetro" datatype="float" column="horimetro" />
+        <fieldmodel name="contrato" datatype="guid" column="contrato_id" useCaseLink="financas\contrato" entityJoinType="left" />
+        <fieldmodel name="intervencao" datatype="string" column="intervencao" />
+        <fieldmodel name="xml_docengine" datatype="string" column="xml_docengine" />
+        <fieldmodel name="valor_total" datatype="float" column="valor_total"/>
+        <fieldmodel name="usuario_id" datatype="guid" column="usuario_id" />
+        <fieldmodel name="pedido_garantia" datatype="string" column="pedido_garantia" />
+        <fieldmodel name="responsavel" datatype="string" column="responsavel_web" />
+
+        <fieldmodel name="utilizaOrdemServicoRetorno" datatype="boolean" notMapped="true" />
+
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">operacao</constructoritem>
+        <constructoritem required="false">projeto</constructoritem>
+        <constructoritem required="false">responsavel</constructoritem>
+        <constructoritem required="false">situacao</constructoritem>
+        <constructoritem required="false">rascunho</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Ordens de Serviço" >
+        <fieldsbrowser>
+            <fieldbrowser alias="ordemservico" entitylink="ordemservico" isid="true" />
+            <fieldbrowser alias="Número" entitylink="numero" visible="true" cansearch="true" />
+            <fieldbrowser alias="Cliente" entitylink="cliente" visible="true" cansearch="false" />
+            <fieldbrowser alias="Projeto" entitylink="projeto" visible="true" cansearch="false" />
+            <fieldbrowser alias="Rascunho" entitylink="rascunho" visible="false" cansearch="false" />
+            <fieldbrowser alias="Data de Criação" entitylink="created_at" visible="false" cansearch="false" alloworder="true" direction="DESC" indefaultorder="true" />
+            <fieldbrowser alias="Situação" entitylink="situacao" visible="true" cansearch="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Ordem de Serviço">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="cliente" controltype="lookup" entitylink="cliente" label="Cliente" colspan="6"  browserlookup="clientes" projectbrowserlookup="ns" fieldlookup="codigo" fieldaliaslookup="cliente" fielddetaillookup="nome">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo cliente não pode ser vazio."/>
+                        </validates>
+                    </cell> 
+                    <cell name="estabelecimento" entitylink="estabelecimento" label="Estabelecimento" controltype="lookup" colspan="6" browserlookup="estabelecimento" projectbrowserlookup="ns" fieldaliaslookup="id" fielddetaillookup="nomefantasia" />
+                </row>
+                <row>
+                    <cell name="pessoamunicipio" entitylink="pessoamunicipio" label="Município Prestação" controltype="lookup" projectbrowserlookup="ns" browserlookup="pessoamunicipio" fieldaliaslookup="pessoamunicipio" fielddetaillookup="ibge" colspan="6" readonly="cliente == null" />
+                    <cell name="enderecocliente" entitylink="enderecocliente" controltype="lookup" projectbrowserlookup="ns" browserlookup="enderecos" fieldaliaslookup="endereco" fielddetaillookup="logradouro" label="Endereço" colspan="6" />
+                </row>
+                <row>
+                    <cell name="tipoordemservico_id" entitylink="tipoordemservico_id" label="Tipo de Ordem de Serviços" controltype="lookup" colspan="6" projectbrowserlookup="servicos" browserlookup="tipoordensservico" fieldaliaslookup="tipoordemservico" fielddetaillookup="descricao" />
+                    <cell name="tipo_manutencao" entitylink="tipo_manutencao" label="Tipo de Manutenção" controltype="lookup" colspan="6" projectbrowserlookup="servicos" browserlookup="tipomanutencao" fieldaliaslookup="tipomanutencao" fielddetaillookup="descricao" />
+                </row>
+                <row readonly="cliente == null" >
+                    <cell name="horimetro" entitylink="horimetro" label="Horímetro" controltype="textedit" colspan="6" visible="context.horimetro==true" />
+                    <cell name="ativo" entitylink="ativo" label="Ativo" controltype="lookup" projectbrowserlookup="servicos" browserlookup="ativos" fieldaliaslookup="servico_id" fielddetaillookup="servico_descricao" colspan="6" />
+                </row>
+                <row>
+                    <cell name="contrato" visible="context.contrato==true" entitylink="contrato" controltype="lookup" projectbrowserlookup="financas" browserlookup="contrato" fieldaliaslookup="id" fielddetaillookup="descricao" label="Contrato" colspan="6" />
+                    <cell name="referenciaexterna" visible="context.referenciaexterna==true" entitylink="referenciaexterna" label="O.S. Externa" controltype="textedit" colspan="6" />
+                    <!--<cell name="tabeladepreco_id" entitylink="tabeladepreco_id" label="Tabela de Preço" controltype="textedit" colspan="4" />-->
+                </row>
+                <row>
+                    <cell colspan="12">
+                        <groupbox name="vinculo">
+                            <caption text="Vincular a"/>
+                            <row>
+                                <cell name="ordemservico_vinculada" entitylink="ordemservico_vinculada" controltype="lookup" colspan="12" projectbrowserlookup="servicos" browserlookup="ordensservico" fieldaliaslookup="numero" fielddetaillookup="numero" />
+                                <cell name="atendimento_vinculado" entitylink="atendimento_vinculado"  controltype="lookup" colspan="12" projectbrowserlookup="atendimento/admin" browserlookup="solicitacoes" fieldlookup="atendimento" fieldaliaslookup="atendimento" fielddetaillookup="resumo" visible="context.chamadotecnico==true" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+
+                <row visible="context.sintoma == true">
+                    <cell name="situacao_maquina_chamado" entitylink="situacao_maquina_chamado" label="Condição da máquina no chamado" controltype="combobox" colspan="6" placeholder="Não informado">
+                        <itenscombobox type="json">{'0':'Parada', '1':'Em vias de parar', '2':'Funcionando'}</itenscombobox>
+                    </cell>
+                    <cell name="sintoma" entitylink="sintoma" label="Sintoma" controltype="textarea" colspan="12" placeholder="Descreva o(s) sintoma(s) descrito(s) pelo cliente/contato... " />
+                </row>
+                <row visible="context.causa == true">
+                    <cell name="situacao_maquina_chegada" entitylink="situacao_maquina_chegada" label="Condição da máquina na chegada do técnico" controltype="combobox" colspan="6" placeholder="Não informado">
+                        <itenscombobox type="json">{'0':'Parada', '1':'Em vias de parar', '2':'Funcionando'}</itenscombobox>
+                    </cell>
+                    <cell name="causa" entitylink="causa" label="Causa" placeholder="Descreva o(s) causa(s) encontrada(s) ... " controltype="textarea" colspan="12" />
+                </row>
+                <row visible="context.intervencao == true">
+                    <cell name="situacao_maquina_saida" entitylink="situacao_maquina_saida" label="Condição da máquina após manutenção" controltype="combobox" colspan="6" placeholder="Não informado">
+                        <itenscombobox type="json">{'0':'Liberada', '1':'Liberada com restrições', '2':'Não Liberada'}</itenscombobox>
+                    </cell>
+                    <cell name="intervencao" entitylink="intervencao" label="Intervenção" placeholder="Descreva qual foi a solução / intervenção" controltype="textarea" colspan="12" />
+                </row>
+                <row>
+                    <cell>
+                        <groupbox>
+                            <row>
+                                <cell name="servicostecnicos" controltype="objectlist" entitylink="servicostecnicos" label="" colspan="12" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <groupbox visible="context.visita != 0">
+                            <row>
+                                <cell name="visitas" controltype="objectlist" entitylink="visitas" label="" colspan="12" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <groupbox visible="context.utilizadevolviveis==true">
+                            <row />
+                        </groupbox>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <groupbox>
+                            <caption text="Orçamento (Preencha abaixo, caso tenha sido gerado)"/>
+                            <row>
+                                <cell name="numero_orcamento" visible="context.orcamento==true" entitylink="numero_orcamento" controltype="textedit" label="Número Orçamento" colspan="4" />
+                                <cell name="responsavel_orcamento" visible="context.orcamento==true" entitylink="responsavel_orcamento" controltype="textedit" label="Responsável pelo Orçamento" colspan="4" />
+                                <cell name="assinado_por" visible="context.assinadopor==true" entitylink="assinado_por" controltype="textedit" label="Assinado Por" colspan="4" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+                <row>
+                    <cell>
+                        <groupbox>
+                            <row>
+                                <cell name="observacao" controltype="wysiwyg" entitylink="observacao" placeholder="Adicione comentários a essa Ordem de Serviço..." label="" colspan="12" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>OrdemServicoNova</name>
+                <fromto valueapi="projeto" valueentity="projeto" />
+                <fromto valueapi="observacao" valueentity="observacao" />
+                <fromto valueapi="responsavel" valueentity="responsavel" />
+                <fromto valueapi="origem" valueentity="origem" />
+                <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+                <fromto valueapi="cliente" valueentity="cliente" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="enderecocliente" valueentity="enderecocliente" />
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="rascunho" valueentity="rascunho"/>
+                <fromto valueapi="operacao" valueentity="operacao"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>OrdemServicoAlterar</name>
+                <fromto valueapi="ordemservico" valueentity="ordemservico" />
+                <fromto valueapi="data_criacao" valueentity="data_criacao" />
+                <fromto valueapi="hora_criacao" valueentity="hora_criacao" />
+                <fromto valueapi="atendimento_vinculado" valueentity="atendimento_vinculado" />
+                <fromto valueapi="situacao" valueentity="situacao" />
+                <fromto valueapi="referenciaexterna" valueentity="referenciaexterna" />
+                <fromto valueapi="tipoordemservico_id" valueentity="tipoordemservico_id" />
+                <fromto valueapi="os_retorno" valueentity="os_retorno" />
+                <fromto valueapi="origem" valueentity="origem" />
+                <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+                <fromto valueapi="cliente" valueentity="cliente" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="enderecocliente" valueentity="enderecocliente" />
+                <fromto valueapi="valor_total" valueentity="valor_total" />
+                <fromto valueapi="xml_docengine" valueentity="xml_docengine" />
+                <fromto valueapi="contrato" valueentity="contrato" />
+                <fromto valueapi="tipo_manutencao" valueentity="tipo_manutencao" />
+                <fromto valueapi="horimetro" valueentity="horimetro" />
+                <fromto valueapi="situacao_maquina_chamado" valueentity="situacao_maquina_chamado" />
+                <fromto valueapi="sintoma" valueentity="sintoma" />
+                <fromto valueapi="situacao_maquina_chegada" valueentity="situacao_maquina_chegada" />
+                <fromto valueapi="causa" valueentity="causa" />
+                <fromto valueapi="situacao_maquina_saida" valueentity="situacao_maquina_saida" />
+                <fromto valueapi="intervencao" valueentity="intervencao" />
+                <fromto valueapi="observacao" valueentity="observacao" />
+                <fromto valueapi="usuario_id" valueentity="usuario_id" />
+                <fromto valueapi="assinado_por" valueentity="assinado_por" />
+                <fromto valueapi="orcamento_gerado" valueentity="orcamento_gerado" />
+                <fromto valueapi="numero_orcamento" valueentity="numero_orcamento" />
+                <fromto valueapi="responsavel_orcamento" valueentity="responsavel_orcamento" />
+                <fromto valueapi="pedido_garantia" valueentity="pedido_garantia" />
+                <fromto valueapi="tabeladepreco_id" valueentity="tabeladepreco_id" />
+                <fromto valueapi="operacaoordemservico_id" valueentity="operacao" />
+                <fromto valueapi="ordemservico_vinculada" valueentity="ordemservico_vinculada" />
+                <fromto valueapi="pessoamunicipio" valueentity="pessoamunicipio" />
+                <fromto valueapi="projeto" valueentity="projeto" />
+                <fromto valueapi="responsavel" valueentity="responsavel" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="rascunho" valueentity="rascunho"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>OrdemServicoExcluir</name>
+                <fromto valueapi="ordemservico" valueentity="ordemservico" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

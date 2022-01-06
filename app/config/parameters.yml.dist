@@ -1,0 +1,25 @@
+parameters:
+    database_driver: pdo_pgsql
+    database_host: postgres
+    database_port: '5432'
+    database_name: integratto2
+    database_user: bancosweb
+    database_password: mysecretpassword
+    locale: pt_BR
+    secret: 8cb32b430326e4e20df873ee37cdd610e6a02016
+    diretorio_key: 82d508602ab8ee7fff5131793227e820
+
+    memcached_host: 127.0.0.1
+    memcached_port: 11211
+    session_prefix: sess_atend_
+    session_lifetime: 86400
+    proxy: null
+    maladireta_url: 'http://maladireta.nasajonsistemas.com.br/'
+    usuario_url: 'http://usuario.nasajonsistemas.com.br/'
+
+    sns_event_notification_topic: null
+    s3_bucket_name: nasajon-dev
+    email_subdomain: 'dev.nasajonsistemas.com.br'
+    mailgun_api_key: null
+    app_version: v12.8
+    assets_version:

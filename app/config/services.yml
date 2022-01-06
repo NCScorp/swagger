@@ -1,0 +1,22 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+    anexos_adapter_path: 'atendimento/anexos'
+    imagens_adapter_path: 'atendimento/imagens'
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    cloudwatch_handler:
+        class: Maxbanton\Cwh\Handler\CloudWatch
+        arguments:
+            - "@aws.cloudwatchlogs" 	# Config Name
+            - '%env(cloudwatchlogs_group)%'  # Group Name
+            - '%env(cloudwatchlogs_stream)%' # Stream Name
+            - 30                     # retention Days
+            - 10                  # logs In Batch
+            - { mytag: "tag" }       # tags
+            - INFO               # logLevel
+            - true               # bubble
+            - false              #createGroup (Se deixar true, ele fara uma requisição para saber se existe toda vez que criar um log e isso deixa API lenta)

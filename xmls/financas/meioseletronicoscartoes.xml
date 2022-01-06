@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="meioseletronicoscartoes" label="meioseletronicoscartoes" project="financas" >
+    <entity schema="financas" table="meioseletronicoscartoes">
+        <fieldmodel name="meioeletronicocartao" datatype="guid" isid="true" column="meioeletronicocartao"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" optimistLock="true" />
+    </entity>
+    <viewbrowser label="Meios Eletrônicos Cartões">
+        <fieldsbrowser>
+            <fieldbrowser alias="meioeletronicocartao" entitylink="meioeletronicocartao" isid="true" />
+            <fieldbrowser alias="codigo" entitylink="codigo" cansearch="true" visible="true" avaliable="true" alloworder="true" indefaultorder="true" direction="ASC"/>
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

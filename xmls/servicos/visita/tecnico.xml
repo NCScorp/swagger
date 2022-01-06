@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="tecnico" label="tecnico" project="Servicos/Visita">
+    <entity schema="servicos" table="ordensservicosvisitastecnicos">
+        <fieldmodel name="ordemservicovisitatecnico" datatype="guid" column="ordemservicovisitatecnico" isid="true" />
+        <fieldmodel name="ordemservicovisita" datatype="guid" column="ordemservicovisita" />
+        <fieldmodel name="tecnico" datatype="guid" column="tecnico" useCaseLink="ns\tecnico" entityJoinType="left" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">ordemservicovisita</constructoritem>
+    </constructors>
+    <viewbrowser label="Técnicos" layout="list" paginate="false" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="Visita Técnico" entitylink="ordemservicovisitatecnico" isid="true" visible="false"  />
+            <fieldbrowser alias="Visita" entitylink="ordemservicovisita" visible="false"  />
+            <fieldbrowser alias="Técnico" entitylink="tecnico" visible="true"  />
+            <fieldbrowser alias="created_at" entitylink="created_at" visible="false"  />
+            <fieldbrowser alias="created_by" entitylink="created_by" visible="false"  />
+            <fieldbrowser alias="updated_at" entitylink="updated_at" visible="false"  />
+            <fieldbrowser alias="updated_by" entitylink="updated_by" visible="false"  />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Técnico" mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="tecnico" controltype="lookup" browserlookup="tecnico" projectbrowserlookup="ns" fieldaliaslookup="id" fieldlookup="id" fielddetaillookup="email" entitylink="tecnico" label="Técnico" colspan="12" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>VisitaTecnicoNovo</name>
+                <fromto valueapi="ordemservicovisita" valueentity="ordemservicovisita" />
+                <fromto valueapi="tecnico" valueentity="tecnico" />
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>VisitaTecnicoAlterar</name>
+                <fromto valueapi="ordemservicovisitatecnico" valueentity="ordemservicovisitatecnico" />
+                <fromto valueapi="tecnico" valueentity="tecnico" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>VisitaTecnicoExcluir</name>
+                <fromto valueapi="ordemservicovisitatecnico" valueentity="ordemservicovisitatecnico" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>
+     

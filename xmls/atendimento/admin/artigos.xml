@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="artigos" label="artigos" project="atendimento/admin" >
+    <entity schema="atendimento" table="vwartigos">
+        <fieldmodel name="artigo" datatype="guid" isid="true" column="artigo"/>
+        <fieldmodel name="categoria" datatype="guid" column="categoria" />
+        <fieldmodel name="categoriatitulo" datatype="guid" column="categoriatitulo" />
+        <fieldmodel name="subcategoria" datatype="guid" column="subcategoria" />
+        <fieldmodel name="subcategoriatitulo" datatype="guid" column="subcategoriatitulo" />
+        <fieldmodel name="secao" datatype="guid" column="secao" useCaseLink="atendimento\categorias" entityJoinType="left" />
+        <fieldmodel name="secaotitulo" datatype="guid" column="secaotitulo" />
+        <fieldmodel name="titulo" datatype="string" column="titulo"/>
+        <fieldmodel name="resumo" datatype="string" column="resumo" />
+        <fieldmodel name="conteudo" datatype="string" column="conteudo" />
+        <fieldmodel name="status" datatype="boolean" column="status" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" optimistLock="true" />
+        <fieldmodel name="followup" datatype="guid" column="followup" />
+        <fieldmodel name="fixarnotopo" datatype="boolean" column="fixarnotopo" />
+        <fieldmodel name="conteudo_textual" datatype="string" column="conteudo_textual" />
+        <fieldmodel name="criado_por_resposta" datatype="boolean" column="criado_por_resposta" />
+        <fieldmodel name="gostaram" datatype="integer" column="gostaram" />
+        <fieldmodel name="naogostaram" datatype="integer" column="naogostaram" />
+        <fieldmodel name="qtd_evitou_criacao_chamados" datatype="integer" column="qtd_evitou_criacao_chamados" />
+        <fieldmodel name="qtd_respostas_chamados" datatype="integer" column="qtd_respostas_chamados" />
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+        <fieldmodel name="orderfield" datatype="string" notMapped="true"/>
+        <fieldmodel name="tags" datatype="json" column="tags" />
+        <fieldmodel name="posicao" datatype="guid" notMapped="true" />
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+        <fieldmodel name="tipoexibicao" datatype="integer" column="tipoexibicao" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">followup</constructoritem>
+        <constructoritem required="false">status</constructoritem>
+        <constructoritem required="false">fixarnotopo</constructoritem>
+        <constructoritem required="false">tags</constructoritem>
+        <constructoritem required="false">categoria</constructoritem>
+        <constructoritem required="false">subcategoria</constructoritem>
+        <constructoritem required="false">secao</constructoritem>
+        <constructoritem required="false">orderfield</constructoritem>
+        <constructoritem required="false">tipoexibicao</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="window" label="Artigos" >
+        <fieldsbrowser>
+            <fieldbrowser alias="artigo" entitylink="artigo" isid="true" visible="true" />
+            <fieldbrowser alias="Titulo" entitylink="titulo" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Resumo" entitylink="resumo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Status" entitylink="status" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Categoria" entitylink="categoria" width="20" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="Categoria Titulo" entitylink="categoriatitulo" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sub Categoria" entitylink="subcategoria" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sub Categoria Titulo" entitylink="subcategoriatitulo" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Seção" entitylink="secao" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Seção Titulo" entitylink="secaotitulo" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Data" entitylink="created_at" width="80" cansearch="false" visible="true" avaliable="false" />
+            <fieldbrowser alias="LastUpdate" entitylink="lastupdate" indefaultorder="true" direction="desc" cansearch="true" visible="false" avaliable="false" />
+            <fieldbrowser alias="Followup" entitylink="followup" width="80" cansearch="false" visible="true" avaliable="false" />
+            <fieldbrowser alias="fixarnotopo" entitylink="fixarnotopo" cansearch="false" visible="false" avaliable="false" />
+            <fieldbrowser allias="tags" entitylink="tags" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser allias="ordem" entitylink="ordem" cansearch="true" visible="true" avaliable="true" indefaultorder="true" direction="asc" />
+            <fieldbrowser allias="tipoexibicao" entitylink="tipoexibicao" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Artigo">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="titulo" controltype="textedit" entitylink="titulo" colspan="8" label="Título">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo título não pode ser vazio."/>
+                            <validate type="maxlength" value="140" displaytext="Tamanho não deve exceder 140 caracteres." />
+                        </validates>
+                    </cell>
+                    <cell name="tipoexibicao" controltype="combobox" entitylink="tipoexibicao" colspan="4" label="Tipo de Exibição">
+                        <itenscombobox type="json">{ '1': 'Artigo', '2': 'Vídeo'}</itenscombobox>
+                        <validates>
+                            <validate type="vnull" displaytext="O campo tipo de exibição não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                    <cell name="secao" controltype="lookup" entitylink="secao" colspan="4"  browserlookup="categorias" projectbrowserlookup="atendimento" fieldlookup="categoria" fieldaliaslookup="categoria" fielddetaillookup="titulo" placeholder="Escolha a categoria">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo seção não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="fixarnotopo" controltype="hidden" entitylink="fixarnotopo" colspan="12" label="Fixar no Topo" ></cell>
+                </row>
+
+                <row>
+                    <cell name="conteudo" controltype="wysiwyg" entitylink="conteudo" colspan="12" placeholder="Conteúdo" >
+                        <validates>
+                            <validate type="vnull" displaytext="O campo conteudo não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="followup" controltype="hidden" entitylink="followup" colspan="12" placeholder="Followup" />
+                </row>
+                <row>
+                    <cell name="posicao" controltype="hidden" entitylink="posicao" colspan="12" placeholder="posicao" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>ArtigoNovo_V7</name>
+                <fromto valueapi="categoria" valueentity="categoria"/>
+                <fromto valueapi="titulo" valueentity="titulo"/>
+                <fromto valueapi="resumo" valueentity="resumo" />
+                <fromto valueapi="conteudo" valueentity="conteudo"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="followup" valueentity="followup" />
+                <fromto valueapi="fixarnotopo" valueentity="fixarnotopo" />
+                <fromto valueapi="conteudo_textual" valueentity="conteudo_textual" />
+                <fromto valueapi="criado_por_resposta" valueentity="criado_por_resposta" />
+                <fromto valueapi="status" valueentity="status" />
+                <fromto valueapi="tags" valueentity="tags" />
+                <fromto valueapi="tipoexibicao" valueentity="tipoexibicao" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>ArtigoAlterar_V7</name>
+                <fromto valueapi="artigo" valueentity="artigo"/>
+                <fromto valueapi="categoria" valueentity="categoria"/>
+                <fromto valueapi="titulo" valueentity="titulo"/>
+                <fromto valueapi="resumo" valueentity="resumo" />
+                <fromto valueapi="conteudo" valueentity="conteudo"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="followup" valueentity="followup" />
+                <fromto valueapi="fixarnotopo" valueentity="fixarnotopo" />
+                <fromto valueapi="conteudo_textual" valueentity="conteudo_textual" />
+                <fromto valueapi="status" valueentity="status" />
+                <fromto valueapi="tags" valueentity="tags" />
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="tipoexibicao" valueentity="tipoexibicao" />
+            </api>
+        </action>
+        <action>
+            <name>AlterarStatus</name>
+            <api>
+                <name>ArtigoAlterarStatus_V3</name>
+                <fromto valueapi="artigo" valueentity="artigo"/>
+                <fromto valueapi="status" valueentity="status"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>ArtigoExcluir_v2</name>
+                <fromto valueapi="artigo" valueentity="artigo"/>
+                <fromto valueapi="deleted_by" valueentity="logged_user"/>
+                <fromto valueapi="secao" valueentity="secao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+          <name>ProcessaTags</name>
+          <api>
+            <name>ArtigoProcessaTag</name>
+            <fromto valueapi="artigo" valueentity="artigo" />
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tags" valueentity="tags" />
+            <fromto valueapi="tenant" valueentity="tenant"/>
+          </api>
+        </action>
+        <action>
+          <name>Reordenar</name>
+          <api>
+            <name>ArtigoReordenar</name>
+            <fromto valueapi="artigo" valueentity="artigo" />
+            <fromto valueapi="posicao" valueentity="posicao" />
+            <fromto valueapi="secao" valueentity="secao" />
+            <fromto valueapi="updated_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+          </api>
+        </action>
+    </actions>
+</nsjusecase>

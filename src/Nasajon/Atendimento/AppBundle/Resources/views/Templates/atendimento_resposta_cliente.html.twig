@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Re: #{{protocolo}} - {{resumo}}</title>
+    </head>
+    <body>
+        <table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="border-top:3px solid #2b6584; font-family:Arial, Helvetica, sans-serif; color:#555555;">
+            <tbody>
+                <tr>
+                    <td style="padding-top:10px;"><img src="http://s3-us-west-2.amazonaws.com/static.nasajon/img/logo.png" /></td>
+                </tr>
+                <tr>
+                    <td>
+                        <h1 style="font-size:20px; margin:8px 0 20px 0; font-family:'Lato', Arial, Helvetica, sans-serif;">
+                            <a href="{{ main_url ~ '#/chamados/'~ atendimento.atendimento}}" title="Re: #{{protocolo}} - {{resumo}}" style="color:#2b6584; text-decoration:none;">Re: #{{protocolo}} - {{resumo}}</a>
+                        </h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="{{ main_url ~ '#/chamados/'~ atendimento.atendimento}}" title="Visualizar atendimento : #{{protocolo}}" style="display:inline-block; border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px; background:#428bca; border:1px solid #357ebd; color:#FFF; padding:8px 10px; text-decoration:none; font-size:14px; margin-bottom:20px;">Visualizar atendimento</a>
+                    </td>
+                </tr>
+                {% for item in atendimento.followups %}
+                    {% if item.tipo == 1 %}
+                        {% set img_url = "https://s3-us-west-2.amazonaws.com/static.nasajon/img/atendimento/ico-comentario.gif" %}
+                        {% set background = "background:#fffdef;" %}
+                    {% elseif item.criador %}
+                        {% set img_url = "https://s3-us-west-2.amazonaws.com/static.nasajon/img/atendimento/ico-resposta.gif" %}
+                        {% set background = "" %}
+                    {% else %}
+                        {% set img_url = "https://s3-us-west-2.amazonaws.com/static.nasajon/img/atendimento/ico-msg-enviada.gif" %}
+                        {% set background = "background:#f7f7f7;" %}
+                    {% endif %}
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="{{ background }} border-bottom:1px solid #ccc; padding:0 10px;">
+                            <tr>
+                                <td style="padding-top:10px;">
+                                    <strong style="font-size:14px;">
+                                        <img src="{{ img_url }}" style="border:none; margin:0; vertical-align:middle" />
+                                        {{ item.created_by.nome }} -
+                                    </strong>
+                                    <span style="font-size:12px; color:#949494;">{{ item.created_at | date("d/m/Y") }} às {{ item.created_at | date("H:i") }}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom:20px;">
+                                    <p style="font-size:14px; line-height:18px; margin:0 0;">{{ item.historico|raw }}</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td>
+                    <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="margin-top:30px; padding:15px; border:1px solid #ccc;">
+                        <tr>
+                            <td>
+                                <h2 style="font-size:16px; margin:0 0 20px 0; font-family:'Lato', Arial, Helvetica, sans-serif; color:#2b6584;">Detalhes do Atendimento</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">ATRIBUÍDO A</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">
+                                            {# <a style="color:#428bca; text-decoration:none;" href="#" title="patriciaribeiro@nasajon.com.br">patriciaribeiro@nasajon.com.br</a>#}
+                                            {{ atendimento.atribuido_a.label }}
+                                        </td>
+                                    </tr>
+                                    {% if atendimento.cliente is not null %}
+                                        <tr>
+                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CLIENTE</strong></td>
+                                            <td style="font-size:14px; line-height:18px;" valign="top">{{ atendimento.cliente.nome }}</td>
+                                        </tr>
+                                    {% endif %}
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CRIADO EM</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">{{ atendimento.created_at|date("d/m/Y") }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CRIADO POR</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">
+                                            {{ atendimento.created_by.nome }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">E-MAIL DO CONTATO</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">
+                                            {{ atendimento.email }}
+                                        </td>
+                                    </tr>
+                                    {#<tr>
+                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">SISTEMA</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">Contábil SQL</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">OCORRÊNCIA</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">Contábil SQL</td>
+                                    </tr>#}
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">DESCRIÇÃO</strong></td>
+                                        <td style="font-size:14px; line-height:18px;">
+                                            <p style="margin:0;" valign="top">{{ atendimento.sintoma|raw }}</p>
+                                        </td>
+                                    </tr>
+                                    {% if atendimento.anexos|length > 0 %}
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="100" valign="top"><strong style="font-size:11px; line-height:18px;">ANEXOS</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">
+                                            <ul style="padding:0; margin:0; list-style:none;">
+                                                {% for anexo in atendimento.anexos %}
+                                                <li><a href="{{anexo.url}}" style="text-decoration:none; color:#428bca;">{{anexo.nome}}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align:center">
+                    <p style="font-size:11px; margin:20px 0 5px;">{#Responda o e-mail para adicionar uma resposta • #}<a href="{{ main_url ~ '#/chamados/'~ atendimento.atendimento}}" style="text-decoration:none; color:#428bca;">Visualizar no Sistema de Atendimentos</a></p>
+                    <p style="font-size:11px; margin:0 0 8px;">Desenvolvido por <a href="http://www.nasajon.com.br" style="text-decoration:none; color:#428bca;">Nasajon Sistemas</a></p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

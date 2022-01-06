@@ -1,0 +1,78 @@
+/* Base de Conhecimento - Chamada Home */
+
+.content-box-header h3 {
+  font-family: "Lato", Arial, sans-serif;
+}
+
+.base-conhecimento-index li {
+  margin-bottom: 12px;
+}
+
+.base-conhecimento-index ul.list-articles {
+  list-style-type: disc;
+}
+
+.base-conhecimento-index ul li {
+  color: #2a6496;
+}
+
+.base-conhecimento-index li.topic {
+  width: 100%;
+  display: block;
+}
+
+.base-conhecimento-index .content-box-body {
+  margin-bottom: 20px;
+}
+
+.busca-artigo {
+  border-radius: 0.3em;
+  padding: 15px 15px;
+  background: #c8e2ec;
+  margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  .box-artigos {
+    padding: unset !important;
+  }
+}
+
+.busca-artigo input {
+  border-right: none;
+}
+
+.busca-artigo button {
+  padding-top: 11px;
+  color: #417e94;
+}
+
+.busca-artigo .btn-default:hover,
+.busca-artigo .btn-default:focus,
+.busca-artigo .btn-default:active,
+.busca-artigo .btn-default.active,
+.busca-artigo .open > .dropdown-toggle.btn-default {
+  background: #fff;
+  border-color: #ccc;
+  border-left: 0;
+  color: #356d82;
+}
+
+@media screen and (min-width: 767px) {
+  .base-conhecimento-index li.topic {
+    width: calc(50% - 20px);
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 15px 0 0;
+  }
+}
+@media screen and (min-width: 992px) {
+  .anon-page {
+    margin-left: 0;
+  }
+}
+
+.banner-anon .banner {
+  margin: 0 15px !important;
+  padding: unset !important;
+}

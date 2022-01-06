@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="solicitacoes" label="solicitacoes" project="atendimento/cliente">
+    <entity schema="servicos" table="atendimentos">
+        <fieldmodel name="atendimento" datatype="guid" isid="true" column="atendimento"/>
+        <fieldmodel name="numeroprotocolo" datatype="string" column="numeroprotocolo"/>
+        <fieldmodel name="email" datatype="string" column="email" />
+        <fieldmodel name="sintoma" datatype="string" column="sintoma"/>
+        <fieldmodel name="resumo" datatype="string" column="resumo" />
+        <fieldmodel name="camposcustomizados" datatype="json" column="camposcustomizados"/>
+        <fieldmodel name="anexos" datatype="objectlist" column="atendimento" useCaseLink="ns\documentosged" entityJoinType="left"  notMapped="true"/>
+        <fieldmodel name="cliente" datatype="guid" column="participante" useCaseLink="ns\clientes" entityJoinType="left" />
+        <fieldmodel name="ativo" datatype="guid" column="ativo" />
+        <fieldmodel name="created_at" datatype="date" column="datacriacao" />
+        <fieldmodel name="created_at_ini" datatype="date" notMapped="true" />
+        <fieldmodel name="created_at_fim" datatype="date" notMapped="true" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="data_ultima_resposta" datatype="date" column="data_ultima_resposta" />
+        <fieldmodel name="ultima_resposta_admin" datatype="boolean" column="ultima_resposta_admin" />
+        <fieldmodel name="ultima_resposta_resumo" datatype="string" column="ultima_resposta_resumo" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="responsavel_web" datatype="string" />
+        <fieldmodel name="responsavel_web_tipo" datatype="integer" />
+        <fieldmodel name="canal" datatype="string" column="canal"/>
+        <fieldmodel name="canal_email" datatype="string" column="canal_email" />
+        <fieldmodel name="situacao" datatype="integer" notMapped="true" />
+        <fieldmodel name="canal_email_copias" datatype="string" column="canal_email_copias" />
+        <fieldmodel name="conteudo_textual" datatype="string" column="conteudo_textual" />
+        <fieldmodel name="mesclado_a" datatype="guid" column="mesclado_a" />
+
+        <!-- Necessário para cobrir a nova configuração ACESSO_CHAMADOS_VISAO_CLIENTE -->
+        <fieldmodel name="email_usuario_criacao" datatype="string" column="email_usuario_criacao" notMapped="true"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">cliente</constructoritem>
+        <constructoritem required="false">email</constructoritem>
+        <constructoritem required="false">created_at</constructoritem>
+        <constructoritem required="false">created_at_ini</constructoritem>
+        <constructoritem required="false">created_at_fim</constructoritem>
+        <constructoritem required="false">camposcustomizados</constructoritem>
+        <constructoritem required="false">responsavel_web</constructoritem>
+        <constructoritem required="false">email_usuario_criacao</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Chamados">
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimento" entitylink="atendimento" isid="true" />
+            <fieldbrowser alias="#" entitylink="numeroprotocolo" width="20" unique="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Resumo" entitylink="resumo" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Data de Criação" entitylink="created_at" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Cliente" entitylink="cliente" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="data_ultima_resposta" width="80" cansearch="false" visible="false" avaliable="true" indefaultorder="true" direction="desc"  />
+            <fieldbrowser entitylink="ultima_resposta_admin" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="ultima_resposta_resumo" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="mesclado_a" width="80" cansearch="false" visible="true" avaliable="true"  />
+            <fieldbrowser alias="responsavel_web" entitylink="responsavel_web" width="80" cansearch="false" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Chamado">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="sintoma" controltype="wysiwyg" entitylink="sintoma" colspan="12">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo descrição da situação não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="created_by" controltype="textedit" entitylink="created_by" label="Criador" colspan="12" />
+                </row>
+                <row>
+                    <cell name="created_at" controltype="textedit" entitylink="created_at" label="Criado em" colspan="12" />
+                </row>
+                <row>
+                    <cell name="cliente" controltype="lookup" entitylink="cliente" label="Cliente" colspan="12"  browserlookup="clientes" projectbrowserlookup="ns" fieldlookup="codigo" fieldaliaslookup="cliente" fielddetaillookup="nome" />
+                </row>
+                <row>
+                    <cell name="numeroprotocolo" controltype="textedit" entitylink="numeroprotocolo" label="Protocolo" colspan="12" />
+                </row>
+                <row>
+                    <cell name="resumo" controltype="textedit" entitylink="resumo" label="Assunto" colspan="12" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoClienteNovo_V2</name>
+                <fromto valueapi="sintoma" valueentity="sintoma"/>
+                <fromto valueapi="resumo" valueentity="resumo" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="participante" valueentity="cliente" />
+                <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="responsavel_web" valueentity="responsavel_web" />
+                <fromto valueapi="situacao" valueentity="situacao" />
+                <fromto valueapi="canal" valueentity="canal" />
+                <fromto valueapi="canal_email" valueentity="canal_email" />
+                <fromto valueapi="conteudo_textual" valueentity="conteudo_textual" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

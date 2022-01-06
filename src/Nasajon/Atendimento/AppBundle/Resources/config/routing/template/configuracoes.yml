@@ -1,0 +1,28 @@
+index:
+    path: /index.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Configuracoes/index.html.twig'
+
+list:
+    path: /list.html
+    defaults:
+        _controller: 'Nasajon\Atendimento\AppBundle\Controller\Admin\Configuracoes\ConfiguracoesController::templateAction'
+        
+convites:
+    path: /convites.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Configuracoes/convites.html.twig'
+        
+configuracoes:
+    path: /configuracoes.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Configuracoes/Portal/configuracoes.html.twig'
+        
+customizacoes:
+    path: /customizacoes.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Configuracoes/Portal/customizacoes.html.twig'

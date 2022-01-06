@@ -1,0 +1,127 @@
+/* Menu Vertical / Toggle */
+
+.vertical-menu {
+    font-weight: 400;
+    font-size: 1.05em;
+}
+
+.vertical-menu .nav-pills>li>a {
+    border-radius: 0;
+}
+
+.vertical-menu span.menutitle {
+    display: block;
+    padding: 14px 15px;
+}
+
+@media screen and (max-width: 767px) {
+  .vertical-menu {
+      padding-top: 42px;
+      margin: 0 -15px;
+  }
+
+  .vertical-menu .active {
+      position: absolute;
+      top: 0;
+      width: 100%;
+  }
+
+  .vertical-menu .badge {
+      color: #337ab7;
+      background-color: #fff;
+  }
+
+  .vertical-menu .nav-pills > li > a {
+      background: rgb(239, 239, 239);
+  }
+
+  .vertical-menu .nav-pills > li.active > a {
+      background: #699db0;
+  }
+
+  .toggle.nav {
+      overflow:hidden;
+      max-height:0;
+      -webkit-transition:max-height 0.3s ease-in-out;
+      -moz-transition:max-height 0.3s ease-in-out;
+      -o-transition:max-height 0.3s ease-in-out;
+      transition:max-height 0.3s ease-in-out;
+  }
+
+  .toggle-open.nav {
+      max-height: 2000px;
+      -webkit-transition:max-height 0.3s ease-in-out;
+      -moz-transition:max-height 0.3s ease-in-out;
+      -o-transition:max-height 0.3s ease-in-out;
+      transition:max-height 0.3s ease-in-out;
+  }
+
+  .toggle.nav>li, .toggle.nav>ul li {
+      position: initial;
+  }
+
+  ul.toggle li.active {
+      position: absolute;
+      width: 100%;
+      top: 0;
+      display: block;
+  }
+
+  .nav-list.height-full {
+      height: auto;
+      margin: 0 -15px;
+  }
+
+  .nav-pills>li.active>a:after {
+    width: 0px;
+    height: 0px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid #FFF;
+    position: absolute;
+    right: 10px;
+    content: ' ';
+    top: 18px;
+    -webkit-transition: transform 0.3s ease-in-out; /* Safari */
+    -moz-transition: transform 0.3s ease-in-out;
+    -o-transition: transform 0.3s ease-in-out;
+     transition: transform 0.3s ease-in-out;
+  }
+
+  .toggle-open.nav-pills>li.active>a:after {
+    -ms-transform: rotate(-180deg); /* IE 9 */
+    -webkit-transform: rotate(-180deg); /* Chrome, Safari, Opera */
+    transform: rotate(-180deg);
+  }
+
+  .nav-stacked>li {
+      border-bottom: 1px solid #fff;
+  }
+
+  .nav-stacked>li+li {
+    margin-top: 0px;
+  }
+}
+
+@media (min-width: 768px) {
+  .vertical-menu .nav-pills>li>a .badge {
+      float: right;
+  }
+
+  .vertical-menu li {
+      border-bottom: 1px solid #dddddd;
+  }
+
+  .vertical-menu span.menutitle {
+      background-color: #efefef;
+      border-bottom: 1px solid #dddddd;
+  }
+
+  .vertical-menu {
+      border-right: 1px solid #dddddd;
+  }
+
+  .nav-stacked>li+li {
+      margin-top: 0;
+  }
+}

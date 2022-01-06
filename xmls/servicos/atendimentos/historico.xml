@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="Historico" label="Historico" project="Servicos/Atendimentos" orphan="false">
+    <config>
+        <autosave>true</autosave>
+    </config>
+    <entity schema="servicos" table="atendimentoshistoricos">
+        <fieldmodel name="atendimentohistorico" datatype="guid" isid="true" column="atendimentohistorico"/>
+        <fieldmodel name="atendimento" datatype="guid" column="atendimento"/>
+        <fieldmodel name="tipo" datatype="integer" column="tipo"/>
+        <fieldmodel name="valornovo" datatype="json" column="valornovo"/>
+        <fieldmodel name="valorantigo" datatype="json" column="valorantigo"/>
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="mesclado_a" datatype="guid" column="mesclado_a" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">atendimento</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table" target="window" label=" ">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="atendimentohistorico" isid="true" />
+            <fieldbrowser entitylink="tipo" visible="true" cansearch="false" />
+            <fieldbrowser entitylink="valornovo" visible="true" cansearch="false" />
+            <fieldbrowser entitylink="valorantigo" visible="true" cansearch="false" />
+            <fieldbrowser entitylink="created_at" visible="true" cansearch="false" />
+            <fieldbrowser entitylink="created_by" visible="true" cansearch="false" />
+            <fieldbrowser entitylink="mesclado_a" visible="true" cansearch="false" />
+            <fieldbrowser entitylink="atendimento" visible="true" cansearch="false" />
+            <fieldbrowser entitylink="lastupdate" visible="true" alloworder="true" indefaultorder="true" direction="DESC" cansearch="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

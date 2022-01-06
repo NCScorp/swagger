@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-12" style="padding: 0px 40px 20px 40px;">
+
+        <h3>Excluir Fila</h3>
+
+        <p>Esta fila possui {{ "{{srvcs_tndmntsfls_frm_cntrllr.count_solicitacoes}}" }} {{'chamadosrelacionados'|trans}}.</p>
+
+        <p>Selecione abaixo qual deve ser a nova atribuição destes {{'chamados'|trans}} e confirme a exclusão.</p>
+
+        <form name="form_atendimentofila_delete" novalidate="novalidate" role="form" ng-submit="srvcs_tndmntsfls_frm_cntrllr.submit('form_atendimentofila_delete')" ng-disabled="srvcs_tndmntsfls_frm_cntrllr.submitting">
+
+                <label for="atribuicao">Atribuir a:</label>
+
+                <ui-select  ng-model="srvcs_tndmntsfls_frm_cntrllr.atribuidoa" on-select="srvcs_tndmntsfls_frm_cntrllr.atribuir($item)" ng-disabled="srvcs_tndmntsfls_frm_cntrllr.submitting">
+                    <ui-select-match allow-clear="true" placeholder="Não atribuir (Selecione ou busque para atribuir)">{{'{{srvcs_tndmntsfls_frm_cntrllr.exibeAtribuido }}'}}</ui-select-match>
+                    <ui-select-choices group-by="srvcs_tndmntsfls_frm_cntrllr.agruparPorTipo" repeat="option in srvcs_tndmntsfls_frm_cntrllr.optionscontas.concat(srvcs_tndmntsfls_frm_cntrllr.filas)  | filter:$select.search">
+                        <div>
+                            <div ng-bind-html="srvcs_tndmntsfls_frm_cntrllr.bindOption(option) | highlight: $select.search"></div>
+                        </div>
+                    </ui-select-choices>
+                </ui-select>
+
+                <br />
+
+                <button type="button" class="btn btn-primary pull-right" ng-click="srvcs_tndmntsfls_frm_cntrllr.save()">Confirmar</button>
+
+        </form>
+
+    </div>
+</div>

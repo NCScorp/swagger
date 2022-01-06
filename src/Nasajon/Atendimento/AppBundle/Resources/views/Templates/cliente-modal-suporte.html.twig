@@ -1,0 +1,82 @@
+<div class="headline-sub clearfix">
+  <h3>
+    Situação do cliente
+  </h3>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    <div class="col-sm-12">
+      <fieldset class="form-group">
+        <legend>Tipo do cliente</legend>
+        <div class="row">
+          <div class="col-sm-8">
+            <strong class="title-flag">Tipo:</strong><br>
+            <span>{{'{{cliente.situacaopagamento}}'}}</span>                   
+          </div>
+          <div class="col-sm-4">
+            <strong class="title-flag">Data Alteração:</strong><br>
+            <span ng-bind="cliente.datatipoclientepagamento || 'Data não cadastrada' | date:'dd/MM/yyyy'"></span>
+          </div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+          <div class="col-sm-8">
+            <strong class="title-flag">Justificativa:</strong><br>
+            <span ng-bind="cliente.justificativatipoclientepagamento || 'Justificativa não cadastrada'"></span>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12">
+      <fieldset class="form-group">
+        <legend>Situação Pagamento</legend>
+      </fieldset>
+      <div class="row">
+        <div class="col-sm-8">
+          <strong class="title-flag">Situação:</strong><br>
+          <span>{{'{{cliente.tipoclientepagamento}}'}}</span>
+        </div>
+        <div class="col-sm-4">
+          <strong class="title-flag">Data Alteração:</strong><br>
+          <span ng-bind="cliente.datasituacaopagamento || 'Data não cadastrada' | date:'dd/MM/yyyy'"></span>
+        </div>
+      </div>
+      <div class="row">&nbsp;</div>
+      <div class="row">
+        <div class="col-sm-8">
+          <strong class="title-flag">Justificativa:</strong><br>
+          <span ng-bind="cliente.justificativasituacaopagamento || 'Justificativa não cadastrada'"></span>
+        </div>
+      </div>
+    </div>
+    <p>&nbsp;</p>
+  </div>
+
+  <div class="row" ng-if="cliente.restricaocobranca1 || cliente.restricaocobranca2">
+    <div class="col-sm-12">
+      <fieldset class="form-group">
+        <legend>Restrições</legend>
+        <div class="row">
+          <div class="col-sm-12">
+            <p ng-if="cliente.restricaocobranca1">
+              <strong class="title-flag">{{'{{cliente.restricaocobranca1.codigo}}'}}</strong> 
+              {{'{{cliente.restricaocobranca1.descricao}}'}}
+            </p>
+            <p ng-if="cliente.restricaocobranca2">
+              <strong class="title-flag">{{'{{cliente.restricaocobranca2.codigo}}'}}</strong> 
+              {{'{{cliente.restricaocobranca2.descricao}}'}}
+            </p>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="clearfix">
+    <button type="button" class="btn btn-default pull-right" ng-click="close()" data-dismiss="modal">Fechar</button>
+  </div>
+</div>

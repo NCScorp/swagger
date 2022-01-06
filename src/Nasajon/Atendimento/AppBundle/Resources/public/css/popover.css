@@ -1,0 +1,52 @@
+/* Pop Over */
+
+.popover {
+  max-width: 600px !important;
+  min-width: 250px;
+}
+
+.popover .info-post {
+  padding-bottom: 0;
+  padding-right: 0;
+}
+
+.popover .reply-header {
+  padding-top: 5px;
+}
+
+.popover .reply .reply-text {
+  padding-bottom: 5px;
+}
+
+.popover .forms {
+  margin-bottom: 5px;
+  padding-bottom: 0;
+}
+
+.popover .table-bordered>tbody>tr>td {
+  border-bottom: none;
+}
+
+.infos-popover {
+  max-height: 200px;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-bottom: 5px;
+}
+
+.infos-popover .dl-horizontal dd {
+    margin-bottom: 3px;
+}
+
+.popover-content>h4,
+.popover-content>p {
+  margin: 10px;
+}
+
+@media screen and (max-width: 991px) {
+  .infos-popover .forms {
+    margin-bottom: 5px !important;
+    padding-bottom: 0;
+  }
+}

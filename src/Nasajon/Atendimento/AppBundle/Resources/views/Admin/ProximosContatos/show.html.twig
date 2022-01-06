@@ -1,0 +1,190 @@
+<div class="row height-full">
+    <div class="height-full" ng-class="{'onloading' : crm_prxmscntts_frm_cntrllr.isBusy()}">
+        <div ng-if="!crm_prxmscntts_frm_cntrllr.isBusy()" class="ng-scope height-full">
+            <div class="col-md-12 view-solicitacao height-full" ng-class="{ 'col-lg-8' : (crm_prxmscntts_frm_cntrllr.entity.cliente.cliente && !crm_prxmscntts_frm_cntrllr.hideCliente) }">
+
+                <div class="headline-sub clearfix fixed-bar">
+                    <h3 class="pull-left">
+                        <a href ui-sref="crm_proximoscontatos({})" title="Voltar à lista" class="hidden-md hidden-lg">
+                            <i class="el el-chevron-left"></i>
+                        </a>
+                        <span ng-if="crm_prxmscntts_frm_cntrllr.entity.hora">{{ "{{crm_prxmscntts_frm_cntrllr.entity.hora | toTime}} - " }}</span>{{ "{{crm_prxmscntts_frm_cntrllr.entity.cliente.nome}}" }}
+                    </h3>
+
+                    <div class="pull-right">
+                        
+                        
+                        <div class="clearfix action-buttons pull-left">
+                            <button type="button" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0" class="btn btn-sm btn-warning btn-edit" ui-sref="crm_proximoscontatos_edit({ 'proximocontato' : crm_prxmscntts_frm_cntrllr.entity.proximocontato})"><i class="el el-pencil"></i> <span class="hidden-xs">{{'editar'|trans}}</span></button>
+                            <button type="button" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0" class="btn btn-sm btn-success"  ng-click="crm_prxmscntts_frm_cntrllr.concluir()"><i class="el el-ok"></i> <span class="hidden-xs">{{'concluir'|trans}}</span></button>
+                            <button type="button" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao != 0" class="btn btn-sm btn-default"  ng-click="crm_prxmscntts_frm_cntrllr.reabrir()"><i class="fa fa-repeat"></i> <span class="hidden-xs">{{'reabrir'|trans}}</span></button>                        
+                        </div>
+                        
+                        <div class="pull-right dropdown dropbutton-geral" uib-dropdown role="group" >
+                            <button id="single-button" type="button" class="btn btn-sm btn-default dropdown-toggle" uib-dropdown-toggle >
+                                <span class="icon xs-icon ret-icon"></span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                                <li role="menuitem" ui-sref-active="active">
+                                    <a href="" ui-sref="crm_proximoscontatos_duplicar({ 'proximocontato' : crm_prxmscntts_frm_cntrllr.entity.proximocontato})">
+                                        <span><i class="el el-plus-sign"></i>  {{'duplicaragendamento'|trans}}</span>
+                                    </a>
+                                </li>
+                                <li role="menuitem" ui-sref-active="active" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0">
+                                    <a href="" ng-click="crm_prxmscntts_frm_cntrllr.cancelar()" >
+                                        <span><i class="el el-remove"></i>  {{'cancelar'|trans}}</span>
+                                    </a>
+                                </li>
+                                <li role="menuitem" ui-sref-active="active" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0">
+                                    <a href="" ng-click="crm_prxmscntts_frm_cntrllr.delete()" >
+                                        <span><i class="el el-trash"></i>  {{'excluir'|trans}}</span>
+                                    </a>
+                                </li>
+                                <li class="divider" ng-if="crm_prxmscntts_frm_cntrllr.hideCliente"></li>
+                                <li role="menuitem" ui-sref-active="active" ng-if="crm_prxmscntts_frm_cntrllr.hideCliente">
+                                    <a href="" ng-click="crm_prxmscntts_frm_cntrllr.hideCliente = false" >
+                                        <i class="el el-torso"></i> Visualizar informações do cliente
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forms col-md-12">
+                   <dl class="dl-horizontal text-overflow">
+                       <dt>Data:</dt>
+                       <dd>
+                           <span ng-bind="crm_prxmscntts_frm_cntrllr.entity.data | date: 'dd/MM/yyyy' || 'Não informado.'"></span>
+                       </dd>
+                       <dt>Horário:</dt>
+                       <dd>
+                           <span>
+                               {{"{{ crm_prxmscntts_frm_cntrllr.entity.hora | toTime }}"}}
+                           </span>
+                       </dd>
+                       <dt>Cliente:</dt>
+                       <dd>
+                            <a href="" ui-sref="ns_clientes_show({cliente : crm_prxmscntts_frm_cntrllr.entity.cliente.cliente})" ng-if="crm_prxmscntts_frm_cntrllr.entity.cliente.nome">
+                                <span ng-bind="crm_prxmscntts_frm_cntrllr.entity.cliente.nome || 'Não informado.'"></span>
+                            </a>
+                       </dd>
+                       <dt>Responsável:</dt>
+                       <dd>
+                           <span ng-bind="crm_prxmscntts_frm_cntrllr.entity.responsavel_web || 'Não informado.'"></span>
+                       </dd>
+                       <dt>Situação:</dt>
+                       <dd>
+                           <span class="label label-warning" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0 && !crm_prxmscntts_frm_cntrllr.entity.ematraso">
+                                {{'pendente'|trans}}
+                            </span>
+                            <span class="label label-danger" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0 && crm_prxmscntts_frm_cntrllr.entity.ematraso">
+                                {{'ematraso'|trans}}
+                            </span>
+                            <span class="label label-success" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 1">
+                                {{'concluido'|trans}}
+                            </span>
+                            <span class="label label-default" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 2">
+                                {{'cancelado'|trans}}
+                            </span>
+                       </dd>
+                       <dt>Assunto:</dt>
+                       <dd>
+                           <span ng-bind="crm_prxmscntts_frm_cntrllr.entity.assunto.descricao || 'Não informado.'"></span>
+                       </dd>
+                       <dt ng-if="crm_prxmscntts_frm_cntrllr.entity.atendimento">Chamado:</dt>
+                       <dd ng-if="crm_prxmscntts_frm_cntrllr.entity.atendimento">
+                           <a href="" ui-sref="atendimento_admin_solicitacoes_show({atendimento : crm_prxmscntts_frm_cntrllr.entity.atendimento.atendimento})">
+                               <span>#{{'{{crm_prxmscntts_frm_cntrllr.entity.atendimento.numeroprotocolo}}'}}</span>
+                           </a>
+                       </dd>                       
+                       <dt>Observações:</dt>
+                       <dd>
+                           <span ng-bind="crm_prxmscntts_frm_cntrllr.entity.observacao || 'Não informado.'"></span>
+                       </dd>
+                   </dl>
+               </div>
+
+
+
+
+
+
+
+
+                {#<div class="forms col-md-12">
+                    <div class="row" >
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Data:</label>
+                                <p class="form-control-static" ng-bind="crm_prxmscntts_frm_cntrllr.entity.data | date: 'dd/MM/yyyy' || 'Não informado.'"></p>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Horário:</label>
+                                <p class="form-control-static" ng-bind="crm_prxmscntts_frm_cntrllr.entity.hora || 'Não informado.'"></p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Cliente:</label>
+                                <a href="" ng-if="crm_prxmscntts_frm_cntrllr.entity.cliente.nome">
+                                    <p class="form-control-static" ng-bind="crm_prxmscntts_frm_cntrllr.entity.cliente.nome || 'Não informado.'"></p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Responsável:</label>
+                                <p class="form-control-static" ng-bind="crm_prxmscntts_frm_cntrllr.entity.responsavel_web || 'Não informado.'"></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Situação:</label>
+                                <span class="label label-warning" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0 && !crm_prxmscntts_frm_cntrllr.entity.ematraso">
+                                    {{'pendente'|trans}}
+                                </span>
+                                <span class="label label-danger" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 0 && crm_prxmscntts_frm_cntrllr.entity.ematraso">
+                                    {{'ematraso'|trans}}
+                                </span>
+                                <span class="label label-success" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 1">
+                                    {{'concluído'|trans}}
+                                </span>
+                                <span class="label label-default" ng-if="crm_prxmscntts_frm_cntrllr.entity.situacao == 2">
+                                    {{'cancelado'|trans}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Assunto:</label>
+                                <p class="form-control-static" ng-bind="crm_prxmscntts_frm_cntrllr.entity.assunto.descricao || 'Não informado.'"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Observações:</label>
+                                <p class="form-control-static" ng-bind="crm_prxmscntts_frm_cntrllr.entity.observacao || 'Não informado.'"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>#}
+            </div>
+
+            <cliente controller="crm_prxmscntts_frm_cntrllr"></cliente>
+
+        </div>
+    </div>
+</div>

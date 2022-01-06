@@ -1,0 +1,245 @@
+solicitacoes:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\SolicitacoesController"
+    name_prefix: "atendimento_admin_solicitacoes_"
+
+followups:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\FollowupsController"
+    name_prefix: "atendimento_admin_followups_"
+    prefix: "/solicitacoes"
+
+artigos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ArtigosController"
+    name_prefix: "atendimento_admin_artigos_"
+
+objetosservicos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ObjetosservicosController"
+    name_prefix: "servicos_objetosservicos_"
+
+nsclientes:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ClientesController"
+    name_prefix: "ns_clientes_"
+
+nscontatos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ContatosController"
+    name_prefix: "ns_contatos_"
+    prefix: "/clientes"
+
+nsusuarios:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\UsuariosController"
+    name_prefix: "ns_clientes_usuarios_"
+    prefix: "/clientes"
+
+contas:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ContasController"
+    name_prefix: "atendimento_admin_contas_"
+    prefix: "/contas"
+
+estabelecimento:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\EstabelecimentoController"
+    name_prefix: "ns_estabelecimento_"
+
+
+vendedor:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\VendedorController"
+    name_prefix: "atendimento_vendedor_"
+
+representantecomercial:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\RepresentantecomercialController"
+    name_prefix: "atendimento_representantecomercial_"
+
+representantetecnico:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\RepresentantetecnicoController"
+    name_prefix: "atendimento_representantetecnico_"
+    
+estatisticasartigo:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\EstatisticasArtigoController"
+    name_prefix: "atendimento_admin_estatisticasartigo_"
+
+relatorios_performance:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\RelatoriosPerformanceController"
+    name_prefix: "atendimento_admin_relatorios_performance_"
+    prefix: "/relatorios/performance"
+
+relatorios_resposta:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\RelatoriosRespostaController"
+    name_prefix: "atendimento_admin_relatorios_resposta_"
+    prefix: "/relatorios/resposta"
+
+relatorios_baseconhecimento:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\RelatoriosBaseConhecimentoController"
+    name_prefix: "atendimento_admin_relatorios_baseconhecimento_"
+    prefix: "/relatorios/baseconhecimento"
+
+relatorios_backlog:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\RelatoriosBacklogController"
+    name_prefix: "atendimento_admin_relatorios_backlog_"
+    prefix: "/relatorios/backlog"
+
+relatorios_termos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\RelatoriosTermosController"
+    name_prefix: "atendimento_admin_relatorios_termos_"
+    prefix: "/relatorios/termos"
+
+assuntos:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\AssuntosController"
+    name_prefix: "crm_assuntos_"
+    prefix: "/assuntos"
+
+proximoscontatos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ProximosContatosController"
+    name_prefix: "crm_proximoscontatos_"
+    prefix: "/proximoscontatos"
+
+usuariosdisponibilidades:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\UsuariosDisponibilidadesController"
+    name_prefix: "atendimento_usuariosdisponibilidades_"
+    prefix: "/usuariosdisponibilidades"
+
+
+# Configurações
+atendimentoarquivos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\Configuracoes\\ArquivosController"
+    name_prefix: "atendimento_admin_arquivos_"
+    prefix: "/configuracoes"
+
+equipe:
+    type:   rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\EquipesController"
+    name_prefix: "atendimento_equipes_"
+    prefix: "/configuracoes"
+
+enderecosemails:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\EnderecosemailsController"
+    name_prefix: "atendimento_admin_enderecosemails_"
+    prefix: "/configuracoes"
+
+flagcliente:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\FlagClienteController"
+    name_prefix: "atendimento_admin_flagcliente_"
+    prefix: "/configuracoes"
+
+categorias:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\CategoriasController"
+    name_prefix: "atendimento_categorias_"
+    prefix: "/configuracoes"
+
+atendimentosfilas:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\AtendimentosfilasController"
+    name_prefix: "servicos_atendimentosfilas_"
+    prefix: "/configuracoes"
+
+configuracoes:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\Configuracoes\\ConfiguracoesController"
+    name_prefix: "atendimento_admin_configuracoes_portal_"
+
+customizacoes:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\Configuracoes\\CustomizacoesController"
+    name_prefix: "atendimento_admin_customizacoes_portal_"
+
+atendimentoscamposcustomizados:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\CamposcustomizadosController"
+    name_prefix: "servicos_atendimentoscamposcustomizados_"
+    prefix: "/configuracoes"
+
+atendimentosregras:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\AtendimentosregrasController"
+    name_prefix: "servicos_atendimentosregras_"
+    prefix: "/configuracoes"
+
+titulos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\Configuracoes\\TitulosController"
+    name_prefix: "atendimento_configuracoes_titulos_"
+    prefix: "/configuracoes"
+
+servicoscatalogo:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Atendimento\\ServicosCatalogoController"
+    name_prefix: "atendimento_servicoscatalogo_"
+    prefix: "/ordensservico"
+
+gerenciaequipe:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\GerenciaEquipeController"
+    name_prefix: "atendimento_admin_gerenciaequipe_"
+
+artigosuteis:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ArtigosuteisController"
+    name_prefix: "atendimento_admin_artigosuteis_"
+    
+atendimentosemailsoriginais:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Servicos\\AtendimentosemailsoriginaisController"
+    name_prefix: "servicos_atendimentosemailsoriginais_"
+    prefix: "/emailsoriginais"
+    
+classificadores:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Ns\\ClassificadoresController"
+    name_prefix: "ns_classificadores_"
+    
+restricoescobrancas:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Financas\\RestricoescobrancasController"
+    name_prefix: "financas_restricoescobrancas_"
+    
+feriados:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\Configuracoes\\FeriadosController"
+    name_prefix: "atendimento_feriados_"
+
+horariosatendimento:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\Configuracoes\\HorariosatendimentoController"
+    name_prefix: "atendimento_horariosatendimento_"
+
+termo:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\Configuracoes\\TermoController"
+    name_prefix: "atendimento_admin_configuracoes_termo_"
+
+slas:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\SlasController"
+    name_prefix: "atendimento_admin_slas_"
+
+resumos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ResumosController"
+    name_prefix: "atendimento_admin_resumos_"
+
+equipesusuarios:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Atendimento\\EquipesusuariosController"
+    name_prefix: "atendimento_equipesusuarios_"

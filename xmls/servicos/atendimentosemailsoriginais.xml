@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentosemailsoriginais" label="atendimentosemailsoriginais" project="servicos">
+    <entity schema="servicos" table="atendimentosemailsoriginais">
+        <fieldmodel name="atendimentoemailoriginal" datatype="guid" isid="true" column="atendimentoemailoriginal"/>
+        <fieldmodel name="atendimento" datatype="guid" column="atendimento" />
+        <fieldmodel name="followup" datatype="guid" column="followup" />
+        <fieldmodel name="emailoriginal" datatype="json" column="emailoriginal" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />        
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">atendimento</constructoritem>
+        <constructoritem required="false">followup</constructoritem>        
+    </constructors>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoEmailOriginalNovo</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="followup" valueentity="followup"/>
+                <fromto valueapi="emailoriginal" valueentity="emailoriginal"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

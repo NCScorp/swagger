@@ -1,0 +1,65 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Admin/Arquivos/index.html.twig' %}
+{% block index_header -%}
+    <div class="col-md-12 headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail hidden-xs hidden-sm pull-left"><a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page">Arquivos</span></strong></div>
+            <a class="btn btn-xs btn-warning" ui-sref="atendimento_admin_arquivos_new({})" >
+                <i class="el el-plus"></i> Criar
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block index_panel_header -%}
+    <div class="headline-sub clearfix hidden-lg hidden-md">
+        <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Voltar às configurações" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a>Arquivos</h3>
+    </div>
+{% endblock %}
+{% block index_list -%}
+     <table class="table table-striped">    
+       <thead>
+         <tr>
+           <th class="td-action"></th>
+           <th>Título</th>
+           <th>Nome do arquivo</th>
+           <th>Tamanho</th>
+           <th>Enviado em</th>
+           <th>Atualizado em</th>
+           <th>Descrição</th>
+           <th class="compact" width="150"></th>
+         </tr>
+       </thead>
+         
+       <tbody id="atendimento_arquivos_list" dnd-list="tndmnt_dmn_rqvs_lst_cntrllr.entities" infinite-scroll='tndmnt_dmn_rqvs_lst_cntrllr.nextPage()' infinite-scroll-disabled='tndmnt_dmn_rqvs_lst_cntrllr.isBusy()' infinite-scroll-distance='1'>
+           <tr ng-if="tndmnt_dmn_rqvs_lst_cntrllr.entities.length == 0 && !tndmnt_dmn_rqvs_lst_cntrllr.isBusy()">
+               <td class="text-center" colspan="7">Nenhum dado encontrado</td>
+           </tr>
+         <tr ng-repeat="entity in tndmnt_dmn_rqvs_lst_cntrllr.entities" ng-drop-success="tndmnt_dmn_rqvs_lst_cntrllr.order($index, $data)"  ui-sref-active="active" ng-drop="true" ng-drag="true" ng-drag-data="entity">
+           <td class="td-action text-center"><span class="ico-move"><i class="el el-move"></i></span</td>
+           <td><a ui-sref="atendimento_admin_arquivos_edit({arquivo : entity.arquivo})"><strong>{{'{{ entity.titulo }}'}}</strong></a></td>
+           <td><a ui-sref="atendimento_admin_arquivos_edit({arquivo : entity.arquivo})"><strong>{{'{{ entity.nomearquivo }}'}}</strong></a></td>
+           <td>{{'{{ entity.tamanho | Filesize }} '}}</td>
+            <td>{{'{{entity.created_at | asDate | date: "dd/MM/yyyy"}}'}}</td>
+           <td>{{'{{entity.updated_at | asDate | date: "dd/MM/yyyy"}}'}}</td>
+           <td><span ng-bind-html='entity.descricao'></span></td>
+           <td class="text-right">
+             {% block index_list_actions -%}
+               <a class="btn btn-primary btn-sm btns-acoes btn-arquivos" ui-sref="atendimento_admin_arquivos_edit({arquivo : entity.arquivo})" title="Editar"><i class="el el-pencil"></i></a>
+               <a class="btn btn-danger btn-sm btns-acoes btn-arquivos" ng-click="tndmnt_dmn_rqvs_lst_cntrllr.delete(entity.arquivo)" title="Deletar"><i class="el el-remove"></i></a>
+             {% endblock index_list_actions -%}
+           </td>
+         </tr>
+       </tbody>
+         
+       <tfoot ng-show='tndmnt_dmn_rqvs_lst_cntrllr.isBusy()'>
+         <tr><td colspan="7" class="text-center">Carregando dados...</td></tr>    
+       </tfoot>
+     </table>
+	 <div class='col-md-{{12 - index_layout_size}} article-area height-full-calc row' ui-view>
+        <div class="bt-new-article new-article text-center height-full">
+            <a class="btn btn-sm btn-fixed btn-warning menu-mobile btn-arquivos" ui-sref="atendimento_admin_arquivos_new({})">
+				<i class="el el-plus"></i> 
+				<span class="hidden-xs hidden-sm">Criar</span>
+			</a>
+		</div>           
+	</div>
+{% endblock index_list -%}

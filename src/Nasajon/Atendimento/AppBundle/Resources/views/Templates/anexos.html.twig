@@ -1,0 +1,27 @@
+<div class="form-group clearfix attachment" ng-if='canEdit'>
+    <button type="button" class="btn btn-default pull-left" aria-label="Anexar arquivo" ngf-select="uploadFiles($files)"  multiple="multiple" ngf-max-size="2GB" ng-disabled="disabled"><i class="el el-paper-clip"></i> Anexar arquivo</button>
+</div>
+<div class="attachments attach-archive clearfix formgroup">
+    <div class="attach col-md-12" ng-repeat="(index,imagem) in model">
+        <div class="block-attach clearfix" ng-class="{ 'has-error' : imagem.error, 'complete' : (!imagem.going && !imagem.error)}">
+            <div class="col-md-3">
+                {#<img ngf-thumbnail="imagem.file" ng-if="imagem.file && imagem.tipo =='image'" />
+                <img ngf-src="imagem.url" ng-if="imagem.url && imagem.tipo =='image'" />
+                <span ng-if="imagem.tipo != 'image'" ng-class="imagem.tipo" class="file"></span>#}
+                <span ng-class="imagem.tipo" class="file"></span>
+            </div>
+            <div class="col-md-5">
+                <a ng-click="open(index, imagem)" class="print-visible" target='_blank'><strong class="nome-arquivo">{{"{{imagem.nome}}"}}</strong></a>
+            </div>
+            <div class="col-md-4">
+                <span ng-if="imagem.error" class="msg-erro">Erro ao subir o arquivo <br /><a href ng-click="retry(index)" class="btn btn-xs btn-primary">Tentar novamente</a></span>
+                <div class="progress" ng-if="imagem.going">
+                    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="imagem.perc" aria-valuemin="0" aria-valuemax="100" style="width: 0%" ng-style="{ width: imagem.perc + '%'}">
+                        <span class="sr-only">0% Complete</span>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-remove" ng-if='canEdit'><a href ng-click="remove(index)"><i class="el el-remove-sign"></i></a></div>
+        </div>
+    </div>
+</div>

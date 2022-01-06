@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="restricoescobrancas" label="restricoescobrancas" project="financas" >
+  <entity schema="financas" table="restricoescobrancas" >
+    <fieldmodel name="restricaocobranca" datatype="guid" isid="true" column="restricaocobranca" />
+    <fieldmodel name="codigo" datatype="string" column="codigo" />
+    <fieldmodel name="descricao" datatype="string" column="descricao" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="list" target="builtin" label="Restrições Cobranças">
+    <fieldsbrowser>
+      <fieldbrowser alias="restricaocobranca" entitylink="restricaocobranca" isid="true" visible="true" />
+      <fieldbrowser alias="codigo" entitylink="codigo" visible="true" />
+      <fieldbrowser alias="descricao" entitylink="descricao" visible="true" />
+    </fieldsbrowser>
+  </viewbrowser>
+</nsjusecase>

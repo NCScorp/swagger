@@ -1,0 +1,141 @@
+<nsj-header>
+    <navbar-logo data-src="//s3-us-west-2.amazonaws.com/static.nasajon/img/logo.png"></navbar-logo>
+    <navbar-logo data-mobile-src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/logo-reduzida.png" data-src="{{tenantLogo}}"></navbar-logo>
+    <navbar-text data-module="Base de Conhecimento" data-system="{{ nsj_application_name() }}"></navbar-text>
+    <navbar-collapse>
+        <div class="col-lg-6 col-md-6 hidden-sm hidden-xs pull-right">
+            <div class="input-group" style="padding-top: 10px;">
+                <span class="input-group-addon">
+                    <i class="fa fa-search"></i>
+                </span>
+                <input type="text" placeholder="Tire suas dúvidas" class="form-control input-lg">
+            </div>
+        </div>
+    </navbar-collapse>
+</nsj-header>
+<div class="container-fluid sistema-atendimento" ng-controller='MenuCtrl as controller' ng-cloak>
+    <div class="anon-page" ng-class="{ 'geral clearfix' : !('home'| isStateEq), 'home' : ('home'| isStateEq), 'padding-alerta': !controller.usuarioDisponivel && controller.usuarioDisponivel != null}" ui-view>
+        <div class="height-full-calc hidden-print list-links col-md-12" 
+            ng-class="{'hidden-sm hidden-xs': (('atendimento_cliente_solicitacoes_show'| isStateEq) 
+                || ('atendimento_cliente_solicitacoes_edit'| isStateEq)
+                || ('atendimento_cliente_solicitacoes_new'| isStateEq ))}">
+            {% set index_layout_size = 12 %}
+            <div class="height-full col-md-{{index_layout_size}}">
+                <div class='row height-full'>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="col-md-8">
+                                <div class="initial-msg hidden-sm hidden-xs banner-anon">
+                                    <p>{{mensagem | raw}}</p>
+                                </div>
+                                <div class="box-artigos">
+                                    <form role="form" class="form-buscar-artigo visible-sm visible-xs">
+                                        <div class="busca-artigo">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-search"></i>
+                                                </span>
+                                                <input type="text" placeholder="{{'{{tndmnt_clnt_rtgs_lst_cntrllr.placeholderBuscaArtigos}}'}}"
+                                                    class="form-control input-lg"
+                                                    ng-model='tndmnt_clnt_rtgs_lst_cntrllr.filter.key'
+                                                    ng-change="tndmnt_clnt_rtgs_lst_cntrllr.pesquisaArtigos()">
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="row container-wrap"
+                                        ng-if="!tndmnt_clnt_rtgs_lst_cntrllr.filter.key && !tndmnt_clnt_rtgs_lst_cntrllr.categoriaSelecionada.id && tndmnt_clnt_rtgs_lst_cntrllr.entities.length == 0">
+                                        <div ng-repeat="categoria in tndmnt_clnt_rtgs_lst_cntrllr.categorias" ng-if="tndmnt_clnt_rtgs_lst_cntrllr.categorias" class="box-categorias-wrap">
+                                            <div class="text-center box-categorias" role="presentation" ui-sref-active="active">                                    
+                                                <a class="thumbnail  ng-binding " id="{{'{{categoria.categoria}}'}}"
+                                                    href ui-sref="atendimento_cliente_artigos({categoria: categoria.categoria, tags: null})">
+                                                    {{'{{categoria.titulo}}'}}
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-if="!tndmnt_clnt_rtgs_lst_cntrllr.filter.key && tndmnt_clnt_rtgs_lst_cntrllr.categoriaSelecionada.id">
+                                        <div ng-repeat="subCategoria in tndmnt_clnt_rtgs_lst_cntrllr.listaSubCategorias" ng-init="subCategoria.index = $index">
+                                            <h3>
+                                                <strong class="text-info">{{'{{subCategoria.titulo}}'}}</strong>
+                                            </h3>
+                                            <p class="text-cinza">{{'{{subCategoria.descricao}}'}}</p>
+                                            <div ng-repeat="secao in subCategoria.secoes" ng-init="secao.indexSubCategoria = subCategoria.index">
+                                                <a href class="title-collapse" ng-init="secao.isCollapsed = true"
+                                                    ng-click="secao.isCollapsed = !secao.isCollapsed;tndmnt_clnt_rtgs_lst_cntrllr.carregaArtigos(secao, $index)">
+                                                    <span ng-class="{ 'fa fa-caret-right': secao.isCollapsed, 'fa fa-caret-down': !secao.isCollapsed }"></span>
+                                                    <strong>{{'{{secao.titulo}}'}}</strong>
+                                                </a>                                          
+                                                <i class="popover-content menu-icon el el-info-circle"
+                                                    uib-popover="{{'{{secao.descricao}}'}}"
+                                                    popover-animation='false'
+                                                    popover-is-open="popoverIsOpen"
+                                                    popover-placement="right-top"
+                                                    ng-if="secao.descricao != null"
+                                                    ng-click="popoverIsOpen = !popoverIsOpen"
+                                                    ng-mouseenter="popoverIsOpen = true"
+                                                    ng-mouseleave="popoverIsOpen = false">
+                                                </i>
+                                                <div uib-collapse="secao.isCollapsed">
+                                                    <ul class="list-group">
+                                                        <li class="list-group-item item-collapse" ng-repeat="artigo in secao.artigos">
+                                                            <span class="text-modulo">
+                                                                <a href ui-sref="atendimento_cliente_artigos_show({ artigo: artigo.artigo })"> {{'{{artigo.titulo }}'}}</a>
+                                                            </span>
+                                                        </li>
+                                                    </ul>
+                                                    <p class="list-group-item item-collapse" ng-if="secao.artigos.length == 0">
+                                                        <span class="text-cinza">Não há artigos nessa seção para listar</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-if="!tndmnt_clnt_rtgs_lst_cntrllr.isBusy() && tndmnt_clnt_rtgs_lst_cntrllr.listaSubCategorias.length == 0">
+                                        <p class="text-cinza"> Não há itens para listar </p>
+                                        </div>
+                                    </div>
+                                    <div ng-if="tndmnt_clnt_rtgs_lst_cntrllr.filter.key">
+                                        <h3>
+                                            <strong class="text-info">Resultado da busca para: {{'{{tndmnt_clnt_rtgs_lst_cntrllr.filter.key + tndmnt_clnt_rtgs_lst_cntrllr.tags}}'}}</strong>
+                                        </h3>
+                                        <div class="list-group-item" ng-repeat="(key, entity) in tndmnt_clnt_rtgs_lst_cntrllr.entities" >
+                                            <a href ui-sref="atendimento_cliente_artigos_show({ artigo: entity.artigo })"> 
+                                                <h4 class="text-azulEscuro">
+                                                    <span ng-bind-html="entity.titulo"></span>
+                                                </h4>
+                                                <span class="text-cinza" ng-bind-html="entity.resumo"></span>
+                                                <br>
+                                                <span class="info-post" am-time-ago="entity.created_at | asDate"></span> |
+                                                <a ng-bind-html="entity.categoriatitulo"></a> &gt;
+                                                <span ng-bind-html="entity.subcategoriatitulo"></span> &gt;
+                                                <span ng-bind-html="entity.secaotitulo"></span>
+                                            </a>
+                                        </div> 
+                                    </div>
+                                    <div ng-class="{'onloading' : tndmnt_clnt_rtgs_lst_cntrllr.isBusy() }" class="text-center"></div>
+                                    <div ng-if="!tndmnt_clnt_rtgs_lst_cntrllr.isBusy() && tndmnt_clnt_rtgs_lst_cntrllr.categorias.length === 0 && tndmnt_clnt_rtgs_lst_cntrllr.categoriaselecionada.length == 0 ">
+                                        Não há categorias
+                                    </div>
+                                </div>
+                            </div>         
+                            <div class="col-md-4">
+                                <div class="ultimas-atualizacoes">
+                                    <strong class="sp-artigo-topo">Últimos artigos atualizados</strong>
+                                    <div class="list-group-item" 
+                                        ng-repeat="(key, entity) in tndmnt_clnt_rtgs_lst_cntrllr.listaUltimosArtigosAtualizados" >
+                                        <a href ui-sref="atendimento_cliente_artigos_show({ artigo: entity.artigo })"> 
+                                            <div class="sp-artigo-topo">
+                                                <p class="sp-artigo-titulo" ng-bind-html="entity.titulo"></p>
+                                                <small>Atualizado em <span am-time-ago="entity.updated_at | asDate"></span></small>
+                                                <p class="artigo-paragrafo">{{'{{entity.categoriatitulo}}'}} &gt; {{'{{entity.subcategoriatitulo}}'}} &gt; {{'{{entity.secaotitulo}}'}}</p>
+                                            </div>
+                                        </a>
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

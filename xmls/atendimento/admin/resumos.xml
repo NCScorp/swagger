@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="resumos" label="resumos" project="atendimento/Admin" >
+    <entity schema="atendimento" table="resumos">
+      <fieldmodel name="resumo" datatype="guid" isid="true" column="resumo"/>
+      <fieldmodel name="entidade" datatype="string" column="entidade"/>
+      <fieldmodel name="entidade_id" datatype="guid" column="entidade_id"/>
+      <fieldmodel name="valor" datatype="integer" column="valor"/>
+      <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+      <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="false">entidade</constructoritem>
+      <constructoritem required="false">entidade_id</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Resumos Atendimentos">
+        <fieldsbrowser>
+            <fieldbrowser alias="resumo" entitylink="resumo" isid="true" visible="true" />
+            <fieldbrowser alias="entidade" entitylink="entidade" visible="true" />
+            <fieldbrowser alias="entidade_id" entitylink="entidade_id" visible="true" />
+            <fieldbrowser alias="valor" entitylink="valor" visible="true" />
+            <fieldbrowser alias="tenant" entitylink="tenant" visible="true" />
+            <fieldbrowser alias="created_at" entitylink="created_at" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

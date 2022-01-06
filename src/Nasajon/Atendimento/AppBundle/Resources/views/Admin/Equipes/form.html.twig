@@ -1,0 +1,178 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Equipes/form.html.twig' %}
+
+
+{% block viewedit_edit -%}
+    <div class="row" >
+        <div class="col-sm-12" >
+            {% block viewedit_form_nome %}
+                <div class="form-group">
+                    <label class="control-label required" for="nome">Nome da Equipe</label>                    
+                    <input type="text" id="nome" name="nome" required="required" ng-model="tndmnt_qps_frm_cntrllr.entity.nome" ng-disabled="tndmnt_qps_frm_cntrllr.entity.submitting" placeholder="" maxlength="100" class="form-control" style="">
+                </div>
+                
+                <div ng-messages="tndmnt_qps_frm_cntrllr.form.nome.$error"  ng-if='tndmnt_qps_frm_cntrllr.form.nome.$dirty || tndmnt_qps_frm_cntrllr.submitted'>
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo nome não pode ser vazio.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        Tamanho não deve exceder 100 caracteres.
+                    </div>
+                </div>
+
+
+            {% endblock viewedit_form_nome %}
+        </div>
+    </div>
+
+
+        <div class="row">
+          <div class="form-group clearfix">
+            <div class="col-md-12"><strong>Gerentes:</strong></div>
+            <div class="col-md-10">
+                <select class="form-control" ng-model="tndmnt_qps_frm_cntrllr.gerente_selecionado" ng-options="op.email as op.nome for (key,op) in tndmnt_qps_frm_cntrllr.opcoesGerentes">
+                    <option disabled="disabled" selected="selected" value="">Selecionar gerente</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-sm btn-warning" ng-click="tndmnt_qps_frm_cntrllr.addUsuario('A')"><i class="el el-plus"></i> Adicionar</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="form-group clearfix">
+            <div class="col-md-12"><strong>Usuários:</strong></div>
+            <div class="col-md-10">
+                <select class="form-control" ng-model="tndmnt_qps_frm_cntrllr.usuario_selecionado" ng-options="op.email as op.nome for (key,op) in tndmnt_qps_frm_cntrllr.opcoesUsuarios">
+                    <option disabled="disabled" selected="selected" value="">Selecionar usuário</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-sm btn-warning" ng-click="tndmnt_qps_frm_cntrllr.addUsuario('U')"><i class="el el-plus"></i> Adicionar</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-sm-12 panel-rules">
+            <div class="panel panel-default">
+                <div class="panel-heading"><strong>Usuários:</strong></div>
+
+                {#{{'{{tndmnt_qps_frm_cntrllr.entity.usuarios}}'}}#}
+
+                <table class="table table-condensed table-striped table-hover">
+                    <tbody>
+                        <tr ng-if="tndmnt_qps_frm_cntrllr.entity.usuarios.length == 0">
+                            <td colspan="4">Nenhum</td>
+                        </tr>
+                        <tr ng-repeat="opcao in tndmnt_qps_frm_cntrllr.entity.usuarios track by $index" >
+                            <td width="35%" ng-bind="tndmnt_qps_frm_cntrllr.getNomeUsuario(opcao.usuario)"></td>
+                            <td width="35%">{{'{{opcao.usuario}}'}}</td>
+                            <td width="20%" ng-bind="tndmnt_qps_frm_cntrllr.getTipoUsuario(opcao.usuariotipo)"></td>
+                            <td width="10%" class="text-right">
+                                <a href ng-click="tndmnt_qps_frm_cntrllr.removeUsuario($index, opcao.usuario)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    <div class="row" >
+        <div class="col-sm-12" >
+            {% block viewedit_form_todosclientes %}
+                
+                <div class="form-group">
+                    <label class="control-label">Clientes</label>
+                    <div id="todosclientes">
+                        <label for="todosclientes_0" class="radio-inline">
+                            <input type="radio" id="todosclientes_0" name="todosclientes" ng-model="tndmnt_qps_frm_cntrllr.entity.todosclientes" ng-disabled="tndmnt_qps_frm_cntrllr.entity.submitting" inline="1" ng-value="1" value="1">
+                            Todos
+                        </label>
+                        
+                        <label for="todosclientes_1" class="radio-inline">
+                            <input type="radio" id="todosclientes_1" name="todosclientes" ng-model="tndmnt_qps_frm_cntrllr.entity.todosclientes" ng-disabled="tndmnt_qps_frm_cntrllr.entity.submitting" inline="1" ng-value="0" value="0">
+                            Configurações Avançadas
+                        </label>
+                    </div>
+                </div>
+                
+            {% endblock viewedit_form_todosclientes %}
+        </div>
+    </div>
+
+    <div class="row" ng-if="tndmnt_qps_frm_cntrllr.entity.todosclientes==0">
+        <div class="col-sm-12 panel-rules">
+            <h5><strong>Condições:</strong></h5>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Combinar todas as condições a seguir:</div>
+                <table class="table">
+                    <tbody>
+                        <tr ng-if="tndmnt_qps_frm_cntrllr.entity.clientesregrasex.length == 0">
+                            <td colspan="4">Nenhuma</td>
+                        </tr>
+                        <tr ng-repeat="opcao in tndmnt_qps_frm_cntrllr.entity.clientesregrasex track by $index">
+                            <td width="25%">
+                                <select class="form-control" ng-model="opcao.campo" ng-options="key as op.label for (key,op) in tndmnt_qps_frm_cntrllr.optionscondicoes" ng-change="tndmnt_qps_frm_cntrllr.selecionaCampo(opcao)"></select>
+                            </td>
+                            <td width="28%">
+                                <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null" ng-options="key as op.label for (key,op) in tndmnt_qps_frm_cntrllr.optionscondicoes[opcao.campo].options" ng-change="tndmnt_qps_frm_cntrllr.selecionaOperador(opcao)"></select>
+                            </td>
+                            <td width="35%">
+                                <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_qps_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in tndmnt_qps_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options">
+                                    <option disabled="disabled" selected="selected" value="">Selecione</option>
+                                </select>
+                                <input class="form-control" type="text" ng-model="opcao.valor" ng-if="tndmnt_qps_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                            </td>
+                            <td width="12%" class="text-right">
+                                <a href ng-click="tndmnt_qps_frm_cntrllr.removeClientesregras($index, 1)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"><a href ng-click="tndmnt_qps_frm_cntrllr.addClientesregrasEx()">Adicionar Condição</a></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">E combinar com qualquer uma das seguintes condições:</div>
+                <table class="table">
+                    <tbody>
+                        <tr ng-if="tndmnt_qps_frm_cntrllr.entity.clientesregrasin.length == 0">
+                            <td colspan="4">Nenhuma</td>
+                        </tr>
+                        <tr ng-repeat="opcao in tndmnt_qps_frm_cntrllr.entity.clientesregrasin track by $index">
+                            <td width="25%">
+                                <select class="form-control" ng-model="opcao.campo" ng-options="key as op.label for (key,op) in tndmnt_qps_frm_cntrllr.optionscondicoes" ng-change="tndmnt_qps_frm_cntrllr.selecionaCampo(opcao)"></select>
+                            </td>
+                            <td width="28%">
+                                <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null" ng-options="key as op.label for (key,op) in tndmnt_qps_frm_cntrllr.optionscondicoes[opcao.campo].options" ng-change="tndmnt_qps_frm_cntrllr.selecionaOperador(opcao)"></select>
+                            </td>
+                            <td width="35%">
+                                <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_qps_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in tndmnt_qps_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options">
+                                    <option disabled="disabled" selected="selected" value="">Selecione</option>
+                                </select>
+
+                            </td>
+                            <td width="12%" class="text-right">
+                                <a href ng-click="tndmnt_qps_frm_cntrllr.removeClientesregras($index, 0)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"><a href ng-click="tndmnt_qps_frm_cntrllr.addClientesregrasIn()">Adicionar Condição</a></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock viewedit_edit -%}

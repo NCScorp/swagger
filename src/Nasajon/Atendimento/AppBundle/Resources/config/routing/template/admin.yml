@@ -1,0 +1,165 @@
+anexos:
+    path: /anexos.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Templates/anexos.html.twig'
+
+anexos_preview_modal:
+   path: /anexos/preview.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Templates/anexos_preview.html.twig'
+       
+cliente:
+    path: /cliente.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Templates/cliente.html.twig'
+
+cliente_modal_suporte:
+    path: /cliente-modal-suporte.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Templates/cliente-modal-suporte.html.twig'
+        
+historicos:
+    path: /historicos.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Templates/historicos.html.twig'
+        
+relatorios_index:
+    path: /relatorios/index.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Relatorios/index.html.twig'
+        
+relatorios_performance:
+    path: /relatorios/performance.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/RelatoriosPerformance/index.html.twig'
+
+relatorios_resposta:
+    path: /relatorios/resposta.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/RelatoriosResposta/index.html.twig'
+
+relatorios_baseconhecimento:
+    path: /relatorios/baseconhecimento.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/RelatoriosBaseConhecimento/index.html.twig'
+         
+relatorios_backlog:
+    path: /relatorios/backlog.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/RelatoriosBacklog/index.html.twig'
+
+relatorios_termos:
+    path: /relatorios/termos.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/RelatoriosTermos/index.html.twig'
+               
+configuracoes:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/template/configuracoes.yml"
+    type:     rest    
+    prefix: /configuracoes
+    name_prefix: configuracoes_
+    defaults:
+        _format: html
+    options:
+        expose: true
+
+email_modal:
+   path: /solicitacoes/modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Solicitacoes/modal.html.twig'
+
+relatorios_baseconhecimento_avaliacao_modal:
+   path: /relatorios/avaliacaomodal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/RelatoriosBaseConhecimento/avaliacaomodal.html.twig'
+       
+abre_chamado_modal:
+   path: /solicitacoes/abrir-chamado-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Solicitacoes/abre-chamado-modal.html.twig'
+       
+estatisticasartigo_modal:
+   path: /artigos/estatisticas-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Artigos/estatisticas-modal.html.twig'
+       
+momentpicker_modal:
+   path: /solicitacoes/momentpicker-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Solicitacoes/momentpicker-modal.html.twig'
+       
+termo_modal:
+   path: /termo.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Templates/termo-modal.html.twig'
+
+categoria_modal:
+   path: /categoria/categoria-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Categorias/categoria.modal.html.twig'
+
+subcategoria_modal:
+   path: /categoria/subcategoria-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Categorias/subcategoria.modal.html.twig'
+
+artigo_modal:
+   path: /categoria/artigo-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Categorias/artigo.modal.html.twig'
+
+secao_modal:
+   path: /categoria/secao-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Categorias/secao.modal.html.twig'
+
+encaminhar_chamado_modal:
+    path: /solicitacoes/encaminhar-chamado-modal.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Solicitacoes/encaminhar-chamado-modal.html.twig'
+
+sugerir_artigos_modal:
+    path: /solicitacoes/sugestao-artigo-modal.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Solicitacoes/sugestao-artigo-modal.html.twig'
+
+artigos_list:
+    path: /artigos/list.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonAtendimentoApp/Admin/Artigos/list.html.twig'        
+
+mesclar_modal:
+   path: /solicitacoes/mesclar-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Admin/Solicitacoes/mesclar-modal.html.twig'
+
+mesclado_aviso_modal:
+   path: /solicitacoes/mesclado-aviso-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Templates/atendimento_admin_chamado_meclado.html.twig'

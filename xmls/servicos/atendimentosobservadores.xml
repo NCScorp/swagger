@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentosobservadores" label="atendimentosobservadores" project="servicos" >
+    <entity schema="servicos" table="atendimentosobservadores">
+        <fieldmodel name="atendimentoobservador" datatype="guid" isid="true" column="atendimentoobservador"/>
+        <fieldmodel name="atendimento" datatype="guid" column="atendimento" />
+        <fieldmodel name="usuario" datatype="string" column="usuario"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">atendimento</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Observadores de Atendimentos">
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimentoobservador" entitylink="atendimentoobservador" isid="true" visible="false" />
+            <fieldbrowser alias="atendimento" entitylink="atendimento" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="usuario" entitylink="usuario" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoObservadorNovo</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="usuario" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>AtendimentoObservadorExcluir</name>
+                <fromto valueapi="atendimentoobservador" valueentity="atendimentoobservador"/>
+            </api>
+        </action>
+    </actions>
+
+</nsjusecase>

@@ -1,0 +1,120 @@
+{% extends '@NasajonMDABundle/Resources/js/Crm/Proximoscontatos/index.html.twig' %}
+
+
+{% block index_header -%}
+<div class="col-md-12 headline-page">
+    <div class="headline clearfix">
+        <h2 class="pull-left">{{'proximoscontatos' | trans}}</h2>
+
+                        <a class="btn btn-xs btn-warning"
+                                  ui-sref="crm_proximoscontatos_new({cliente : crm_prxmscntts_lst_cntrllr.constructors.cliente,data : crm_prxmscntts_lst_cntrllr.constructors.data,situacao : crm_prxmscntts_lst_cntrllr.constructors.situacao})"
+
+                              >
+                <i class="el el-plus"></i> Criar
+            </a>
+
+    </div>
+</div>
+{% endblock index_header -%}
+
+
+{% block index_filter -%}
+    <form id="list_filter">
+        <div class="col-xs-8 col-sm-6">
+            <div>
+                <div class="input-group">
+                    <input type="text"
+                       class="form-control"
+                       uib-datepicker-popup="dd/MM/yyyy"
+                       format="dd/MM/yyyy"
+                       id="key"
+                       ng-model-options='{ debounce: 500 }'
+                       ng-model="crm_prxmscntts_lst_cntrllr.dataFilter"
+                       ng-change="crm_prxmscntts_lst_cntrllr.filtrarPorData()"
+                       placeholder=""
+                       date-input=""
+                       name="key"
+                       ng-click="data.open=true"
+                       is-open="data.open"
+                       datepicker-options="dateOptions"
+                       close-text="Close"
+                       alt-input-formats="altInputFormats"
+                       current-text='Hoje'
+                       clear-text='Limpar'
+                       autocomplete="off">
+                    <span ng-click="data.open=true" class="input-group-btn">                       
+                        <button class="btn btn-default"><i class='glyphicon glyphicon-calendar'></i></button>
+                    </span>
+                </div>
+                
+            </div>
+        </div>
+        <div class="btn-group pull-right" uib-dropdown role="group">
+            <button type="button" class="btn btn-default" title="Atualizar" ng-click="crm_prxmscntts_lst_cntrllr.reload()"><i class="el el-refresh"  aria-hidden="true"></i></button>
+            <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled">
+                <span class="icon xs-icon ret-icon"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="dLabel">
+              <li><button class="btn-dropdown" ng-class="{active : crm_prxmscntts_lst_cntrllr.responsavelAtivo === 'meus'}" ng-model="MeusContatos" ng-click="crm_prxmscntts_lst_cntrllr.filtrarMeusContatos('meus')">Meus contatos</button></li>
+              <li><button class="btn-dropdown" ng-class="{active : crm_prxmscntts_lst_cntrllr.responsavelAtivo === 'todos'}" ng-click="crm_prxmscntts_lst_cntrllr.removerFiltroResponsavelWeb('todos')">Todos os contatos</button></li>
+
+
+              <li class="divider"></li>
+                <li class="dropdown-header">Situação</li>
+                <li role="menuitem">
+                    <button class="btn-dropdown" ng-class="{active : crm_prxmscntts_lst_cntrllr.menuSituacaoAtivo === 'todos'}" ng-click="crm_prxmscntts_lst_cntrllr.filtrarSituacao(null, null, 'todos')">Todas</button>
+                </li>
+                <li role="menuitem">
+                    <button class="btn-dropdown" ng-class="{active : crm_prxmscntts_lst_cntrllr.menuSituacaoAtivo === 'pendente'}" ng-click="crm_prxmscntts_lst_cntrllr.filtrarSituacao(0, 0, 'pendente')">Pendente</button>
+                </li>
+                <li role="menuitem">
+                    <button class="btn-dropdown" ng-class="{active : crm_prxmscntts_lst_cntrllr.menuSituacaoAtivo === 'concluido'}" ng-click="crm_prxmscntts_lst_cntrllr.filtrarSituacao(1, 0, 'concluido')">Concluído</button>
+                </li>
+                <li role="menuitem">
+                    <button class="btn-dropdown" ng-class="{active : crm_prxmscntts_lst_cntrllr.menuSituacaoAtivo === 'cancelado'}" ng-click="crm_prxmscntts_lst_cntrllr.filtrarSituacao(2, 0, 'cancelado')">Cancelado</button>
+                </li>
+                <li role="menuitem">
+                    <button class="btn-dropdown" ng-class="{active : crm_prxmscntts_lst_cntrllr.menuSituacaoAtivo === 'atraso'}" ng-click="crm_prxmscntts_lst_cntrllr.filtrarSituacao(0, 1, 'atraso')">Em atraso</button>
+                </li>
+                {#
+                <li class="divider"></li>
+                <li class="dropdown-header">Ordenar por</li>
+                <li role="menuitem">
+                  <button class="btn-dropdown" ng-click="crm_prxmscntts_lst_cntrllr.ordenarLista('desc')">Mais recentes</button>
+                </li>
+                <li role="menuitem">
+                  <button class="btn-dropdown" ng-click="crm_prxmscntts_lst_cntrllr.ordenarLista('asc')">Mais antigos</button>
+                </li>
+                #}
+            </ul>
+        </div>
+    </form>
+{% endblock index_filter -%}
+
+{%- block viewedit_view_list_item %}
+<a href ui-sref='crm_proximoscontatos_show({proximocontato : entity.proximocontato})'  class="list-group-item" ng-repeat="entity in crm_prxmscntts_lst_cntrllr.entities" ui-sref-active="active">
+    <div class="pull-right">
+      <span class="label label-warning" ng-if="entity.situacao == 0 && !entity.ematraso">
+           {{'pendente'|trans}}
+       </span>
+       <span class="label label-danger" ng-if="entity.situacao == 0 && entity.ematraso">
+           {{'ematraso'|trans}}
+       </span>
+       <span class="label label-success" ng-if="entity.situacao == 1">
+           {{'concluido'|trans}}
+       </span>
+       <span class="label label-default" ng-if="entity.situacao == 2">
+           {{'cancelado'|trans}}
+       </span>
+    </div>
+    <div class="list-group-item-heading">
+        <span ng-bind="entity.hora | limitTo: 5"></span>
+        <span ng-if="entity.cliente.nome"> - </span>
+        <span ng-bind="entity.cliente.nome | highlight : crm_prxmscntts_lst_cntrllr.filter.key"></span>
+    </div>
+
+    <p class="list-group-item-text">
+        <span ng-bind-html="entity.observacao | highlight : crm_prxmscntts_lst_cntrllr.filter.key"></span>
+    </p>
+</a>
+{%- endblock viewedit_view_list_item %}

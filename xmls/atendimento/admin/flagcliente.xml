@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="flagcliente" label="flagcliente" project="atendimento/admin">
+    <entity schema="atendimento" table="flagsclientes">
+        <fieldmodel name="flagcliente" datatype="guid" isid="true" column="flagcliente"/>
+        <fieldmodel name="titulo" datatype="string" column="titulo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="cor" datatype="string" column="cor" />
+        <fieldmodel name="corfundo" datatype="string" column="corfundo" />
+        <fieldmodel name="icone" datatype="string" column="icone" />
+        <fieldmodel name="condicoes_ex" datatype="objectlist" column="flagcliente" useCaseLink="atendimento\admin\flagclientecondicao" entityJoinType="left" notMapped="true" />
+        <fieldmodel name="condicoes_in" datatype="objectlist" column="flagcliente" useCaseLink="atendimento\admin\flagclientecondicao" entityJoinType="left" notMapped="true" />
+        
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="updated_at" datatype="date" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Avisos de Cliente">
+        <fieldsbrowser>
+            <fieldbrowser alias="flagcliente" entitylink="flagcliente" isid="true" />
+            <fieldbrowser alias="titulo" entitylink="titulo" width="80" cansearch="false" visible="true" avaliable="true" indefaultorder="true" direction="asc" />
+            <fieldbrowser entitylink="descricao" width="2" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser entitylink="cor" width="2" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser entitylink="corfundo" width="2" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser entitylink="icone" width="2" cansearch="false" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Aviso">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="titulo" controltype="textedit" entitylink="titulo" label="Título">
+                        <validates>
+                            <validate type="vnull" displaytext="O título da flag não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="descricao" controltype="textarea" entitylink="descricao" label="Descrição">
+                        <validates>
+                            <validate type="vnull" displaytext="A descrição não pode ser vazia."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="icone" controltype="combobox" entitylink="icone" label="Ícone" colspan="2">
+                        <validates>
+                            <validate type="vnull" displaytext="O ícone é obrigatório."/>
+                        </validates>
+                        <itenscombobox type="json">{'exclamation-sign':'exclamation-sign', 'ban-circle':'ban-circle', 'asterisk':'asterisk', 'bell':'bell', 'book':'book', 'calendar':'calendar', 'comment':'comment', 'error-alt':'error-alt', 'flag':'flag', 'gift':'gift', 'heart':'heart', 'lock':'lock', 'unlock':'unlock', 'question':'question', 'remove':'remove', 'signal':'signal', 'star':'star', 'chevron-down':'chevron-down', 'chevron-up':'chevron-up', 'envelope':'envelope', 'cloud':'cloud'}</itenscombobox>
+                    </cell>
+                    <cell name="cor" controltype="combobox" entitylink="cor" label="Cor do ícone" colspan="3">
+                        <validates>
+                            <validate type="vnull" displaytext="A cor é obrigatória."/>
+                        </validates>
+                        <itenscombobox type="json">{ 'FFFFFF':'FFFFFF', 'ffc000':'ffc000', 'bf0c0c':'bf0c0c', '436470':'436470', '5cb85c':'5cb85c', 'ffe79c':'ffe79c', 'd9aeae':'d9aeae', 'adbcc2':'adbcc2', 'bcd9bc':'bcd9bc', 'cdcdcd':'cdcdcd', '393939':'393939', 'ff9c00':'ff9c00', '00afe9':'00afe9', 'e90079':'e90079', '6714b5':'6714b5', '1445b5':'1445b5', 'ffe3b7':'ffe3b7', 'a4dbed':'a4dbed', 'ebaece':'ebaece', 'ac99be':'ac99be', '98a6c4':'98a6c4' }</itenscombobox>                        
+                    </cell>
+                    <cell name="corfundo" controltype="combobox" entitylink="corfundo" label="Cor do fundo" colspan="3">
+                        <validates>
+                            <validate type="vnull" displaytext="A cor do fundo é obrigatória."/>
+                        </validates>
+                        <itenscombobox type="json">{ 'FFFFFF':'FFFFFF', 'ffc000':'ffc000', 'bf0c0c':'bf0c0c', '436470':'436470', '5cb85c':'5cb85c', 'ffe79c':'ffe79c', 'd9aeae':'d9aeae', 'adbcc2':'adbcc2', 'bcd9bc':'bcd9bc', 'cdcdcd':'cdcdcd', '393939':'393939', 'ff9c00':'ff9c00', '00afe9':'00afe9', 'e90079':'e90079', '6714b5':'6714b5', '1445b5':'1445b5', 'ffe3b7':'ffe3b7', 'a4dbed':'a4dbed', 'ebaece':'ebaece', 'ac99be':'ac99be', '98a6c4':'98a6c4' }</itenscombobox>                     
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>FlagClienteNova</name>
+                <fromto valueapi="titulo" valueentity="titulo"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="cor" valueentity="cor"/>
+                <fromto valueapi="corfundo" valueentity="corfundo"/>
+                <fromto valueapi="icone" valueentity="icone"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>FlagClienteAlterar</name>
+                <fromto valueapi="flagcliente" valueentity="flagcliente"/>
+                <fromto valueapi="titulo" valueentity="titulo"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="cor" valueentity="cor"/>
+                <fromto valueapi="corfundo" valueentity="corfundo"/>
+                <fromto valueapi="icone" valueentity="icone"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>FlagClienteExcluir</name>
+                <fromto valueapi="flagcliente" valueentity="flagcliente"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>FlagClienteReordenar</name>
+                <fromto valueapi="flagcliente" valueentity="flagcliente"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

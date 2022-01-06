@@ -1,0 +1,264 @@
+<div class="headline-sub clearfix">
+    <h3 class="pull-left">
+        Analítico de Respostas
+    </h3>
+</div>
+<div class="row clearfix article">
+    <div class="col-md-12 abas">
+        <div class="forms col-md-12">
+            <div class="row">
+                <dl class="dl-horizontal small text-overflow">
+                    <div class='col-md-3'>
+                        <dt class="line-height-campo">Inicio:</dt>
+                        <dd>
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker6'>
+                                    <p class="input-group">
+                                        
+                                        <input type="text" 
+                                               class="form-control" 
+                                               uib-datepicker-popup="dd/MM/yyyy" 
+                                               id="inicial"
+                                               ng-model="dmn_rltrs_cntrllr.dtInicio" 
+                                               is-open="dmn_rltrs_cntrllr.dtInicioOpened" 
+                                               datepicker-options="dmn_rltrs_cntrllr.dateOptions" 
+                                               ng-required="true" 
+                                               current-text="Hoje" 
+                                               clear-text="Limpar" 
+                                               alt-input-formats="altInputFormats" 
+                                               ng-change="dmn_rltrs_cntrllr.reloadData()" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="dmn_rltrs_cntrllr.dtInicioOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </dd>
+                    </div>
+                    <div class='col-md-3'>
+                        <dt class="line-height-campo">Fim:</dt>
+                        <dd>
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker7'>
+                                    <p class="input-group">
+                                        <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dmn_rltrs_cntrllr.dtFim" is-open="dmn_rltrs_cntrllr.dtFimOpened" datepicker-options="dateOptions" ng-required="true" current-text="Hoje" clear-text="Limpar" alt-input-formats="altInputFormats" ng-change="dmn_rltrs_cntrllr.reloadData()" />
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-default" ng-click="dmn_rltrs_cntrllr.dtFimOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </dd>
+                    </div>
+                    <div class="col-md-6">
+                        {#<div class="btns-area pull-right">
+                            <button type="button" class="btn btn-sm btn-default btn-fixed" data-export-report>
+                                <i class="el el-download-alt"></i>
+                                <span class="hidden-xs">Exportar</span>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-default btn-fixed" onclick="window.print();">
+                                <i class="el el-print"></i>
+                                <span class="hidden-xs">Imprimir</span>
+                            </button>
+                        </div>#}
+                    </div>
+                </dl>
+                <dl class="dl-horizontal small text-overflow">
+                    <dt>
+                        <div ng-messages ng-if="!dmn_rltrs_cntrllr.dtValida" class="col-md-12">
+                            <div class="alert alert-danger" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span>
+                                A diferença máxima entre as datas deve ser 30 dias
+                            </div>
+                        </div>
+                    </dt>
+                </dl>
+            </div>
+            <div class="row filter clearfix">
+                <div class="col-md-8">
+                    <form name="dmn_rltrs_cntrllr.form_filtros_relatorios">
+                        <table class="table">
+                            <tbody>
+                                <tr ng-repeat="filtro in dmn_rltrs_cntrllr.filtros track by $index">
+                                    <td width="25%">
+                                        <select id="add-filtro" name="add-filtro" class="form-control" required ng-model="filtro.campo" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro" ng-change="dmn_rltrs_cntrllr.reloadData() || dmn_rltrs_cntrllr.zeraFiltros(filtro)">
+                                            <option value="" disabled="disabled">Selecione</option>
+                                        </select>
+                                    </td>
+                                    <td width="28%">
+                                        <select id="add-condicao" name="add-condicao" class="form-control" required ng-model="filtro.operador" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro[filtro.campo].options" ng-change="dmn_rltrs_cntrllr.reloadData()">
+                                            <option value="" disabled="disabled">Condição</option>
+                                        </select>
+                                    </td>
+                                    <td width="35%" ng-if="filtro.campo != 'cliente_resposta' && filtro.operador != 'is_set' && filtro.operador != 'is_not_set'">
+                                        <select id="add-resultado" name="add-resultado" class="form-control" required ng-model="filtro.valor" ng-options="op.value as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro[filtro.campo].options[filtro.operador].options" ng-change="dmn_rltrs_cntrllr.reloadData()" ng-if="(filtro.campo != 'conteudo_resposta') && (filtro.campo != 'conteudo_resumo') && (filtro.operador != 'includes')">
+                                            <option value="" disabled="disabled">Selecione</option>
+                                        </select>
+                                        <input class="form-control" type="text" ng-model="filtro.valor" required ng-if="filtro.campo == 'conteudo_resposta'" ng-change="dmn_rltrs_cntrllr.reloadData()" />
+                                        <input class="form-control" type="text" ng-model="filtro.valor" required ng-if="filtro.campo == 'conteudo_resumo'" ng-change="dmn_rltrs_cntrllr.reloadData()" />
+                                        <input class="form-control" type="text" ng-model="filtro.valor" required ng-if="filtro.operador == 'includes'" ng-change="dmn_rltrs_cntrllr.reloadData()" />
+                                    </td>
+                                    <td width="35%" ng-if="filtro.campo == 'cliente_resposta' && filtro.operador != 'is_set' && filtro.operador != 'is_not_set'">
+                                        <mda-ui-select
+                                            class="print-visible"
+                                            service="NsClientes"
+                                            constructors="{ 'bloqueado' : false  }"
+                                            opts='{ "attr" : { "ng-change" : "dmn_rltrs_cntrllr.reloadData()", "ng-model" : "filtro.valor", "placeholder" : "Selecione ou busque", "required" : "true"} , "required" : true, "match" : "nome" }'
+                                            fields='["codigo", "nome"]'
+                                        ></mda-ui-select>
+                                    </td>
+                                    <td width="12%" class="text-left">
+                                        <a href  ng-click="dmn_rltrs_cntrllr.removeFiltro($index);" class="btn btn-danger btn-md btns-acoes"><i class="el el-remove"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">
+                                        <div class="col-sm-3">
+                                            <select id="add-filtro" name="add-filtro" class="form-control" ng-model="dmn_rltrs_cntrllr.novoFiltro" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro" ng-change="dmn_rltrs_cntrllr.addFiltros()">
+                                                <option value="" disabled="disabled">Adicionar filtro</option>
+                                            </select>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+
+
+            <div>
+                <div class="col-sm-2 total-tickets">
+                    <div class="placard text-center">
+                        <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.respostas"></div>
+                        <div class="placard-description">Respostas</div>
+                    </div>
+                </div>
+             <div>
+                <div class="col-sm-2 total-tickets">
+                    <div class="placard text-center">
+                        <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.comentarios"></div>
+                        <div class="placard-description">Comentários</div>
+                    </div>
+                </div>
+            <div>
+                <div class="col-sm-2 total-tickets">
+                    <div class="placard text-center">
+                        <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.comentariosERespostas"></div>
+                        <div class="placard-description" style="word-break: break-all;">Total Respostas/Comentários</div>
+                    </div>
+                </div>
+                <div class="row total-boxes">
+                    <div class="col-sm-2 total-tickets">
+                        <div class="placard text-center">
+                            <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.chamados"></div>
+                            <div class="placard-description">Chamados</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 total-tickets">
+                        <div class="placard text-center">
+                            <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.clientes"></div>
+                            <div class="placard-description">Clientes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row clearfix col-md-12">
+                <div class="panel-rules">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Usuários
+                            <div class="btn-group pull-right" uib-dropdown auto-close="outsideClick">
+                              <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                                <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="nome"><input class="form-check-input" type="checkbox" ng-model="dmn_rltrs_cntrllr.colunas.nome" id="nome" checked="true"> Nome</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                    <label for="chamado"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.chamado" id="chamado" checked="true"> Chamado</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="data"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.data" id="data" checked="true"> Data</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="cliente"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.cliente" id="cliente" checked="true"> Cliente</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                    <label for="resposta"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.resposta" id="resposta" checked="true"> Resposta</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                    <label for="comentarios"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.comentarios" id="comentarios" checked="true"> Comentários</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                    <label for="totalComentarios"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.totalComentarios" id="totalComentarios" checked="true"> TotalComentarios</label>
+                                  </li>
+                                <li class="divider"></li>
+                                <li role="menuitem"><a href="#" ng-click="dmn_rltrs_cntrllr.mostrarTodasColunas()">Mostrar todos</a></li>
+                              </ul>
+                            </div>
+                        </div>
+                        <div class="height-full" ng-class="{'onloading' : dmn_rltrs_cntrllr.loadingUsuario }">
+                            <div class="table-responsive" ng-if="!dmn_rltrs_cntrllr.loadingUsuario">
+                                <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                                    <thead>
+                                        <tr>
+                                            <th ng-show="dmn_rltrs_cntrllr.colunas.nome" ts-criteria="usuario" width="25%">Nome</th>
+                                            <th ng-show="dmn_rltrs_cntrllr.colunas.chamado" ts-criteria="numeroprotocolo" width="7%">Chamado</th>
+                                            <th ng-show="dmn_rltrs_cntrllr.colunas.data" ts-criteria="created_at" width="7%">Data</th>
+                                            <th ng-show="dmn_rltrs_cntrllr.colunas.cliente" ts-criteria="cliente" width="15%">Cliente</th>
+                                            <th ng-show="dmn_rltrs_cntrllr.colunas.resposta" ts-criteria="resposta" width="20%">Resposta</th>
+                                            <th ng-show="dmn_rltrs_cntrllr.colunas.comentarios" ts-criteria="comentarios" width="20%">Comentários</th>
+                                            <th ng-show="dmn_rltrs_cntrllr.colunas.totalComentarios" ts-criteria="totalComentarios" width="6%">Total Comentários</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in dmn_rltrs_cntrllr.tableData" ts-repeat>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.nome">{{'{{data.usuario}}'}}</td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.chamado"><a href ui-sref="atendimento_admin_solicitacoes_show({atendimento : data.atendimento})">{{'{{data.numeroprotocolo}}'}}</a></td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.data">{{'{{data.created_at | convertToDateTime | date: "dd/MM/yyyy hh:mm"}}'}}</td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.cliente"><a href ui-sref="ns_clientes_show({cliente : data.cliente_id})">{{'{{data.cliente}}'}}</a></td>
+                                            
+                                            <!-- Caso o tipo seja 0, então é resposta -->
+                                            <td ng-if="data.tipo == 0" ng-show="dmn_rltrs_cntrllr.colunas.resposta" ng-click="dmn_rltrs_cntrllr.visualizarResposta(data)" style="cursor: pointer" ng-bind-html="data.resposta"></td>
+                                            <td ng-if="data.tipo == 0" ng-show="dmn_rltrs_cntrllr.colunas.comentarios"></td>
+
+                                            <!-- Caso o tipo seja 0, então é comentário -->
+                                            <td ng-if="data.tipo == 1" ng-show="dmn_rltrs_cntrllr.colunas.resposta"></td>
+                                            <td ng-if="data.tipo == 1" ng-show="dmn_rltrs_cntrllr.colunas.comentarios" ng-click="dmn_rltrs_cntrllr.visualizarResposta(data)" style="cursor: pointer" ng-bind-html="data.resposta"></td>
+                                            
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.totalComentarios" ng-bind-html="data.contadorComentarios"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <p class="onloading" ng-if="dmn_rltrs_cntrllr.busy"></p>
+                                <p class="list-group-item" ng-if="!dmn_rltrs_cntrllr.finished">
+                                    <a href="" ng-click="dmn_rltrs_cntrllr.loadMore()">Ver mais...</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                                        
+<script type="text/ng-template" id="respostaModal">
+    <div class="modal-header">
+        <h3>Chamado: #{{'{{dmn_rltrs_cntrllr.chamado}}'}}</h3>
+    </div>
+    <div class="modal-body">
+        <p ng-bind-html="dmn_rltrs_cntrllr.respostaCompleta"></p>
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="dmn_rltrs_cntrllr.fecharModal()" data-dismiss="modal">Fechar</button>
+    </div>
+</script>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="enderecosemails" label="enderecosemails" project="atendimento/admin" >
+    <entity schema="atendimento" table="enderecosemails ">
+        <fieldmodel name="enderecoemail" datatype="guid" isid="true" column="enderecoemail"/>
+        <fieldmodel name="email" datatype="string" column="email"/>
+        <fieldmodel name="ativo" datatype="boolean" column="ativo"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser label="Endereços de emails" layout="table" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="enderecoemail" entitylink="enderecoemail" isid="true" visible="false" />
+            <fieldbrowser alias="Email" entitylink="email" visible="true" cansearch="true"  />
+            <fieldbrowser alias="Ativo" entitylink="ativo" visible="true" cansearch="true"  />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Endereço de Email" mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="email" entitylink="email" controltype="email" label="Email" placeholder="contato@exemplo.com.br" colspan="10">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo email não pode ser vazio."/>
+                            <validate type="email" displaytext="O campo email deve ser um email válido."/>
+                        </validates>
+                    </cell>
+                    <cell name="ativo" entitylink="ativo" controltype="checkbox" label="Ativo" colspan="2" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>enderecosemailsNovo</name>
+                <fromto valueapi="email" valueentity="email" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>update</name>
+            <api>
+                <name>enderecosemailsAlterar</name>
+                <fromto valueapi="enderecoemail" valueentity="enderecoemail" />
+                <fromto valueapi="email" valueentity="email" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>delete</name>
+            <api>
+                <name>enderecosemailsExcluir</name>
+                <fromto valueapi="enderecoemail" valueentity="enderecoemail" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

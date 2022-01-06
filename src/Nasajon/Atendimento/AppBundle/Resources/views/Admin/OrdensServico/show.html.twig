@@ -1,0 +1,430 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/OrdensServico/show.html.twig' %}
+
+{% block viewedit_toolbar -%}
+    <div class="headline-sub fixed-bar clearfix">
+        <h3 class="pull-left">
+            <a href ui-sref="servicos_ordensservico({})" title="Voltar à lista" class="hidden-md hidden-lg">
+                <i class="el el-chevron-left"></i>
+            </a>
+            #<span ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.numero"></span>
+        </h3>
+        <div class="btns-area pull-right">
+
+
+            {#    <button ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao == 0" id="single-button" ng-click="srvcs_rdns_srvc_frm_cntrllr.close()"  type="button" class="btn btn-default btn-xs pull-left">
+                    Fechar atendimento
+                </button>#}
+            <h4 class="label-solicitacoes  pull-left">
+                {# <span class="label label-default">Check-in</span> #}
+                <span class="label" ng-class="{ 'label-success' : (srvcs_rdns_srvc_frm_cntrllr.entity.situacao == 0), 'label-default' : (srvcs_rdns_srvc_frm_cntrllr.entity.situacao == 1)}">{{"{{['Aberto','Fechado'][srvcs_rdns_srvc_frm_cntrllr.entity.situacao]}}"}}</span>
+            </h4>
+            <div class="pull-right dropdown" uib-dropdown role="group">
+                <button id="single-button" type="button" class="btn btn-xs btn-default dropdown-toggle" uib-dropdown-toggle >
+                    <span class="icon xs-icon ret-icon"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                    {# <li role="menuitem" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao == 0">
+                        <a href="" ng-click="srvcs_rdns_srvc_frm_cntrllr.ajustarHorario()" >Ver/Ajustar Horários</a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="" ng-click="srvcs_rdns_srvc_frm_cntrllr.CriaOSVinculada()" >Criar OS Vinculada</a>
+                    </li> #}
+                    <li role="menuitem">
+                        <a href="" ng-click="srvcs_rdns_srvc_frm_cntrllr.encerrar()" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0" >Encerrar</a>
+                    </li>
+                    <li role="menuitem">
+                        <a href="" ng-click="srvcs_rdns_srvc_frm_cntrllr.delete()" >Deletar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!--/headline-sub-->
+{% endblock viewedit_toolbar -%}
+
+{% block viewedit_view -%}
+    <div class="infos-os">
+        <div class="row" >
+            <div class="col-sm-6" >
+                {% block viewedit_form_cliente %}
+
+                    <div class="form-group"><label class="control-label">Cliente:</label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.cliente.nome || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_cliente %}
+            </div>
+            <div class="col-sm-6" >
+                {% block viewedit_form_estabelecimento %}
+
+                    <div class="form-group"><label class="control-label">Estabelecimento:</label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.estabelecimento.nomefantasia || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_estabelecimento %}
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-6" >
+                {% block viewedit_form_pessoamunicipio %}
+
+                    <div class="form-group"><label class="control-label">Município Prestação:</label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.pessoamunicipio.ibge || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_pessoamunicipio %}
+            </div>
+            <div class="col-sm-6" >
+                {% block viewedit_form_enderecocliente %}
+
+                    <div class="form-group"><label class="control-label">Endereço:</label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.enderecocliente.logradouro || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_enderecocliente %}
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-6" >
+                {% block viewedit_form_tipoordemservico_id %}
+
+                    <div class="form-group"><label class="control-label">Tipo de Ordem de Serviços:</label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.tipoordemservico_id.descricao || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_tipoordemservico_id %}
+            </div>
+            <div class="col-sm-6" >
+                {% block viewedit_form_tipo_manutencao %}
+
+                    <div class="form-group"><label class="control-label">Tipo de Manutenção:</label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.tipo_manutencao.descricao || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_tipo_manutencao %}
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-6" >
+                {% block viewedit_form_ativo %}
+
+                    <div class="form-group"><label class="control-label">Ativo: </label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.ativo.servico_descricao || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_ativo %}
+            </div>
+            <div class="col-sm-6" ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.contrato==true)">
+                {% block viewedit_form_contrato %}
+
+                    <div class="form-group"><label class="control-label">Contrato: </label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.contrato.descricao || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_contrato %}
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-6" >
+                {% block viewedit_form_situacao %}
+
+                    <div class="form-group"><label class="control-label">Situação: </label> <span class="form-control-static">
+                        {{'{{srvcs_rdns_srvc_frm_cntrllr.situacao[srvcs_rdns_srvc_frm_cntrllr.entity.situacao] || "Não informado."}}'}}
+                        </span></div>
+
+                {% endblock viewedit_form_situacao %}
+            </div>
+            <div class="col-sm-6" ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.referenciaexterna==true)">
+                {% block viewedit_form_referenciaexterna %}
+
+                    <div class="form-group"><label class="control-label">O.S. Externa: </label> <span class="form-control-static" ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.referenciaexterna || 'Não informado.'"></span></div>
+
+                {% endblock viewedit_form_referenciaexterna %}
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-sm-12" >
+                {% block viewedit_form_groupbox_vncl %}
+                    <div class="form-group" ng-show="(srvcs_rdns_srvc_frm_cntrllr.entity.tipo_vinculo==1)">
+                        <label class="control-label">Ordem de Serviço Vinculada</label>
+                        <p  class="form-control-static" >
+                            <a href ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.ordemservico_vinculada.numero" ui-sref="{{"{{srvcs_rdns_srvc_frm_cntrllr.entity.ordemservico_vinculada.rascunho ? 'servicos_ordensservico_edit({ordemservico : srvcs_rdns_srvc_frm_cntrllr.entity.ordemservico_vinculada.ordemservico})' : 'servicos_ordensservico_show({ordemservico : srvcs_rdns_srvc_frm_cntrllr.entity.ordemservico_vinculada.ordemservico})'}}"}}"></a>
+                        </p>
+                    </div>
+                    <div class="form-group" ng-show="((srvcs_rdns_srvc_frm_cntrllr.context.chamadotecnico==true)&&(srvcs_rdns_srvc_frm_cntrllr.entity.tipo_vinculo==0))">
+                        <label class="control-label">Atendimento Vinculado:</label> <span class="form-control-static">
+                            {{"{{srvcs_rdns_srvc_frm_cntrllr.entity.atendimento_vinculado.numeroprotocolo||'Não há atendimento vinculado'}}"}} {{"{{srvcs_rdns_srvc_frm_cntrllr.entity.atendimento_vinculado.resumo}}"}}
+                        </span>
+                    </div>
+                {% endblock viewedit_form_groupbox_vncl %}
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.sintoma==true)"><div class="col-sm-6" >
+            {% block viewedit_form_situacao_maquina_chamado %}
+
+                <div class="form-group"><label class="control-label">Condição da máquina no chamado</label>
+                    <p>
+                        {{'{{srvcs_rdns_srvc_frm_cntrllr.situacao_maquina_chamado[srvcs_rdns_srvc_frm_cntrllr.entity.situacao_maquina_chamado] || "Não informado."}}'}}
+                    </p>
+                </div>
+
+            {% endblock viewedit_form_situacao_maquina_chamado %}
+        </div><div class="col-sm-12" >
+            {% block viewedit_form_sintoma %}
+
+                <div class="form-group"><label class="control-label">Descrição</label><p ng-bind="srvcs_rdns_srvc_frm_cntrllr.entity.sintoma || 'Não informado.'"></p></div>
+
+            {% endblock viewedit_form_sintoma %}
+        </div>
+
+    </div>
+
+    <div class="row" ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.causa==true)"><div class="col-sm-6" >
+            {% block viewedit_form_situacao_maquina_chegada %}
+                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">
+                    <label class="control-label">Condição da máquina na chegada do técnico</label>
+                    <p>{{'{{srvcs_rdns_srvc_frm_cntrllr.situacao_maquina_chegada[srvcs_rdns_srvc_frm_cntrllr.entity.situacao_maquina_chegada] || "Não informado."}}'}}</p>
+                </div>
+{#                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0"> {{ form_row(form.situacao_maquina_chegada) }} </div>#}
+            {% endblock viewedit_form_situacao_maquina_chegada %}
+        </div><div class="col-sm-12" >
+            {% block viewedit_form_causa %}
+                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">
+                    <label class="control-label">Causa</label>
+                    <p>{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.causa}}'}}</p>
+                </div>
+{#                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0"> {{ form_row(form.causa) }} </div>#}
+            {% endblock viewedit_form_causa %}
+        </div>
+    </div>
+    <div class="row" ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.intervencao==true)" >
+        <div class="col-sm-6" >
+            {% block viewedit_form_situacao_maquina_saida %}
+                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">
+                    <label class="control-label">Condição da máquina após manutenção</label>
+                    <p>{{'{{srvcs_rdns_srvc_frm_cntrllr.situacao_maquina_saida[srvcs_rdns_srvc_frm_cntrllr.entity.situacao_maquina_saida] || "Não informado."}}'}}</p>
+                </div>
+{#                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0"> {{ form_row(form.situacao_maquina_saida) }} </div>#}
+            {% endblock viewedit_form_situacao_maquina_saida %}
+        </div>
+        <div class="col-sm-12" >
+            {% block viewedit_form_intervencao %}
+                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">
+                    <label class="control-label">Intervenção</label>
+                    <p>{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.intervencao}}'}}</p>
+                </div>
+{#                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0"> {{ form_row(form.intervencao) }} </div>#}
+            {% endblock viewedit_form_intervencao %}
+        </div>
+    </div>
+    <div class="row" ><div class="col-sm-12" >
+            <fieldset >
+                {% block viewedit_form_servicostecnicos %}
+                    <object-list
+                        entities='srvcs_rdns_srvc_frm_cntrllr.entity.servicostecnicos'
+                        service="ServicosOrdensServicoItem"
+                        constructors="{ 'ordemservico' : srvcs_rdns_srvc_frm_cntrllr.entity.ordemservico  }">
+                        <legend class="clearfix">
+                            <h4 class="pull-left">Serviços Técnicos</h4>
+                            <a class="btn btn-sm btn-warning pull-right" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0" ng-click="oblistctrl.add()"><i class="el el-plus"></i> Adicionar</a>
+                        </legend>
+                        <p class="text-center nfound ng-scope" ng-if="(entities.length == 0)">Nenhum serviço técnico adicionado</p>
+                        <div class="table-default">
+                            <table class="table table-striped table-bordered table-condensed servicos-tecnicos" ng-if="(entities.length > 0)">
+                                <thead>
+                                    <tr>
+                                        <th>Serviço</th>
+                                        <th class="text-center">Venda(h)</th>
+                                        <th class="text-center">Objetivo(h)</th>
+                                        <th class="text-center">Executadas(h)</th>
+                                        <th class="compact hidden-print">
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat-start="($index, subentity) in entities"  ng-controller="ObjectListItemCtrl as itemctrl">
+                                        <td width="40%">
+                                <mda-ui-select
+                                    ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0"
+                                    service="ServicosServicoTecnico"
+                                    constructors="{  }"
+                                    opts='{ "attr" : { "ng-model" : "subentity.servicotecnico", "ng-disabled" : "subentity.submitting", "ng-change" : "itemctrl.autosave(); srvcs_rdns_srvc_frm_cntrllr.loadChecklists($index);", "placeholder" : "",  } , "required" : false, "match" : "descricao" }'
+                                    fields='["descricao", ]'>
+                                </mda-ui-select>
+                                <p class="form-control-static" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{subentity.servicotecnico.descricao}}' }}</p>
+                                </td>
+                                <td class="text-center input-wd">
+                                    <input ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0" type="text" name="servicostecnicos[{{"{{index}}"}}][horascontratadas]" ng-model="subentity.horascontratadas" ng-disabled="subentity.submitting" convert-to-number=" " ng-change="itemctrl.autosave()" placeholder="" class="form-control text-center">
+                                    <p class="form-control-static" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{subentity.horascontratadas}}' }}</p>
+                                </td>
+                                <td class="text-center input-wd">
+                                    <input ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0" type="text" name="servicostecnicos[{{"{{index}}"}}][horasfaturar]" ng-model="subentity.horasfaturar" ng-disabled="subentity.submitting" convert-to-number=" " ng-change="itemctrl.autosave()" placeholder="" class="form-control text-center">
+                                    <p class="form-control-static" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{subentity.horasfaturar}}' }}</p>
+                                </td>
+                                <td class="text-center input-wd">
+                                    <input ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0" type="text" name="servicostecnicos[{{"{{index}}"}}][horasexecutadas]" ng-model="subentity.horasexecutadas" ng-disabled="subentity.submitting" convert-to-number=" " ng-change="itemctrl.autosave()" placeholder="" class="form-control text-center">
+                                    <p ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0" class="form-control-static" ng-bind="subentity.horasexecutadas || 'Não informado.'"></p>
+                                </td>
+                                <td nowrap class="hidden-print" width="42px"> <!-- Botão default quando não há informação / primary quando há informação cadastrada / success apenas no icone el-ok para quando o serviço foi marcado como executado -->
+                                    <a href class="btns-acoes btn btn-danger" ng-click="itemctrl.remove()" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0" title="Excluir serviço"><i class="el el-remove"></i></a>
+                                    <!--
+                                    <a href class="btn btn-default" title="Fazer comentário"><i class="el el-comment"></i></a>
+                                    <a href class="btn btn-primary" title="Cadastrar horários"><i class="el el-time"></i></a>
+                                    <a href class="btn btn-success" title="Concluir serviço"><i class="el el-ok"></i></ar>
+                                    -->
+                                </td>
+                                </tr>
+
+                                <tr ng-repeat-end ng-init="srvcs_rdns_srvc_frm_cntrllr.loadChecklists($index)">
+                                    <td ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.servicostecnicos[$index].checklists" colspan="5" class="td-subitens" >
+                                        <table class="table-condensed table table-subitens">
+                                            <tr ng-repeat="checklist in srvcs_rdns_srvc_frm_cntrllr.entity.servicostecnicos[$index].checklists">
+                                                <td>{{'{{checklist.descricao}}'}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </object-list>
+                {% endblock viewedit_form_servicostecnicos %}
+            </fieldset></div></div>
+    <div class="row" >
+        <fieldset ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.visita!=0)">
+            {% block viewedit_form_visitas %}
+                <object-list
+                    entities='srvcs_rdns_srvc_frm_cntrllr.entity.visitas'
+                    service="ServicosVisita"
+                    ng-init="srvcs_rdns_srvc_frm_cntrllr.context.visita==1?srvcs_rdns_srvc_frm_cntrllr.addVisita(oblistctrl, srvcs_rdns_srvc_frm_cntrllr.context.visita):false"
+                    constructors="{ 'ordemservico' : srvcs_rdns_srvc_frm_cntrllr.entity.ordemservico,  }">
+                    <div class="col-sm-12" >
+                        <legend class="clearfix">
+                            <h4 class="pull-left">Visitas</h4>
+                        </legend>
+                        <p class="text-center nfound ng-scope" ng-if="(entities.length == 0)">Nenhuma visita adicionada</p>
+                    </div>
+
+                    <div class="row" ng-if="srvcs_rdns_srvc_frm_cntrllr.context.visita==2">
+                        <div class="col-sm-12">
+                            <div class="table-default">
+                                <table class="table table-striped table-hover table-bordered table-condensed servicos-visitas" ng-if="(entities.length > 0)">
+                                    <thead>
+                                        <tr>
+                                            <th>Data / Hora</th>
+                                            <th>Técnicos</th>
+                                            <th class="text-center">Consecutiva</th>
+                                            <th class="text-center">Check-in</th>
+                                            <th class="text-center">Check-out</th>
+                                            <th class="compact hidden-print"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="subentity in entities track by $index" ng-controller="ObjectListItemCtrl as itemctrl">
+                                            <td>{{'{{subentity.datavisita | date: "dd/MM/yyyy" }}'}}<br /></td>
+                                            <td ng-init="srvcs_rdns_srvc_frm_cntrllr.loadTecnicos($index)">
+                                                <span ng-repeat='tc in subentity.tecnicos'>{{'{{tc.tecnico.nome}}'}}<br/></span>
+                                            </td>
+                                            <td class="text-center">{{'{{subentity.atendimento_consecutivo?"Sim":"Não"}}'}}</td>
+                                            <td class="text-center">{{'{{subentity.hora_chegada_cliente | asDate | date: "HH:mm:ss"}}' }}</td>
+                                            <td class="text-center">{{'{{subentity.hora_saida_cliente | asDate | date: "HH:mm:ss"}}'  }}</td>
+                                            <td class="text-right hidden-print" width="150px">
+                                                <a class="btn btn-warning btn-sm" ng-if="(srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0 && !subentity.hora_chegada_cliente)" ng-click="srvcs_rdns_srvc_frm_cntrllr.visitaCheck('i',$index)">Check-in</a>
+                                                <a class="btn btn-danger btn-sm" ng-if="(srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0 && subentity.hora_chegada_cliente && !subentity.hora_saida_cliente)" ng-click="srvcs_rdns_srvc_frm_cntrllr.visitaCheck('o',$index)">Check-out</a>
+                                                <i class="el el-ok ico-success" ng-if="(subentity.hora_chegada_cliente && subentity.hora_saida_cliente)"></i>
+                                                &nbsp;
+                                                <a href ng-click="srvcs_rdns_srvc_frm_cntrllr.openVisita($index)" title="Editar Visita" class="btn btn-warning btns-acoes"><i class="el el-pencil"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" ng-repeat-start="subentity in entities track by $index" ng-controller="ObjectListItemCtrl as itemctrl" ng-if="srvcs_rdns_srvc_frm_cntrllr.context.visita!=2">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Data</label>
+{#                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">{{ form_widget(form.visitas.vars.prototype.datavisita) }}</div>#}
+                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{subentity.datavisita | asDate | date: "dd/MM/yyyy"}}' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" ng-if="srvcs_rdns_srvc_frm_cntrllr.context.estimativadehoras">
+                            <div class="form-group">
+                                <label class="control-label">Inicio</label>
+                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+{#                                    {{ form_widget(form.visitas.vars.prototype.hora_estimada_inicio, {'attr': { 'ui-mask':'99:99:99' }}) }}</div>#}
+                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{subentity.hora_estimada_inicio}}'}}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" ng-if="srvcs_rdns_srvc_frm_cntrllr.context.estimativadehoras">
+                            <div class="form-group">
+                                <label class="control-label">Término</label>
+{#                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">{{ form_widget(form.visitas.vars.prototype.hora_estimada_fim, {'attr': { 'ui-mask':'99:99:99' }}) }}</div>#}
+                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{subentity.hora_estimada_fim}}'}}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label class="control-label">Consecutiva</label>
+{#                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">{{ form_widget(form.visitas.vars.prototype.atendimento_consecutivo) }} Marque caso seja consecutiva</div>#}
+                                <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{subentity.atendimento_consecutivo?"Sim":"Não"}}'}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div  ng-repeat-end class="row" ng-if="srvcs_rdns_srvc_frm_cntrllr.context.visita!=2">
+                        <div class="col-sm-12">
+                            <div class="form-group pull-right">
+                                <a class="btn btn-primary" ng-if="srvcs_rdns_srvc_frm_cntrllr.context.deslocamentoextra" ng-click="srvcs_rdns_srvc_frm_cntrllr.openDeslocamentoExtra($index)">Deslocamento Extra</a>
+                                <a class="btn btn-primary" ng-click="srvcs_rdns_srvc_frm_cntrllr.openDadosAdicionais($index)">Incluir Dados Adicionais</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                          <div ng-init="srvcs_rdns_srvc_frm_cntrllr.loadTecnicos($index)" ng-if="(srvcs_rdns_srvc_frm_cntrllr.context.visita!=2 && !( srvcs_rdns_srvc_frm_cntrllr.entity.situacao == 2 && srvcs_rdns_srvc_frm_cntrllr.entity.visitas[$index].tecnicos.length == 0)  )">
+                          <h5><strong>Técnico(s)</strong></h5>
+                          <table class="table table-hover table-bordered table-condensed servicos-visitas-tecnicos">
+                              <tbody>
+                                  <tr ng-repeat="tc in srvcs_rdns_srvc_frm_cntrllr.entity.visitas[$index].tecnicos track by $index">
+                                      <td class="text-center">
+                              <mda-ui-select
+                                  service="NsTecnico"
+                                  constructors="{  }"
+                                  opts='{ "attr" : { "ng-model" : "tc.tecnico", "ng-disabled" : "srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0", "ng-change" : "srvcs_rdns_srvc_frm_cntrllr.saveTecnico(tc.visitaIndex,$index)", "placeholder" : "",  } , "required" : false, "match" : "nome" }'
+                                  fields='["nome"]'>
+                              </mda-ui-select>
+                              </td>
+                              <td class="text-center" width="40px">
+                                  <a href class="btn btn-danger btns-acoes" ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0" ng-click="srvcs_rdns_srvc_frm_cntrllr.removeTecnico($parent.$index,$index)" title="Excluir serviço"><i class="el el-remove"></i></a>
+                              </td>
+                              </tr>
+                              </tbody>
+                              <tfoot ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                                  <tr>
+                                      <th colspan="4"><a href ng-click="srvcs_rdns_srvc_frm_cntrllr.addTecnico($index)">Adicionar Usuário</a></th>
+                                  </tr>
+                              </tfoot>
+                          </table>
+                      </div>
+                        </div>
+                    </div>
+
+                </object-list>
+            {% endblock viewedit_form_visitas %}
+        </fieldset>
+    </div>
+    <div class="row" ><div class="col-sm-12" ><fieldset ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.utilizadevolviveis==true)"><div class="row" ></div></fieldset></div></div>
+    <div class="row" >
+        <fieldset ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.orcamento==true)">
+            <div class="col-sm-12" ><legend><h4>Orçamento (Preencha abaixo, caso tenha sido gerado)</h4></legend></div>
+            <div class="row" ><div class="col-sm-4" >
+                    {% block viewedit_form_numero_orcamento %}
+{#                        <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">{{ form_row(form.numero_orcamento) }}</div>#}
+                        <p ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.numero_orcamento}}'}}</p>
+                    {% endblock viewedit_form_numero_orcamento %}
+                </div><div class="col-sm-4" >
+                    {% block viewedit_form_responsavel_orcamento %}
+{#                        <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">{{ form_row(form.responsavel_orcamento) }}</div>#}
+                        <p ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.responsavel_orcamento}}'}}</p>
+                    {% endblock viewedit_form_responsavel_orcamento %}
+                </div><div class="col-sm-4" ng-show="(srvcs_rdns_srvc_frm_cntrllr.context.assinadopor==true)">
+                    {% block viewedit_form_assinado_por %}
+{#                        <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">{{ form_row(form.assinado_por) }}</div>#}
+                        <p ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.assinado_por}}'}}</p>
+                    {% endblock viewedit_form_assinado_por %}
+                </div></div>
+        </fieldset>
+    </div>
+
+    <div class="row" ><div class="col-sm-12 form-observacao" ><fieldset >
+                {% block viewedit_form_observacao %}
+                    <legend><h4>Observações</h4></legend>
+{#                    <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">{{ form_row(form.observacao) }}</div>#}
+                    <p ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0" ng-bind-html="srvcs_rdns_srvc_frm_cntrllr.entity.observacao"></p>
+                {% endblock viewedit_form_observacao %}
+            </fieldset></div></div>
+        {% endblock viewedit_view -%}

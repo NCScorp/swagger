@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="artigosuteis" label="artigosuteis" project="atendimento/cliente">
+   <entity schema="atendimento" table="artigosuteis">
+       <fieldmodel name="artigoutil" datatype="guid" isid="true" column="artigoutil"/>
+       <fieldmodel name="artigo" datatype="guid" column="artigo"/>
+       <fieldmodel name="tenant" datatype="integer" column="tenant" />
+       <fieldmodel name="util" datatype="boolean" column="util" />
+       <fieldmodel name="justificativa" datatype="string" column="justificativa" />
+       <fieldmodel name="created_by" datatype="string" column="created_by" />
+       <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+   </entity>
+   <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">artigo</constructoritem>
+        <constructoritem required="false">artigoutil</constructoritem>
+        <constructoritem required="false">created_by</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Artigos Úteis" >
+        <fieldsbrowser>
+            <fieldbrowser alias="artigo" entitylink="artigo" visible="false"  /> 
+            <fieldbrowser alias="tenant" entitylink="tenant" visible="false" /> 
+            <fieldbrowser alias="util" entitylink="util" visible="false"  /> 
+            <fieldbrowser alias="justificativa" entitylink="justificativa" visible="false"  /> 
+            <fieldbrowser alias="created_by" entitylink="created_by" visible="false"  /> 
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Artigos Úteis">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="util" entitylink="util" controltype="checkbox" />
+                </row>
+                <row>
+                    <cell name="justificativa" entitylink="justificativa" controltype="textedit" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+   <actions>
+       <action>
+           <name>Insert</name>
+           <api>
+               <name>ArtigoUtilNovo_V2</name>
+               <fromto valueapi="artigo" valueentity="artigo"/>
+               <fromto valueapi="tenant" valueentity="tenant"/>
+               <fromto valueapi="util" valueentity="util"/>
+               <fromto valueapi="justificativa" valueentity="justificativa"/>
+               <fromto valueapi="created_by" valueentity="logged_user"/>
+           </api>
+       </action>
+   </actions>
+</nsjusecase>

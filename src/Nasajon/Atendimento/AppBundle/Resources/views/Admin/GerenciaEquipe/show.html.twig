@@ -1,0 +1,64 @@
+<div class="height-full col-md-12 article-area row">
+    <div>
+        <div class="col-md-12 row">
+          <div class="headline-sub clearfix">
+            <h3 class="pull-left">Equipe: {{'{{tndmnt_dmn_grncqp_shw_cntrllr.entity.nome}}'}}</h3>
+          </div>
+          <div class="forms clearfix">
+              
+              <div class="row">
+                <div class="form-group clearfix">
+                  <div class="col-md-12"><strong>Usuários:</strong></div>
+                  <div class="col-md-10">
+                      <select class="form-control" ng-model="tndmnt_dmn_grncqp_shw_cntrllr.usuario_selecionado" ng-options="op.email as op.nome for (key,op) in tndmnt_dmn_grncqp_shw_cntrllr.opcoesUsuarios">
+                          <option disabled="disabled" selected="selected" value="">Selecionar usuário</option>
+                      </select>
+                  </div>
+                  <div class="col-md-2">
+                      <a class="btn btn-sm btn-warning" ng-click="tndmnt_dmn_grncqp_shw_cntrllr.addUsuario('U')"><i class="el el-plus"></i> Adicionar</a>
+                  </div>
+                </div>
+              </div>
+              
+            <div class="row col-sm-12 panel-rules">
+              <div class="panel panel-default">
+                  <div class="panel-heading"><strong>Usuários:</strong></div>
+                  <div class="table-clients table-default">
+                    <table class="table table-condensed table-striped table-hover">
+                        <thead>
+                      <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Tipo</th>
+                        <th>Disponibilidade</th>
+                      </tr>
+                    </thead>
+                        <tbody>
+                            <tr ng-if="tndmnt_dmn_grncqp_shw_cntrllr.entity.usuarios.length == 0">
+                                <td colspan="4">Nenhum</td>
+                            </tr>
+                            <tr ng-repeat="opcao in tndmnt_dmn_grncqp_shw_cntrllr.entity.usuarios track by $index" >
+                                <td width="25%" ng-bind="tndmnt_dmn_grncqp_shw_cntrllr.getNomeUsuario(opcao.usuario)"></td>
+                                <td width="20%">{{'{{opcao.usuario}}'}}</td>
+                                <td width="20%" ng-bind="tndmnt_dmn_grncqp_shw_cntrllr.getTipoUsuario(opcao.usuariotipo)"></td>
+                                <td width="15%" class="text-right">
+                                    <div class="switch switch-sm pull-left">
+                                        <input id="status_conta_{{'{{$index}}'}}" name="status_conta_{{'{{$index}}'}}" type="checkbox" ng-checked="opcao.status == 1" ng-model="opcao.status" ng-change="tndmnt_dmn_grncqp_shw_cntrllr.setStatus(opcao)">
+                                        <label for="status_conta_{{'{{$index}}'}}" class="label-success"></label>  
+                                        <small class="text-uppercase" ng-if="opcao.status == 1">{{'disponivel'|trans}}</small>
+                                        <small class="text-uppercase" ng-if="opcao.status == 0">{{'indisponivel'|trans}}</small>
+                                    </div>
+                                </td>
+                                <td width="10%" class="text-right">
+                                    <a href ng-click="tndmnt_dmn_grncqp_shw_cntrllr.removeUsuario($index, opcao.usuario)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

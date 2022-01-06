@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="gruposdeusuarios" label="gruposdeusuarios" project="ns" >
+    <entity schema="ns" table="gruposdeusuarios">
+        <fieldmodel name="grupodeusuario" datatype="guid" isid="true" column="grupodeusuario"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo" />
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel column="tenant" datatype="integer" name="tenant" />
+    </entity>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Grupos de Usuário" >
+        <fieldsbrowser>
+            <fieldbrowser alias="grupodeusuario" entitylink="grupodeusuario" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" cansearch="true" visible="true" avaliable="true" indefaultorder="true" direction="ASC" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Grupo de Usuário" mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="codigo" entitylink="codigo" colspan="4" controltype="sequence" label="Código" placeholder="Código" >
+                        <validates>
+                            <validate type="maxlength" value="30" displaytext="O campo código não pode ter mais que 30 posições"/>
+                            <validate type="vnull" displaytext="O campo código não pode ser vazio."/>
+                            <validate type="unique" displaytext="O código não está disponível." action="unique"/>
+                        </validates>
+                    </cell>
+                    <cell name="descricao" entitylink="descricao" colspan="8" controltype="textedit" label="Descrição" placeholder="Descrição">
+                        <validates>
+                            <validate type="maxlength" value="150" displaytext="O campo descrição não pode ter mais que 150 posições"/>
+                            <validate type="vnull" displaytext="O campo descrição não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>grupodeusuarioNovo</name>
+                <fromto valueapi="grupodeusuario" valueentity="grupodeusuario" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>gruposdeusuariosalterar</name>
+                <fromto valueapi="grupodeusuario" valueentity="grupodeusuario" />
+                <fromto valueentity="codigo" valueapi="codigo" />
+                <fromto valueentity="descricao" valueapi="descricao" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>grupodeusuarioExcluir</name>
+                <fromto valueapi="grupodeusuario" valueentity="grupodeusuario" />
+            </api>
+        </action>
+        <action>
+            <name>Unique</name>
+            <api>
+                <name>gruposdeusuarios_codigo_unique</name>
+                <fromto valueapi="grupodeusuario" valueentity="grupodeusuario" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

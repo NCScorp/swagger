@@ -1,0 +1,164 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Admin/Flagcliente/form.html.twig' %}
+
+{% block viewedit_form_icone %}
+    <div class="form-group">
+        <label class="control-label required" for="icone">Ícone</label>
+        <div uib-dropdown >
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-disabled="tndmnt_dmn_flgclnt_frm_cntrllr.entity.submitting"  uib-dropdown-toggle>
+                <i class='el' ng-class='"el-"+tndmnt_dmn_flgclnt_frm_cntrllr.entity.icone'></i> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu scrollable-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                {% for option in form.icone.vars.choices %}
+                    <li role="menuitem">
+                        <a href ng-click="tndmnt_dmn_flgclnt_frm_cntrllr.entity.icone = '{{option.value}}'"><i class='el el-{{option.value}}'></i></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {#<select id="icone" name="icone" required="required" ng-model="tndmnt_dmn_flgclnt_frm_cntrllr.entity.icone">
+            <option  disabled="disabled" selected="selected" value="">Selecione</option>
+            {% for option in form.icone.vars.choices %}
+                <option value="{{option.value}}" class="el" style="content: '\f14f';"></option>
+            {% endfor %}
+        </select>#}
+    </div>
+    <div ng-messages="tndmnt_dmn_flgclnt_frm_cntrllr.form.icone.$error"  ng-if='tndmnt_dmn_flgclnt_frm_cntrllr.form.icone.$dirty || tndmnt_dmn_flgclnt_frm_cntrllr.submitted'>
+        <div class="alert alert-danger" role="alert" ng-message="required">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            O ícone é obrigatório.
+        </div>
+    </div>
+{% endblock viewedit_form_icone %}
+
+
+{% block viewedit_form_cor %}
+    <div class="form-group">
+        <label class="control-label required" for="cor">Cor do ícone</label>
+        <div class="select-cor" uib-dropdown>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-model="tndmnt_dmn_flgclnt_frm_cntrllr.entity.cor" ng-disabled="tndmnt_dmn_flgclnt_frm_cntrllr.entity.submitting"  uib-dropdown-toggle>
+                <span class="box-cor" style="background-color: #{{'{{tndmnt_dmn_flgclnt_frm_cntrllr.entity.cor}}'}};"></span> <span class="selected">#{{'{{tndmnt_dmn_flgclnt_frm_cntrllr.entity.cor}}'}}</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu scrollable-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                {% for option in form.cor.vars.choices %}
+                    <li role="menuitem">
+                        <a href ng-click="tndmnt_dmn_flgclnt_frm_cntrllr.entity.cor = '{{option.value}}'"><span class="box-cor" style="background-color: #{{option.value}};"></span> <span class="selected">#{{option.value}}</span></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div ng-messages="tndmnt_dmn_flgclnt_frm_cntrllr.form.cor.$error"  ng-if='tndmnt_dmn_flgclnt_frm_cntrllr.form.cor.$dirty || tndmnt_dmn_flgclnt_frm_cntrllr.submitted'>
+        <div class="alert alert-danger" role="alert" ng-message="required">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            A cor é obrigatória.
+        </div>
+    </div>
+{% endblock viewedit_form_cor %}
+{% block viewedit_form_corfundo %}
+    <div class="form-group">
+        <label class="control-label required" for="corfundo">Cor do fundo</label>
+        <div class="select-cor" uib-dropdown>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-model="tndmnt_dmn_flgclnt_frm_cntrllr.entity.corfundo" ng-disabled="tndmnt_dmn_flgclnt_frm_cntrllr.entity.submitting"  uib-dropdown-toggle>
+                <span class="box-cor" style="background-color: #{{'{{tndmnt_dmn_flgclnt_frm_cntrllr.entity.corfundo}}'}};"></span> <span class="selected">#{{'{{tndmnt_dmn_flgclnt_frm_cntrllr.entity.corfundo}}'}}</span> <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu scrollable-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                {% for option in form.corfundo.vars.choices %}
+                    <li role="menuitem">
+                        <a href ng-click="tndmnt_dmn_flgclnt_frm_cntrllr.entity.corfundo = '{{option.value}}'"><span class="box-cor" style="background-color: #{{option.value}};"></span> <span class="selected">#{{option.value}}</span></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div ng-messages="tndmnt_dmn_flgclnt_frm_cntrllr.form.corfundofundo.$error"  ng-if='tndmnt_dmn_flgclnt_frm_cntrllr.form.corfundo.$dirty || tndmnt_dmn_flgclnt_frm_cntrllr.submitted'>
+        <div class="alert alert-danger" role="alert" ng-message="required">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            A cor do fundo é obrigatória.
+        </div>
+    </div>
+{% endblock viewedit_form_corfundo %}
+{% block viewedit_edit %}
+    {{ parent() }}
+
+    <div class="row">
+        <div class="col-sm-12 panel-rules">
+            <h5><strong>Condições:</strong></h5>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">Combinar todas as condições a seguir:</div>
+
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr ng-if="tndmnt_dmn_flgclnt_frm_cntrllr.entity.condicoes_ex.length == 0">
+                            <td colspan="4">Nenhuma</td>
+                        </tr>
+                        <tr ng-repeat="opcao in tndmnt_dmn_flgclnt_frm_cntrllr.entity.condicoes_ex track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                            <td width="25%">
+                                <select class="form-control" ng-model="opcao.campo" ng-options="key as op.label group by op.category for (key,op) in tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes" ng-change="tndmnt_dmn_flgclnt_frm_cntrllr.selecionaCampo(opcao)"></select>
+                            </td>
+                            <td colspan="3" ng-if="opcao.desativado">
+                                <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                            </td>
+                            <td ng-if="!opcao.desativado" width="28%">
+                                <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null" ng-options="key as op.label for (key,op) in tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options" ng-change="tndmnt_dmn_flgclnt_frm_cntrllr.selecionaOperador(opcao)"></select>
+                            </td>
+                            <td ng-if="!opcao.desativado" width="35%">
+                                <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options">
+                                    <option disabled="disabled" selected="selected" value="">Selecione</option>
+                                </select>
+                                <input class="form-control" type="text" ng-model="opcao.valor" ng-if="tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                            </td>
+                            <td ng-if="!opcao.desativado" width="12%" class="text-right">
+                                <a href ng-click="tndmnt_dmn_flgclnt_frm_cntrllr.removeCondicaoEx($index)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"><a href ng-click="tndmnt_dmn_flgclnt_frm_cntrllr.addCondicaoEx()">Adicionar Condição</a></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">E combinar com qualquer uma das seguintes condições:</div>
+
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr ng-if="tndmnt_dmn_flgclnt_frm_cntrllr.entity.condicoes_in.length == 0">
+                            <td colspan="4">Nenhuma</td>
+                        </tr>
+                        <tr ng-repeat="opcao in tndmnt_dmn_flgclnt_frm_cntrllr.entity.condicoes_in track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                            <td width="25%">
+                                <select class="form-control" ng-model="opcao.campo" ng-options="key as op.label group by op.category for (key,op) in tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes" ng-change="tndmnt_dmn_flgclnt_frm_cntrllr.selecionaCampo(opcao)"></select>
+                            </td>
+                            <td colspan="3" ng-if="opcao.desativado">
+                                <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                            </td>
+                            <td ng-if="!opcao.desativado" width="28%">
+                                <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null" ng-options="key as op.label for (key,op) in tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options" ng-change="tndmnt_dmn_flgclnt_frm_cntrllr.selecionaOperador(opcao)"></select>
+                            </td>
+                            <td ng-if="!opcao.desativado" width="35%">
+                                <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"  ng-options="op.value as op.label for (key,op) in tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options">
+                                    <option disabled="disabled" selected="selected" value="">Selecione</option>
+                                </select>
+                                <input class="form-control" type="text" ng-model="opcao.valor" ng-if="tndmnt_dmn_flgclnt_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                            </td>
+                            <td ng-if="!opcao.desativado" width="12%" class="text-right">
+                                <a href ng-click="tndmnt_dmn_flgclnt_frm_cntrllr.removeCondicaoIn($index)" class="btn btn-danger btn-sm btns-acoes"><i class="el el-remove"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4"><a href ng-click="tndmnt_dmn_flgclnt_frm_cntrllr.addCondicaoIn()">Adicionar Condição</a></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

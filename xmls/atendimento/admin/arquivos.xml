@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="arquivos" label="arquivos" project="atendimento/admin" >
+    <entity schema="atendimento" table="arquivos">
+        <fieldmodel name="arquivo" datatype="guid" isid="true" column="arquivo"/>
+        <fieldmodel name="titulo" datatype="string" column="titulo"/>
+        <fieldmodel name="nomearquivo" datatype="string" column="nomearquivo"/>
+        <fieldmodel name="tamanho" datatype="integer" column="tamanho"/>
+        <fieldmodel name="tamanho_multiplicador" datatype="string" column="tamanho_multiplicador" notMapped="true" />
+        <fieldmodel name="caminho" datatype="string" column="caminho"/>
+        <fieldmodel name="situacao" datatype="integer" column="situacao"/>
+        <fieldmodel name="todosclientes" datatype="integer" column="todosclientes"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+        <fieldmodel name="regravisualizacao" datatype="string" column="regravisualizacao" />    
+        <fieldmodel name="arquivosregrasin" datatype="objectlist" column="arquivo" entityJoinType="left" useCaseLink="atendimento\admin\arquivosregras" />
+        <fieldmodel name="arquivosregrasex" datatype="objectlist" column="arquivo" entityJoinType="left" useCaseLink="atendimento\admin\arquivosregras" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="window" label="Downloads">
+        <fieldsbrowser>
+            <fieldbrowser alias="Arquivo" entitylink="arquivo" isid="true" visible="false" />
+            <fieldbrowser alias="Título" cansearch="true" entitylink="titulo" visible="true" />
+            <fieldbrowser alias="Nome do arquivo" cansearch="true" entitylink="nomearquivo" visible="true" />
+            <fieldbrowser alias="Tamanho" entitylink="tamanho" visible="true" />
+            <fieldbrowser alias="Enviado em" entitylink="created_at" visible="true" />
+            <fieldbrowser alias="Data de atualização" entitylink="updated_at" visible="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" />
+            <fieldbrowser alias="ordem" entitylink="ordem" width="2" cansearch="false" visible="false" avaliable="true" indefaultorder="true" direction="asc" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Arquivo">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="titulo" controltype="textedit" entitylink="titulo" colspan="12" placeholder="Título" label="Título">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo título não pode ser vazio."/>
+                            <validate type="maxlength" value="40" displaytext="Título não deve exceder 40 caracteres." />
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="nomearquivo" controltype="textedit" entitylink="nomearquivo" colspan="12" placeholder="Nome do Arquivo" label="Nome do Arquivo">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo nome do arquivo não pode ser vazio."/>
+                            <validate type="maxlength" value="30" displaytext="Nome do arquivo não deve exceder 30 caracteres." />
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="caminho" controltype="textedit" entitylink="caminho" colspan="12" placeholder="Caminho do arquivo" label="Url">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo caminho do arquivo não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="tamanho" controltype="textedit" entitylink="tamanho" colspan="4" placeholder="Tamanho" label="Tamanho">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo tamanho não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="todosclientes" controltype="radiobutton" entitylink="todosclientes" colspan="12" label="Regra de Visualização">
+                        <itenscombobox type="json">{ '1': 'Todos Visualizam', '0': 'Apenas clientes que respeitem as condições'}</itenscombobox>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" colspan="12" placeholder="Descrição do arquivo" label="Descrição do Arquivo" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>insert</name>
+            <api>
+                <name>ArquivoNovo</name>
+                <fromto valueapi="titulo" valueentity="titulo" />
+                <fromto valueapi="nomearquivo" valueentity="nomearquivo" />
+                <fromto valueapi="tamanho" valueentity="tamanho" />
+                <fromto valueapi="caminho" valueentity="caminho" />
+                <fromto valueapi="todosclientes" valueentity="todosclientes" />
+                <fromto valueapi="regravisualizacao" valueentity="regravisualizacao" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+            </api>
+        </action>
+        <action>
+            <name>update</name>
+            <api>
+                <name>ArquivoAlterar</name>
+                <fromto valueapi="arquivo" valueentity="arquivo" />
+                <fromto valueapi="titulo" valueentity="titulo" />
+                <fromto valueapi="nomearquivo" valueentity="nomearquivo" />
+                <fromto valueapi="tamanho" valueentity="tamanho" />
+                <fromto valueapi="caminho" valueentity="caminho" />
+                <fromto valueapi="todosclientes" valueentity="todosclientes" />
+                <fromto valueapi="regravisualizacao" valueentity="regravisualizacao" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+            </api>
+        </action> 
+        <action>
+            <name>delete</name>
+            <api>
+                <name>ArquivoExcluir</name>
+                <fromto valueapi="arquivo" valueentity="arquivo" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>ArquivoReordenar</name>
+                <fromto valueapi="arquivo" valueentity="arquivo" />
+                <fromto valueapi="posicaonova" valueentity="ordem"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

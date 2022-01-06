@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="operacao" label="operacao" project="servicos\OrdensServico">
+    <entity schema="servicos" table="operacoesordensservicos">
+        <fieldmodel name="operacao" datatype="guid" isid="true" column="operacaoordemservico"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="ativo" datatype="boolean" column="ativo" />
+        <fieldmodel name="referenciaexterna" datatype="boolean" column="referenciaexterna" />
+        <fieldmodel name="ordemservicoretorno" datatype="boolean" column="ordemservicoretorno" />
+        <fieldmodel name="chamadotecnico" datatype="boolean" column="chamadotecnico" />
+        <fieldmodel name="campodetalheinstancia" datatype="string" column="campodetalheinstancia" />
+        <fieldmodel name="horimetro" datatype="boolean" column="horimetro" />
+        <fieldmodel name="contrato" datatype="boolean" column="contrato" />
+        <fieldmodel name="sintoma" datatype="boolean" column="sintoma" />
+        <fieldmodel name="causa" datatype="boolean" column="causa" />
+        <fieldmodel name="intervencao" datatype="boolean" column="intervencao" />
+        <fieldmodel name="orcamento" datatype="boolean" column="orcamento" />
+        <fieldmodel name="assinadopor" datatype="boolean" column="assinadopor" />
+        <fieldmodel name="materiais" datatype="boolean" column="materiais" />
+        <fieldmodel name="gerarequisicao" datatype="boolean" column="gerarequisicao" />
+        <fieldmodel name="documentorequisicao_id" datatype="guid" column="documentorequisicao_id" />
+        <fieldmodel name="geranotafiscal" datatype="boolean" column="geranotafiscal" />
+        <fieldmodel name="documentonotafiscal_id" datatype="guid" column="documentonotafiscal_id" />
+        <fieldmodel name="visita" datatype="integer" column="visita " />
+        <fieldmodel name="estimativadehoras" datatype="boolean" column="estimativadehoras" />
+        <fieldmodel name="saidaparacliente" datatype="boolean" column="saidaparacliente" />
+        <fieldmodel name="chegadanocliente" datatype="boolean" column="chegadanocliente" />
+        <fieldmodel name="saidadocliente" datatype="boolean" column="saidadocliente" />
+        <fieldmodel name="deslocamentoextra" datatype="boolean" column="deslocamentoextra" />
+        <fieldmodel name="veiculo" datatype="boolean" column="veiculo" />
+        <fieldmodel name="faturamento" datatype="boolean" column="faturamento" />
+        <fieldmodel name="faturaservico" datatype="boolean" column="faturaservico" />
+        <fieldmodel name="faturavisita" datatype="boolean" column="faturavisita" />
+        <fieldmodel name="tipoordemservico" datatype="guid" column="tipoordemservico" useCaseLink="servicos\tipoOrdensServico" entityJoinType="left" />
+        <fieldmodel name="tipomanutencao" datatype="guid" column="tipomanutencao" useCaseLink="servicos\tipoManutencao" entityJoinType="left" />
+        <fieldmodel name="utilizadevolviveis" datatype="boolean" column="utilizadevolviveis" />
+        <fieldmodel name="documentodevolvivelsaida_id" datatype="guid" column="documentodevolvivelsaida_id" />
+        <fieldmodel name="participante_id" datatype="guid" column="participante_id" />
+        <fieldmodel name="tiporeajuste" datatype="integer" column="tiporeajuste" />
+        <fieldmodel name="valorpercentualreajuste" datatype="float" column="valorpercentualreajuste" />
+        <fieldmodel name="documentodevolvivelentrada_id" datatype="guid" column="documentodevolvivelentrada_id" />
+        <fieldmodel name="gerarentradadevolvivel" datatype="boolean" column="gerarentradadevolvivel" />
+        <fieldmodel name="sinaldocumentovalordevolvivel" datatype="integer" column="sinaldocumentovalordevolvivel" />
+        <fieldmodel name="validade" datatype="string" column="validade" />
+        <fieldmodel name="tempoaviso" datatype="string" column="tempoaviso" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table" target="builtin" label="Operações">
+        <fieldsbrowser>
+            <fieldbrowser alias="operacaoordemservicos" entitylink="operacao" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="true" />
+            <fieldbrowser alias="Decrição" entitylink="descricao" visible="true" cansearch="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Operação">
+        <layout>
+            <headerform>
+                <row>
+                    <cell label="Código" name="codigo" entitylink="codigo" controltype="textedit" colspan="3"  />
+                    <cell label="Descrição" name="descricao" entitylink="descricao" controltype="textedit" colspan="7" />
+                    <cell label="Ativo" name="ativo" entitylink="ativo" controltype="checkbox" colspan="2" />
+                </row>
+            </headerform>
+            <bodyform>
+                <tabs>
+                    <tab caption="Dados Gerais">
+                        <row>
+                            <cell>
+                                <groupbox>
+                                    <caption text="Informações utilizadas na Ordem de Serviço" />
+                                    <row>
+                                        <cell label="Detalhe Ativo" name="campodetalheinstancia" entitylink="campodetalheinstancia" controltype="combobox" colspan="4" >
+                                            <itenscombobox type="json">{ 'origem':'0 - Manual, 1 - Proposta', 'situacao':'0 - Pendente, 1 - Pedido Gerado, 2 - Pedido Enviado, 3 - Parcialmente Recebido, 4 - Disponível, 5 - Locado, 6 - Vendido', 'id_capitulo':'Aponta para documentoitem de capítulo que gerou esta instância', 'nome':'Descrição', 'data_fim_garantia':'Final da Garantia', 'garantia':'Garantia', 'data_inicio_garantia':'Início da Garantia', 'numero_serie':'Número de Série'  }</itenscombobox>
+                                        </cell>
+                                        <cell name="tipoordemservico" entitylink="tipoordemservico" label="Tipo de Ordem de Serviços Padrão" controltype="lookup" colspan="4" projectbrowserlookup="servicos" browserlookup="tipoordensservico" fieldaliaslookup="tipoordemservico" fielddetaillookup="descricao" />
+                                        <cell name="tipomanutencao" entitylink="tipomanutencao" label="Tipo de Manutenção Padrão" controltype="lookup" colspan="4" projectbrowserlookup="servicos" browserlookup="tipomanutencao" fieldaliaslookup="tipomanutencao" fielddetaillookup="descricao" />
+                                    </row>
+                                    <row>
+                                        <cell label="Validade" name="validade" entitylink="validade" controltype="textedit" colspan="4"  />
+                                        <cell label="Tempo para aviso de vencimento" name="tempoaviso" entitylink="tempoaviso" controltype="textedit" colspan="4"  />
+                                    </row>
+                                    <row>
+                                        <cell label="Contrato" name="contrato" entitylink="contrato" controltype="checkbox" colspan="2" />
+                                        <cell label="Horímetro" name="horimetro" entitylink="horimetro" controltype="checkbox" colspan="2" />
+                                        <cell label="Atendimento" name="chamadotecnico" entitylink="chamadotecnico" controltype="checkbox" colspan="2" />
+                                        <cell label="Orçamento Externo" name="orcamento" entitylink="orcamento" controltype="checkbox" colspan="2" />
+                                        <cell label="Assinatura Responsável" name="assinadopor" entitylink="assinadopor" controltype="checkbox" colspan="2" />
+                                    </row>
+                                    <row>
+                                        <cell label="Sintoma" name="sintoma" entitylink="sintoma" controltype="checkbox" colspan="2" />
+                                        <cell label="Nº O.S. Externa" name="referenciaexterna" entitylink="referenciaexterna" controltype="checkbox" colspan="2" />
+                                        <cell label="Causa" name="causa" entitylink="causa" controltype="checkbox" colspan="2" />
+                                        <cell label="Intervenção" name="intervencao" entitylink="intervencao" controltype="checkbox" colspan="2" />
+                                        <cell label="Ordem de Serviço de Retorno" name="ordemservicoretorno" entitylink="ordemservicoretorno" controltype="checkbox" colspan="2" />
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                    <tab caption="Visitas">
+                        <row>
+                            <cell>
+                                <groupbox>
+                                    <caption>
+                                        <cell label="Utiliza Visita" name="visita" entitylink="visita" controltype="combobox" colspan="12">
+                                            <itenscombobox type="json">{ '0': 'Sem Visita', '1': 'Uma Visita', '2': 'Várias Visitas'  }</itenscombobox>
+                                        </cell>
+                                    </caption>
+                                    <row readonly="(visita == 0 || !visita )">
+                                        <cell label="Estimativa da Hora" name="estimativadehoras" entitylink="estimativadehoras" controltype="checkbox" colspan="12" />
+                                        <cell label="Horário de Saída para Cliente" name="saidaparacliente" entitylink="saidaparacliente" controltype="checkbox" colspan="12" />
+                                        <cell label="Horário de Chegada no Cliente" name="chegadanocliente" entitylink="chegadanocliente" controltype="checkbox" colspan="12" />
+                                        <cell label="Horário de Saída do Cliente" name="saidadocliente" entitylink="saidadocliente" controltype="checkbox" colspan="12" />
+                                        <cell label="Deslocamento Extra" name="deslocamentoextra" entitylink="deslocamentoextra" controltype="checkbox" colspan="12" />
+                                        <cell label="Veículo" name="veiculo" entitylink="veiculo" controltype="checkbox" colspan="12" />
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                    <tab caption="Materiais">
+                        <row>
+                            <cell>
+                                <groupbox>
+                                    <caption>
+                                        <cell label="Utiliza Materiais" name="materiais" entitylink="materiais" controltype="checkbox" colspan="12" />
+                                    </caption>
+                                    <row readonly="!materiais">
+                                        <cell label="Gera Requisição de Materiais"  name="gerarequisicao" entitylink="gerarequisicao" controltype="checkbox" colspan="4" />
+                                        <cell label="Gera Nota Fiscal de Saída Automática" name="geranotafiscal" entitylink="geranotafiscal" controltype="checkbox" colspan="4" />
+                                        <cell label="Documento Fiscal" name="documentonotafiscal_id" entitylink="documentonotafiscal_id" controltype="textedit" colspan="4" />
+                                    </row>
+                                    <row readonly="!materiais">
+                                        <cell label="Utiliza Produtos Devolvíveis" name="utilizadevolviveis" entitylink="utilizadevolviveis" controltype="checkbox" colspan="12" />
+                                    </row>
+                                    <row readonly="!materiais &amp;&amp; !utilizadevolviveis">
+                                        <cell label="Gera Documento de Entrada" name="gerarentradadevolvivel" entitylink="gerarentradadevolvivel" controltype="checkbox" colspan="12" />
+                                    </row>
+                                    <row readonly="!materiais &amp;&amp; !utilizadevolviveis">
+                                        <cell label="Documento de Entrada" name="documentodevolvivelentrada_id" entitylink="documentodevolvivelentrada_id" controltype="textedit" colspan="3" />
+                                        <cell label="Documento de Saída" name="documentodevolvivelsaida_id" entitylink="documentodevolvivelsaida_id" controltype="textedit" colspan="3" />
+                                        <cell label="Fornecedor" name="participante_id" entitylink="participante_id" controltype="textedit" colspan="3" />
+                                    </row>
+                                    <row readonly="!materiais &amp;&amp; !utilizadevolviveis">
+                                        <cell label="Utiliza valor referente à última" name="sinaldocumentovalordevolvivel" entitylink="sinaldocumentovalordevolvivel" controltype="combobox" colspan="3">
+                                            <itenscombobox type="json">{ "0":"Saída","1":"Entrada" }</itenscombobox>
+                                        </cell>
+                                        <cell label="Tipo de Cálculo" name="tiporeajuste" entitylink="tiporeajuste" controltype="combobox" colspan="3">
+                                            <itenscombobox type="json">{ "0":"Sem Reajuste", "1":"Desconto", "2":"Acréscimo" }</itenscombobox>
+                                        </cell>
+                                        <cell label="% Valor" name="valorpercentualreajuste" entitylink="valorpercentualreajuste" controltype="textedit" colspan="3" />
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                    <tab caption="Faturamento">
+                        <row>
+                            <cell>
+                                <groupbox>
+                                    <caption>                                    
+                                        <cell label="Utiliza Faturamento" name="faturamento" entitylink="faturamento" controltype="checkbox" colspan="12" />
+                                    </caption>                                    
+                                    <row readonly="!faturamento">
+                                        <cell label="Por Serviços Técnicos" name="faturaservico" entitylink="faturaservico" controltype="checkbox" colspan="12" />
+                                    </row>
+                                    <row readonly="(!faturamento || (visita == 0 || !visita ))">
+                                        <cell label="Por Visitas Executadas" name="faturavisita" entitylink="faturavisita" controltype="checkbox" colspan="12" />
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                </tabs>
+            </bodyform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>operacoesordensservicosnovo</name>
+                <fromto valueentity="codigo" valueapi="codigo"/>
+                <fromto valueentity="descricao" valueapi="descricao" />
+                <fromto valueentity="ativo" valueapi="ativo" />
+                <fromto valueentity="referenciaexterna" valueapi="referenciaexterna" />
+                <fromto valueentity="ordemservicoretorno" valueapi="ordemservicoretorno" />
+                <fromto valueentity="chamadotecnico" valueapi="chamadotecnico" />
+                <fromto valueentity="campodetalheinstancia" valueapi="campodetalheinstancia" />
+                <fromto valueentity="horimetro" valueapi="horimetro" />
+                <fromto valueentity="contrato" valueapi="contrato" />
+                <fromto valueentity="sintoma" valueapi="sintoma" />
+                <fromto valueentity="causa" valueapi="causa" />
+                <fromto valueentity="intervencao" valueapi="intervencao" />
+                <fromto valueentity="orcamento" valueapi="orcamento" />
+                <fromto valueentity="assinadopor" valueapi="assinadopor" />
+                <fromto valueentity="materiais" valueapi="materiais" />
+                <fromto valueentity="gerarequisicao" valueapi="gerarequisicao" />
+                <fromto valueentity="documentorequisicao_id" valueapi="documentorequisicao_id" />
+                <fromto valueentity="geranotafiscal" valueapi="geranotafiscal" />
+                <fromto valueentity="documentonotafiscal_id" valueapi="documentonotafiscal_id" />
+                <fromto valueentity="visita" valueapi="visita" />
+                <fromto valueentity="estimativadehoras" valueapi="estimativadehoras" />
+                <fromto valueentity="saidaparacliente" valueapi="saidaparacliente" />
+                <fromto valueentity="chegadanocliente" valueapi="chegadanocliente" />
+                <fromto valueentity="saidadocliente" valueapi="saidadocliente" />
+                <fromto valueentity="deslocamentoextra" valueapi="deslocamentoextra" />
+                <fromto valueentity="veiculo" valueapi="veiculo" />
+                <fromto valueentity="faturamento" valueapi="faturamento" />
+                <fromto valueentity="faturaservico" valueapi="faturaservico" />
+                <fromto valueentity="faturavisita" valueapi="faturavisita" />
+                <fromto valueentity="tipoordemservico" valueapi="tipoordemservico" />
+                <fromto valueentity="tipomanutencao" valueapi="tipomanutencao" />
+                <fromto valueentity="utilizadevolviveis" valueapi="utilizadevolviveis" />
+                <fromto valueentity="documentodevolvivelsaida_id" valueapi="documentodevolvivelsaida_id" />
+                <fromto valueentity="participante_id" valueapi="participante_id" />
+                <fromto valueentity="tiporeajuste" valueapi="tiporeajuste" />
+                <fromto valueentity="valorpercentualreajuste" valueapi="valorpercentualreajuste" />
+                <fromto valueentity="documentodevolvivelentrada_id" valueapi="documentodevolvivelentrada_id" />
+                <fromto valueentity="gerarentradadevolvivel" valueapi="gerarentradadevolvivel" />
+                <fromto valueentity="sinaldocumentovalordevolvivel" valueapi="sinaldocumentovalordevolvivel" />
+                <fromto valueentity="validade" valueapi="validade" />
+                <fromto valueentity="tempoaviso" valueapi="tempoaviso" />
+                <fromto valueentity="tenant" valueapi="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>operacoesordensservicoseditar</name>
+                <fromto valueentity="operacao" valueapi="operacaoordemservico"/>
+                <fromto valueentity="codigo" valueapi="codigo"/>
+                <fromto valueentity="descricao" valueapi="descricao" />
+                <fromto valueentity="ativo" valueapi="ativo" />
+                <fromto valueentity="referenciaexterna" valueapi="referenciaexterna" />
+                <fromto valueentity="ordemservicoretorno" valueapi="ordemservicoretorno" />
+                <fromto valueentity="chamadotecnico" valueapi="chamadotecnico" />
+                <fromto valueentity="campodetalheinstancia" valueapi="campodetalheinstancia" />
+                <fromto valueentity="horimetro" valueapi="horimetro" />
+                <fromto valueentity="contrato" valueapi="contrato" />
+                <fromto valueentity="sintoma" valueapi="sintoma" />
+                <fromto valueentity="causa" valueapi="causa" />
+                <fromto valueentity="intervencao" valueapi="intervencao" />
+                <fromto valueentity="orcamento" valueapi="orcamento" />
+                <fromto valueentity="assinadopor" valueapi="assinadopor" />
+                <fromto valueentity="materiais" valueapi="materiais" />
+                <fromto valueentity="gerarequisicao" valueapi="gerarequisicao" />
+                <fromto valueentity="documentorequisicao_id" valueapi="documentorequisicao_id" />
+                <fromto valueentity="geranotafiscal" valueapi="geranotafiscal" />
+                <fromto valueentity="documentonotafiscal_id" valueapi="documentonotafiscal_id" />
+                <fromto valueentity="visita" valueapi="visita" />
+                <fromto valueentity="estimativadehoras" valueapi="estimativadehoras" />
+                <fromto valueentity="saidaparacliente" valueapi="saidaparacliente" />
+                <fromto valueentity="chegadanocliente" valueapi="chegadanocliente" />
+                <fromto valueentity="saidadocliente" valueapi="saidadocliente" />
+                <fromto valueentity="deslocamentoextra" valueapi="deslocamentoextra" />
+                <fromto valueentity="veiculo" valueapi="veiculo" />
+                <fromto valueentity="faturamento" valueapi="faturamento" />
+                <fromto valueentity="faturaservico" valueapi="faturaservico" />
+                <fromto valueentity="faturavisita" valueapi="faturavisita" />
+                <fromto valueentity="tipoordemservico" valueapi="tipoordemservico" />
+                <fromto valueentity="tipomanutencao" valueapi="tipomanutencao" />
+                <fromto valueentity="utilizadevolviveis" valueapi="utilizadevolviveis" />
+                <fromto valueentity="documentodevolvivelsaida_id" valueapi="documentodevolvivelsaida_id" />
+                <fromto valueentity="participante_id" valueapi="participante_id" />
+                <fromto valueentity="tiporeajuste" valueapi="tiporeajuste" />
+                <fromto valueentity="valorpercentualreajuste" valueapi="valorpercentualreajuste" />
+                <fromto valueentity="documentodevolvivelentrada_id" valueapi="documentodevolvivelentrada_id" />
+                <fromto valueentity="gerarentradadevolvivel" valueapi="gerarentradadevolvivel" />
+                <fromto valueentity="sinaldocumentovalordevolvivel" valueapi="sinaldocumentovalordevolvivel" />
+                <fromto valueentity="validade" valueapi="validade" />
+                <fromto valueentity="tempoaviso" valueapi="tempoaviso" />
+                <fromto valueentity="tenant" valueapi="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>operacoesordensservicosexcluir</name>
+                <fromto valueentity="operacao" valueapi="operacaoordemservico" />
+                <fromto valueentity="tenant" valueapi="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

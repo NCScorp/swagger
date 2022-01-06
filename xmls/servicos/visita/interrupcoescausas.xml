@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="interrupcoescausas" label="interrupcoescausas" project="Servicos/Visita">
+    <entity schema="servicos" table="ordensservicosvisitasinterrupcoescausas">
+        <fieldmodel name="ordemservicovisitainterrupcaocausa" column="ordemservicovisitainterrupcaocausa" datatype="guid" isid="true"/>
+        <fieldmodel name="codigo" column="codigo" datatype="string" />
+        <fieldmodel name="descricao" column="descricao" datatype="string" />
+        <fieldmodel name="afetafaturamento" column="afetafaturamento" datatype="boolean" />
+        <fieldmodel name="tenant" column="tenant" datatype="integer" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Causas">
+        <fieldsbrowser>
+            <fieldbrowser alias="ordemservicovisitainterrupcaocausa" entitylink="ordemservicovisitainterrupcaocausa" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" />
+            <fieldbrowser alias="afetafaturamento" entitylink="afetafaturamento" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Causa" mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="codigo" entitylink="codigo" controltype="textedit" placeholder="Código" label="Código" colspan="3"  />
+                    <cell name="descricao" entitylink="descricao" controltype="textedit" placeholder="Descrição" label="Descrição" colspan="7"  />
+                    <cell name="afetafaturamento" entitylink="afetafaturamento" controltype="textedit" placeholder="Afeta faturamento" label="Afeta faturamento" colspan="7"  />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+</nsjusecase>

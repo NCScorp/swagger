@@ -1,0 +1,16 @@
+<div>
+    <div class="headline-sub clearfix" style="margin:0;">
+        <h3>
+           {{'{{tndmnt_clnt_rqvs_lst_cntrllr.arquivoAberto.titulo}}'}}
+           <a href="{{'{{tndmnt_clnt_rqvs_lst_cntrllr.arquivoAberto.caminho}}'}}" target="_blank" class="pull-right btn btn-primary"><i class="el el-download-alt"></i> <span class="hidden-xs">Baixar</span></a>
+        </h3>
+    </div><!--/headline-sub-->
+    
+    <div class="modal-body" id="modal-body"> 
+        <div class="arquivo">
+            <span class="info-post"><a href="{{'{{tndmnt_clnt_rqvs_lst_cntrllr.arquivoAberto.caminho}}'}}" target="_blank">{{'{{ tndmnt_clnt_rqvs_lst_cntrllr.arquivoAberto.nomearquivo }}'}}</a> ({{'{{tndmnt_clnt_rqvs_lst_cntrllr.arquivoAberto.tamanho | Filesize}}'}})</span>
+            <span class="info-post"><strong>Data de atualização:</strong> {{'{{tndmnt_clnt_rqvs_lst_cntrllr.arquivoAberto.updated_at | asDate | date: "dd/MM/yyyy"}}'}}</span>
+        </div>  
+       <p ng-bind-html="tndmnt_clnt_rqvs_lst_cntrllr.arquivoAberto.descricao"></p>
+    </div>
+</div>

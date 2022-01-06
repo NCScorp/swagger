@@ -1,0 +1,34 @@
+<div class="height-full col-md-12 article-area row">
+
+    <div class="headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail pull-left"><a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page">Convites de Clientes</span></strong></div>
+
+        </div>
+
+    </div>
+    <div class="headline-sub clearfix hidden-lg hidden-md">
+        <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar à lista" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> Convites de Clientes</h2>            
+    </div>
+
+    <div>
+        <table class="table table-responsive table-condensed table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>CNPJ</th>
+                    <th>Contato</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="cliente in tndmnt_dmn_cnfgrcs_cnvts_frm_cntrllr.clientes">
+                    <td ng-bind="cliente.codigo"></td>
+                    <td ng-bind="cliente.nome"></td>
+                    <td ng-bind="cliente.cnpj"></td>                    
+                </tr>
+            </tbody>
+        </table>
+    </div>    
+</div>

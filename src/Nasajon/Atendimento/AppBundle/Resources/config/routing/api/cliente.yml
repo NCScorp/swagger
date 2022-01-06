@@ -1,0 +1,73 @@
+artigos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\ArtigosController"
+    name_prefix: "artigos_"
+
+solicitacoes:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\SolicitacoesController"
+    name_prefix: "solicitacoes_"
+
+followups:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\FollowupsController"
+    name_prefix: "followups_"
+    prefix: "/solicitacoes"
+
+usuarios:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\UsuariosController"
+    name_prefix: "usuarios_"
+
+categorias:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\CategoriasController"
+    name_prefix: "categorias_"
+
+arquivos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\ArquivosController"
+    name_prefix: "arquivos_"
+
+titulos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\TitulosController"
+    name_prefix: "titulos_"
+
+download:
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\AssetsController"
+    type:     rest
+    prefix:   /assets
+    name_prefix: "assets_"
+
+artigosuteis:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\ArtigosuteisController"
+    name_prefix: "artigosuteis_"
+    
+contas:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\ContasController"
+    name_prefix: "contas_"
+
+termos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\TermosController"
+    name_prefix: "termos_"
+    
+vinculo:
+    type:     rest
+    path: /vinculo
+    defaults: { _controller: NasajonAtendimentoAppBundle:Cliente\Vinculo:create }
+    name_prefix: "vinculo_"
+
+atendimentoscamposcustomizados:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\CamposcustomizadosController"
+    name_prefix: "servicos_clientescamposcustomizados_"
+    prefix: "/configuracoes"
+
+contatos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Cliente\\ContatosController"
+    name_prefix: "contatos_"

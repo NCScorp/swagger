@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="Item" label="Item" project="Servicos/OrdensServico" orphan="false">
+    <config>
+        <autosave>true</autosave>
+    </config>  
+    <entity schema="servicos" table="ordensservicositens">
+        <fieldmodel name="ordemservicoitem" datatype="guid" isid="true" column="ordemservicoitem"/>
+        <fieldmodel name="ordemservico" datatype="guid" column="ordemservico"/>
+        <fieldmodel name="servicotecnico" datatype="guid" column="servicotecnico" useCaseLink="servicos\ServicoTecnico" entityJoinType="left"/>
+        <fieldmodel name="horascontratadas" datatype="integer" column="horascontratadas"/>
+        <fieldmodel name="horasexecutadas" datatype="integer" column="horasexecutadas"/>
+        <fieldmodel name="horasfaturar" datatype="integer" column="horasfaturar"/>
+        <fieldmodel name="servicoexecutado" datatype="integer" column="servicoexecutado"/>
+        <fieldmodel name="descontopercentual" datatype="float" column="descontopercentual"/>
+        <fieldmodel name="valortotal" datatype="float" column="valortotal"/>
+        <fieldmodel name="valorunitario" datatype="float" column="valorunitario"/>
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">ordemservico</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table" target="window" label=" ">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="ordemservicoitem" isid="true" />
+            <fieldbrowser alias="Serviço Técnico" entitylink="servicotecnico" visible="true" cansearch="false" width="100%" />
+            <fieldbrowser alias="Venda (H)" entitylink="horascontratadas" visible="true" cansearch="false" />
+            <fieldbrowser alias="Objetivo (H)" entitylink="horasfaturar" visible="true" cansearch="false" />
+            <fieldbrowser alias="Executadas (H)" entitylink="horasexecutadas" visible="true" cansearch="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="servicotecnico" controltype="lookup" entitylink="servicotecnico" label="Serviço Técnico" colspan="6"  browserlookup="ServicoTecnico" projectbrowserlookup="Servicos" fieldlookup="codigo" fieldaliaslookup="servicotecnico" fielddetaillookup="descricao" />
+                    <cell name="horascontratadas" controltype="textedit" entitylink="horascontratadas" label="horascontratadas" colspan="1" />
+                    <cell name="horasfaturar" controltype="textedit" entitylink="horasfaturar" label="horasfaturar" colspan="1" />
+                    <cell name="horasexecutadas" controltype="textedit" entitylink="horasexecutadas" label="horasexecutadas" colspan="1" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>OrdemServicoItemNovo</name>
+                <fromto valueapi="ordemservico" valueentity="ordemservico" />
+                <fromto valueapi="servicotecnico" valueentity="servicotecnico" />
+                <fromto valueapi="horascontratadas" valueentity="horascontratadas" />
+                <fromto valueapi="horasexecutadas" valueentity="horasexecutadas" />
+                <fromto valueapi="horasfaturar" valueentity="horasfaturar" />
+                <fromto valueapi="valorunitario" valueentity="valorunitario" />
+                <fromto valueapi="valortotal" valueentity="valortotal" />
+                <fromto valueapi="descontopercentual" valueentity="descontopercentual" />
+                <fromto valueapi="servicoexecutado" valueentity="servicoexecutado" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>OrdemServicoItemAlterar</name>
+                <fromto valueapi="ordemservicoitem" valueentity="ordemservicoitem" />
+                <fromto valueapi="servicotecnico" valueentity="servicotecnico" />
+                <fromto valueapi="horascontratadas" valueentity="horascontratadas" />
+                <fromto valueapi="horasexecutadas" valueentity="horasexecutadas" />
+                <fromto valueapi="horasfaturar" valueentity="horasfaturar" />
+                <fromto valueapi="valorunitario" valueentity="valorunitario" />
+                <fromto valueapi="valortotal" valueentity="valortotal" />
+                <fromto valueapi="descontopercentual" valueentity="descontopercentual" />
+                <fromto valueapi="servicoexecutado" valueentity="servicoexecutado" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>OrdemServicoItemExcluir</name>
+                <fromto valueapi="ordemservicoitem" valueentity="ordemservicoitem" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

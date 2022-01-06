@@ -1,0 +1,35 @@
+{% extends 'NasajonAtendimentoAppBundle:Default:main-error.html.twig' %}
+
+{% block content %}
+<div class="container-fluid sistema-atendimento" ng-app="Atendimento" ng-cloak="">
+<div class="page-error">
+    <div class="row">
+        <div class="col-md-12">
+            <h2><i class="el el-exclamation-sign"></i> Oops! Erro inesperado do servidor</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Desculpe, mas ocorreu um erro inesperado. Isso pode ter acontecido pelos seguintes motivos:</h4>
+            <ul>
+              <li>Estamos fazendo uma manutenção em nossos servidores.</li>
+              <li>Há muitas pessoas tentando acessar esta página no momento, sobrecarregando os servidores.</li>
+              <li>Ocorreu uma falha durante sua navegação.</li>
+            </ul>
+
+            <p><strong>Para tentar solucionar o problema, por favor:</strong></p>
+            <ul>
+              <li>Aguarde alguns minutos e tente atualizar a página.</li>
+              <li>Caso esteja acessando esta página com o auxílio de um link externo, reinicie o processo da Página Inicial do sistema {{ 'nomesistema'|trans }} e tente novamente.</li>
+            </ul>
+            <p class="info-post col-md-12">"{{ status_code }} {{ status_text }}".</p>
+            <a class="btn btn-primary btn-md" href="#" role="button">Voltar ao painel</a>
+
+            {#<p>{{exception.message}}</p>#}
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

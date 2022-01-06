@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="objetosservicos" label="objetosservicos" project="servicos" >
+    <entity schema="servicos" table="objetosservicos">
+        <fieldmodel name="objetoservico" datatype="guid" isid="true" column="objetoservico"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome" />
+        <fieldmodel name="participante" datatype="guid" column="participante" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">participante</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser alias="objetoservico" entitylink="objetoservico" isid="true" />
+            <fieldbrowser alias="codigo" entitylink="codigo" width="20" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="nome" entitylink="nome" width="80" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

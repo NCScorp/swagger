@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="TipoServico" label="TipoServico" project="Servicos">
+    <entity schema="servicos" table="tiposservicos">
+        <fieldmodel name="codigo" datatype="string" isid="true" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="versao" datatype="integer" column="versao"/>
+        <fieldmodel name="tiposervico" datatype="guid" column="tiposervico"/>
+        <fieldmodel name="idGrupoEmpresarial" datatype="guid" column="id_grupoempresarial"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">idGrupoEmpresarial</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Tipos de Serviços" >
+        <fieldsbrowser>
+            <fieldbrowser alias="tiposervico" entitylink="tiposervico" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" />
+            <fieldbrowser alias="Versão" entitylink="versao" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Tipo de Projeto">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="codigo" controltype="textedit" entitylink="codigo" label="Código" colspan="4" placeholder="Ex: 123" />   
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" label="Descrição" colspan="8" placeholder="Digite a descrição" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>tipoServicoNovo</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>tipoServicoEditar</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="tiposervico" valueentity="tiposervico" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>tipoServicoExcluir</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="tiposervico" valueentity="tiposervico" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

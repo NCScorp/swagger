@@ -1,0 +1,67 @@
+/* Feeds da Home */
+
+.feeds .panel.panel-default {
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  border-right: none;
+}
+
+.feeds a.list-group-item:hover, .feeds a.list-group-item:focus {
+  background-color:inherit;
+}
+
+.feeds .panel-footer {
+  background: none;
+  border: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.feeds .destaque-novo-chamado {
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  padding: 25px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.feeds .destaque-novo-chamado p {
+  color: #838383;
+  font-size: 1.1em;
+}
+
+.feeds h3 {
+  margin-top: 0;
+  color: #005679;
+}
+
+.feeds .ico-default {
+  border-radius: 20px;
+  background: #005679;
+  padding: 10px;
+  color: #FFF;
+  font-size: 0.6em;
+}
+
+@media screen and (max-width: 767px) {
+  .feeds .panel.panel-default {
+    padding-bottom: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .feeds {
+    float: right;
+  }
+
+  .feeds .panel-heading {
+    padding: 0 0 10px;
+    border: none;
+  }
+
+  .feeds .list-group>.list-group-item {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

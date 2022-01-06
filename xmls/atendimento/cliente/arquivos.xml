@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="arquivos" label="arquivos" project="atendimento/cliente" >
+    <entity schema="atendimento" table="arquivos">
+        <fieldmodel name="arquivo" datatype="guid" isid="true" column="arquivo"/>
+        <fieldmodel name="titulo" datatype="string" column="titulo"/>
+        <fieldmodel name="nomearquivo" datatype="string" column="nomearquivo"/>
+        <fieldmodel name="tamanho" datatype="string" column="tamanho"/>
+        <fieldmodel name="caminho" datatype="string" column="caminho"/>
+        <fieldmodel name="tipo" datatype="string" column="tipo"/>
+        <fieldmodel name="origem" datatype="integer" column="origem"/>
+        <fieldmodel name="todosclientes" datatype="integer" column="todosclientes"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+        <fieldmodel name="arquivosregrasin" datatype="objectlist" column="arquivo" entityJoinType="left" useCaseLink="atendimento\admin\arquivosregras" />
+        <fieldmodel name="arquivosregrasex" datatype="objectlist" column="arquivo" entityJoinType="left" useCaseLink="atendimento\admin\arquivosregras" />
+        <fieldmodel name="ordem" datatype="integer" column="ordem"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="table" target="window" label="Downloads">
+        <fieldsbrowser>
+            <fieldbrowser alias="Arquivo" entitylink="arquivo" isid="true" visible="false" />
+            <fieldbrowser alias="Caminho" entitylink="caminho" visible="false" />
+            <fieldbrowser alias="Título" cansearch="true" entitylink="titulo" visible="true" />
+            <fieldbrowser alias="Nome do arquivo" cansearch="true" entitylink="nomearquivo" visible="true" />
+            <fieldbrowser alias="Tamanho" entitylink="tamanho" visible="true" />
+            <fieldbrowser alias="todos os clientes" entitylink="todosclientes" visible="true" />
+            <fieldbrowser alias="Enviado em" entitylink="created_at" visible="true" />
+            <fieldbrowser alias="Enviado em" entitylink="created_by" visible="true" />
+            <fieldbrowser alias="ordem" entitylink="ordem" cansearch="false" visible="false" avaliable="true" indefaultorder="true" direction="asc" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

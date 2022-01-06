@@ -1,0 +1,29 @@
+{% extends 'NasajonAtendimentoAppBundle:Default:blank.html.twig' %}
+
+{% block content %}
+
+    {% if atendimentofilaobservador is not null %}
+
+        {% if confirmado is null %}
+
+            <p>Deseja que o usuário <strong>{{ atendimentofilaobservador.usuario }}</strong> não seja mais um observador da fila <strong>{{ atendimentofila.nome }}</strong>?</p>
+
+            <p>Após a confirmação, o usuário não receberá mais e-mails quando um chamado for criado nesta fila.</p>
+
+            <p>Para confirmar, clique no botão abaixo.</p>
+
+            <a href="{{path('nasajon_atendimento_app_unsubscribe_filaconfirmar', {'atendimentofilaobservador': atendimentofilaobservador.atendimentofilaobservador})}}" class="btn btn-success">Confirmar</a>
+
+        {% else %}
+
+            <p>O usuário <strong>{{ atendimentofilaobservador.usuario }}</strong> foi excluído com sucesso como observador da fila <strong>{{ atendimentofila.nome }}</strong>.</p>
+
+        {% endif %}
+
+    {% else %}
+
+        <p>Solicitação inválida. Possivelmente, o usuário já foi excluído desta fila.</p>
+
+    {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="feriados" label="feriados" project="atendimento" >
+    <entity schema="atendimento" table="feriados">
+            <fieldmodel name="feriado" datatype="guid" isid="true" column="feriado"/>
+            <fieldmodel name="descricao" datatype="string" column="descricao"/>
+            <fieldmodel name="data" datatype="datetime" column="data" />
+            <fieldmodel name="tenant" datatype="integer" column="tenant" />
+            <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+            <fieldmodel name="created_by" datatype="json" column="created_by" />
+            <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+            <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">data</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Feriados">
+        <fieldsbrowser>
+            <fieldbrowser alias="Feriado" entitylink="feriado" isid="true" visible="false" />
+            <fieldbrowser alias="Data" entitylink="data" cansearch="false" visible="true" avaliable="true"  />
+            <fieldbrowser alias="Descrição" entitylink="descricao" cansearch="false" visible="true" avaliable="true"  />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Feriado">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" colspan="12" placeholder="Título" label="Título">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo descrição deve ser preenchido" />
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="data" controltype="textedit" entitylink="data" colspan="12" placeholder="Data" label="Data">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo data deve ser preenchido" />
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>FeriadoNovo</name>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="data" valueentity="data"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>FeriadoAlterar</name>
+                <fromto valueapi="feriado" valueentity="feriado"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="data" valueentity="data"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>FeriadoExcluir</name>
+                <fromto valueapi="feriado" valueentity="feriado"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

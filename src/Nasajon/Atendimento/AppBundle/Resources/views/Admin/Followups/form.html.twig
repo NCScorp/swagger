@@ -1,0 +1,122 @@
+<uib-tabset active="tndmnt_dmn_slctcs_shw_cntrllr.activeTab">
+    <uib-tab index="0" classes="tab-de-resposta" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao != 1 && tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao != 2">
+        <uib-tab-heading>
+            <span class="reply-ico">
+                <i class="el el-share-alt"></i>
+            </span> {{'respostaadmin'|trans}}
+        </uib-tab-heading>
+        <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim() && tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0">
+            <div ng-controller="AtendimentoAdminFollowupsFormController as respostaController">
+
+                <div class="pull-right text-right auto-search" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.responsavel_web == tndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado.email">
+                    <div uib-dropdown auto-close="outsideClick" on-toggle="respostaController.toggled(open)" is-open="respostaController.dropDownOpen"> 
+                        <div>
+                            <a href="#" ng-click="respostaController.abrirSugestoesArtigos()" >
+                                <div class="min-font">Inserir Resposta Automática</div>
+                            </a>
+                        </div>
+                        <ul class="dropdown-menu-right" uib-dropdown-menu>
+                            <li>
+                                <input id="txtRespostaAutomatica" type='text' class='form-control campo-busca' ng-model='respostaController.searchArtigo' ng-change='respostaController.buscarArtigos(respostaController.searchArtigo)' />
+                                <div class="opcoes">
+                                    <a href class="list-group-item" ng-repeat="artigo in respostaController.artigos" ui-sref-active="active" ng-click="respostaController.inserirArtigo(artigo)">
+                                        <h4 class="list-group-item-heading"><span ng-bind-html="artigo.titulo"></span></h4>
+                                        <p class="list-group-item-text" ng-bind-html="artigo.resumo"></p>
+                                        <small ng-bind-html="artigo.categoria.titulo"></small>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="ticket-reply-tabs-content-ta ticket-reply-tabs-content-ta-message form-group" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.responsavel_web == tndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado.email">
+
+                    <ng-form name="respostaController.form" novalidate="novalidate" role="form" ng-disabled="respostaController.submitting">
+                        <div class="row forms">
+                            <div class="row">
+                                <div class="text-area">
+                                    <ng-ckeditor skin="moono-lisa" ng-model="respostaController.entity.historico" required name="historico"  editor="respostaController.ckeditor" ng-disable="respostaController.submitting"></ng-ckeditor>
+                                    <div class="alert alert-danger" role="alert" ng-if="respostaController.historicoVazio()">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Erro:</span>
+                                        {{'respostaadminObrigatoriomsg'|trans}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.habilitarCCO == '1'">
+                              <dl class="dl-horizontal small text-overflow" ng-class="{ 'hidden': tndmnt_dmn_slctcs_shw_cntrllr.cco  }">
+                                <dt><dt>
+                                <dd><a class="bt-cco" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.toggleCco()" >Cco</a><dd>
+                              </dl>
+                              <dl class="dl-horizontal small text-overflow" ng-class="{ 'hidden': !tndmnt_dmn_slctcs_shw_cntrllr.cco  }">
+                                <dt class="col-sm-1 cco">Cco:</dt>
+                                <dd>
+                                  <tags-input
+                                  class="col-sm-12"
+                                  ng-model="respostaController.entity.copiaoculta"
+                                  placeholder="Digite o e-mail"
+                                  allowed-tags-pattern='^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+                                  title="E-mail inválido"
+                                  keyProperty=''
+                                  name='copiaoculta'
+                                  ng-disable="respostaController.submitting" 
+                                  ng-required="false"
+                                  ng-init=""
+                                  ng-trim="true"
+                                  ></tags-input>
+                                </dd>
+                              </dl>
+                            </div>
+                            <div class="row">
+                                <anexos model='respostaController.entity.anexos' can-edit='true' disabled='respostaController.submitting'></anexos>
+                                <div class="btns-area pull-right">
+                                    <button type="submit" class="btn btn-default" ng-click="respostaController.submit($event, 1, respostaController.form)" ng-disabled="respostaController.submitting" ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.visivelparacliente ? 'Enviar e Fechar' : 'Salvar e Fechar'"></button>
+                                    <button type="submit" class="btn btn-primary" ng-click="respostaController.submit($event, 0, respostaController.form)" ng-disabled="respostaController.submitting" ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.visivelparacliente ? 'Enviar' : 'Salvar'"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-form>
+                </div>
+            </div>
+        </div>
+        <div class="ticket-reply-tabs-content-ta ticket-reply-tabs-content-ta-message form-group" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.responsavel_web != tndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado.email && tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0">
+            <div  class="text-center">
+                <div class="row forms">
+                    <div class="row">
+                        <div class="col-sm-12 text-area">
+                            <a href ng-click="tndmnt_dmn_slctcs_shw_cntrllr.atribuirUsuarioLogado(tndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado)">{{'chamadoatribuir'|trans}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="1">
+        <uib-tab-heading>
+            <i class="el el-comment-alt"></i> {{'comentario'|trans}}
+        </uib-tab-heading>
+        <div ng-controller="AtendimentoAdminFollowupsFormComentarioController as comentarioController" class="ticket-reply-tabs-content-ta ticket-reply-tabs-content-ta-message form-group">
+
+            <ng-form name="comentarioForm" novalidate="novalidate" role="form" ng-disabled="comentarioController.submitting">
+                <div class="row forms">
+                    <div class="row">
+                        <div class="text-area obs-text">
+                            <ng-ckeditor skin="moono-lisa" ng-model="comentarioController.entity.historico" required name="comentario" ng-disable="comentarioController.submitting"></ng-ckeditor>
+                            <div class="alert alert-danger" role="alert" ng-if="comentarioController.historicoVazio()">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span> {{'comentarioObrigatoriomsg'|trans}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <anexos model='comentarioController.entity.anexos' can-edit='true' disabled='comentarioController.submitting'></anexos>
+                        <div class="btns-area pull-right">
+                            <button type="submit" class="btn btn-default" ng-click="comentarioController.submit($event, 0, comentarioForm)" ng-disabled="comentarioController.submitting" ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.visivelparacliente ? 'Enviar' : 'Salvar'"></button>
+                        </div>
+                    </div>
+                </div>
+            </ng-form>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -1,0 +1,433 @@
+{% embed '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Solicitacoes/index.html.twig' %}
+
+    {% block index_header -%}
+        <div class="col-md-12 headline-page">
+            <div class="headline clearfix">
+                <h2 class="pull-left">Chamados</h2>
+                <a ng-if="tndmnt_clnt_slctcs_lst_cntrllr.podeCriarChamado" class="btn btn-xs btn-warning" ui-sref="atendimento_cliente_solicitacoes_new({cliente : tndmnt_clnt_slctcs_lst_cntrllr.constructors.cliente,email : tndmnt_clnt_slctcs_lst_cntrllr.constructors.email})">
+                    <i class="el el-plus"></i> Criar
+                </a>
+            </div>
+        </div>
+    {% endblock index_header -%}
+
+
+    {% block index_layout %}
+        <div class="height-full-calc hidden-print list-links col-md-4" ng-class="{ 'hidden-sm hidden-xs' : (('atendimento_cliente_solicitacoes_show'| isStateEq) || ('atendimento_cliente_solicitacoes_edit'| isStateEq) || ('atendimento_cliente_solicitacoes_new'| isStateEq ))}">
+            {% set index_layout_size = 12 %}
+            <div class="height-full col-md-{{index_layout_size}}">
+                <div class='row height-full'>
+                    <div class="panel panel-default">
+                        {% block index_panel_header -%}
+                            <div class="panel-heading clearfix">
+                                {% block index_filter -%}
+                                    <form id="list_filter">
+                                        <div class="col-xs-8">
+                                            <div>
+                                                <input type="text" name="key" class="form-control campo-busca" ng-model="tndmnt_clnt_slctcs_lst_cntrllr.campoParaBusca" ng-change="tndmnt_clnt_slctcs_lst_cntrllr.search()" ng-model-options='{ debounce: 500 }'  placeholder="Buscar..." />
+                                            </div><!-- /input-group -->
+                                        </div>
+                                        <div class="col-xs-4">
+                                            {% block index_toolbar -%}
+                                                <div class="btn-group pull-right" uib-dropdown role="group">
+                                                    <button type="button" class="btn btn-default" title="Atualizar" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.recarregar()"><i class="el el-refresh"  aria-hidden="true"></i></button>
+                                                    
+                                                    <button ng-click="tndmnt_clnt_slctcs_lst_cntrllr.toggleFilter = !tndmnt_clnt_slctcs_lst_cntrllr.toggleFilter" type="button" class="btn btn-default" title="Filtros" ng-if="tndmnt_clnt_slctcs_lst_cntrllr.constructors.situacao != 2">
+                                                        <i class="el el-filter"  aria-hidden="true"></i>
+                                                    </button>
+
+                                                    <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle ng-disabled="disabled" ng-if="tndmnt_clnt_slctcs_lst_cntrllr.usuarioLogado.getClientes().length > 0">
+                                                        <span class="icon xs-icon ret-icon"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                                        <li role="menuitem">
+                                                            <button class="btn-dropdown" ng-class="{active : tndmnt_clnt_slctcs_lst_cntrllr.menuSituacaoAtivo === 'todos'}" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.filtrarSituacao('todos')">{{'todoschamados'|trans}}</button>
+                                                        </li>
+                                                         <li role="menuitem" ng-if="tndmnt_dmn_slctcs_lst_cntrllr.entity.usuarioLogado.USUARIO_SEM_CLIENTE_CRIAR_CHAMADO == 1">
+                                                            <button class="btn-dropdown" ng-class="{active : tndmnt_clnt_slctcs_lst_cntrllr.menuSituacaoAtivo === 'meus'}" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.filtrarSituacao('meus')">{{'meuschamados'|trans}}</button>
+                                                        </li>
+                                                        <li role="presentation" ui-sref-active="active"  ng-repeat="clnt in tndmnt_clnt_slctcs_lst_cntrllr.usuarioLogado.getClientes()" ng-if="tndmnt_clnt_slctcs_lst_cntrllr.usuarioLogado.getClientes().length > 1">
+                                                            <button class="btn-dropdown" ng-class="{active : tndmnt_clnt_slctcs_lst_cntrllr.menuSituacaoAtivo === clnt.cliente_id}" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.filtrarSituacao(clnt.cliente_id)">{{"{{clnt.cliente_nome}}"}}</button>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        <li class="dropdown-header">Ordenar por</li>
+                                                        <li role="menuitem">
+                                                            <button class="btn-dropdown" ng-class="{active : tndmnt_clnt_slctcs_lst_cntrllr.menuOrdenacaoAtiva === 'created_at_desc'}" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.filterOrder('created_at_desc')">Mais recentes</button>
+                                                        </li>
+                                                        <li role="menuitem">
+                                                            <button class="btn-dropdown" ng-class="{active : tndmnt_clnt_slctcs_lst_cntrllr.menuOrdenacaoAtiva === 'created_at_asc'}" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.filterOrder('created_at_asc')">Mais antigas</button>
+                                                        </li>
+                                                        <li role="menuitem">
+                                                            <button class="btn-dropdown" ng-class="{active : tndmnt_clnt_slctcs_lst_cntrllr.menuOrdenacaoAtiva === 'desc'}" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.filterOrder('desc')">Resposta mais recentes</button>
+                                                        </li>
+                                                        <li role="presentation" ng-class="{'active': tndmnt_clnt_slctcs_lst_cntrllr.mim}" ng-if="tndmnt_clnt_slctcs_lst_cntrllr.usuarioLogado.usuarioSemClienteCriarChamado">
+                                                            <a href ng-click="tndmnt_clnt_slctcs_lst_cntrllr.filtrarAtribuicao({ atribuidoa : 'mim', order: 'asc', adiado: false })"><span class="badge" ng-bind="tndmnt_clnt_slctcs_lst_cntrllr.abertos.mim"></span> {{'meuschamados'|trans}}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            {% endblock index_toolbar -%}
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <div ng-show="tndmnt_clnt_slctcs_lst_cntrllr.toggleFilter" class="filter top-buffer">
+
+                                                <table class="table no-border clear-bottom">
+                                                    
+                                                    <tbody ng-if="tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at_ini.length > 0 && tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at_fim.length > 0" class="row">
+                                                     <tr>
+                                                            <td class="td-title" colspan="2">
+                                                                <b>Criado entre</b>
+                                                            </td>
+                                                        </tr>
+
+                                                    <div class ="row">
+                                                        <tr class="col-md-6" ng-repeat="created_at_ini in tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at_ini track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                <div>
+                                                                    <div class="input-group input-sm date" 
+                                                                    id='datetimepicker6'/>
+                                                                    <p class="input-group">
+                                                                    <input type="text" 
+                                                                    class="form-control input-sm" 
+                                                                    uib-datepicker-popup="dd/MM/yyyy" 
+                                                                    format="dd/MM/yyyy"
+                                                                    ng-model="created_at_ini.opt"
+                                                                    ng-model-options='{ debounce: 500 }'
+                                                                    placeholder=""
+                                                                    date-input=""
+                                                                    name=""
+                                                                    is-open="data.open" 
+                                                                    datepicker-options="dateOptions" 
+                                                                    ng-click="data.open=true"
+                                                                    ng-required="true" current-text="Hoje" 
+                                                                    clear-text="Limpar"
+                                                                    close-text="Close"
+                                                                    current-text='Hoje' 
+                                                                    alt-input-formats="altInputFormats" 
+                                                                    ng-change="tndmnt_clnt_slctcs_lst_cntrllr.checaFiltrosCreatedAt()" />
+                                                                    <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default" ng-click="data.open=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                    </p>
+                                                                </div>
+                                                                </tr>
+                                                        </div>
+                                                                </td>
+                                                             </td>
+                                                        <tr class="col-md-6" ng-repeat="created_at_fim in tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at_fim track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                <div>
+                                                                    <div class="input-group input-sm date" 
+                                                                    id='datetimepicker6'/>
+                                                                    <p class="input-group">
+                                                                    <input type="text" 
+                                                                    class="form-control input-sm" 
+                                                                    uib-datepicker-popup="dd/MM/yyyy" 
+                                                                    format="dd/MM/yyyy"
+                                                                    ng-model="created_at_fim.opt"
+                                                                    ng-model-options='{ debounce: 500 }'
+                                                                    placeholder=""
+                                                                    date-input=""
+                                                                    name=""
+                                                                    is-open="data.open" 
+                                                                    datepicker-options="dateOptions" 
+                                                                    ng-click="data.open=true"
+                                                                    ng-required="true" current-text="Hoje" 
+                                                                    clear-text="Limpar"
+                                                                    close-text="Close"
+                                                                    current-text='Hoje' 
+                                                                    alt-input-formats="altInputFormats" 
+                                                                    ng-change="tndmnt_clnt_slctcs_lst_cntrllr.checaFiltrosCreatedAt()" />
+                                                                    <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default" ng-click="data.open=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                         <td width="5%" class="text-left">
+                                                            <a href ng-if="tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at_ini.length > 0 && tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at_fim.length > 0" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.removeFiltroCreated_at(created_at.label);" class="btn btn-danger btn-small btns-acoes"><i class="el el-remove"></i></a>
+                                                        </td>
+                                                        </tr>
+                                                        </div>
+                                                                </td>
+                                                             </td>
+                                                        </tbody>
+                                                        </div>
+                                                        </div>
+
+                                                    {# <tbody ng-if="tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at.length > 0">
+
+                                                        <tr>
+                                                            <td class="td-title" colspan="2">
+                                                                <b>Data Criação</b>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        <div class ="row">
+                                                        <tr class="col-md-6" ng-repeat="created_at in tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                <div>
+                                                                    <div class="input-group input-sm date" 
+                                                                    id='datetimepicker6'/>
+                                                                    <p class="input-group">
+                                                                    <input type="text" 
+                                                                    class="form-control input-sm" 
+                                                                    uib-datepicker-popup="dd/MM/yyyy" 
+                                                                    format="dd/MM/yyyy"
+                                                                    ng-model="created_at.opt"
+                                                                    ng-model-options='{ debounce: 500 }'
+                                                                    placeholder=""
+                                                                    date-input=""
+                                                                    name=""
+                                                                    is-open="data.open" 
+                                                                    datepicker-options="dateOptions" 
+                                                                    ng-click="data.open=true"
+                                                                    ng-required="true" current-text="Hoje" 
+                                                                    clear-text="Limpar"
+                                                                    close-text="Close"
+                                                                    cur<div class ="row">
+                                                        <tr class="col-md-6" ng-repeat="created_at in tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                <div>
+                                                                    <div class="input-group input-sm date" 
+                                                                    id='datetimepicker6'/>
+                                                                    <p class="input-group">
+                                                                    <input type="text" 
+                                                                    class="form-control input-sm" 
+                                                                    uib-datepicker-popup="dd/MM/yyyy" 
+                                                                    format="dd/MM/yyyy"
+                                                                    ng-model="created_at.opt"
+                                                                    ng-model-options='{ debounce: 500 }'
+                                                                    placeholder=""
+                                                                    date-input=""
+                                                                    name=""
+                                                                    is-open="data.open" 
+                                                                    datepicker-options="dateOptions" 
+                                                                    ng-click="data.open=true"
+                                                                    ng-required="true" current-text="Hoje" 
+                                                                    clear-text="Limpar"
+                                                                    close-text="Close"
+                                                                    current-text='Hoje' 
+                                                                    alt-input-formats="altInputFormats" 
+                                                                    ng-change="tndmnt_clnt_slctcs_lst_cntrllr.checaFiltrosCreatedAt()" />
+                                                                    <span class="input-group-btn">
+                                                                    <button type="button" class="btn btn-default" ng-click="data.open=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                                    </span>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                         <td width="5%" class="text-left">
+                                                            <a href ng-if="$index == 1" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.removeFiltroCreated_at(created_at.label);" class="btn btn-danger btn-small btns-acoes"><i class="el el-remove"></i></a>
+                                                        </td>
+                                                        </tr>
+                                                        </div> #}
+
+                                                        {# <tr ng-repeat="created_at in tndmnt_clnt_slctcs_lst_cntrllr.filtros.created_at track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                    <div class="input-group input-sm">
+                                                                        <input type="text"
+                                                                               class="form-control input-sm"
+                                                                               uib-datepicker-popup="dd/MM/yyyy"
+                                                                               format="dd/MM/yyyy"
+                                                                               id=""
+                                                                               ng-model-options='{ debounce: 500 }'
+                                                                               ng-model="created_at.opt"
+                                                                               ng-change="tndmnt_clnt_slctcs_lst_cntrllr.reloadData()"
+                                                                               placeholder=""
+                                                                               date-input=""
+                                                                               name=""
+                                                                               ng-click="data.open=true"
+                                                                               is-open="data.open"
+                                                                               datepicker-options="dateOptions"
+                                                                               close-text="Close"
+                                                                               alt-input-formats="altInputFormats"
+                                                                               current-text='Hoje'
+                                                                               clear-text='Limpar'>
+
+                                                                        <span ng-click="data.open=true" class="input-group-btn input-sm">
+                                                                            <button class="btn btn-default"><i class='glyphicon glyphicon-calendar'></i></button>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td width="5%" class="text-left">
+                                                                <a href  ng-click="tndmnt_clnt_slctcs_lst_cntrllr.removeFiltro(created_at);" class="btn btn-danger btn-small btns-acoes"><i class="el el-remove"></i></a>
+                                                            </td>
+                                                        </tr> #}
+                                                    {# </tbody> #}
+
+                                                     <tbody ng-if="tndmnt_clnt_slctcs_lst_cntrllr.filtros.atribuidoa.length > 0 && !tndmnt_clnt_slctcs_lst_cntrllr.mim">
+
+                                                        <tr>
+                                                            <td class="td-title" colspan="2">
+                                                                <b>Criado por:</b>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr ng-repeat="atribuidoa in tndmnt_clnt_slctcs_lst_cntrllr.filtros.atribuidoa track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                    <ui-select class="input-sm" id="atribuicao" ng-model="atribuidoa.opt" on-select="tndmnt_clnt_slctcs_lst_cntrllr.checaAtribuicao()" ng-change='tndmnt_clnt_slctcs_lst_cntrllr.checaAtribuicao()'>
+                                                                        <ui-select-match allow-clear="true" placeholder="Selecione ou busque">{{'{{atribuidoa.opt}}'}}</ui-select-match>
+                                                                        <ui-select-choices group-by="tndmnt_clnt_slctcs_lst_cntrllr.agruparPorTipo" 
+                                                                        repeat="option in tndmnt_clnt_slctcs_lst_cntrllr.contas | filter:$select.search">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12" ng-bind-html="option? (option) : option | highlight: $select.search"></div>
+                                                                            </div>
+                                                                        </ui-select-choices>
+                                                                    </ui-select>
+                                                                </div>
+                                                            </td>
+                                                            <td width="5%" class="text-left">
+                                                                <a href  ng-click="tndmnt_clnt_slctcs_lst_cntrllr.removeFiltro(atribuidoa);" class="btn btn-danger btn-small btns-acoes"><i class="el el-remove"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+                                                    <tbody ng-if="tndmnt_clnt_slctcs_lst_cntrllr.filtros.adiado.length > 0">
+
+                                                        <tr>
+                                                            <td class="td-title" colspan="2">
+                                                                <b>Adiado</b>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr ng-repeat="adiado in tndmnt_clnt_slctcs_lst_cntrllr.filtros.adiado track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                    <select
+                                                                        class="input-sm form-control"
+                                                                        ng-model='adiado.opt'
+                                                                        ng-change='tndmnt_clnt_slctcs_lst_cntrllr.reloadData()'>
+                                                                        <option value="" disabled="disabled">Selecione</option>
+                                                                        <option value="true">Sim</option>
+                                                                        <option value="false">Não</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <td width="5%" class="text-left">
+                                                                <a href  ng-click="tndmnt_clnt_slctcs_lst_cntrllr.removeFiltro(adiado);" class="btn btn-danger btn-small btns-acoes"><i class="el el-remove"></i></a>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+
+                                                    <tbody ng-if="tndmnt_clnt_slctcs_lst_cntrllr.filtros[cc.atendimentocampocustomizado].length > 0" ng-repeat="cc in tndmnt_clnt_slctcs_lst_cntrllr.camposcustomizados">
+
+                                                        <tr>
+                                                            <td class="td-title" colspan="2">
+                                                                <b>{{'{{cc.label}}'}}</b>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr ng-repeat="campo in tndmnt_clnt_slctcs_lst_cntrllr.filtros[cc.atendimentocampocustomizado] track by $index">
+                                                            <td width="95%">
+                                                                <div>
+                                                                    <select ng-if="cc.tipo == 'CB'"
+                                                                            class="form-control input-sm"
+                                                                            ng-options='opt as opt for opt in cc.opcoes'
+                                                                            ng-model='campo.opt'
+                                                                            ng-change='tndmnt_clnt_slctcs_lst_cntrllr.reloadData()'>
+                                                                        <option value="" disabled="disabled">Selecione</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div>
+                                                                    <input ng-if="cc.tipo == 'TE'"
+                                                                           type="text" 
+                                                                           ng-model='campo.opt' 
+                                                                           ng-change='tndmnt_clnt_slctcs_lst_cntrllr.reloadData()' 
+                                                                           class="form-control input-sm" 
+                                                                           placeholder="Pesquisar por {{'{{cc.label}}'}}">
+                                                                </div>
+                                                            </td>
+                                                            <td width="5%" class="text-left">
+                                                                <a href  ng-click="tndmnt_clnt_slctcs_lst_cntrllr.removeFiltro(campo);" class="btn btn-danger btn-small btns-acoes"><i class="el el-remove"></i></a>
+                                                            </td>
+                                                        </tr>
+
+                                                    </tbody>
+
+
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="2">
+                                                                <div class="col-md-12">
+                                                                    <select 
+                                                                        id="add-filtro"
+                                                                        name="add-filtro" 
+                                                                        class="form-control input-sm"
+                                                                        ng-model="tndmnt_clnt_slctcs_lst_cntrllr.novoFiltro" 
+                                                                        ng-change="tndmnt_clnt_slctcs_lst_cntrllr.addFiltros()">
+                                                                        <option value="" disabled="disabled">Adicionar filtro</option>
+                                                                        <option value="{{'{{filtro.value}}'}}" ng-repeat="filtro in tndmnt_clnt_slctcs_lst_cntrllr.listaFiltros track by $index">{{'{{filtro.label}}'}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% endblock index_filter -%}
+                            </div><!--/panel-head-->
+                        {% endblock index_panel_header -%}
+
+                        <div class="panel-body">
+
+                            {% block index_list -%}
+
+                                <div class="list-group" id="atendimento_cliente_solicitacoes_list" >
+                                    {%- block viewedit_view_list_item %}
+                                    <a href ui-sref='atendimento_cliente_solicitacoes_show({atendimento : entity.atendimento})'  class="list-group-item" ng-repeat="entity in tndmnt_clnt_slctcs_lst_cntrllr.entities" ui-sref-active="active">
+                                        <div class="status pull-right">
+                                            <span class="info-post" am-time-ago="entity.data_ultima_resposta | asDate"></span>
+                                        </div>
+                                        <h4 class="list-group-item-heading">#{{'{{ entity.numeroprotocolo }} '}}</h4>
+                                        <p class="list-group-item-text" ng-bind-html="entity.resumo | highlight : tndmnt_clnt_slctcs_lst_cntrllr.filter.key"></p>
+                                        <p class="list-group-item-text ultima-resposta" ng-if="entity.ultima_resposta_admin"><span class="reply-ico"><i class="el el-share-alt"></i></span><span ng-bind-html="entity.ultima_resposta_resumo"></span></p>
+                                        <span class="label label-default" ng-if="entity.cliente.cliente && tndmnt_clnt_slctcs_lst_cntrllr.usuarioLogado.getClientes().length > 1">{{'{{ tndmnt_clnt_slctcs_lst_cntrllr.usuarioLogado.getCliente(entity.cliente.cliente).cliente_nome }} '}}</span>
+                                    </a>
+                                    {%- endblock viewedit_view_list_item %}
+                                    <p class="list-group-item" ng-if="!tndmnt_clnt_slctcs_lst_cntrllr.finished && (tndmnt_clnt_slctcs_lst_cntrllr.service.to_load <= 0)">
+                                        <a href="" ng-click="tndmnt_clnt_slctcs_lst_cntrllr.loadMore()">Ver mais...</a>
+                                    </p>
+                                    <p class="text-center article-loading height-full" ng-class="{'onloading' : tndmnt_clnt_slctcs_lst_cntrllr.isBusy() }" ng-if="tndmnt_clnt_slctcs_lst_cntrllr.isBusy()"></p>
+                                    <p class="text-center nfound" ng-if="tndmnt_clnt_slctcs_lst_cntrllr.entities.length == 0 && !tndmnt_clnt_slctcs_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+                                </div>
+
+                            {% endblock index_list -%}
+                        </div><!--/panel-body-->
+                    </div><!--/panel-->
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block index_builltin_form -%}
+        <div class='col-md-{{12 - index_layout_size}} article-area height-full-calc row' ui-view>
+            <div class="bt-new-article new-article message text-center height-full">
+                <div class="initial-msg hidden-sm hidden-xs">
+                    <i class="el el-inbox"></i>
+                    <div ng-if="tndmnt_dmn_slctcs_lst_cntrllr.entities.length != 0">
+                        <h2>Visualize ou Crie um Chamado.</h2>
+                        <p ng-if="tndmnt_clnt_slctcs_lst_cntrllr.chamadosDescricao == null">Selecione um Chamado no painel ao lado para visualizar as suas informações.</p>
+                    </div>
+                    <div dynamic="tndmnt_clnt_slctcs_lst_cntrllr.chamadosDescricao"></div>
+                </div>
+                <a class="btn btn-sm btn-fixed btn-warning" ui-sref="atendimento_cliente_solicitacoes_new({cliente : tndmnt_clnt_slctcs_lst_cntrllr.constructors.cliente,email : tndmnt_clnt_slctcs_lst_cntrllr.constructors.email})">
+                    <i class="el el-plus"></i> <span class="hidden-xs hidden-sm">Criar Chamado</span>
+                </a>
+            </div>
+        </div>
+        {% endblock index_builltin_form -%}
+
+
+
+{% endembed %}

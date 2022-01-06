@@ -1,0 +1,64 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Admin/Slas/index.html.twig' %}
+
+{% block index_header -%}
+  <div class="col-md-12 headline-page">
+    <div class="headline clearfix">
+      <div class="breadcrumb-trail hidden-xs hidden-sm pull-left"><a ui-sref="atendimento_admin_configuracoes_list" href title="Configurações">Configurações</a> > <span class="select-page">SLAs</span></strong></div>
+      <a class="btn btn-xs btn-warning" ui-sref="atendimento_admin_slas_new({})" href>
+        <i class="el el-plus"></i> Criar
+      </a>
+    </div>
+  </div>
+{% endblock index_header -%}
+
+{% block index_panel_header -%}
+{% endblock index_panel_header -%}
+
+{% block index_list -%}
+  <div class="height-full" ng-class="{'onloading' : tndmnt_dmn_sls_lst_cntrllr.isBusy() }">
+    <ul class="list-group reorder" id="atendimento_admin_slas_list" dnd-list="tndmnt_dmn_sls_lst_cntrllr.entities">
+      <li class="list-group-item"
+          ng-repeat="entity in tndmnt_dmn_sls_lst_cntrllr.entities"
+          ng-drop="true"
+          ng-drop-success="tndmnt_dmn_sls_lst_cntrllr.order($index, $data)"
+          ui-sref-active="active"
+          ng-class="{'selected': selected === entity}"
+          ng-drag="true" ng-drag-data="entity" ng-class="obj.nome">
+          <span class="ico-move pull-left">
+            <i class="el el-move"></i>
+          </span> 
+            <div class="list-group-item-heading row">
+                <span ng-bind-html="entity.nome"></span>
+              <span ng-if="entity.condicoes_in.length"><br />Combina todas as condições: </span>
+              <span ng-repeat="condicao in entity.condicoes_in" ng-if="$index < 3">
+                  <span ng-bind-html="tndmnt_dmn_sls_lst_cntrllr.montaFraseSlaCondicao(condicao)"></span>
+                  <b ng-bind-html="condicao.valor" ng-if="condicao.campo !== 'situacao'"></b>
+                  <b ng-if="condicao.campo == 'situacao'">
+                      <span ng-if="condicao.valor == 0">Aberto</span>
+                      <span ng-if="condicao.valor == 1">Fechado</span>
+                  </b>
+                  <span ng-if="!$last && $index < 2"> | </span>
+                  <span ng-if="$index == 2 && entity.condicoes_in.length > 3">...</span>
+              </span>
+                <span ng-if="entity.condicoes_ex.length"><br/>Combina com alguma das condições: </span>
+                <span ng-repeat="condicao in entity.condicoes_ex" ng-if="$index < 3">
+                        <span ng-bind-html="tndmnt_dmn_sls_lst_cntrllr.montaFraseSlaCondicao(condicao)"></span>
+                        <b ng-bind-html="condicao.valor" ng-if="condicao.campo !== 'situacao'"></b>
+                        <b ng-if="condicao.campo == 'situacao'">
+                            <span ng-if="condicao.valor == 0">Aberto</span>
+                            <span ng-if="condicao.valor == 1">Fechado</span>
+                        </b>
+                        <span ng-if="!$last && $index < 2"> | </span>
+                        <span ng-if="$index == 2 && entity.condicoes_in.length > 3">...</span>
+                    </span>
+              <div class="pull-right">
+                <button class=" btn btn-sm btn-warning" ui-sref="atendimento_admin_slas_edit({sla : entity.sla})" title="edit">
+                  <i class="fa fa-edit"></i>
+                </button>
+              </div>
+            </div>
+            
+      </li>
+    </ul>
+  </div>
+{% endblock index_list -%}

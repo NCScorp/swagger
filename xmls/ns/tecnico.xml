@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="tecnico" label="tecnico" project="Ns">
+    <entity schema="ns" table="vwtecnicos">
+        <fieldmodel name="id" datatype="guid" isid="true" column="id" />
+        <fieldmodel name="nome" datatype="string" column="nome" />
+        <fieldmodel name="email" datatype="string" column="email" />
+    </entity>
+    <viewbrowser>
+        <fieldsbrowser>
+            <fieldbrowser alias="id" entitylink="id" visible="false" isid="true"/>
+            <fieldbrowser alias="nome" entitylink="nome" visible="true"/>
+            <fieldbrowser alias="email" entitylink="email" visible="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

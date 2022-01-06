@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="proximoscontatos" label="proximoscontatos" project="crm" >
+    <entity schema="crm" table="vwproximoscontatos">
+        <fieldmodel name="proximocontato" datatype="guid" column="proximocontato" isid="true" />
+        <fieldmodel name="data" datatype="date" column="data" />
+        <fieldmodel name="hora" datatype="time" column="hora" />
+        <fieldmodel name="situacao" datatype="integer" column="situacao" />
+        <fieldmodel name="assunto" datatype="guid" column="assunto" useCaseLink="crm\assuntos" entityJoinType="left" />
+        <fieldmodel name="cliente" datatype="guid" column="participante" useCaseLink="ns\clientes" entityJoinType="left" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="responsavel_web" datatype="string" column="responsavel_web" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="observacao" datatype="string" column="observacao" />
+        <fieldmodel name="ematraso" datatype="boolean" column="ematraso" />
+        <fieldmodel name="atendimento" datatype="guid" column="atendimento" useCaseLink="atendimento\admin\solicitacoes" entityJoinType="left" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">cliente</constructoritem>
+        <constructoritem required="false">data</constructoritem>
+        <constructoritem required="false">situacao</constructoritem>
+        <constructoritem required="false">ematraso</constructoritem>
+        <constructoritem required="false">responsavel_web</constructoritem>
+        <constructoritem required="false">atendimento</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Próximos Contatos" >
+        <fieldsbrowser>
+            <fieldbrowser entitylink="proximocontato" isid="true" visible="false" />
+            <fieldbrowser visible="true" entitylink="cliente" cansearch="false" avaliable="true" fielddetaillookup="{ 'nome' : 'Cliente' }" />
+            <fieldbrowser visible="true" entitylink="assunto" cansearch="false" avaliable="true" fielddetaillookup="{ 'nome' : 'Assunto' }" />
+            <fieldbrowser alias="Responsável" visible="true" entitylink="responsavel_web" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="Situação" visible="true" entitylink="situacao" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="Em atraso" visible="true" entitylink="ematraso" cansearch="true" avaliable="true" />
+            <fieldbrowser alias="ematraso" visible="true" entitylink="ematraso" cansearch="false" avaliable="true" />
+            <fieldbrowser alias="Data" visible="true" entitylink="data" cansearch="false" avaliable="true" />
+            <fieldbrowser alias="Hora" visible="true" entitylink="hora" cansearch="false" avaliable="false" />
+            <fieldbrowser alias="Observação" visible="true" entitylink="observacao" cansearch="false" avaliable="false" />
+            <fieldbrowser alias="tenant" visible="false" entitylink="tenant" />
+        </fieldsbrowser>
+    </viewbrowser>
+
+    <viewedit mode="view" label="Próximos Contatos">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="data" controltype="dateedit" entitylink="data" colspan="2" label="Data:">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo data não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                    <cell name="hora" controltype="textedit" entitylink="hora" colspan="2" label="Horario:">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo hora não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                    <cell name="atendimento" controltype="lookup" readonly="true" visible="atendimento != null" entitylink="atendimento" colspan="4" browserlookup="admin/solicitacoes" projectbrowserlookup="atendimento" fieldlookup="atendimento" fieldaliaslookup="atendimento" fielddetaillookup="numeroprotocolo" placeholder="." label="Atendimento:">
+                    </cell>
+                    <cell name="cliente" visible="atendimento == null" controltype="lookup" entitylink="cliente" colspan="4" browserlookup="clientes" projectbrowserlookup="ns" fieldlookup="cliente" fieldaliaslookup="cliente" fielddetaillookup="nome" placeholder="Escolha um cliente" label="Cliente:">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo cliente não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="responsavel_web" controltype="email" entitylink="responsavel_web" colspan="4" label="Responsável:">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo responsável não pode ser vazio."/>
+                            <validate type="email" displaytext="O campo email deve ser um email válido." />
+                        </validates>
+                    </cell>
+                    <cell name="assunto" controltype="lookup" entitylink="assunto" colspan="4" browserlookup="assuntos" projectbrowserlookup="crm" fieldlookup="assunto" fieldaliaslookup="assunto" fielddetaillookup="descricao" placeholder="Escolha o assunto" label="Assunto:">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo assunto não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="observacao" controltype="textarea" entitylink="observacao" colspan="8" label="Observações:"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>ProximoContatoNovo_V2</name>
+                <fromto valueapi="data" valueentity="data"/>
+                <fromto valueapi="hora" valueentity="hora"/>
+                <fromto valueapi="assunto" valueentity="assunto"/>
+                <fromto valueapi="observacao" valueentity="observacao"/>
+                <fromto valueapi="responsavel_web" valueentity="responsavel_web"/>
+                <fromto valueapi="cliente" valueentity="cliente"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>ProximoContatoAlterar</name>
+                <fromto valueapi="proximocontato" valueentity="proximocontato"/>
+                <fromto valueapi="data" valueentity="data"/>
+                <fromto valueapi="hora" valueentity="hora"/>
+                <fromto valueapi="assunto" valueentity="assunto"/>
+                <fromto valueapi="observacao" valueentity="observacao"/>
+                <fromto valueapi="responsavel_web" valueentity="responsavel_web"/>
+                <fromto valueapi="cliente" valueentity="cliente"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="situacao" valueentity="situacao"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>ProximoContatoExcluir</name>
+                <fromto valueapi="proximocontato" valueentity="proximocontato"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Concluir</name>
+            <api>
+                <name>ProximoContatoConcluir</name>
+                <fromto valueapi="proximocontato" valueentity="proximocontato"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Cancelar</name>
+            <api>
+                <name>ProximoContatoCancelar</name>
+                <fromto valueapi="proximocontato" valueentity="proximocontato"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Reabrir</name>
+            <api>
+                <name>ProximoContatoReabrir</name>
+                <fromto valueapi="proximocontato" valueentity="proximocontato"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+    </actions>
+
+</nsjusecase>

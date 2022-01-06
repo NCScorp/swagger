@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="contas" label="contas" project="financas" >
+    <entity schema="financas" table="contas">
+        <fieldmodel name="conta" datatype="guid" isid="true" column="conta"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="numero" datatype="string" column="numero"/>
+        <fieldmodel name="digito" datatype="string" column="digito"/>
+        <fieldmodel name="bloqueado" datatype="boolean" column="bloqueado"/>
+        <fieldmodel name="agencianumero" datatype="string" column="agencianumero"/>
+        <fieldmodel name="agenciadigito" datatype="string" column="agenciadigito"/>
+        <fieldmodel name="banco" datatype="guid" column="banco"/>
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" useCaseLink="ns\estabelecimento" entityJoinType="left"/>
+        <fieldmodel column="lastupdate" datatype="datetime" name="lastupdate" optimistLock="true" />
+    </entity>
+    <constructors>
+        <constructoritem required="false">estabelecimento</constructoritem>
+    </constructors>
+    <viewbrowser label="Contas" >
+        <fieldsbrowser>
+            <fieldbrowser alias="conta" entitylink="conta" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" cansearch="true" visible="true" avaliable="true" unique="true" alloworder="true" indefaultorder="true" direction="ASC"/>
+            <fieldbrowser alias="Nome" entitylink="nome" cansearch="true" visible="true" avaliable="true" alloworder="true" />
+            <fieldbrowser alias="Banco" entitylink="banco" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

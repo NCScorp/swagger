@@ -1,0 +1,34 @@
+{% set form_name = form.vars.original_type %}
+<form name="{{form_name}}" novalidate="novalidate" role="form"  ng-submit="tndmnt_clnt_fllwps_frm_cntrllr.submit({{form_name}})">
+    <div class="forms">
+        <div class="ticket-reply-tabs">
+            <div class="nav-tabs">
+              <label class="ticket-reply-tab ticket-reply-tab-message active">
+                  <a class="selected tab"><span class="reply-ico"><i class="el el-share-alt"></i></span> {{'respostacliente'|trans}}</a>
+              </label>
+            </div>
+
+            <div class="ticket-reply-tabs-content ticket-reply-tabs-content-message">
+
+                <div class="ticket-reply-tabs-content-ta ticket-reply-tabs-content-ta-message form-group">
+                    <div class="ticket-reply-tabs-content-ta-message-wrap">
+                        <div class="text-area">
+                          <ng-ckeditor skin="moono-lisa" class="col-sm-12 row" placeholder="{{'respostaclienteplaceholder'|trans}}" ngCkeditor remove-plugins=",link,autolink,elementspath" ng-model="tndmnt_clnt_fllwps_frm_cntrllr.entity.historico" required name="historico" ng-disable="tndmnt_clnt_fllwps_frm_cntrllr.submitting"></<ng-ckeditor>
+                            <div class="alert alert-danger" role="alert" ng-if="tndmnt_clnt_fllwps_frm_cntrllr.historicoVazio()">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Erro:</span>
+                                {{'respostaclienteObrigadoriomsg'|trans}}
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <anexos model='tndmnt_clnt_fllwps_frm_cntrllr.entity.anexos' can-edit='true'  disabled='tndmnt_clnt_fllwps_frm_cntrllr.submitting'></anexos>
+                            <div class="btns-area pull-right">
+                                <button type="submit" class="btn btn-primary" ng-disabled="tndmnt_clnt_fllwps_frm_cntrllr.submitting">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="slas" label="slas" project="atendimento/admin">
+    <entity schema="atendimento" table="slas">
+        <fieldmodel name="sla" datatype="guid" isid="true" column="sla"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+        <fieldmodel name="condicoes_ex" datatype="objectlist" column="sla" useCaseLink="atendimento\admin\slascondicoes" entityJoinType="left" notMapped="true" />
+        <fieldmodel name="condicoes_in" datatype="objectlist" column="sla" useCaseLink="atendimento\admin\slascondicoes" entityJoinType="left" notMapped="true" />
+        <!-- <fieldmodel name="acoes" datatype="objectlist" column="atendimentoregra" useCaseLink="servicos\atendimentosregrasacoes" entityJoinType="left" /> -->
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="tempo_primeiro" datatype="string" column="tempo_primeiro" />
+        <fieldmodel name="tempo_proximo" datatype="string" column="tempo_proximo" />
+        <fieldmodel name="tempo_resolucao" datatype="string" column="tempo_resolucao" />
+        <fieldmodel name="tempo_primeiro_ativo" datatype="boolean" column="tempo_primeiro_ativo" />
+        <fieldmodel name="tempo_proximo_ativo" datatype="boolean" column="tempo_proximo_ativo" />
+        <fieldmodel name="tempo_resolucao_ativo" datatype="boolean" column="tempo_resolucao_ativo" />
+        <fieldmodel name="updated_at" datatype="date" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="window" label="Slas">
+        <fieldsbrowser>
+            <fieldbrowser alias="sla" entitylink="sla" isid="true" />
+            <fieldbrowser alias="nome" entitylink="nome" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="ordem" entitylink="ordem" width="2" cansearch="false" visible="false" avaliable="true" indefaultorder="true" direction="asc" />
+            <fieldbrowser alias="tempo_primeiro" entitylink="tempo_primeiro" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tempo_proximo" entitylink="tempo_proximo" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tempo_resolucao" entitylink="tempo_resolucao" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tempo_primeiro_ativo" entitylink="tempo_primeiro_ativo" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tempo_proximo_ativo" entitylink="tempo_proximo_ativo" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tempo_resolucao_ativo" entitylink="tempo_resolucao_ativo" width="80" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Sla">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="nome" controltype="textedit" entitylink="nome" label="Nome">
+                        <validates>
+                            <validate type="vnull" displaytext="O nome da Sla não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="tempo_primeiro" controltype="textedit" entitylink="tempo_primeiro" label="Tempo Primeiro" />
+                </row>
+                <row>
+                    <cell name="tempo_proximo" controltype="textedit" entitylink="tempo_proximo" label="Tempo Proximo" />
+                </row>
+                <row>
+                    <cell name="tempo_resolucao" controltype="textedit" entitylink="tempo_resolucao" label="Tempo Resolução" />
+                </row>
+                <row>
+                    <cell name="tempo_primeiro_ativo" controltype="checkbox" entitylink="tempo_primeiro_ativo" label="Tempo Primeiro Ativo" />
+                </row>
+                <row>
+                    <cell name="tempo_proximo_ativo" controltype="checkbox" entitylink="tempo_proximo_ativo" label="Tempo Proximo Ativo" />
+                </row>
+                <row>
+                    <cell name="tempo_resolucao_ativo" controltype="checkbox" entitylink="tempo_resolucao_ativo" label="Tempo Resolução Ativo" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>insert</name>
+            <api>
+                <name>slanovo</name>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="tempo_primeiro_ativo" valueentity="tempo_primeiro_ativo"/>
+                <fromto valueapi="tempo_primeiro" valueentity="tempo_primeiro"/>
+                <fromto valueapi="tempo_proximo_ativo" valueentity="tempo_proximo_ativo"/>
+                <fromto valueapi="tempo_proximo" valueentity="tempo_proximo"/>
+                <fromto valueapi="tempo_resolucao_ativo" valueentity="tempo_resolucao_ativo"/>
+                <fromto valueapi="tempo_resolucao" valueentity="tempo_resolucao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>update</name>
+            <api>
+                <name>slaalterar</name>
+                <fromto valueapi="sla" valueentity="sla" />
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="tempo_primeiro_ativo" valueentity="tempo_primeiro_ativo"/>
+                <fromto valueapi="tempo_primeiro" valueentity="tempo_primeiro"/>
+                <fromto valueapi="tempo_proximo_ativo" valueentity="tempo_proximo_ativo"/>
+                <fromto valueapi="tempo_proximo" valueentity="tempo_proximo"/>
+                <fromto valueapi="tempo_resolucao_ativo" valueentity="tempo_resolucao_ativo"/>
+                <fromto valueapi="tempo_resolucao" valueentity="tempo_resolucao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>slaexcluir</name>
+                <fromto valueapi="sla" valueentity="sla" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>slaReordenar</name>
+                <fromto valueapi="sla" valueentity="sla"/>
+                <fromto valueapi="posicaonova" valueentity="ordem"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

@@ -1,0 +1,54 @@
+<div>
+    <div class="headline-sub clearfix" style="margin:0;">
+        <h3>Encaminhar histórico por e-mail</h3>
+        
+    </div>
+
+    <hr>
+
+    <div class="modal-body encaminhar-email reset-top" id="modal-body"> 
+      <p>
+        Encaminhe o histórico desse chamado de forma oculta para pessoas que não estão na lista de e-mail.
+      </p>
+      <div class="row">
+        <div class="col-md-12">
+          <b>Encaminhar para:</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <tags-input ng-model="tndmnt_dmn_slctcs_shw_cntrllr.escopoModalEncaminhar.email"
+          placeholder="Digite o e-mail"
+          allowed-tags-pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="E-mail inválido"
+          keyProperty=''
+          name='email'
+          ng-required="true"
+          ng-init=""
+          ng-trim="true"
+          on-tag-added="tndmnt_dmn_slctcs_shw_cntrllr.escopoModalEncaminhar.validaEmails($email)"
+          ></tags-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <b>Mensagem:</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <textarea class="col-md-12" rows="10" ng-model="tndmnt_dmn_slctcs_shw_cntrllr.escopoModalEncaminhar.mensagem"></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.escopoModalEncaminhar.close()" data-dismiss="modal">Fechar</button>
+        <button
+        type="button"
+        name="submit"
+        class="btn btn-primary"
+        ng-click="tndmnt_dmn_slctcs_shw_cntrllr.escopoModalEncaminhar.encaminhaEmail()"
+        ng-disabled="tndmnt_dmn_slctcs_shw_cntrllr.escopoModalEncaminhar.submitting" >Salvar</button>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="contrato" label="contrato" project="financas">
+    <entity schema="financas" table="contratos">
+        <fieldmodel name="id" datatype="guid" isid="true" column="contrato"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="cliente" datatype="guid" column="participante" useCaseLink="ns\clientes" entityJoinType="left"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" label="Contratos" layout="list" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="id" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="1" unique="true" indefaultorder="true" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Nome" entitylink="descricao"  width="8" unique="false" indefaultorder="false" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+
+</nsjusecase>

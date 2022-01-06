@@ -1,0 +1,23 @@
+arquivos_modal:
+   path: /arquivos/modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Cliente/Arquivos/modal.html.twig'
+       
+vinculo_modal:
+   path: template/vinculo-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Cliente/vinculo-modal.html.twig'
+       
+anexos_preview_modal:
+   path: /anexos/preview.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Templates/anexos_preview.html.twig'
+
+mesclado_cliente_aviso_modal:
+   path: /solicitacoes/mesclado-aviso-modal.html
+   defaults:
+       _controller:  FrameworkBundle:Template:template
+       template: '@NasajonAtendimentoApp/Templates/atendimento_cliente_chamado_meclado.html.twig'

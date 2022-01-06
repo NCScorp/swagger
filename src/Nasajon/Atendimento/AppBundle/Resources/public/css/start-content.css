@@ -1,0 +1,24 @@
+.home-article {
+    background: #f0f0f0;
+    padding: 55px;
+    color: #a8a8a8;
+}
+
+.home-article .content {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.home-article h3 {
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.home-article p {
+    font-size: 1.3em;
+}
+
+.home-article i {
+    font-size: 2.2em;
+}

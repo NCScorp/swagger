@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="bancoschavesseguranca" label="bancoschavesseguranca" project="atendimento" >
+    <entity schema="atendimento" table="bancoschavesseguranca">
+            <fieldmodel name="bancochaveseguranca" datatype="guid" isid="true" column="bancochaveseguranca"/>
+            <fieldmodel name="banco" datatype="guid" column="banco" useCaseLink="financas\banco" entityJoinType="left" />
+            <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento"/>
+            <fieldmodel name="valor" datatype="json" column="valor"/>
+            <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+            <fieldmodel name="created_by" datatype="json" column="created_by"/>
+            <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+            <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+            <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="">
+        <fieldsbrowser>
+            <fieldbrowser alias="bancochaveseguranca" entitylink="bancochaveseguranca" isid="true" visible="false" />
+            <fieldbrowser alias="banco" entitylink="banco" cansearch="false" visible="true" />
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" cansearch="false" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="banco" entitylink="banco" label="Banco" controltype="lookup" browserlookup="banco" projectbrowserlookup="financas" fieldlookup="banco" fieldaliaslookup="Código" fielddetaillookup="banco" colspan="6" />
+                    <!--<cell name="estabelecimento" entitylink="estabelecimento" label="Estabelecimento" controltype="lookup" browserlookup="estabelecimento" projectbrowserlookup="ns" fieldlookup="codigo" fieldaliaslookup="Código" fielddetaillookup="nomefantasia" colspan="6" />-->
+                </row>
+                <row>
+                    <cell name="valor" entitylink="valor" controltype="textarea" label="Valor" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+</nsjusecase>

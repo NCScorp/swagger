@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8">
+        <title>#{{protocolo}} - {{resumo}}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="border-top:3px solid #2b6584; font-family:Arial, Helvetica, sans-serif; color:#555555;">
+            <tbody>
+                <tr>
+                    <td style="padding-top:10px;">
+                        <img src="http://s3-us-west-2.amazonaws.com/static.nasajon/img/logo.png" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h1 style="font-size:20px; margin:8px 0 20px 0; font-family:'Lato', Arial, Helvetica, sans-serif;">
+                            <a href="{{ main_url ~ '#/chamados/'~ atendimento.atendimento}}" title="#{{protocolo}} - {{resumo}}" style="color:#2b6584; text-decoration:none;">#{{protocolo}} - {{resumo}}</a>
+                        </h1>
+                    </td>
+                </tr>
+                {% for historico in atendimento.historico %}
+                    {% if historico['tipo'] == 1 %}
+                        <tr>
+                            <td>
+                                <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="border-bottom:1px solid #ccc; padding:0 10px;">
+                                    <tr>
+                                        <td style="padding-top:10px;">
+                                            <strong style="font-size:14px;">
+                                                <img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/atendimento/ico-resposta-recebida.gif" style="border:none; margin:0; vertical-align:middle" />
+                                                {{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )
+                                            </strong>
+                                            <span style="font-size:12px; color:#949494;">em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}:</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-bottom:20px;">
+                                            {{ historico['valornovo']['sintoma'] |raw }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    {% elseif historico['tipo'] == 2 %} <!--email contato -->
+                        <tr>
+                            <td style="padding:20px 0; border-bottom:1px solid #ccc; font-size:11px; color:#828282;">
+                                <strong>{{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )</strong> em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}: <br />
+                                <strong>Email do contato:</strong> {{historico.valorantigo ? historico.valorantigo : '(Vazio)'}} → {{historico.valornovo ? historico.valornovo : '(Vazio)'}}
+                            </td>
+                        </tr>
+                    {% elseif historico['tipo'] == 3 %}
+                        <tr>
+                            <td style="padding:20px 0; border-bottom:1px solid #ccc; font-size:11px; color:#828282;">
+                                <strong>{{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )</strong> em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}: <br />
+                                <strong>Situação:</strong> {{['Aberto', 'Fechado'][historico.valorantigo.situacao]}}→ {{['Aberto', 'Fechado'][historico.valornovo.situacao]}}
+                            </td>
+                        </tr>
+                    {% elseif historico['tipo'] == 4 %}
+                        <tr>
+                            <td style="padding:20px 0; border-bottom:1px solid #ccc; font-size:11px; color:#828282;">
+                                <strong>{{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )</strong> em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}: <br />
+                                <strong>Atribuição:</strong> {{historico.valorantigo.nome ? historico.valorantigo.nome : '(Vazio)'}} → {{historico.valornovo.nome ? historico.valornovo.nome : '(Vazio)'}}
+                            </td>
+                        </tr>
+                    {% elseif historico['tipo'] == 5 %}
+                        <tr>
+                            <td style="padding:20px 0; border-bottom:1px solid #ccc; font-size:11px; color:#828282;">
+                                <strong>{{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )</strong> em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}:
+                                {% for campo in historico.valornovo %}
+                                    {% if campo['valor_antigo'] is not same as(campo['valor_novo']) %}
+                                        <br /> <strong>{{campo['label']}}:</strong> {{ campo['valor_antigo'] }} → {{ campo['valor_novo'] }}
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% elseif historico['tipo'] == 6 %}
+
+                        {% if historico['valornovo']['tipo'] == 0 %}
+                            <tr>
+                                <td>
+                                    <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="background:#f7f7f7; border-bottom:1px solid #ccc; padding:0 10px;">
+                                        <tr>
+                                            <td style="padding-top:10px;">
+                                                <strong style="font-size:14px;"><img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/atendimento/ico-msg-enviada.gif" style="border:none; margin:0; vertical-align:middle" />
+                                                    {{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )
+                                                </strong>
+                                                <span style="font-size:12px; color:#949494;">em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}:</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-bottom:20px;">
+                                                {{ historico['valornovo']['historico']|raw }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        {% elseif historico['valornovo']['tipo'] == 1 %}
+                            <tr>
+                                <td>
+                                    <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="background:#fffdef; border-bottom:1px solid #ccc; padding:0 10px;">
+                                        <tr>
+                                            <td style="padding-top:10px;">
+                                                <strong style="font-size:14px;">
+                                                    <img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/atendimento/ico-comentario.gif" style="border:none; margin:0; vertical-align:middle" />
+                                                    {{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )
+                                                </strong>
+                                                <span style="font-size:12px; color:#949494;">em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}:</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-bottom:20px;">
+                                                {{ historico['valornovo']['historico']|raw }}
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        {% endif %}
+                    {% elseif historico['tipo'] == 7 %}
+                        <tr>
+                            <td style="padding:20px 0; border-bottom:1px solid #ccc; font-size:11px; color:#828282;">
+                                <strong>{{ historico['created_by']['nome'] }}({{historico['created_by']['email']}} )</strong> em {{ historico['created_at'] |date("d/m/Y") }} às {{ historico['created_at'] |date("H:i") }}: <br />
+                                <strong>Cliente:</strong> {{historico.valorantigo.nome ? historico.valorantigo.nome : '(Vazio)'}} → {{historico.valornovo.nome ? historico.valornovo.nome : '(Vazio)'}}
+                            </td>
+                        </tr>
+                    {% endif %}
+
+                {% endfor %}
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="margin-top:30px; padding:15px; border:1px solid #ccc;">
+                            <tr>
+                                <td>
+                                    <h2 style="font-size:16px; margin:0 0 20px 0; font-family:'Lato', Arial, Helvetica, sans-serif; color:#2b6584;">Detalhes do Atendimento</h2>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+
+                                        <tr>
+                                            <td>
+                                                <table cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+                                                    <tr>
+                                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">ATRIBUÍDO A</strong></td>
+                                                        <td style="font-size:14px; line-height:18px;" valign="top">{{ atendimento.atribuido_a.label }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CRIADO EM</strong></td>
+                                                        <td style="font-size:14px; line-height:18px;" valign="top">{{ atendimento.created_at|date("d/m/Y") }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CRIADO POR</strong></td>
+                                                        <td style="font-size:14px; line-height:18px;" valign="top">{{ atendimento.created_by.nome}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">E-MAIL DO CONTATO</strong></td>
+                                                        <td style="font-size:14px; line-height:18px;" valign="top">{{ atendimento.email}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">DESCRIÇÃO</strong></td>
+                                                        <td style="font-size:14px; line-height:18px;">
+                                                            {{ atendimento.sintoma|raw }}
+                                                        </td>
+                                                    </tr>
+                                                    {% if atendimento.anexos|length > 0 %}
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="100" valign="top"><strong style="font-size:11px; line-height:18px;">ANEXOS</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">
+                                                                <ul style="padding:0; margin:0; list-style:none;">
+                                                                    {% for anexo in atendimento.anexos %}
+                                                                        <li><a href="{{anexo.url}}" style="text-decoration:none; color:#428bca;">{{anexo.nome}}</a></li>
+                                                                        {% endfor %}
+                                                                </ul>
+                                                            </td>
+                                                        </tr>
+                                                    {% endif %}
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        {% if atendimento.cliente is not null %}
+                                            <tr>
+                                                <td>
+                                                    <h3 style="font-size:16px; margin:15px 0; font-family:'Lato', Arial, Helvetica, sans-serif; color:#3c3c3c; font-weight:normal;">Detalhes do Cliente</h2>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <table cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CÓDIGO</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['codigo']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">NOME</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['nome']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">NOME FANTASIA</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['nomefantasia']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CNPJ/CPF</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['cnpj'] ? atendimento.cliente['cnpj'] : atendimento.cliente['cpf']}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">CLIENTE DESDE</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['datacliente'] }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">VENDEDOR</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['vendedor'] ? atendimento.cliente['vendedor']['nome'] : 'Não informado'}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">REPRESENTANTE</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['representante'] ? atendimento.cliente['representante']['nome'] : 'Não informado' }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">REPRES. TÉCNICO</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['representante_tecnico'] ? atendimento.cliente['representante_tecnico']['nome'] : 'Não informado'}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:right; padding-right:10px;" width="120" valign="top"><strong style="font-size:11px; line-height:18px;">BLOQUEADO</strong></td>
+                                                            <td style="font-size:14px; line-height:18px;" valign="top">{{atendimento.cliente['bloqueado'] ? 'Sim' : 'Não'}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            {% if atendimento.cliente.flags|length > 0 %}
+                                                <tr>
+                                                    <td>
+                                                        <table cellpadding="3" cellspacing="0" border="0" align="center" width="100%" style="border-top:1px solid #e7e7e7; margin-top:15px;">
+                                                            {% for flag in atendimento.cliente.flags %}
+                                                                {% if loop.index % 2 != 0 %}
+                                                                    <tr>
+                                                                    {% endif %}
+                                                                    <td style="padding:15px 7px 0 0; font-size:11px;" width="50%">
+                                                                        <span style="width: 18px; height: 34px; margin-right: 10px; position: relative; display: inline-block; float: left; background:#{{flag['corfundo']}};">
+                                                                            <span style="display: block; border: 9px solid transparent; border-bottom-color: #FFF; position: absolute; bottom: 0;"></span>
+                                                                        </span>
+                                                                        <span style="float:left;">
+                                                                            <strong style="font-size:14px;">{{flag['titulo']}}</strong>
+                                                                            <br />
+                                                                            {{flag['descricao']}}
+                                                                        </span>
+                                                                    </td>
+                                                                    {% if loop.index0 % 2 != 0 %}
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endif %}
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center">
+                        <p style="font-size:11px; margin:20px 0 5px;">Responda o e-mail para adicionar uma resposta • <a href="{{ main_url ~ '#/chamados/'~ atendimento.atendimento}}" style="text-decoration:none; color:#428bca;">Visualizar no Sistema de Atendimentos</a></p>
+                        <p style="font-size:11px; margin:0 0 8px;">Desenvolvido por <a href="http://www.nasajon.com.br" style="text-decoration:none; color:#428bca;">Nasajon Sistemas</a></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

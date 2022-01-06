@@ -1,0 +1,35 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/OrdensServico/Operacao/index.html.twig' %}
+
+{% block index_header -%}
+    <div class="col-md-12 headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail hidden-xs hidden-sm pull-left"><a ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Configurações">Configurações</a> > <span class="select-page">Operações</span></strong></div>
+            <a class="btn btn-xs btn-warning" ui-sref="servicos_ordensservico_operacao_new({})" href="#/operacao/new">
+                <i class="el el-plus"></i> Criar
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block index_panel_header -%}
+    <div class="headline-sub clearfix hidden-lg hidden-md">
+        <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Voltar às configurações" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> Operações</h3>
+    </div>
+    {{ parent() }}
+{% endblock %}
+
+{% block index_list -%}
+
+<div class="height-full" ng-class="{'onloading' : tndmnt_dmn_ndrcsmls_lst_cntrllr.isBusy() }">
+  <ul class="list-group" id="servicos_ordensservico_operacao_list" dnd-list="tndmnt_dmn_ndrcsmls_lst_cntrllr.entities">
+      <li href ui-sref='servicos_ordensservico_operacao_edit({operacao : entity.operacao})'  class="list-group-item"
+          ng-repeat="entity in srvcs_rdns_srvc_prc_lst_cntrllr.entities"
+          ui-sref-active="active"
+          ng-class="{'selected': selected === entity}">
+          <h4 class="list-group-item-heading">{{'{{ entity.codigo }} '}}</h4>
+          <p class="list-group-item-text">{{'{{ entity.descricao }} '}}</p>
+      </li>
+      <p class="text-center nfound"  ng-if="srvcs_rdns_srvc_prc_lst_cntrllr.entities.length == 0 && !srvcs_rdns_srvc_prc_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+  </ul>
+  </div>
+
+{% endblock index_list -%}

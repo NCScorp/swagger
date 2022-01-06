@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="equipes" label="equipes" project="atendimento" >
+    <entity schema="atendimento" table="equipes">
+        <fieldmodel name="equipe" datatype="guid" column="equipe" isid="true" />
+        <fieldmodel name="nome" datatype="string" column="nome" />
+        <fieldmodel name="todosclientes" datatype="integer" column="todosclientes" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="usuarios" datatype="objectlist" column="equipe" entityJoinType="left" useCaseLink="atendimento\equipesusuarios" />
+        <fieldmodel name="clientesregrasin" datatype="objectlist" column="equipe" entityJoinType="left" useCaseLink="atendimento\equipesclientesregras" />
+        <fieldmodel name="clientesregrasex" datatype="objectlist" column="equipe" entityJoinType="left" useCaseLink="atendimento\equipesclientesregras" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Equipes">
+        <fieldsbrowser>
+            <fieldbrowser alias="equipe" visible="false" entitylink="equipe" isid="true" />
+            <fieldbrowser alias="Nome" visible="true" entitylink="nome" cansearch="false" indefaultorder="true" />
+            <fieldbrowser alias="Clientes" visible="true" entitylink="todosclientes" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Equipe">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="nome" controltype="textedit" entitylink="nome" colspan="12" label="Nome da Equipe">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo nome não pode ser vazio." />
+                            <validate type="maxlength" value="100" displaytext="Tamanho não deve exceder 100 caracteres." />
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="todosclientes" controltype="radiobutton" entitylink="todosclientes" colspan="12" label="Clientes">
+                        <itenscombobox type="json">{ '1': 'Todos', '0': 'Configurações Avançadas'}</itenscombobox>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>EquipeNovo</name>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="todosclientes" valueentity="todosclientes" />
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>EquipeAlterar</name>
+                <fromto valueapi="equipe" valueentity="equipe" />
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="todosclientes" valueentity="todosclientes" />
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>EquipeExcluir</name>
+                <fromto valueapi="equipe" valueentity="equipe" />
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

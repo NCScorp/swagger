@@ -1,0 +1,131 @@
+{% extends '@NasajonMDABundle/Resources/js/Crm/Proximoscontatos/form.html.twig' %}
+
+{% block viewedit_form_data %}
+    <div class="form-group">
+        <label class="control-label required" for="data">Data:</label>
+        <input type="text"
+               class="form-control"
+               uib-datepicker-popup="dd/MM/yyyy"
+               id="data"
+               ng-model="crm_prxmscntts_frm_cntrllr.entity.data"
+               ng-disabled="crm_prxmscntts_frm_cntrllr.entity.submitting"
+               placeholder=""
+               date-input=""
+               name="data"
+               ng-click="data.open=true"
+               is-open="data.open"
+               datepicker-options="dateOptions"
+               close-text="Close"
+               alt-input-formats="altInputFormats"
+               ng-required="true"
+               required="required"
+               clear-text='Limpar'
+               current-text='Hoje'
+               autocomplete="off">
+
+        <div uib-datepicker-popup-wrap="" ng-model="date"
+             ng-change="dateSelection(date)"
+             template-url="uib/template/datepickerPopup/popup.html"
+             class="ng-pristine ng-untouched ng-valid ng-scope ng-not-empty">
+        </div>
+    </div>
+
+    <div ng-messages="crm_prxmscntts_frm_cntrllr.form.data.$error"  ng-if="crm_prxmscntts_frm_cntrllr.form.data.$dirty || crm_prxmscntts_frm_cntrllr.submitted">
+        <div class="alert alert-danger" role="alert" ng-message="required">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            O campo data não pode ser vazio.
+        </div>
+    </div>
+
+{% endblock viewedit_form_data %}
+
+{% block viewedit_form_hora %}
+    <div class="form-group">
+        <label class="control-label required" for="hora">Horário:</label>
+        <input type="text"
+               id="hora"
+               name="hora"
+               ng-model="crm_prxmscntts_frm_cntrllr.entity.hora"
+               ng-disabled="crm_prxmscntts_frm_cntrllr.entity.submitting"
+               class="form-control"
+               required="required"
+               ui-mask="99:99" 
+               model-view-value="true">
+    </div>
+
+    <div ng-messages="crm_prxmscntts_frm_cntrllr.form.hora.$error"  ng-if="crm_prxmscntts_frm_cntrllr.form.hora.$dirty || crm_prxmscntts_frm_cntrllr.submitted">
+        <div class="alert alert-danger" role="alert" ng-message="required">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            O campo hora não pode ser vazio.
+        </div>
+    </div>
+{% endblock viewedit_form_hora %}
+
+
+
+
+{% block viewedit_form_responsavel_web %}
+    <div class="form-group">
+        <label for="responsavel">Responsável</label>
+        <ui-select id="responsavel"
+                   name="responsavel"
+                   ng-model="crm_prxmscntts_frm_cntrllr.atribuidoa"
+                   on-select="crm_prxmscntts_frm_cntrllr.atribuir($item)"
+                   ng-disabled="crm_prxmscntts_frm_cntrllr.submitting">
+
+            <ui-select-match allow-clear="true" placeholder="Selecione ou busque">
+                {{'{{crm_prxmscntts_frm_cntrllr.exibeAtribuido }}'}}
+            </ui-select-match>
+
+            <ui-select-choices group-by="crm_prxmscntts_frm_cntrllr.agruparPorTipo"
+                               repeat="option in crm_prxmscntts_frm_cntrllr.optionusuariologado.concat(crm_prxmscntts_frm_cntrllr.contas)  | filter:$select.search">
+
+                <div class="row">
+                    <div class="col-md-12" ng-bind-html="option.email? (option.nome + ' ('+option.email+')') : option.nome | highlight: $select.search"></div>
+                </div>
+            </ui-select-choices>
+        </ui-select>
+
+        <div ng-messages="crm_prxmscntts_frm_cntrllr.form.responsavel_web.$error"  ng-if="crm_prxmscntts_frm_cntrllr.form.responsavel_web.$dirty || crm_prxmscntts_frm_cntrllr.submitted">
+            <div class="alert alert-danger" role="alert" ng-message="required">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Erro:</span>
+                O campo responsável não pode ser vazio.
+            </div>
+            <div class="alert alert-danger" role="alert" ng-message="email">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Erro:</span>
+                O campo email deve ser um email válido.
+            </div>
+        </div>
+
+    </div>
+{% endblock viewedit_form_responsavel_web %}
+
+{% block viewedit_form_cliente %}
+
+    <div class="form-group">
+        <label class="control-label" for="cliente">Cliente:</label>
+        <mda-ui-select
+            service="NsClientes"
+            constructors="{ 'bloqueado' : false }"
+            opts='{ "attr" : {"id" : "cliente", "name" : "cliente","ng-change" : "crm_prxmscntts_frm_cntrllr.carregaUsuariosCliente($select.selected)", "ng-model" : "crm_prxmscntts_frm_cntrllr.entity.cliente", "ng-disabled" : "crm_prxmscntts_frm_cntrllr.entity.submitting", "placeholder" : "Escolha um cliente",  "ng-required" : "crm_prxmscntts_frm_cntrllr.permitirCadastroSemCliente === 0"} , "match" : "nome" }'
+            fields='["nome", ]'>                
+        </mda-ui-select>
+
+        <div ng-messages="crm_prxmscntts_frm_cntrllr.form.cliente.$error"  ng-if="crm_prxmscntts_frm_cntrllr.form.cliente.$dirty || crm_prxmscntts_frm_cntrllr.submitted">
+            <div class="alert alert-danger" role="alert" ng-message="required">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Erro:</span>
+                O campo cliente não pode ser vazio.
+            </div>
+            <div class="alert alert-danger" role="alert" ng-message="number">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Erro:</span>
+            </div>
+        </div>
+    </div>
+
+{% endblock viewedit_form_cliente %}

@@ -1,0 +1,116 @@
+projetos:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\ProjetosController"
+    name_prefix: "servicos_projetos_"
+
+estabelecimento:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\EstabelecimentoController"
+    name_prefix: "ns_estabelecimento_"
+
+tipodeprojeto:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\TipodeProjetoController"
+    name_prefix: "servicos_tipodeprojeto_"
+
+ordensservico:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\OrdensServicoController"
+    name_prefix: "servicos_ordensservico_"
+
+ordensservico_itens:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\OrdensServico\\ItemController"
+    name_prefix: "servicos_ordensservico_item_"
+    prefix: "/ordensservico"
+
+ordensservico_operacao:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\OperacaoController"
+    name_prefix: "servicos_ordensservico_operacao_"
+    prefix: "/ordensservico"
+
+
+tiposervico:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\TipoServicoController"
+    name_prefix: "servicos_tiposervico_"
+    prefix: "/tiposervico"
+
+servicotecnico:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\ServicoTecnicoController"
+    name_prefix: "servicos_servicotecnico_"
+    prefix: "/servicotecnico"
+
+cfop:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\CfopController"
+    name_prefix: "ns_cfop_"
+    prefix: "/cfop"
+
+categoriadeproduto:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Estoque\\CategoriaDeProdutoController"
+    name_prefix: "estoque_categoriadeproduto_"
+    prefix: "/categoriadeproduto"
+
+produto:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Estoque\\ProdutoController"
+    name_prefix: "estoque_produto_"
+    prefix: "/produto"
+
+tipoordensservico:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\TipoOrdensServicoController"
+    name_prefix: "servicos_tipoordensservico_"
+    prefix: "/tipoordensservico"
+
+servicostecnicos_checklist:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\ServicoTecnico\\ChecklistController"
+    name_prefix: "servicos_servicotecnico_checklist_"
+
+tipomanutencao:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\TipoManutencaoController"
+    name_prefix: "servicos_tipomanutencao_"
+
+visita:
+    type:     rest
+    resource: "Nasajon\\Atendimento\\AppBundle\\Controller\\Admin\\VisitaController"
+    name_prefix: "servicos_visita_"
+
+tecnico:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\Visita\\TecnicoController"
+    name_prefix: "servicos_visita_tecnico_"
+    prefix: "/visita"
+
+nstecnico:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\TecnicoController"
+    name_prefix: "ns_tecnico_"
+
+financascontrato:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Financas\\ContratoController"
+    name_prefix: "financas_contrato_"
+
+nspessoamunicipio:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\PessoamunicipioController"
+    name_prefix: "ns_pessoamunicipio_"
+
+servicosativos:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\AtivosController"
+    name_prefix: "servicos_ativos_"
+
+estoqueveiculo:
+    type:     rest
+    resource: "Nasajon\\MDABundle\\Controller\\Estoque\\VeiculoController"
+    name_prefix: "estoque_veiculo_"
+    prefix: "/veiculo"
+    

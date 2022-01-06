@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentosregrasacoes" label="atendimentosregrasacoes" project="servicos">
+    <entity schema="servicos" table="atendimentosregrasacoes">
+        <fieldmodel name="atendimentoregraacao" datatype="guid" isid="true" column="atendimentoregraacao"/>
+        <fieldmodel name="atendimentoregra" datatype="guid" column="atendimentoregra" useCaseLink="servicos\atendimentosregras" entityJoinType="left" />
+        <fieldmodel name="acao" datatype="string" column="acao"/>
+        <fieldmodel name="acaocampocustomizado" datatype="guid" column="acaocampocustomizado" />
+        <fieldmodel name="valor" datatype="string" column="valor"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">atendimentoregra</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimentoregraacao" entitylink="atendimentoregraacao" isid="true" />
+            <fieldbrowser alias="acao" entitylink="acao" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="acaocampocustomizado" entitylink="acaocampocustomizado" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="valor" entitylink="valor" width="80" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="acao" controltype="textedit" entitylink="acao" label="Ação">
+                        <validates>
+                            <validate type="vnull" displaytext="Ação não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="valor" controltype="textedit" entitylink="valor" label="Valor"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoRegraAcaoNovo</name>
+                <fromto valueapi="atendimentoregra" valueentity="atendimentoregra"/>
+                <fromto valueapi="acao" valueentity="acao"/>
+                <fromto valueapi="acaocampocustomizado" valueentity="acaocampocustomizado"/>
+                <fromto valueapi="valor" valueentity="valor"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

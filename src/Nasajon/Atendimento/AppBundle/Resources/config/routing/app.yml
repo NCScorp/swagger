@@ -1,0 +1,106 @@
+aprovar:
+    pattern: /{tenant}/vinculo/aprovar
+    defaults: { _controller: NasajonAtendimentoAppBundle:Cliente\Vinculo:aprovar }
+
+robots:
+    pattern: /robots.txt
+    defaults: { _controller: NasajonAtendimentoAppBundle:Cliente\Index:robots}
+    name_prefix: "atendimento_cliente_"
+    arguments:
+        - "@nasajon_mda.atendimento_cliente_artigos_repository"
+
+sitemap_index:
+    pattern: /sitemapindex
+    defaults: { _controller: NasajonAtendimentoAppBundle:Cliente\Index:sitemapIndex}
+    name_prefix: "atendimento_cliente_"
+    arguments:
+        - "@nasajon_mda.atendimento_cliente_artigos_repository"
+sitemap:
+    pattern: /{tenant}/sitemap
+    defaults: { _controller: NasajonAtendimentoAppBundle:Cliente\Index:sitemap}
+    name_prefix: "atendimento_cliente_"
+    arguments:
+        - "@nasajon_mda.atendimento_cliente_artigos_repository"
+
+redirect:
+    resource: "@NasajonAtendimentoAppBundle/Controller/RedirectController.php"
+    type:     annotation
+    prefix:   /
+
+globals:
+    resource: "@NasajonAtendimentoAppBundle/Controller/GlobalsController.php"
+    type:     annotation
+    prefix:   /{tenant}/
+
+unsubscribe:
+    resource: "@NasajonAtendimentoAppBundle/Controller/UnsubscribeController.php"
+    type: annotation
+    prefix: /unsubscribe/
+
+endpoint:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/api/endpoint.yml"
+    type:     rest
+    name_prefix: "atendimento_endpoint_"
+    prefix:   /endpoint
+
+admin_public_api:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/api.yml"
+    type:     rest
+    name_prefix: api_
+    prefix:   /api/
+
+admin_private_api:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/api.yml"
+    type:     rest
+    prefix:   /private/
+    options:
+        expose: true
+        
+template_admin:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/template/admin.yml"
+    type:     rest    
+    prefix: /admin
+    name_prefix: template_
+    defaults:
+        _format: html
+    options:
+        expose: true
+
+template_cliente:
+   resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/template/cliente.yml"
+   type:     rest    
+   prefix: /
+   name_prefix: template_
+   defaults:
+       _format: html
+   options:
+       expose: true
+       
+    
+template_mda:
+   resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/template/mda.yml"
+   type:     rest    
+   prefix: /
+   defaults:
+       _format: html
+   options:
+       expose: true   
+    
+admin_ui:
+    resource: "@NasajonAtendimentoAppBundle/Controller/Admin/IndexController.php"
+    type:     annotation
+    prefix:   /{tenant}/admin
+    defaults:
+        _format: html        
+    options:
+        expose: true
+
+cliente_ui:
+    resource: "@NasajonAtendimentoAppBundle/Controller/Cliente/IndexController.php"
+    type:     annotation
+    prefix:   /{tenant}
+    name_prefix: "atendimento_"
+    defaults: 
+        _format: html
+    options:
+        expose: true

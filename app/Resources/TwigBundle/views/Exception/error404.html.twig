@@ -1,0 +1,24 @@
+{% extends 'NasajonAtendimentoAppBundle:Default:main-error.html.twig' %}
+
+{% block content %}
+<div class="container-fluid sistema-atendimento" ng-app="Atendimento" ng-cloak="">
+<div class="page-error">
+    <div class="row">
+        <div class="col-md-12">
+            <h2><i class="el el-exclamation-sign"></i> Página não encontrada!</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>Parece que houve um erro com a página que você estava procurando.</p>
+            <p>É possível que a página tenha sido removida ou o endereço não existe.</p>
+            <p class="info-post col-md-12">"{{ status_code }} {{ status_text }}".</p>
+            <a class="btn btn-primary btn-md" href="#" role="button">Voltar ao painel</a>
+            {#<p>{{exception.message}}</p>#}
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}

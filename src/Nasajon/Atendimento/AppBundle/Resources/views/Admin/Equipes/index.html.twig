@@ -1,0 +1,27 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Equipes/index.html.twig' %}
+
+{% block index_header -%}
+    <div class="col-md-12 headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail hidden-xs hidden-sm pull-left"><a ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Configurações">Configurações</a> > <span class="select-page">Equipes</span></strong></div>
+            <a class="btn btn-xs btn-warning" ui-sref="atendimento_equipes_new({})" href="#/configuracoes/equipes/novo">
+                <i class="el el-plus"></i> Criar
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block index_panel_header -%}
+    <div class="headline-sub clearfix hidden-lg hidden-md">
+        <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Voltar às configurações" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a>Equipes</h3>
+    </div>
+    
+{% endblock %}
+
+{%- block viewedit_view_list_item %}
+<a href ui-sref='atendimento_equipes_edit({equipe : entity.equipe})'  class="list-group-item" ng-repeat="entity in tndmnt_qps_lst_cntrllr.entities" ui-sref-active="active">
+    <h4 class="list-group-item-heading" ng-bind-html="entity.nome | highlight : tndmnt_qps_lst_cntrllr.filter.key"></h4>
+    <p class="list-group-item-text"><strong>Clientes:</strong>
+        <span ng-bind-html="['Configurações Avançadas', 'Todos'][entity.todosclientes] | highlight : tndmnt_qps_lst_cntrllr.filter.key"></span>
+    </p>
+</a>
+{%- endblock viewedit_view_list_item %}

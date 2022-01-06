@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="cliente" label="cliente" project="ns" >
+    <entity schema="ns" table="vwpessoas" >
+        <fieldmodel name="cliente" datatype="guid" isid="true" column="id"/>
+        <fieldmodel name="codigo" datatype="string" column="pessoa"/>
+        <fieldmodel name="nome" datatype="string" column="nome" />
+        <fieldmodel name="nomefantasia" datatype="string" column="nomefantasia" />
+        <fieldmodel name="datacliente" datatype="string" column="datacliente" />
+        <fieldmodel name="bloqueado" datatype="boolean" column="bloqueado" />
+    </entity>
+    <constructors>
+        <constructoritem required="false">bloqueado</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Clientes">
+        <fieldsbrowser>
+            <fieldbrowser alias="Cliente" entitylink="cliente" isid="true" />
+            <fieldbrowser alias="Nome" entitylink="nome" width="20" unique="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Nome Fantasia" entitylink="nomefantasia" width="20" cansearch="true" visible="false" avaliable="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="80" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

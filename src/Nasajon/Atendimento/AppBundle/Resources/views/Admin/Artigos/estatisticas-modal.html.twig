@@ -1,0 +1,116 @@
+<div class="headline-sub clearfix headline-mobile">
+  <h3 class="">
+    Estatísticas do Artigo
+    <div class="pull-right">
+      <button type="button" class="btn btn-default" ng-click="estatisticas.voltar()" data-dismiss="modal">Voltar ao artigo</button>
+    </div>
+  </h3>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div ng-if="!estatisticas.isBusy()">
+      <div class="forms col-sm-12">
+        <div class="row total-boxes">
+          <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+              <div class="placard-value" ng-bind="estatisticas.total.gostaram"></div>
+              <div class="placard-description">Gostaram</div>
+            </div>
+          </div>
+
+          <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+              <div class="placard-value" ng-bind="estatisticas.total.naoGostaram"></div>
+              <div class="placard-description">Não gostaram</div>
+            </div>
+          </div>
+
+          <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+              <div class="placard-value" ng-bind="estatisticas.total.respostasChamados"></div>
+              <div class="placard-description">Respostas em chamados</div>
+            </div>
+          </div>
+
+          <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+              <div class="placard-value" ng-bind="estatisticas.total.respostasImediatas"></div>
+              <div class="placard-description">Respostas Imediatas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <uib-tabset active="0">
+        <uib-tab index="0" classes="tab-de-resposta">
+          <uib-tab-heading>
+            <span class="reply-ico">
+              <i class="el el-thumbs-up"></i> Gostaram
+            </span>
+          </uib-tab-heading>
+
+          <div class='padding-content'>
+            <div class="table-responsive">
+              <table class="table table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                <thead>
+                  <tr>
+                    <th ts-criteria="usuario" width="20%">Usuário</th>
+                    <th ts-criteria="numeroprotocolo" width="80%">Comentário</th>
+                    <th ts-criteria="created_at" width="10%">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="data in estatisticas.gostaram" ts-repeat>
+                    <td>
+                      <span>{{"{{data.nome}}"}}</span><br/>
+                      <span>({{"{{data.email}}"}})</span>
+                    </td>
+                    <td>{{'{{data.comentario}}'}}</td>
+                    <td>{{'{{data.created_at | convertToDate}}'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </uib-tab>
+        <uib-tab index="1">
+          <uib-tab-heading>
+            <span class="reply-ico">
+              <i class="el el-thumbs-down"></i> Não gostaram
+            </span>
+          </uib-tab-heading>
+
+          <div class='padding-content'>
+            <div class="table-responsive">
+              <table class="table table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                <thead>
+                  <tr>
+                    <th ts-criteria="usuario" width="20%">Usuário</th>
+                    <th ts-criteria="numeroprotocolo" width="70%">Comentário</th>
+                    <th ts-criteria="created_at" width="10%">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="data in estatisticas.naoGostaram" ts-repeat>
+                    <td>
+                      <span>{{"{{data.nome}}"}}</span><br/>
+                      <span>({{"{{data.email}}"}})</span>
+                    </td>
+                    <td>{{'{{data.comentario}}'}}</td>
+                    <td>{{'{{data.created_at | convertToDate}}'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+    <div ng-class="{'onloading' : estatisticas.isBusy() }" class="text-center">
+    </div>
+
+  </div>
+</div>

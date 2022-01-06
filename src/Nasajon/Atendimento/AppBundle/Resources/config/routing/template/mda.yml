@@ -1,0 +1,17 @@
+atendimento_categorias_template_form:
+    path: /configuracoes/categorias/template/form.html
+    defaults:
+        _controller:  FrameworkBundle:Template:template
+        template: '@NasajonMDABundle/Resources/js/Atendimento/Categorias/form.html.twig'
+
+#atendimento_admin_enderecosemails:
+#    path: /configuracoes/enderecosemails/template/index.html
+#    defaults:
+#        _controller:  FrameworkBundle:Template:template
+#        template: '@NasajonMDA/Atendimento/Enderecosemails/index.html.twig'
+#
+#atendimento_admin_enderecosemails:
+#    path: /configuracoes/enderecosemails/template/index.html
+#    defaults:
+#        _controller:  FrameworkBundle:Template:template
+#        template: '@NasajonMDA/Atendimento/Enderecosemails/index.html.twig'

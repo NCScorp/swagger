@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="artigos" label="artigos" project="atendimento/cliente" >
+    <entity schema="atendimento" table="vwartigosativos_v2">
+        <fieldmodel name="artigo" datatype="guid" isid="true" column="artigo"/>
+        <fieldmodel name="categoria" datatype="guid" />
+        <fieldmodel name="categoriatitulo" datatype="guid" column="categoriatitulo"/>
+        <fieldmodel name="subcategoria" datatype="guid" column="subcategoria"/>
+        <fieldmodel name="secao" datatype="guid" column="secao"  />
+        <fieldmodel name="subcategoriatitulo" datatype="guid" column="subcategoriatitulo"/>
+        <fieldmodel name="secaotitulo" datatype="guid" column="secaotitulo"  />
+        <fieldmodel name="titulo" datatype="string" column="titulo"/>
+        <fieldmodel name="resumo" datatype="string" column="resumo" />
+        <fieldmodel name="conteudo" datatype="string" column="conteudo" />
+        <fieldmodel name="status" datatype="boolean" column="status" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="published_at" datatype="datetime" column="published_at" />
+        <fieldmodel name="fixarnotopo" datatype="boolean" column="fixarnotopo" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="followup" datatype="guid" column="followup" />
+        <fieldmodel name="gostaram" datatype="integer" column="gostaram" />
+        <fieldmodel name="tags" datatype="json" column="tags" />
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+        <fieldmodel name="campoordenacao" datatype="string" column="campoordenacao" notMapped = "true"></fieldmodel>
+        <fieldmodel name="direcaoordenacao" datatype="string" column="direcaoordenacao" notMapped = "true"></fieldmodel>
+        <fieldmodel name="limite" datatype="string" column="limite" notMapped = "true"></fieldmodel>
+        <fieldmodel name="tipoexibicao" datatype="integer" column="tipoexibicao" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">categoria</constructoritem>
+        <constructoritem required="false">subcategoria</constructoritem>
+        <constructoritem required="false">secao</constructoritem>
+        <constructoritem required="false">followup</constructoritem>
+        <constructoritem required="false">fixarnotopo</constructoritem>
+        <constructoritem required="false">tags</constructoritem>
+        <constructoritem required="false">campoordenacao</constructoritem>
+        <constructoritem required="false">direcaoordenacao</constructoritem>
+        <constructoritem required="false">limite</constructoritem>
+        <constructoritem required="false">tipoexibicao</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="window" label="Base de Conhecimento">
+        <fieldsbrowser>
+            <fieldbrowser alias="artigo" entitylink="artigo" isid="true" visible="false" />
+            <fieldbrowser alias="Titulo" entitylink="titulo" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Resumo" entitylink="resumo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Status" entitylink="status" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Categoria" entitylink="categoria" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Categoria Titulo" entitylink="titulo" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="SubCategoria" entitylink="subcategoria" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="SubCategoria Titulo" entitylink="subcategoriatitulo" width="20" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Seção" entitylink="secao" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Seção Titulo" entitylink="secaotitulo" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Data" entitylink="created_at" width="80" cansearch="false" visible="false" avaliable="false" />
+            <fieldbrowser alias="LastUpdate" entitylink="lastupdate" cansearch="false" visible="false" avaliable="false" />
+            <fieldbrowser alias="Data de Publicação" entitylink="published_at" cansearch="false" visible="false" avaliable="false" />
+            <fieldbrowser alias="Followup" entitylink="followup" width="80" cansearch="false" visible="false" avaliable="false" />
+            <fieldbrowser alias="fixarnotopo" entitylink="fixarnotopo" cansearch="false" visible="true" avaliable="false" />
+            <fieldbrowser allias="tags" entitylink="tags" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser allias="ordem" entitylink="ordem" cansearch="false" visible="true" avaliable="true" indefaultorder="true" direction="desc"  />
+            <fieldbrowser alias="Data de Atualização" entitylink="updated_at" visible="false" />
+            <fieldbrowser allias="tipoexibicao" entitylink="tipoexibicao" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Artigo">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="titulo" controltype="textedit" entitylink="titulo" colspan="8" />
+                    <cell name="categoria" controltype="textedit" entitylink="categoria" colspan="4" />
+                </row>
+                <row>
+                    <cell name="conteudo" controltype="wysiwyg" entitylink="conteudo" colspan="12"/>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>ArtigoUtil</name>
+            <api>
+                <name>ArtigoUtil</name>
+                <fromto valueapi="artigo" valueentity="artigo"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="logged_user" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>IncrementarQtdeEvitouCriacaoChamado</name>
+            <api>
+                <name>IncrementarQtdeEvitouCriacaoChamado</name>
+                <fromto valueapi="artigo" valueentity="artigo"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

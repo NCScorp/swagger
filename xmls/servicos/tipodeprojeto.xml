@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="TipodeProjeto" label="TipodeProjeto" project="Servicos">
+    <entity schema="servicos" table="tiposprojetos">
+        <fieldmodel name="tipoprojeto" datatype="guid" isid="true" column="tipoprojeto"/>            
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial_id"/>
+        <fieldmodel name="tenant" datatype="string" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Tipos de Projetos" >
+        <fieldsbrowser>
+            <fieldbrowser alias="tipoprojeto" entitylink="tipoprojeto" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Tipo de Projeto">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="codigo" controltype="textedit" entitylink="codigo" label="Código" colspan="4" placeholder="Ex: 123" >
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Código deve ser preenchido." />
+                            <validate type="maxlength" value="30" displaytext="O campo Código ultrapassa o limite de 30 caracteres. "/>
+                        </validates>
+                    </cell>
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" label="Descrição" colspan="8" placeholder="Digite a descrição">
+                        <validates>
+                            <validate type="maxlength" value="150" displaytext="O campo Descrição ultrapassa o limite de 150 caracteres. "/>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>tipoprojetoNovo</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="tipodeprojeto" valueentity="tipoprojeto"/>
+                <fromto valueapi="codigo" valueentity="codigo"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+            </api>         
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>tipoprojetoAlterar</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="tipodeprojeto" valueentity="tipoprojeto" specificType="EntidadeInterna"/>
+                <fromto valueapi="codigo" valueentity="codigo"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>tipoprojetoExcluir</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="tipodeprojeto" valueentity="tipoprojeto" specificType="EntidadeInterna"/>     
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

@@ -1,0 +1,47 @@
+services:
+
+    nasajon_atendimento_app_bundle.event_processor.followup:
+        class: Nasajon\Atendimento\AppBundle\Event\Processor\FollowupProcessor
+        arguments:
+            - "@nasajon_mda.atendimento_admin_followups_repository"
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - "@nasajon_mda.servicos_atendimentosobservadores_repository"
+            - "@nasajon_mda.ns_clientes_repository"
+            - "@nasajon_mda.atendimento_equipes_repository"
+            - "@modelbundle.service.configuracoes"
+            - "@nasajon_atendimento_app_bundle.usuarios_dispinibilidades_service"
+            - "@nasajon_atendimento_app_bundle.equipe_cliente_filter_service"
+            - "%env(email_subdomain)%"
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+            - "@nasajon_sdk.diretorio"
+    nasajon_atendimento_app_bundle.event_processor.atendimento_cliente:
+        class: Nasajon\Atendimento\AppBundle\Event\Processor\AtendimentoClienteProcessor
+        arguments:
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - "@nasajon_mda.servicos_atendimentosfilasobservadores_repository"
+            - "@nasajon_atendimento_app_bundle.usuariosdisponibilidades_repository"
+            - "@nasajon_mda.servicos_atendimentosregrasacoes_repository"
+            - "@nasajon_mda.ns_clientes_repository"
+            - "@nasajon_mda.atendimento_equipes_repository"
+            - "@nasajon_atendimento_app_bundle.equipe_cliente_filter_service"
+            - "@modelbundle.service.configuracoes"
+            - "%env(email_subdomain)%"
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+    nasajon_atendimento_app_bundle.event_processor.atendimento_admin:
+        class: Nasajon\Atendimento\AppBundle\Event\Processor\AtendimentoAdminProcessor
+        arguments:
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - "@nasajon_mda.servicos_atendimentosregrasacoes_repository"
+            - "%env(email_subdomain)%"
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+
+    nasajon_atendimento_app_bundle.event_receiver:
+        class: Nasajon\Atendimento\AppBundle\Event\EventReceiver
+        arguments:
+           - "@nasajon_atendimento_app_bundle.notification_dispatcher"
+        calls:
+        - [setContainer, ["@service_container"]]
+

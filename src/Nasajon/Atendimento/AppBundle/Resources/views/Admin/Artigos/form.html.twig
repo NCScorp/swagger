@@ -1,0 +1,226 @@
+<div ng-if="!tndmnt_dmn_rtgs_frm_cntrllr.isBusy()">    
+    <form name="tndmnt_dmn_rtgs_frm_cntrllr.form" novalidate="novalidate" role="form"  ng-submit="tndmnt_dmn_rtgs_frm_cntrllr.submit()">
+        {% block viewedit_header_toolbar -%}
+            <div class="headline-sub clearfix">
+                <h3 class="pull-left">
+                    <a href ui-sref="atendimento_admin_artigos({})" title="Voltar à lista" class="hidden-md hidden-lg">
+                        <i class="el el-chevron-left"></i>
+                    </a> 
+                    {% block viewedit_header_toolbar_title -%} 
+                        Artigo
+                    {% endblock viewedit_header_toolbar_title -%} 
+                </h3>
+
+                <div class="btns-area pull-right">
+                    {% block viewedit_toolbar_btn_area %}
+                        <button 
+                            id="btnCancelar"
+                            ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.artigo"
+                            type="button"
+                            class="btn btn-sm btn-link btn-cancel btn-geral"
+                            ui-sref="atendimento_admin_artigos_show({tenant : tndmnt_dmn_rtgs_frm_cntrllr.entity.tenant, artigo: tndmnt_dmn_rtgs_frm_cntrllr.entity.artigo})">
+                            <i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span>
+                        </button>
+                        <button 
+                            id="btnCancelar"
+                            ng-if="!tndmnt_dmn_rtgs_frm_cntrllr.entity.artigo"
+                            type="button"
+                            class="btn btn-sm btn-link btn-cancel btn-geral"
+                            ui-sref="atendimento_admin_artigos">
+                            <i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span>
+                        </button>
+
+                        <button id="btnSalvar" ng-disabled="tndmnt_dmn_rtgs_frm_cntrllr.submitting || (tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao == 2 && (!tndmnt_dmn_rtgs_frm_cntrllr.videoValido || !tndmnt_dmn_rtgs_frm_cntrllr.entity.conteudo))" type="submit" class="btn btn-sm btn-primary btn-save btn-geral" ng-click="tndmnt_dmn_rtgs_frm_cntrllr.submit($event, 0)">
+                            <i class="el el-ok"></i> <span class="hidden-xs">Salvar</span>
+                        </button>
+
+
+                    {% endblock viewedit_toolbar_btn_area %}
+                </div>
+            </div>
+        {% endblock viewedit_header_toolbar -%}
+
+
+
+        <div class="forms">
+
+            {% block viewedit_edit -%}            
+                <div class="row" >
+                    <div class="col-sm-8" >
+                    {% block viewedit_form_titulo %}
+                            <div class="form-group">
+                                <label class="control-label" for="titulo">Título</label>
+                                <input type='text' class="form-control" id="titulo" name="titulo" required="required" maxlength="140" 
+                                        ng-model="tndmnt_dmn_rtgs_frm_cntrllr.entity.titulo" 
+                                        ng-disabled="tndmnt_dmn_rtgs_frm_cntrllr.entity.$$__submitting" />
+                                <div ng-messages="tndmnt_dmn_rtgs_frm_cntrllr.form.titulo.$error"  
+                                     ng-if="tndmnt_dmn_rtgs_frm_cntrllr.form.titulo.$dirty || tndmnt_dmn_rtgs_frm_cntrllr.submitted">
+                                     <div class="alert alert-danger" role="alert" ng-message="required">
+                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                         <span class="sr-only">Erro:</span>O campo título não pode ser vazio.
+                                     </div>
+                                     <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                         <span class="sr-only">Erro:</span>Tamanho não deve exceder 140 caracteres.
+                                     </div>
+                                </div>
+                            </div>
+                    {% endblock viewedit_form_titulo %}
+                    </div>
+                    
+                    <div class="col-sm-4" >
+                        {% block viewedit_form_tipoexibicao %}
+                        
+                        {% endblock viewedit_form_tipoexibicao %}
+        </div>
+
+                    {# <div class="col-sm-4" >
+                        {% block viewedit_form_secao %}
+
+                            <div class="form-group">
+                                <label class="control-label" for="secao"></label>
+                                <mda-ui-select 
+                                    service="AtendimentoCategorias" 
+                                    constructors="{ 'tipo': 3  }"
+                                    opts='{ "attr" : {"id" : "cbCategoria", "name" : "secao", "ng-model" : "tndmnt_dmn_rtgs_frm_cntrllr.entity.secao", "ng-disabled" : "tndmnt_dmn_rtgs_frm_cntrllr.entity.submitting", "placeholder" : "Escolha a Seção",  "required" : "true"} , "required" : true, "match" : "titulo" }'
+                                    fields='["titulo", ]'></mda-ui-select>
+
+                                <div ng-messages="tndmnt_dmn_rtgs_frm_cntrllr.form.secao.$error"  ng-if="tndmnt_dmn_rtgs_frm_cntrllr.form.secao.$dirty || tndmnt_dmn_rtgs_frm_cntrllr.submitted">
+                                    <div id="errorCategoriaRequerida" class="alert alert-danger" role="alert" ng-message="required">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Erro:</span>
+                                        O campo seção não pode ser vazio.
+                                    </div>
+                                </div>
+                            </div>            
+
+                        {% endblock viewedit_form_secao %}
+                    </div> #}
+                </div>
+
+
+                <div class="row" ><div class="col-sm-12" >
+                        {% block viewedit_form_fixarnotopo %}
+                            <div class="form-group"><input type='hidden' class="form-control"     id="fixarnotopo" name="fixarnotopo"            ng-model="tndmnt_dmn_rtgs_frm_cntrllr.entity.fixarnotopo" ng-disabled="tndmnt_dmn_rtgs_frm_cntrllr.entity.$$__submitting" /></div>
+                        {% endblock viewedit_form_fixarnotopo %}    
+                    </div>
+                </div>
+
+                <div class="row" >
+                    <div class="col-sm-12" >
+                        {% block viewedit_form_conteudo %}
+                            {% set form_name = form.vars.original_type %}
+
+                            <div ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao === 1" >
+                                <ng-ckeditor id="conteudo"
+                                            ng-model="tndmnt_dmn_rtgs_frm_cntrllr.entity.conteudo"
+                                            ng-changes="tndmnt_dmn_rtgs_frm_cntrllr.suggestTag()"
+                                            skin="moono-lisa" 
+                                            required
+                                            name="conteudo">
+                                </ng-ckeditor>
+
+                                <div ng-messages="tndmnt_dmn_rtgs_frm_cntrllr.form.conteudo.$error"  ng-if='tndmnt_dmn_rtgs_frm_cntrllr.form.conteudo.$dirty || tndmnt_dmn_rtgs_frm_cntrllr.submitted'>
+
+                                    <div id="errorConteudo" class="alert alert-danger" role="alert" ng-message="required">
+                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                        <span class="sr-only">Erro:</span>
+                                        O campo conteúdo não pode ser vazio.
+                                    </div>
+                                </div>
+                            </div> 
+
+                            <div ng-if="tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao === 2">
+
+
+                                <label class="control-label" for="url_video">URL:</label>
+                                <input type='text' class="form-control" id="url_video" name="url_video" required="required" 
+                                       maxlength="200" ng-model="tndmnt_dmn_rtgs_frm_cntrllr.entity.conteudo" 
+                                       ng-init="tndmnt_dmn_rtgs_frm_cntrllr.renderizarVideo()"
+                                       ng-disabled="tndmnt_dmn_rtgs_frm_cntrllr.entity.$$__submitting"
+                                       ng-change="tndmnt_dmn_rtgs_frm_cntrllr.renderizarVideo()" />
+
+                                <div id="render-video">
+
+                                </div>       
+                                                                
+                            </div>
+                        {% endblock viewedit_form_conteudo %}
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                      <tags-input 
+                        ng-model="tndmnt_dmn_rtgs_frm_cntrllr.entity.tags"
+                        placeholder="Adicionar tag"
+                        keyProperty=''
+                        name='tags'
+                        ng-required="(tndmnt_dmn_rtgs_frm_cntrllr.tagObrigatorio==1)"
+                        ng-init="tndmnt_dmn_rtgs_frm_cntrllr.suggestTag()"
+                        on-invalid-tag="invalidTag($tag)"
+                        on-tag-added="addedTag($tag)"
+                        min-length='3'
+                        add-on-blur="true"
+                        allow-leftover-text="true"
+                      >
+                      </tags-input>
+                      <div ng-messages="tndmnt_dmn_rtgs_frm_cntrllr.form.tags.$error" ng-if="(tndmnt_dmn_rtgs_frm_cntrllr.form.tags.$dirty || tndmnt_dmn_rtgs_frm_cntrllr.submitted) && tndmnt_dmn_rtgs_frm_cntrllr.tagObrigatorio == 1">
+                          <div id="errorTags" class="alert alert-danger" role="alert" ng-message="required">
+                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                              <span class="sr-only">Erro:</span>
+                              O campo tag não pode ser vazio e deve conter no mínimo 3 caracteres.
+                          </div>
+                      </div>
+                      <div ng-if="tndmnt_dmn_rtgs_frm_cntrllr.tagInvalida == 1">
+                          <div id="errorTags" class="alert alert-danger" role="alert">
+                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                              <span class="sr-only">Erro:</span>
+                              Cada tag deve conter no mínimo 3 caracteres.
+                          </div>
+                      </div>
+                      <div ng-if="tndmnt_dmn_rtgs_frm_cntrllr.tagInvalida == 2">
+                          <div id="errorTags" class="alert alert-danger" role="alert">
+                              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                              <span class="sr-only">Erro:</span>
+                              As tags não podem ser repetidas.
+                          </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 tags-show" ng-show="((tndmnt_dmn_rtgs_frm_cntrllr.suggestedTags| filter:tndmnt_dmn_rtgs_frm_cntrllr.filterSuggestedTag).length > 0)">
+                    <h4>Tags Sugeridas</h4>
+                    <a class="label label-success"
+                      ng-repeat="suggestedTag in tndmnt_dmn_rtgs_frm_cntrllr.suggestedTags | filter:tndmnt_dmn_rtgs_frm_cntrllr.filterSuggestedTag | limitTo: tndmnt_dmn_rtgs_frm_cntrllr.suggestedTagsMaxSize"
+                      ng-click="tndmnt_dmn_rtgs_frm_cntrllr.addSuggestedTags(suggestedTag)"
+                    >
+                    {{'{{suggestedTag}}'}}
+                    </a>
+                  </div>
+                </div>
+            {% endblock viewedit_edit -%}
+            
+            {% block viewedit_footer_toolbar -%}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="btn-group pull-right" uib-dropdown>
+                            <button id="btnSubmit" type="submit" class="btn btn-primary" ng-click="tndmnt_dmn_rtgs_frm_cntrllr.submit($event, 0)" ng-disabled="tndmnt_dmn_rtgs_frm_cntrllr.submitting || (tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao == 2 && (!tndmnt_dmn_rtgs_frm_cntrllr.videoValido || !tndmnt_dmn_rtgs_frm_cntrllr.entity.conteudo))">Salvar</button>
+                            <button id="btnOpt" ng-disabled="tndmnt_dmn_rtgs_frm_cntrllr.submitting || (tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao == 2 && (!tndmnt_dmn_rtgs_frm_cntrllr.videoValido || !tndmnt_dmn_rtgs_frm_cntrllr.entity.conteudo))" type="button" class="btn btn-primary" uib-dropdown-toggle>
+                                <span class="caret"></span>
+                                <span class="sr-only">Mais opções</span>
+                            </button>
+                            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                <li role="menuitem">
+                                    <a id="btnSubmitPublish" href="#" ng-click="tndmnt_dmn_rtgs_frm_cntrllr.submit($event, 1)" ng-disabled="tndmnt_dmn_rtgs_frm_cntrllr.submitting || (tndmnt_dmn_rtgs_frm_cntrllr.entity.tipoexibicao == 2 && (!tndmnt_dmn_rtgs_frm_cntrllr.videoValido || !tndmnt_dmn_rtgs_frm_cntrllr.entity.conteudo))">Salvar e publicar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endblock viewedit_footer_toolbar -%}
+        </div>
+    </form>
+</div>
+<div ng-class="{'onloading' : tndmnt_dmn_rtgs_frm_cntrllr.isBusy() }" class="text-center">    
+</div>

@@ -1,0 +1,136 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Artigos/show.html.twig' %}
+
+
+
+{% block viewedit_toolbar -%}
+    
+<div class="headline-sub clearfix visible-xs visible-sm">
+    <h3 class="pull-left">
+        <a title="Voltar às sub-categorias" class="hidden-md hidden-lg"
+           ui-sref="atendimento_cliente_artigos({categoria: tndmnt_clnt_rtgs_frm_cntrllr.entity.categoria, tags: null})">
+            <i class="el el-chevron-left"></i>
+            Voltar
+        </a>
+    </h3>
+</div><!--/headline-sub-->
+  
+<div class="col-md-12 headline-page ng-scope">
+    <div class="headline clearfix">
+        <div class="breadcrumb-trail hidden-xs hidden-sm pull-left">
+          <a ui-sref="atendimento_cliente_artigos({ categoria: null, tags: '' })" title="Base de Conhecimento">Base de Conhecimento</a> >
+          <a ui-sref="atendimento_cliente_artigos({ categoria: tndmnt_clnt_rtgs_frm_cntrllr.entity.categoria, tags: '' })" title="Base de Conhecimento"> {{'{{tndmnt_clnt_rtgs_frm_cntrllr.entity.categoriatitulo}}'}}</a > >
+          <span class="select-page">{{'{{tndmnt_clnt_rtgs_frm_cntrllr.entity.subcategoriatitulo}}'}}</span> > 
+          <span class="select-page">{{'{{tndmnt_clnt_rtgs_frm_cntrllr.entity.secaotitulo}}'}}</span>
+        </div>
+        <div class="btns-area pull-right">
+          <button type="button" class="btn btn-sm btn-default btn-fixed" onclick="window.print();">
+              <i class="el el-print"></i>
+              <span class="hidden-xs">Imprimir</span>
+          </button>
+        </div>
+    </div>
+</div>
+{% endblock viewedit_toolbar %}
+
+{% block viewedit_view -%}
+
+    <p class="onloading" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.isBusy()"></p>
+
+    <div class="published-article">
+        <div class="row clearfix article">
+            <div class="col-sm-12">
+                <h4 class="title">
+                    {{ "{{tndmnt_clnt_rtgs_frm_cntrllr.entity.titulo}}" }}
+                </h4>
+            </div>
+
+            <div class="col-md-12 div-col-article">
+                
+                <div ng-if="tndmnt_clnt_rtgs_frm_cntrllr.entity.tipoexibicao === 1" >
+                    <div ng-bind-html="tndmnt_clnt_rtgs_frm_cntrllr.conteudoTratado"></div>
+                </div>
+        
+                <div ng-if="tndmnt_clnt_rtgs_frm_cntrllr.entity.tipoexibicao === 2"
+                         ng-init="tndmnt_clnt_rtgs_frm_cntrllr.renderizarVideo()" >
+                    <div id="render-video">
+        
+                    </div>       
+                </div>    
+
+
+
+                
+                <div class="modified-by" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.entity.updated_at == tndmnt_clnt_rtgs_frm_cntrllr.entity.created_at">
+                    <small>Criado em {{ "{{tndmnt_clnt_rtgs_frm_cntrllr.entity.created_at | asDate | amCalendar}}" }}</small>
+                </div>
+                
+                <div class="modified-by" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.entity.created_at != tndmnt_clnt_rtgs_frm_cntrllr.entity.updated_at">
+                    <small>Última atualização em {{ "{{tndmnt_clnt_rtgs_frm_cntrllr.entity.updated_at | asDate | amCalendar}}" }}</small>
+                </div>
+
+                <div class="tags-show" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.entity.tags">
+                  <div>
+                    Tags:
+                  </div>
+                  <span ng-repeat="tag in tndmnt_clnt_rtgs_frm_cntrllr.entity.tags">
+                    <a  
+                      href ui-sref="atendimento_cliente_artigos({tags: tag, categoria: null})" 
+                      class="label label-info">{{ "{{tag}}" }}
+                    </a>
+                  </span>
+                </div>
+
+
+                <div class="pesquisa-satisfacao text-center" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.jaVotou === false">
+                    <span class="info-post">Pesquisa de satisfação</span>
+                    <div ng-if="tndmnt_clnt_rtgs_frm_cntrllr.finalizouPesquisa" ng-class="{'fade-in fade' : tndmnt_clnt_rtgs_frm_cntrllr.finalizouPesquisa }">
+                        <h3>Obrigado pela sua opinião!</h3>
+                        <p>Ela será muito importante no nosso processo de melhoria contínua.</p>
+                    </div>
+
+                    <div ng-if="!tndmnt_clnt_rtgs_frm_cntrllr.finalizouPesquisa" ng-class="{'fade-out fade' : tndmnt_clnt_rtgs_frm_cntrllr.finalizouPesquisa }">
+                        <div>
+                            <h3>Você gostou deste artigo?</h3>
+                            <div class="form-group">
+                                <button id="btnGostei" ng-if="!tndmnt_clnt_rtgs_frm_cntrllr.isAnonimous" type="button" class="btn btn-sm btn-default" ng-click="tndmnt_clnt_rtgs_frm_cntrllr.votar(true)" ng-class="tndmnt_clnt_rtgs_frm_cntrllr.gosteiClass">
+                                    <i class="el el-thumbs-up"></i> Gostei
+                                </button>
+
+                                <button id="btnNaoGostei" ng-if="!tndmnt_clnt_rtgs_frm_cntrllr.isAnonimous" type="button" class="btn btn-sm btn-default" ng-click="tndmnt_clnt_rtgs_frm_cntrllr.votar(false)" ng-class="tndmnt_clnt_rtgs_frm_cntrllr.naoGosteiClass">
+                                    <i class="el el-thumbs-down"></i> Não Gostei
+                                </button>
+
+                                <a id="btnGostei" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.isAnonimous" type="button" class="btn btn-sm btn-default" href="/" ng-class="tndmnt_clnt_rtgs_frm_cntrllr.gosteiClass">
+                                    <i class="el el-thumbs-up"></i> Gostei
+                                </a>
+
+                                <a id="btnNaoGostei" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.isAnonimous" type="button" class="btn btn-sm btn-default" href="/" ng-class="tndmnt_clnt_rtgs_frm_cntrllr.naoGosteiClass">
+                                    <i class="el el-thumbs-down"></i> Não Gostei
+                                </a>
+
+                                <div ng-if="tndmnt_clnt_rtgs_frm_cntrllr.voto != undefined">
+                                    <br>
+                                    <p ng-if="!tndmnt_clnt_rtgs_frm_cntrllr.voto">Como podemos melhorar?</p>
+                                    <p ng-if="tndmnt_clnt_rtgs_frm_cntrllr.voto">Gostaria de escrever alguma sugestão? <span class="info-post">(Caso não queira escrever nada, apenas clique em Enviar.)</span></p>
+                                    <p>
+                                        <textarea class="form-control" name="justificativaNaoGostei" id="txtJustificativaNaoGostei" ng-model="tndmnt_clnt_rtgs_frm_cntrllr.justificativa"></textarea>
+                                    </p>
+                                    <div class="text-right">
+                                        <button type="button" class="btn btn-sm btn-default pull-right" ng-click="tndmnt_clnt_rtgs_frm_cntrllr.enviarVoto()">Enviar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <span class="info-post" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.entity.gostaram == 1"><i class="el el-thumbs-up"></i> {{'{{tndmnt_clnt_rtgs_frm_cntrllr.entity.gostaram}}'}} pessoa gostou</span>
+                <span class="info-post" ng-if="tndmnt_clnt_rtgs_frm_cntrllr.entity.gostaram > 1"><i class="el el-thumbs-up"></i> {{'{{tndmnt_clnt_rtgs_frm_cntrllr.entity.gostaram}}'}} pessoas gostaram</span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock viewedit_view -%}
+

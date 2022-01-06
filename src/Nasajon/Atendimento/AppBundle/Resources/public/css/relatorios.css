@@ -1,0 +1,140 @@
+/* RELATORIOS */
+
+@media screen and (max-width: 991px) {
+  .ns_relatorios .headline-sub {
+    display: none;
+  }
+
+  .ns_relatorios .lista-artigos {
+    margin-bottom: 15px;
+  }
+
+  .ns_relatorios .vertical-menu {
+      height: auto;
+      overflow-x: inherit;
+      overflow-y: inherit;
+  }
+
+  .ns_relatorios .toggle.nav {
+    overflow: hidden;
+    max-height: 0;
+    -webkit-transition: max-height 0.3s ease-in-out;
+    -moz-transition: max-height 0.3s ease-in-out;
+    -o-transition: max-height 0.3s ease-in-out;
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  .ns_relatorios ul.toggle li.active {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    display: block;
+  }
+
+  .ns_relatorios .nav-pills>li.active>a:after {
+    width: 0px;
+    height: 0px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid #FFF;
+    position: absolute;
+    right: 10px;
+    content: ' ';
+    top: 18px;
+    -webkit-transition: transform 0.3s ease-in-out;
+    -moz-transition: transform 0.3s ease-in-out;
+    -o-transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .ns_relatorios .nav-list.height-full {
+    height: auto;
+  }
+
+  .ns_relatorios .lista-artigos.height-full-calc {
+    height: auto;
+  }
+}
+
+@media screen and (min-width:767px) and (max-width: 991px) {
+  .ns_relatorios .lista-artigos {
+    margin-bottom: 55px;
+  }
+}
+
+.ns_relatorios .chart {
+  margin: 0 0 15px;
+}
+
+.ns_relatorios .filter th, .ns_relatorios .filter td {
+  border: none;
+  padding: 5px 10px 5px 0;
+}
+
+.ns_relatorios .filter {
+  margin-bottom: 15px;
+}
+
+.ns_relatorios .filter .col-sm-3 {
+  margin: 0;
+  padding: 0;
+}
+
+.ns_relatorios .nav-tabs {
+  padding: 0 15px;
+  margin-bottom: 15px;
+}
+
+.ns_relatorios .container {
+  padding-top: 15px;
+}
+
+.ns_relatorios dt {
+  width: auto;
+  margin-right: 5px;
+}
+
+.ns_relatorios dd {
+  margin: 0;
+}
+
+.ns_relatorios dl {
+  margin: 0;
+}
+
+.ns_relatorios .table,
+.ns_relatorios .table>thead>tr>th {
+  vertical-align: middle;
+}
+
+.ns_relatorios .table thead {
+  font-size: 11px;
+}
+
+.ns_relatorios .table tbody {
+  font-size: 12px;
+}
+
+.ns_relatorios .container .form-group {
+  margin-bottom: 0;
+}
+
+.ns_relatorios p.input-group {
+  margin-bottom: 0;
+}
+
+.ns_relatorios .table {
+  margin-bottom: 0;
+}
+
+.ns_relatorios .box-color {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 3px;
+  border: 5px solid;
+}
+
+.ns_relatorios .panel>.table-responsive>.table-bordered>thead>tr:first-child>th {
+  border-bottom: 2px solid #ddd;
+}

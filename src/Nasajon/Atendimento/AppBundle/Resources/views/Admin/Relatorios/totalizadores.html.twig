@@ -1,0 +1,35 @@
+<div>
+    <div class="row total-boxes">
+        <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+                <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.chamados"></div>
+                <div class="placard-description">Chamados</div>
+                {#<div class="percent danger-ico"><i class="el el-caret-down"></i> -11%</div>#}
+            </div>
+        </div>
+
+        <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+                <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.respostas"></div>
+                <div class="placard-description">Respostas</div>
+                {#<div class="percent danger-ico"><i class="el el-caret-down"></i> -11%</div>#}
+            </div>
+        </div>
+
+        <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+                <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.mediaderespostas"></div>
+                <div class="placard-description">Resposta média por chamado</div>
+                {#<div class="percent success-ico"><i class="el el-caret-up"></i> 25%</div>#}
+            </div>
+        </div>
+
+        <div class="col-sm-3 total-tickets">
+            <div class="placard text-center">
+                <div class="placard-value" ng-bind="dmn_rltrs_cntrllr.total.resolvidoprimeirocontato"></div>
+                <div class="placard-description">Resolução no primeiro contato</div>
+                {#<div class="percent danger-ico"><i class="el el-caret-down"></i> -7%</div>#}
+            </div>
+        </div>
+    </div>
+</div>

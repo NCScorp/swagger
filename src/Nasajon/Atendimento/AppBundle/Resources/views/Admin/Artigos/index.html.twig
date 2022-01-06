@@ -1,0 +1,92 @@
+
+<div class="col-md-4 row lista-artigos height-full-calc" ng-class="{ 'hidden-sm hidden-xs' : (('atendimento_admin_artigos_show'| isStateEq) || ('atendimento_admin_artigos_edit'| isStateEq) || ('atendimento_admin_artigos_new'| isStateEq ))}">
+    <div class="list-links height-full col-sm-12">
+        <div class="panel panel-default">
+            <section class="panel-body">
+                <div class="row">
+                    <div class="col-md-12 headline-page no-border">
+                        <div class="headline">
+                            <a href
+                                ui-sref="atendimento_admin_artigos_list({})"
+                                ui-sref-opts="{inherit:false}"
+                                ng-click="tndmnt_dmn_rtgs_lst_cntrllr.entity = null"
+                                title="Base de conhecimento">
+                                <h2 class="pull-left">{{'baseconhecimento'|trans}}</h2>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div ng-class="{'onloading':tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy}"></div>
+                <div class="link-categoria-admin">
+                    <div ng-repeat="categoria in tndmnt_dmn_rtgs_lst_cntrllr.listaCategoriasNomes" ng-if="categoria.exibir">
+                        <div ng-class="{ 'bg-azul': categoria.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria
+                                                    && tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria != null}">
+                            <span ng-click="categoria.isCollapsed = !categoria.isCollapsed"
+                                class="caret-button fa fa-chevron-down text-azulLink"
+                                ng-class="{ 'roda': categoria.isCollapsed,
+                                            'text-branco': categoria.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria}">
+                                
+                            </span>
+                            <a href class="link-categoria-admin no-text-decoration"
+                                ng-class="{ 'text-branco': categoria.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria}"
+                                ng-click="tndmnt_dmn_rtgs_lst_cntrllr.selecionaCategoria(categoria)"
+                                type="button">
+                                {{'{{categoria.titulo}}'}}
+                            </a> 
+                            <span class="status-article pull-right">
+                                <i class="el el-file-alt" class="el el-file-alt" ng-class="{ 'success' : (categoria.status==1), 'default' : (categoria.status==0) }"></i>
+                            </span>
+                        </div>
+                        <div class="box-collapse" uib-collapse="categoria.isCollapsed">
+                            <div ng-repeat="subcategoria in categoria.subcategorias" ng-if="subcategoria.exibir" ng-init="subcategoria.isCollapsed = true">
+                                <div ng-class="{ 'bg-azul': subcategoria.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria
+                                                            && tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria != null}">
+                                    <span ng-click="subcategoria.isCollapsed = !subcategoria.isCollapsed"
+                                        class="caret-button text-azulLink fa fa-chevron-down"
+                                        ng-class="{ 'roda': subcategoria.isCollapsed,
+                                                    'text-branco': subcategoria.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria }">
+                                    </span>
+                                    <a href class="link-categoria-admin no-text-decoration"
+                                        ng-class="{ 'text-branco': subcategoria.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria}"
+                                        ng-click="tndmnt_dmn_rtgs_lst_cntrllr.selecionaCategoria(subcategoria)"
+                                        type="button">
+                                        {{'{{subcategoria.titulo}}'}}
+                                    </a>
+                                    <span class="status-article pull-right">
+                                        <i class="el el-file-alt" class="el el-file-alt" ng-class="{ 'success' : (subcategoria.status==1), 'default' : (subcategoria.status==0) }"></i>
+                                    </span>
+                                </div>
+                            
+                                
+                                <div class="box-collapse" uib-collapse="subcategoria.isCollapsed" ng-init="categoria.isCollapsed = true">
+                                <div ng-repeat="secao in subcategoria.secoes">
+                                    <div ng-class="{ 'bg-azul': secao.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria
+                                                                && tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria != null}">
+                                        <a href class="link-categoria-admin secao no-text-decoration"
+                                            ng-class="{ 'text-branco': secao.categoria == tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria}"
+                                            ng-click="tndmnt_dmn_rtgs_lst_cntrllr.selecionaCategoria(secao)"
+                                            type="button"
+                                            ng-bind="secao.titulo">
+                                        </a>
+                                        <span class="status-article pull-right">
+                                            <i class="el el-file-alt" ng-class="{ 'success' : (secao.status==1), 'default' : (secao.status==0) }"></i>
+                                        </span>
+                                        <hr class="sem-margen"/>
+                                    </div>
+                                </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </section>
+            
+        </div><!--/panel-->
+    </div>
+</div>
+
+<div class="article-area col-md-8 row height-full-calc">
+    <div ui-view></div>
+</div>

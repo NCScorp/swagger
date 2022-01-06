@@ -1,0 +1,13 @@
+<form name="formAbreChamadoModal" novalidate="novalidate" role="form"  ng-submit="tndmnt_dmn_slctcs_lst_cntrllr.abrirChamadoProtocolo(tndmnt_dmn_slctcs_lst_cntrllr.numProtocolo)">
+    <div class="modal-sm">
+        <div class="modal-body" id="modal-body">
+            <strong>Número do protocolo:</strong>
+            <input ng-model="tndmnt_dmn_slctcs_lst_cntrllr.numProtocolo" autofocus type="text" class="form-control" onkeypress="return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 13">
+        </div>
+
+        <div class="modal-footer ng-scope">
+            <button class="btn btn-primary" type="submit">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="tndmnt_dmn_slctcs_lst_cntrllr.fecharModalAbreChamado()">Cancel</button>
+        </div>
+    </div>
+</form>

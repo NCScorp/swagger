@@ -1,0 +1,61 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Usuarios/form.html.twig' %}
+
+{% block viewedit_edit -%}
+    <div class="row" >
+        <div class="col-sm-7">
+            {% block viewedit_form_conta %}
+                <div class="form-group">
+                    <label class="control-label required" for="conta">Conta</label>
+                    <input type="email" id="conta" name="conta" required="required" ng-model="tndmnt_clnt_srs_frm_cntrllr.entity.conta" ng-disabled="(tndmnt_clnt_srs_frm_cntrllr.entity.clientefuncao!=null)||(tndmnt_clnt_srs_frm_cntrllr.entity.clientefuncao!=null)" placeholder="ex: email@empresa.com.br" class="form-control">
+                </div>
+                <div ng-messages="tndmnt_clnt_srs_frm_cntrllr.form.conta.$error"  ng-if="tndmnt_clnt_srs_frm_cntrllr.form.conta.$dirty || tndmnt_clnt_srs_frm_cntrllr.submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo conta não pode ser vazio.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="email">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo conta deve ser um email válido.
+                    </div>
+                </div>
+            {% endblock viewedit_form_conta %}
+        </div>
+        
+        <div class="col-sm-5" >
+            {% block viewedit_form_funcao %}
+                <div class="form-group">
+                    <label class="control-label required" for="funcao">Função</label>
+                    <select id="funcao" name="funcao" required="required" ng-model="tndmnt_clnt_srs_frm_cntrllr.entity.funcao" ng-disabled="tndmnt_clnt_srs_frm_cntrllr.entity.submitting" class="form-control">
+                        <option disabled="disabled" selected="selected" value="">Selecionar</option>
+                        <option value="A">Admin</option>
+                        <option value="U">Usuário</option>
+                    </select>
+                </div>
+                <div ng-messages="tndmnt_clnt_srs_frm_cntrllr.form.funcao.$error"  ng-if="tndmnt_clnt_srs_frm_cntrllr.form.funcao.$dirty || tndmnt_clnt_srs_frm_cntrllr.submitted"><div class="alert alert-danger" role="alert" ng-message="required"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                        O campo função é obrigatório.
+                    </div>
+                </div>
+            {% endblock viewedit_form_funcao %}
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-sm-12" >
+            {% block viewedit_form_notificar %}
+
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label for="notificar">
+                            <input type="checkbox" id="notificar" name="notificar" ng-model="tndmnt_clnt_srs_frm_cntrllr.entity.notificar" ng-disabled="tndmnt_clnt_srs_frm_cntrllr.entity.submitting" placeholder="" value="1">
+                            <strong>Notificar</strong>
+                        </label>
+                        <p><span class="small">Marque essa opção caso queira notificar esse usuário por e-mail</span></p>
+                    </div>
+                </div>
+            {% endblock viewedit_form_notificar %}
+            <input type="hidden" id="pendente" name="pendente" ng-model="tndmnt_clnt_srs_frm_cntrllr.entity.pendente">
+        </div>
+    </div>
+{% endblock viewedit_edit -%}

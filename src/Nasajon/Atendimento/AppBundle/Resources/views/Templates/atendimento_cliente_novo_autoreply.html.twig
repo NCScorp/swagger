@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8">
+<title>Re: #{{protocolo}} - {{resumo}}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<table cellpadding="0" cellspacing="0" border="0" align="center" width="600" style="border-top:3px solid #2b6584; font-family:Arial, Helvetica, sans-serif; color:#555555;">
+    <tbody>
+        <tr>
+            <td style="padding-top:10px;">
+                <img src="http://s3-us-west-2.amazonaws.com/static.nasajon/img/logo.png" />
+            </td>
+        </tr>
+		<tr>
+			<td>
+				<p style="font-size:16px; line-height:22px;">
+					{{ mensagem|nl2br }}
+				</p>
+			</td>
+		</tr>
+        <tr>
+            <td>
+                <h1 style="font-size:20px; margin:8px 0 20px 0; font-family:'Lato', Arial, Helvetica, sans-serif;">
+                    <a href="{{ main_url ~ '#/chamados/'~ atendimento.atendimento}}" title="#{{protocolo}} - {{resumo}}" style="color:#2b6584; text-decoration:none;">#{{protocolo}} - {{resumo}}</a>
+                </h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table cellpadding="0" cellspacing="0" border="0" align="center" width="100%" style="margin-top:30px; padding:15px; border:1px solid #ccc;">
+                    <tr>
+                        <td>
+                            <h2 style="font-size:16px; margin:0 0 20px 0; font-family:'Lato', Arial, Helvetica, sans-serif; color:#2b6584;">Detalhes do Atendimento</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="3" cellspacing="0" border="0" align="center" width="100%">
+                                <tr>
+                                    <td style="text-align:right; padding-right:10px;" width="100" valign="top"><strong style="font-size:11px; line-height:18px;">CRIADO EM</strong></td>
+                                    <td style="font-size:14px; line-height:18px;" valign="top">{{ atendimento.created_at|date("d/m/Y") }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right; padding-right:10px;" width="100" valign="top"><strong style="font-size:11px; line-height:18px;">DESCRIÇÃO</strong></td>
+                                    <td style="font-size:14px; line-height:18px;">
+                                        <p style="margin:0;" valign="top">{{ atendimento.sintoma|raw }}</p>
+                                    </td>
+                                </tr>
+                                {% if atendimento.anexos|length > 0 %}
+                                    <tr>
+                                        <td style="text-align:right; padding-right:10px;" width="100" valign="top"><strong style="font-size:11px; line-height:18px;">ANEXOS</strong></td>
+                                        <td style="font-size:14px; line-height:18px;" valign="top">
+                                            <ul style="padding:0; margin:0; list-style:none;">
+                                                {% for anexo in atendimento.anexos %}
+                                                <li><a href="{{anexo.url}}" style="text-decoration:none; color:#428bca;">{{anexo.nome}}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </td>
+                                    </tr>'
+                                {% endif %}
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center">
+                <p style="font-size:11px; margin:20px 0 5px;">Responda o e-mail para adicionar uma resposta • <a href="{{ main_url ~ '#/chamados/'~ atendimento.atendimento}}" style="text-decoration:none; color:#428bca;">Visualizar no Sistema de Atendimentos</a></p>
+                <p style="font-size:11px; margin:0 0 8px;">Desenvolvido por <a href="http://www.nasajon.com.br" style="text-decoration:none; color:#428bca;">Nasajon Sistemas</a></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

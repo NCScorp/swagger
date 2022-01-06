@@ -1,0 +1,128 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/OrdensServico/index.html.twig' %}
+
+{% block index_header -%}
+<div class="col-md-12 headline-page">
+    <div class="headline clearfix">
+        <h2 class="pull-left">Ordens de Serviço</h2>
+
+                            <div class="btn-group" uib-dropdown ng-if="srvcs_rdns_srvc_lst_cntrllr.context.length > 1">
+                    <button id="single-button" type="button" class="btn btn-xs btn-fixed btn-warning" uib-dropdown-toggle ng-disabled="disabled">
+                        <i class="el el-plus"></i> Criar <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        <li role="menuitem" ng-repeat="context in srvcs_rdns_srvc_lst_cntrllr.context">
+                            <a href ng-click="srvcs_rdns_srvc_lst_cntrllr.new(context)" ng-bind="context.descricao"></a>
+                        </li>
+                    </ul>
+                </div>
+                        <a class="btn btn-xs btn-warning"
+                                  ng-click="srvcs_rdns_srvc_lst_cntrllr.new()"
+
+               ng-if="srvcs_rdns_srvc_lst_cntrllr.operacao.length ==1">
+                <i class="el el-plus"></i> Criar
+            </a>
+
+    </div>
+</div>
+{% endblock index_header -%}
+
+{% block index_layout %}
+    <div class="height-full-calc col-md-6 row col-lg-5" ng-class="{ 'hidden-sm hidden-xs' : (('servicos_ordensservico_show'| isStateEq) || ('servicos_ordensservico_edit'| isStateEq) || ('servicos_ordensservico_new'| isStateEq ))}">
+        <div class="height-full nav-list col-sm-4" >
+            <div class="vertical-menu height-full">
+                <ul toggle class="toggle nav nav-pills nav-stacked">
+                    <li role="presentation" ui-sref-active="active"><a href ui-sref="servicos_ordensservico({ operacao: null, situacao: null, responsavel : 'mim',  rascunho: false })"> Minhas</a></li>
+                    <li role="presentation" ui-sref-active="active"><a href ui-sref="servicos_ordensservico({ operacao: null, situacao: null, responsavel: 'ninguem',  rascunho: false  })">Sem atribuição</a></li>
+                    <li role="presentation" ui-sref-active="active"><a href ui-sref="servicos_ordensservico({ operacao: null, situacao: null, responsavel: null,  rascunho: true  })">Rascunhos</a></li>
+                    <li role="presentation" ui-sref-active="active" ng-repeat="context in srvcs_rdns_srvc_lst_cntrllr.context">
+                        <a href ui-sref="servicos_ordensservico({ operacao: context.operacao , situacao: null,  responsavel : null, rascunho: null })" ng-bind="context.descricao"></a>
+                    </li>
+                    <li role="presentation" ui-sref-active="active"><a href ui-sref="servicos_ordensservico({ operacao: null, situacao: null,  responsavel : null, rascunho: null })">Todas</a></li>
+                </ul>
+            </div><!--/vertical-menu-->
+        </div>
+        <div class="height-full list-links col-sm-8">
+
+            <div class="height-full col-md-12" ng-class="{ 'hidden-sm hidden-xs' : (('servicos_ordensservico_show'| isStateEq) || ('servicos_ordensservico_edit'| isStateEq) || ('servicos_ordensservico_new'| isStateEq ))}">
+                <div class='row height-full'>
+
+                    <div class="panel panel-default">
+
+
+                        {% block index_panel_header -%}
+                                        <div class="panel-heading clearfix">
+                            {% block index_filter -%}
+                                                    <form id="list_filter">
+            <div class="col-xs-8">
+                <div>
+                    <input type="text" name="key" class="form-control campo-busca" ng-model="srvcs_rdns_srvc_lst_cntrllr.filter.key" ng-change="srvcs_rdns_srvc_lst_cntrllr.search('key')" ng-model-options='{ debounce: 500 }'  placeholder="Buscar..." />
+                            </div><!-- /input-group -->
+            </div>
+            <div class="col-xs-4">
+                {% block index_toolbar -%}
+                <div class="dropdown dropdown-order  pull-right">
+                                        </div>
+                <button type="button" class="btn btn-default pull-right" title="Atualizar" ng-click="srvcs_rdns_srvc_lst_cntrllr.reload()"><i class="el el-refresh"  aria-hidden="true"></i></button>
+                    {% endblock index_toolbar -%}
+            </div>
+        </form>
+                                                {% endblock index_filter -%}
+                        </div><!--/panel-head-->
+                                        {% endblock index_panel_header -%}
+
+
+                        <div class="panel-body">
+
+                            {% block index_list -%}
+
+
+        <div class="list-group" id="servicos_ordensservico_list" >
+          {%- block viewedit_view_list_item %}
+          <a href ui-sref="{{"{{entity.rascunho ? 'servicos_ordensservico_edit({ordemservico : entity.ordemservico})' : 'servicos_ordensservico_show({ordemservico : entity.ordemservico})'}}"}}"  class="list-group-item" ng-repeat="entity in srvcs_rdns_srvc_lst_cntrllr.entities" ui-sref-active="active">
+              <div class="status pull-right">
+                  <span class="info-post" am-time-ago="entity.created_at"></span>
+                  <span class="label" ng-class="{ 'label-success' : (entity.situacao!=2), 'label-default' : (entity.situacao==2) }"></span>
+              </div>
+              <h4 class="list-group-item-heading">#{{'{{ entity.numero }} '}} <span style="color: red;font-weight: normal;font-size: 14px;vertical-align: middle;" ng-if="entity.rascunho">(Rascunho)</span></h4>
+              <p class="list-group-item-text" ng-if="entity.cliente.cliente"><strong>Cliente:</strong> {{'{{ entity.cliente.nome }} '}}</p>
+
+              <small ng-if="entity.projeto.projeto">{{'{{ entity.projeto.nome }} '}}</small>
+
+          </a>
+          {%- endblock viewedit_view_list_item %}
+                <p class="text-center article-loading height-full" ng-class="{'onloading' : srvcs_rdns_srvc_lst_cntrllr.isBusy() }" ng-if="srvcs_rdns_srvc_lst_cntrllr.isBusy()"></p>
+            <p class="text-center nfound" ng-if="srvcs_rdns_srvc_lst_cntrllr.entities.length == 0 && !srvcs_rdns_srvc_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+        </div>
+
+                                                {% endblock index_list -%}
+                        </div><!--/panel-body-->
+                    </div><!--/panel-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block index_builltin_form -%}
+<div class="article-area height-full-calc col-md-6 row col-lg-7" ui-view>
+                    <div class="bt-new-article new-article text-center height-full">
+                    <div class="btn-group btn-fixed" uib-dropdown ng-if="srvcs_rdns_srvc_lst_cntrllr.context.length > 1">
+                      <button id="single-button" type="button" class="btn btn-warning btn-new-ticket btn-fixed" uib-dropdown-toggle ng-disabled="disabled">
+                          <i class="el el-plus"></i> <span class="hidden-xs hidden-sm">Nova Ordem de Serviço</span> <span class="caret hidden-xs hidden-sm"></span>
+                      </button>
+                      <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                          <li role="menuitem" ng-repeat="context in srvcs_rdns_srvc_lst_cntrllr.context">
+                              <a href ng-click="srvcs_rdns_srvc_lst_cntrllr.new(context)" ng-bind="context.descricao"></a>
+                          </li>
+                      </ul>
+                    </div>
+                <a class="btn btn-sm btn-fixed btn-warning" ng-click="srvcs_rdns_srvc_lst_cntrllr.new()" ng-if="srvcs_rdns_srvc_lst_cntrllr.operacao.length ==1">
+                  <i class="el el-plus"></i> <span class="hidden-xs hidden-sm">Criar</span>
+                </a>
+
+        </div>
+
+      </div>
+{% endblock index_builltin_form -%}

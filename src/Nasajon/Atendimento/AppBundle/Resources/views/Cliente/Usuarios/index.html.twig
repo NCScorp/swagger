@@ -1,0 +1,93 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Usuarios/index.html.twig' %}
+
+
+{% block index_layout %}
+    <div class="height-full-calc col-md-6 row" ng-class="{ 'hidden-sm hidden-xs' : ('atendimento_cliente_usuarios_new'| isStateEq )}">
+        <div class="nav-list height-full col-sm-4">
+            <div class="vertical-menu height-full">
+                <ul class="toggle nav nav-pills nav-stacked">
+                    <li role="presentation" ui-sref-active="active" ng-repeat="cliente in tndmnt_clnt_srs_lst_cntrllr.usuarioLogado.getClientes()" ng-if="cliente.funcao == 'A'">
+                        <a href ui-sref='atendimento_cliente_usuarios({ funcao : NULL, cliente: cliente.cliente_id })'>{{"{{cliente.cliente_nome}}"}}</a>
+                    </li>
+                </ul>
+            </div><!--/vertical-menu-->
+        </div>
+        <div class="height-full list-links col-sm-8 row">
+            {% set index_layout_size = 12 %}
+            {{ parent() }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block index_panel_header -%}
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" ui-sref-active="active"><a href  ui-sref="atendimento_cliente_usuarios({ funcao: NULL})">Todos</a></li>
+        <li role="presentation" ui-sref-active="active"><a href  ui-sref="atendimento_cliente_usuarios({ funcao: 'A'})">Admin</a></li>
+        <li role="presentation" ui-sref-active="active"><a href  ui-sref="atendimento_cliente_usuarios({ funcao: 'U'})">Usuários</a></li>
+    </ul>
+    {{ parent() }}
+{% endblock %}
+
+{%- block viewedit_view_list_item %}
+<li href class="list-group-item clearfix" ng-repeat="entity in tndmnt_clnt_srs_lst_cntrllr.entities">
+    <div class="col-xs-9">
+        <h4 class="list-group-item-heading">{{'{{ entity.conta }} '}}</h4>
+        <span class="label label-default" ng-if="entity.funcao == 'A'">Admin</span>
+        <span ng-if="entity.notificar" class="label label-success">Notificar</span>
+        <span ng-if="entity.pendente" class="label label-danger">Pendente</span>
+        <span class="info-post">Ativo desde <span ng-bind="entity.created_at | asDate | date:'dd/MM/yyyy'"></span></span>
+    </div>
+    <div class="col-xs-3">
+        <div class="configs text-right">
+            <div class="dropdown" uib-dropdown uib-keyboard-nav>
+                <button class="btn btn-xs btn-default dropdown-toggle" type="button" uib-dropdown-toggle>
+                    <i class="el el-cog"></i>
+                    <span class="caret"></span>
+                </button>
+                <ul uib-dropdown-menu role="menu" aria-labelledby="simple-btn-keyboard-nav" class="dropdown-menu-right">
+                    <li role="menuitem" ng-if="entity.funcao == 'A'">
+                        <a href ng-click="tndmnt_clnt_srs_lst_cntrllr.alteraUsuario(entity, 'U', 'funcao')">
+                            Remover função de admin
+                        </a>
+                    </li>
+                    <li role="menuitem" ng-if="entity.funcao == 'U'">
+                        <a href ng-click="tndmnt_clnt_srs_lst_cntrllr.alteraUsuario(entity, 'A', 'funcao')">
+                            Adicionar como admin
+                        </a>
+                    </li>
+                    <li role="menuitem" ng-if="!entity.notificar">
+                        <a href ng-click="tndmnt_clnt_srs_lst_cntrllr.alteraUsuario(entity, true, 'notificacao')">
+                            Adicionar notificações
+                        </a>
+                    </li>
+                    <li role="menuitem" ng-if="entity.pendente">
+                        <a href ng-click="tndmnt_clnt_srs_lst_cntrllr.alteraUsuario(entity, false, 'pendente')">
+                            Aprovar usuário
+                        </a>
+                    </li>
+                    <li role="menuitem" ng-if="entity.notificar">
+                        <a href ng-click="tndmnt_clnt_srs_lst_cntrllr.alteraUsuario(entity, false, 'notificacao')">
+                            Remover notificações
+                        </a>
+                    </li>
+                    <li role="menuitem">
+                        <a href ng-click="tndmnt_clnt_srs_lst_cntrllr.delete(entity)">
+                            Remover usuário
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</li>
+{%- endblock viewedit_view_list_item %}
+
+{% block index_builltin_form -%}
+
+    <div class="article-area height-full-calc col-md-6" ui-view>
+        <div class="bt-new-article new-article text-center height-full">
+            <button type="button" class="btn btn-warning btn-fixed btn-new-user" ui-sref="atendimento_cliente_usuarios_new"><i class="el el-plus"></i> <span class="hidden-sm hidden-xs">Adicionar Usuário</span></button>
+        </div>
+    </div><!--/.article-area-->
+
+{% endblock index_builltin_form -%}

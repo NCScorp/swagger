@@ -1,0 +1,290 @@
+<div class="headline-sub clearfix">
+    <h3 class="pull-left">
+        Análise de Chamados e Respostas
+    </h3>
+</div>
+<div class="row clearfix article">
+    <div class="col-md-12 abas">
+        <uib-tabset>
+            <uib-tab select="dmn_rltrs_cntrllr.triggerResize('usuarios')" classes="tab-de-resposta">
+                <uib-tab-heading>
+                    Por Usuários
+                </uib-tab-heading>
+                <div class="forms col-md-12">
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:filtros.html.twig' %}
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:totalizadores.html.twig' %}
+
+                    <div class="row clearfix col-md-12">
+                        <div class="chart">
+                            <div id="grafico_usuario"></div>
+                        </div>
+
+                        <div class="panel-rules">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Usuários
+                                    <div class="btn-group pull-right" uib-dropdown auto-close="outsideClick">
+                                      <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                                        <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="nome"><input class="form-check-input" type="checkbox" ng-model="dmn_rltrs_cntrllr.colunas.nome" id="nome" checked="true"> Nome</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="chamados"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.chamados" id="chamados" checked="true"> Chamados</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="percent"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.percent" id="percent" checked="true"> % Porcentagem</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="respostaOutroUsuario"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.respostaOutroUsuario" id="respostaOutroUsuario" checked="true"> Respostas de outros usuários</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="respostaMediaChamado"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.respostaMediaChamado" id="respostaMediaChamado" checked="true"> Respostas média por chamado</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="resolucaoPrimeiroContatoCount"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.resolucaoPrimeiroContatoCount" id="resolucaoPrimeiroContatoCount" checked="true"> Resolução no primeiro contato (contagem)</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="resolucaoPrimeiroContatoPercent"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.resolucaoPrimeiroContatoPercent" id="resolucaoPrimeiroContatoPercent" checked="true"> Resolução no primeiro contato (porcentagem)</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="respostas"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.respostas" id="respostas" checked="true"> Respostas</label>
+                                          </li>
+                                          <li class="checkbox padding-content" role="menuitem">
+                                              <label for="trocasAtribuicao"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.trocasAtribuicao" id="trocasAtribuicao" checked="true"> Trocas de atribuição</label>
+                                          </li>
+                                        <li class="divider"></li>
+                                        <li role="menuitem"><a href="#" ng-click="dmn_rltrs_cntrllr.mostrarTodasColunas()">Mostrar todos</a></li>
+                                      </ul>
+                                    </div>
+                                </div>
+                                <div class="height-full" ng-class="{'onloading' : dmn_rltrs_cntrllr.loadingUsuario }">
+                                    <div class="table-responsive" ng-if="!dmn_rltrs_cntrllr.loadingUsuario">
+                                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                                            <thead>
+                                                <tr>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.nome" ts-criteria="usuario" width="25%">{#<input type="checkbox" name="master" checked="">#} Nome</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.chamados" ts-criteria="qtdchamados" ts-default="descending">Chamados</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.percent" ts-criteria="qtdchamados_perc">%</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.respostaOutroUsuario" ts-criteria="respostasoutros">Respostas de outros usuários</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.respostaMediaChamado" ts-criteria="resposta_media_por_chamado">Resposta média por chamado</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.resolucaoPrimeiroContatoCount" ts-criteria="resolvidoprimeirocontato">Resolução no primeiro contato (contagem)</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.resolucaoPrimeiroContatoPercent" ts-criteria="resolvidoprimeirocontato_perc">Resolução no primeiro contato (porcentagem)</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.respostas" ts-criteria="respostas">Respostas</th>
+                                                    <th ng-show="dmn_rltrs_cntrllr.colunas.trocasAtribuicao" ts-criteria="escaladas">Trocas de Atribuição</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in dmn_rltrs_cntrllr.tableData['usuarios'] track by data.usuario" ts-repeat>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.nome" scope="row">
+                                                        <input type="checkbox" ng-checked="data.checked" ng-click="dmn_rltrs_cntrllr.series('grafico_usuario', data.usuario)">
+                                                        <span style="border-color: {{'{{data.color}}'}};" class="box-color"></span>
+                                                        {{'{{data.usuario}}'}}
+                                                    </td>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.chamados">{{'{{data.qtdchamados}}'}}</td>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.percent">{{'{{data.qtdchamados_perc}}'}}%</td>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.respostaOutroUsuario">{{'{{data.respostasoutros}}'}}</td>
+
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.respostaMediaChamado">{{'{{data.resposta_media_por_chamado}}'}}</td>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.resolucaoPrimeiroContatoCount">{{'{{data.resolvidoprimeirocontato}}'}}</td>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.resolucaoPrimeiroContatoPercent">{{'{{data.resolvidoprimeirocontato_perc}}'}}%</td>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.respostas">{{'{{data.respostas}}'}}</td>
+                                                    <td ng-show="dmn_rltrs_cntrllr.colunas.trocasAtribuicao">{{'{{data.escaladas}}'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--/.panel-rules-->
+
+                    </div>
+                </div><!--/.forms-->
+            </uib-tab>
+
+
+            <uib-tab select="dmn_rltrs_cntrllr.triggerResize('filas')">
+                <uib-tab-heading>
+                    Por Filas
+                </uib-tab-heading>
+                <div class="forms col-md-12">
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:filtros.html.twig' %}
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:totalizadores.html.twig' %}
+                    <div class="row clearfix col-md-12">
+                        <div class="chart">
+                            <div id="grafico_fila"></div>
+                        </div>
+                        <div class="panel-rules">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Filas</div>
+                                <div class="height-full" ng-class="{'onloading' : dmn_rltrs_cntrllr.loadingFila }">
+                                    <div class="table-responsive" ng-if="!dmn_rltrs_cntrllr.loadingFila">
+                                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                                            <thead>
+                                                <tr>
+                                                    <th ts-criteria="fila | lowercase" width="15%">{#<input type="checkbox" name="master" checked=""> #}Nome</th>
+                                                    <th ts-criteria="qtChamados|parseInt" ts-default="descending">Chamados</th> <!--/trocar o dropdown por dropup quando usuário mudar a ordenação-->
+                                                    <th ts-criteria="qtdchamados_perc|parseFloat">%</th>
+                                                    <th ts-criteria="respostasoutros|parseInt">Respostas de outros usuários</th>
+
+                                                    <th ts-criteria="resposta_media_por_chamado|parseFloat">Resposta média por chamado</th>
+                                                    <th ts-criteria="resolvidoprimeirocontato|parceInt">Resolução no primeiro contato (contagem)</th>
+                                                    <th ts-criteria="resolvidoprimeirocontato_perc|parseFloat">Resolução no primeiro contato (porcentagem)</th>
+                                                    <th ts-criteria="respostas|parseInt">Respostas</th>
+                                                    <th ts-criteria="escaladas|parseInt">Trocas de Atribuição</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in dmn_rltrs_cntrllr.tableData['fila'] track by data.id" ts-repeat>
+                                                    <td scope="row">
+                                                        <input type="checkbox" ng-checked="data.checked" ng-click="dmn_rltrs_cntrllr.series('grafico_fila', data.fila)">
+                                                        <span style="border-color: {{'{{data.color}}'}};" class="box-color"></span>
+                                                        {{'{{data.fila}}'}}
+                                                    </td>
+                                                    <td>{{'{{data.qtdchamados}}'}}</td>
+                                                    <td>{{'{{data.qtdchamados_perc}}'}}%</td>
+                                                    <td>{{'{{data.respostasoutros}}'}}</td>
+
+                                                    <td>{{'{{data.resposta_media_por_chamado}}'}}</td>
+                                                    <td>{{'{{data.resolvidoprimeirocontato}}'}}</td>
+                                                    <td>{{'{{data.resolvidoprimeirocontato_perc}}'}}%</td>
+                                                    <td>{{'{{data.respostas}}'}}</td>
+                                                    <td>{{'{{data.escaladas}}'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--/.panel-rules-->
+
+                    </div>
+                </div><!--/.forms-->
+            </uib-tab>
+            <uib-tab select="dmn_rltrs_cntrllr.triggerResize('clientes')">
+                <uib-tab-heading>
+                    Por Cliente
+                </uib-tab-heading>
+                <div class="forms col-md-12">
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:filtros.html.twig' %}
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:totalizadores.html.twig' %}
+                    <div class="row clearfix col-md-12">
+                        <div class="chart">
+                            <div id="grafico_cliente"></div>
+                        </div>
+
+                        <div class="panel-rules">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Clientes</div>
+                                <div class="height-full" ng-class="{'onloading' : dmn_rltrs_cntrllr.loadingCliente }">
+                                    <div class="table-responsive" ng-if="!dmn_rltrs_cntrllr.loadingCliente">
+                                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                                            <thead>
+                                                <tr>
+                                                    <th ts-criteria="nome | lowercase" width="15%">{#<input type="checkbox" name="master" checked="">#} Nome</th>
+                                                    <th ts-criteria="qtdchamados|parseInt" ts-default="descending">Chamados</th> <!--/trocar o dropdown por dropup quando usuário mudar a ordenação-->
+                                                    <th ts-criteria="qtdchamados_perc|parseFloat">%</th>
+                                                    <th ts-criteria="respostasoutros|parseInt">Respostas de outros usuários</th>
+
+                                                    <th ts-criteria="resposta_media_por_chamado|parseFloat">Resposta média por chamado</th>
+                                                    <th ts-criteria="resolvidoprimeirocontato|parseInt">Resolução no primeiro contato (contagem)</th>
+                                                    <th ts-criteria="resolvidoprimeirocontato_perc|parseFloat">Resolução no primeiro contato (porcentagem)</th>
+                                                    <th ts-criteria="respostas|parseInt">Respostas</th>
+                                                    <th ts-criteria="escaladas|parseInt">Trocas de Atribuição</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in dmn_rltrs_cntrllr.tableData['clientes'] track by data.cliente" ts-repeat>
+                                                    <td scope="row">
+                                                        <input type="checkbox" ng-checked="data.checked" ng-click="dmn_rltrs_cntrllr.series('grafico_cliente', data.cliente)">
+                                                        <span style="border-color: {{'{{data.color}}'}};" class="box-color"></span>
+                                                        {{'{{data.nome}}'}}
+                                                    </td>
+                                                    <td>{{'{{data.qtdchamados}}'}}</td>
+                                                    <td>{{'{{data.qtdchamados_perc}}'}}%</td>
+                                                    <td>{{'{{data.respostasoutros}}'}}</td>
+
+                                                    <td>{{'{{data.resposta_media_por_chamado}}'}}</td>
+                                                    <td>{{'{{data.resolvidoprimeirocontato}}'}}</td>
+                                                    <td>{{'{{data.resolvidoprimeirocontato_perc}}'}}%</td>
+                                                    <td>{{'{{data.respostas}}'}}</td>
+                                                    <td>{{'{{data.escaladas}}'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--/.panel-rules-->
+
+                    </div>
+                </div><!--/.forms-->
+            </uib-tab>
+            <uib-tab select="dmn_rltrs_cntrllr.triggerResize('camposcustomizados')">
+                <uib-tab-heading>
+                    Por Campos Customizados
+                </uib-tab-heading>
+                <div class="forms col-md-12">
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:filtros.html.twig' %}
+                    {% include 'NasajonAtendimentoAppBundle:Admin/Relatorios:totalizadores.html.twig' %}
+                    <div class="row clearfix col-md-12">
+                        <div class="chart">
+                            <div id="grafico_campocustomizado"></div>
+                        </div>
+
+                        <div class="panel-rules">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">Campo Customizado:
+                                    <select ng-model="dmn_rltrs_cntrllr.campocustomizadoAgrupamento" ng-options="op.atendimentocampocustomizado as op.label for op in dmn_rltrs_cntrllr.camposcustomizados" ng-change="dmn_rltrs_cntrllr.reloadData()">
+                                        <option value="" disabled="disabled">Selecione</option>
+                                    </select>
+                                </div>
+                                <div class="height-full" ng-class="{'onloading' : dmn_rltrs_cntrllr.loadingCampocustomizado }">
+                                    <div class="table-responsive" ng-if="!dmn_rltrs_cntrllr.loadingCampocustomizado">
+                                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                                            <thead>
+                                                <tr>
+                                                    <th ts-criteria="campocustomizado | lowercase" width="15%">{#<input type="checkbox" name="master" checked="">#} Nome</th>
+                                                    <th ts-criteria="qtdchamados|parseInt" ts-default="descending">Chamados</th> <!--/trocar o dropdown por dropup quando usuário mudar a ordenação-->
+                                                    <th ts-criteria="qtdchamados_perc|parseFloat">%</th>
+                                                    <th ts-criteria="respostasoutros|parseInt">Respostas de outros usuários</th>
+
+                                                    <th ts-criteria="resposta_media_por_chamado|parseFloat">Resposta média por chamado</th>
+                                                    <th ts-criteria="resolvidoprimeirocontato|parseInt">Resolução no primeiro contato (contagem)</th>
+                                                    <th ts-criteria="resolvidoprimeirocontato_perc|parseFloat">Resolução no primeiro contato (porcentagem)</th>
+                                                    <th ts-criteria="respostas|parseInt">Respostas</th>
+                                                    <th ts-criteria="escaladas|parseInt">Trocas de Atribuição</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="data in dmn_rltrs_cntrllr.tableData['campocustomizado'] track by data.campocustomizado" ts-repeat>
+                                                    <td scope="row">
+                                                        <input type="checkbox" ng-checked="data.checked" ng-click="dmn_rltrs_cntrllr.series('grafico_campocustomizado', data.campocustomizado)">
+                                                        <span style="border-color: {{'{{data.color}}'}};" class="box-color"></span>
+                                                        {{'{{data.campocustomizado}}'}}
+                                                    </td>
+                                                    <td>{{'{{data.qtdchamados}}'}}</td>
+                                                    <td>{{'{{data.qtdchamados_perc}}'}}%</td>
+                                                    <td>{{'{{data.respostasoutros}}'}}</td>
+
+                                                    <td>{{'{{data.resposta_media_por_chamado}}'}}</td>
+                                                    <td>{{'{{data.resolvidoprimeirocontato}}'}}</td>
+                                                    <td>{{'{{data.resolvidoprimeirocontato_perc}}'}}%</td>
+                                                    <td>{{'{{data.respostas}}'}}</td>
+                                                    <td>{{'{{data.escaladas}}'}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--/.panel-rules-->
+
+                    </div>
+                </div><!--/.forms-->
+            </uib-tab>
+
+        </uib-tabset>
+    </div>
+</div><!--/.article-area-->

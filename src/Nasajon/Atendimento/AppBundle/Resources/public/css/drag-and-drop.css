@@ -1,0 +1,45 @@
+/* Drag and drop menu elements */
+ul[dnd-list],
+ul[dnd-list] > a {
+    position: relative;
+}
+
+ul[dnd-list] {
+    min-height: 42px;
+    padding-left: 0px;
+}
+
+ul[dnd-list] .dndDraggingSource {
+    display: none;
+}
+.list-group-item .dndDragging {
+    background: red;
+}
+
+ul[dnd-list] .dndPlaceholder {
+    display: block;
+    background-color: #ddd;
+    min-height: 42px;
+}
+
+ul[dnd-list] a {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+}
+
+.list-group-item .ico-move {
+  display: none;
+}
+
+.list-group-item:hover .ico-move,
+.list-group-item:focus .ico-move {
+  display: block;
+  opacity: 0.5;
+  filter: alpha(opacity=60);
+}
+
+.ico-move:hover {
+  cursor: move;
+}

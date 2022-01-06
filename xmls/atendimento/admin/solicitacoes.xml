@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="solicitacoes" label="solicitacoes" project="atendimento/admin">
+    <entity schema="servicos" table="atendimentos">
+        <fieldmodel name="atendimento" datatype="guid" isid="true" column="atendimento"/>
+        <fieldmodel name="numeroprotocolo" datatype="string" column="numeroprotocolo"/>
+        <fieldmodel name="situacao" datatype="integer" column="situacao" />
+        <fieldmodel name="email" datatype="string" column="email" />
+        <fieldmodel name="responsavel_web" datatype="string" column="responsavel_web" />
+        <fieldmodel name="responsavel_web_tipo" datatype="integer" column="responsavel_web_tipo" />
+        <fieldmodel name="sintoma" datatype="string" column="sintoma"/>
+        <fieldmodel name="resumo" datatype="string" column="resumo_admin" />
+        <fieldmodel name="fila" datatype="guid" column="atendimentofila" useCaseLink="servicos\atendimentosfilas" entityJoinType="left" />
+        <fieldmodel name="cliente" datatype="guid" column="participante" useCaseLink="ns\clientes" entityJoinType="left" />
+
+        <fieldmodel name="anexos" datatype="objectlist" column="atendimento" useCaseLink="ns\documentosged" entityJoinType="left" notMapped="true" />
+        <fieldmodel name="camposcustomizados" datatype="json" column="camposcustomizados"/>
+        <fieldmodel name="ativo" datatype="guid" column="ativo" />
+
+        <fieldmodel name="data_ultima_resposta" datatype="date" column="data_ultima_resposta" />
+        <fieldmodel name="data_ultima_resposta_admin" datatype="date" column="data_ultima_resposta_admin" />
+        <fieldmodel name="data_ultima_resposta_cliente" datatype="date" column="data_ultima_resposta_cliente" />
+        <fieldmodel name="ultima_resposta_admin" datatype="boolean" column="ultima_resposta_admin" />
+        <fieldmodel name="ultima_resposta_resumo" datatype="string" column="ultima_resposta_resumo" />
+        <fieldmodel name="usuario_observando" datatype="boolean" notMapped="true" />
+        <fieldmodel name="followups" datatype="objectlist" column="atendimento" useCaseLink="atendimento\admin\followups" />
+        <fieldmodel name="historico" datatype="objectlist" column="atendimento" useCaseLink="servicos\atendimentos\historico" />
+        <fieldmodel name="proximoscontatos" datatype="objectlist" column="atendimento" useCaseLink="crm\proximoscontatos" />
+        <fieldmodel name="canal" datatype="string" column="canal"/>
+        <fieldmodel name="canal_email" datatype="string" column="canal_email"/>
+        <fieldmodel name="tipo" datatype="integer" notMapped="true"/>
+
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="created_at" datatype="date" column="datacriacao" />
+        <fieldmodel name="created_at_ini" datatype="date" notMapped="true" />
+        <fieldmodel name="created_at_fim" datatype="date" notMapped="true" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" optimistLock="true" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="visivelparacliente" datatype="boolean" column="visivelparacliente" />
+        <fieldmodel name="conteudo_textual" datatype="string" column="conteudo_textual" />
+        <fieldmodel name="adiado" datatype="boolean" column="adiado" />
+        <fieldmodel name="data_adiamento" datatype="date" column="data_adiamento" />
+        <fieldmodel name="data_abertura" datatype="date" column="data_abertura" />
+        <fieldmodel name="orderfield" datatype="string" notMapped="true"/>
+        <fieldmodel name="sla" datatype="object" column="sla"  />
+        <fieldmodel name="proximaviolacaosla" datatype="datetime" column="proximaviolacaosla" />
+        <fieldmodel name="ultimaviolacaosla" datatype="datetime" column="ultimaviolacaosla" />
+        <fieldmodel name="qtd_respostas" datatype="integer" notMapped="true" />
+        <fieldmodel name="mesclado_a" datatype="guid" column="mesclado_a" />
+        <fieldmodel name="mesclado_por" datatype="json" column="mesclado_por" />
+        <fieldmodel name="mesclado_em" datatype="datetime" column="mesclado_em" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">situacao</constructoritem>
+        <constructoritem required="false">responsavel_web</constructoritem>
+        <constructoritem required="false">cliente</constructoritem>
+        <constructoritem required="false">created_at</constructoritem>
+        <constructoritem required="false">camposcustomizados</constructoritem>
+        <constructoritem required="false">visivelparacliente</constructoritem>
+        <constructoritem required="false">canal</constructoritem>
+        <constructoritem required="false">adiado</constructoritem>
+        <constructoritem required="false">orderfield</constructoritem>
+        <constructoritem required="false">qtd_respostas</constructoritem>
+        <constructoritem required="false">ultima_resposta_admin</constructoritem>
+        <constructoritem required="false">created_at_ini</constructoritem>
+        <constructoritem required="false">created_at_fim</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Chamados" >
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimento" entitylink="atendimento" isid="true" />
+            <fieldbrowser alias="#" entitylink="numeroprotocolo" width="20" unique="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Resumo" entitylink="resumo" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="situacao" entitylink="situacao" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="visivelparacliente" entitylink="visivelparacliente" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="canal" entitylink="canal" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Data de Criação" entitylink="created_at" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Criador" entitylink="created_by" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="cliente" entitylink="cliente" width="80" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="responsavel_web" entitylink="responsavel_web" width="80" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="Ativo" entitylink="ativo" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="data_ultima_resposta" width="80" cansearch="false" visible="false" avaliable="true" indefaultorder="true" direction="desc"  />
+            <fieldbrowser entitylink="data_ultima_resposta_admin" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="data_ultima_resposta_cliente" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="ultima_resposta_admin" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="ultima_resposta_resumo" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="adiado" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="data_adiamento" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="data_abertura" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="data_abertura" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="proximaviolacaosla" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="qtd_respostas" width="80" cansearch="false" visible="false" avaliable="true"  />
+            <fieldbrowser entitylink="mesclado_a" width="80" cansearch="false" visible="false" avaliable="true"  />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Chamado">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="sintoma" placeholder="Descreva a situação" controltype="wysiwyg" entitylink="sintoma" label="" colspan="12">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo descrição da situação não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <!--                <row>
+                    <mode>rmHor</mode>
+                    <cell name="responsavel" controltype="textedit" entitylink="responsavel" label="Responsavel" colspan="12" />
+                </row> -->
+                <row>
+                    <cell name="responsavel_web" controltype="textedit" entitylink="responsavel_web" label="Atribuído à" colspan="12" />
+                </row>
+                <row>
+                    <cell name="email" controltype="email" entitylink="email" label="Email do contato" colspan="12" />
+                </row>
+                <row>
+                    <cell name="cliente" controltype="lookup" entitylink="cliente" label="Cliente" colspan="12"  browserlookup="clientes" projectbrowserlookup="ns" fieldlookup="codigo" fieldaliaslookup="cliente" fielddetaillookup="nome" />
+                </row>
+                <row>
+                    <cell name="numeroprotocolo" controltype="textedit" entitylink="numeroprotocolo" label="Protocolo" colspan="12" />
+                </row>
+                <row>
+                    <cell name="fila" controltype="lookup" entitylink="fila" label="Fila" colspan="12"  browserlookup="atendimentosfilas" projectbrowserlookup="servicos" fieldlookup="nome" fieldaliaslookup="atendimentofila" fielddetaillookup="nome" />
+                </row>
+                <row>
+                    <cell name="tipo" controltype="combobox" label="tipo" entitylink="tipo" placeholder="Selecionar" colspan="4">
+                        <itenscombobox type="json">{ '0' : 'Resposta', '1': 'Comentário' }</itenscombobox>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="ativo" controltype="combobox" label="Ativo" entitylink="ativo" placeholder="Selecionar" colspan="4">
+                        <itenscombobox type="json">{}</itenscombobox>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="visivelparacliente" controltype="checkbox" entitylink="visivelparacliente" colspan="4" label="Visível para o cliente ?" />
+                </row>
+                <row>
+                    <cell name="resumo" controltype="textedit" entitylink="resumo" label="Assunto" colspan="12"/>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoNovo_V3</name>
+                <fromto valueapi="email" valueentity="email" />
+                <fromto valueapi="sintoma" valueentity="sintoma"/>
+                <fromto valueapi="resumo" valueentity="resumo" />
+                <fromto valueapi="responsavel_web" valueentity="responsavel_web" />
+                <fromto valueapi="participante" valueentity="cliente" />
+                <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="canal" valueentity="canal" />
+                <fromto valueapi="visivelparacliente" valueentity="visivelparacliente" />
+                <fromto valueapi="tipo" valueentity="tipo" />
+                <fromto valueapi="conteudo_textual" valueentity="conteudo_textual" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>AtendimentoAlterar_v2</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="email" valueentity="email" />
+                <fromto valueapi="participante" valueentity="cliente" />
+                <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="lastupdate" valueentity="lastupdate" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="visivelparacliente" valueentity="visivelparacliente" />
+                <fromto valueapi="responsavel_web" valueentity="responsavel_web" />
+                <fromto valueapi="responsavel_web_tipo" valueentity="responsavel_web_tipo" />
+            </api>
+        </action>
+        <action>
+            <name>AlterarCliente</name>
+            <api>
+                <name>AtendimentoAlterarCliente</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="cliente" valueentity="cliente" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>AlterarSituacao</name>
+            <api>
+                <name>AtendimentoAlterarSituacao</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="situacao" valueentity="situacao"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>AlterarResponsavelWeb</name>
+            <api>
+                <name>AtendimentoAlterarResponsavelWeb</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="responsavel_web" valueentity="responsavel_web"/>
+                <fromto valueapi="lastupdate" valueentity="lastupdate"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>AlterarCampoCustomizado</name>
+            <api>
+                <name>AtendimentoAlterarCampoCustomizado</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>AlterarVisibilidade</name>
+            <api>
+                <name>AtendimentoAlterarVisibilidade</name>
+                <fromto valueapi="atendimento" valueentity="atendimento" />
+                <fromto valueapi="visivelparacliente" valueentity="visivelparacliente" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>AlterarEmailContato</name>
+            <api>
+                <name>AtendimentoAlterarEmailContato</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="email" valueentity="email"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Adiar</name>
+            <api>
+                <name>AtendimentoAdiar</name>
+                <fromto valueapi="atendimento" valueentity="atendimento"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="adiado" valueentity="adiado" />
+                <fromto valueapi="data_adiamento" valueentity="data_adiamento" />
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+          <name>AtendimentoAlterarSla</name>
+          <api>
+            <name>AtendimentoAlterarSla</name>
+            <fromto valueapi="atendimento" valueentity="atendimento" />
+            <fromto valueapi="sla" valueentity="sla" />
+            <fromto valueapi="tenant" valueentity="tenant" />
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+          </api>
+        </action>
+        <action>
+          <name>AtendimentoAlterarViolacaoSla</name>
+          <api>
+            <name>AtendimentoAlterarViolacaoSla</name>
+            <fromto valueapi="atendimento" valueentity="atendimento" />
+            <fromto valueapi="proximaviolacaosla" valueentity="proximaviolacaosla" />
+            <fromto valueapi="tenant" valueentity="tenant" />
+          </api>
+        </action>
+        <action>
+            <name>AtendimentoRegistraUltimaViolacaoSla</name>
+            <api>
+                <name>AtendimentoRegistraUltimaViolacaoSla</name>
+                <fromto valueapi="atendimento" valueentity="atendimento" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>AtendimentoAlterarResumo</name>
+            <api>
+                <name>AtendimentoAlterarResumo</name>
+                <fromto valueapi="atendimento" valueentity="atendimento" />
+                <fromto valueapi="resumo" valueentity="resumo" />
+                <fromto valueapi="updated_by" valueentity="updated_by" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

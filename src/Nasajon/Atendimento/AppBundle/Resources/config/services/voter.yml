@@ -1,0 +1,79 @@
+services:
+    nasajon_atendimento_app_bundle.voter_clientes:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\ClientesVoter
+        tags:
+            - { name: security.voter, priority: 1 }
+        arguments:
+            - "@nasajon_mda.atendimento_cliente_usuarios_repository"
+            - "@nasajon_mda.fixed_attributes"
+            - "@nasajon_loginbundle_provisao"
+            - "@modelbundle.service.configuracoes"
+        public: false
+
+    nasajon_atendimento_app_bundle.voter_usuarios:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\UsuariosVoter
+        tags:
+            - { name: security.voter, priority: 1  }
+        arguments:
+            - "@nasajon_mda.atendimento_cliente_usuarios_repository"
+            - "@nasajon_mda.fixed_attributes"
+            - "@nasajon_loginbundle_provisao"
+        public: false
+
+    nasajon_atendimento_app_bundle.voter_solicitacoes:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\SolicitacoesVoter
+        tags:
+            - { name: security.voter, priority: 1  }
+        arguments:
+            - "@nasajon_mda.atendimento_cliente_usuarios_repository"
+            - "@nasajon_mda.fixed_attributes"
+        # small performance boost
+        public: false
+        
+    nasajon_atendimento_app_bundle.voter_titulos:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\TituloVoter
+        tags:
+            - { name: security.voter, priority: 1  }
+        arguments:
+            - "@nasajon_mda.atendimento_cliente_usuarios_repository"
+            - "@nasajon_mda.fixed_attributes"
+            - "@nasajon_loginbundle_provisao"
+            - "@modelbundle.service.configuracoes"
+        public: false
+
+    nasajon_atendimento_app_bundle.voter_categorias:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\CategoriasVoter
+        tags:
+            - { name: security.voter, priority: 1  }
+        arguments:
+            - "@nasajon_mda.fixed_attributes"
+            - "@modelbundle.service.configuracoes"
+            - "@nasajon_mda.atendimento_categorias_repository"
+        public: false
+
+    nasajon_atendimento_app_bundle.voter_globals:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\GlobalsVoter
+        tags:
+            - { name: security.voter, priority: 1  }
+        arguments:
+            - "@nasajon_mda.fixed_attributes"
+            - "@modelbundle.service.configuracoes"
+        public: false
+        
+    nasajon_atendimento_app_bundle.voter_contatos:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\ContatosVoter
+        tags:
+            - { name: security.voter, priority: 1  }
+        arguments:
+            - "@nasajon_mda.fixed_attributes"
+            - "@nasajon_mda.atendimento_cliente_usuarios_repository"
+        public: false
+
+    nasajon_atendimento_app_bundle.voter_arquivos:
+        class: Nasajon\Atendimento\AppBundle\Security\Authorization\Voter\ArquivosVoter
+        tags:
+            - { name: security.voter, priority: 1  }
+        arguments:
+            - "@nasajon_mda.fixed_attributes"
+            - "@modelbundle.service.configuracoes"
+        public: false

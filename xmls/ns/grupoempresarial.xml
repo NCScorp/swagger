@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="grupoempresarial" label="grupoempresarial" project="ns" >
+    <entity schema="ns" table="gruposempresariais">
+        <fieldmodel name="grupoempresarial" datatype="guid" isid="true" column="grupoempresarial"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+    </entity>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Grupos Empresariais">
+        <fieldsbrowser>
+            <fieldbrowser alias="grupoempresarial" entitylink="grupoempresarial" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="2" indefaultorder="true" cansearch="true" visible="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" width="10" cansearch="true" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

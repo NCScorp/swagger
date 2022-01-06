@@ -1,0 +1,338 @@
+<div class="row height-full">
+    <div class="height-full" ng-class="{'onloading' : tndmnt_dmn_slctcs_shw_cntrllr.isBusy()}">
+        <div ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.isBusy()" class="ng-scope height-full">
+
+            <div class="box-with-head col-md-12 view-solicitacao height-full" ng-class="{ 'col-lg-8': (tndmnt_dmn_slctcs_shw_cntrllr.entity.cliente.cliente && !tndmnt_dmn_slctcs_shw_cntrllr.hideCliente && tndmnt_dmn_slctcs_shw_cntrllr.exibe_cliente == 1) }">
+                {% embed '@NasajonMDABundle/Resources/js/Atendimento/Admin/Solicitacoes/show.html.twig' %}
+
+                    {% block viewedit_toolbar -%}
+                        <div class="headline-sub clearfix fixed-bar">
+                            <h3 class="pull-left">
+                                <a href ui-sref="atendimento_admin_solicitacoes({})" title="Voltar à lista" class="hidden-md hidden-lg">
+                                    <i class="el el-chevron-left"></i>
+                                </a>
+                                #{{ "{{tndmnt_dmn_slctcs_shw_cntrllr.entity.numeroprotocolo}}" }} 
+                            </h3>
+                            <div class="pull-right btn-acao-header">
+                                <span class="msg-salvo pull-left" ng-show="tndmnt_dmn_slctcs_shw_cntrllr.savingstate">
+                                    {{ "{{['','Salvando', 'Salvo', 'Erro ao salvar'][tndmnt_dmn_slctcs_shw_cntrllr.savingstate] }}" }}
+                                </span>
+                                <h4 class="label-solicitacoes pull-left">
+                                    <span class="label label-success" ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a && tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0">
+                                        {{'Aberto'|trans}}
+                                    </span>
+                                    <span class="label label-default" ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a && tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 1">
+                                        {{'Fechado'|trans}}
+                                    </span>
+                                    <span class="label label-danger" ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a && tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 2">
+                                        {{'SPAM'|trans}}
+                                    </span>
+                                    <span class="label label-info" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a != null" >
+                                        Mesclado ao chamado #{{ '{{ tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a_numeroprotocolo }}' }}
+                                    </span>
+                                </h4>
+                                <div ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a">
+                                    <button ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0" id="single-button" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.close()"  type="button" class="btn btn-default btn-xs pull-left">
+                                        {{'fecharchamado'|trans}}
+                                    </button>
+                                    <button ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 1" id="single-button" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.open()"  type="button" class="btn btn-default btn-xs pull-left">
+                                        {{'abrirchamado'|trans}}
+                                    </button>
+                                    <button ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 2" id="single-button" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.open(1)"  type="button" class="btn btn-default btn-xs pull-left">
+                                        {{'naoespam'|trans}}
+                                    </button>
+
+                                    <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.permitirAdiamento" class="pull-left dropdown dropbutton-geral" uib-dropdown role="adiar">
+                                        <button type="button" class="btn btn-xs btn-default dropdown-toggle" uib-dropdown-toggle >
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right b-dropdown-menu" uib-dropdown-menu role="menu-adiar">
+                                            <li class="dropdown-header">Adiar até...</li>
+                                            <li ng-if='tndmnt_dmn_slctcs_shw_cntrllr.hoje.valid' role="menuitem-adiar" ui-sref-active="active">
+                                                <a class="clearfix" href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.adiar(tndmnt_dmn_slctcs_shw_cntrllr.hoje.value)" >
+                                                    <span class="pull-left">Mais tarde hoje</span>
+                                                    <span class="pull-right legenda">{{'{{tndmnt_dmn_slctcs_shw_cntrllr.hoje.label}}'}} 18:00</span>
+                                                </a>
+                                            </li>
+                                            <li role="menuitem-adiar" ui-sref-active="active">
+                                                <a class="clearfix" href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.adiar(tndmnt_dmn_slctcs_shw_cntrllr.amanha.value)" >
+                                                    <span class="pull-left">Amanhã</span>
+                                                    <span class="pull-right legenda">{{'{{tndmnt_dmn_slctcs_shw_cntrllr.amanha.label}}'}} 08:00</span>
+                                                </a>
+                                            </li>
+                                            <li role="menuitem-adiar" ui-sref-active="active">
+                                                <a class="clearfix" href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.adiar(tndmnt_dmn_slctcs_shw_cntrllr.fimSemana)" >
+                                                    <span class="pull-left">Este fim de semana</span>
+                                                    <span class="pull-right legenda">sáb 08:00</span>
+                                                </a>
+                                            </li>
+                                            <li role="menuitem-adiar" ui-sref-active="active">
+                                                <a class="clearfix" href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.adiar(tndmnt_dmn_slctcs_shw_cntrllr.proxSemana)" >
+                                                    <span class="pull-left">Próxima semana</span>
+                                                    <span class="pull-right legenda">seg 08:00</span>
+                                                </a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li role="menuitem-adiar" ui-sref-active="active">
+                                                <a class="dropdown-toggle clearfix" id="dropdown1" role="button" data-toggle="dropdown" data-target="#" href="#" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.openMomentPickerModal()">
+                                                    Escolher data e hora
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="pull-right dropdown dropbutton-geral" uib-dropdown role="group" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao != 2">
+                                    <button id="single-button" type="button" class="btn btn-xs btn-default dropdown-toggle" uib-dropdown-toggle >
+                                        <span class="icon xs-icon ret-icon"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" uib-dropdown-menu role="menu">
+                                        <li role="menuitem" ui-sref-active="active" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.close()" >
+                                                <span>{{'fecharchamado'|trans}}</span>
+                                            </a>
+                                        </li>
+                                        <li role="menuitem" ui-sref-active="active" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.isSpam()" >
+                                                <span>{{'definirspam'|trans}}</span>
+                                            </a>
+                                        </li>
+                                        <li role="menuitem" ui-sref-active="active">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.saveObservador()" >
+                                                <span ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.usuario_observando">{{'naoobservarchamado'|trans}}</span>
+                                                <span ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.entity.usuario_observando">{{'observarchamado'|trans}}</span>
+                                            </a>
+                                        </li>
+                                        <li role="menuitem" ui-sref-active="active">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.alteraVisibilidade()" >
+                                                <span>Deixar {{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.visivelparacliente?"oculto":"visível"}}'}} para cliente</span>
+                                            </a>
+                                        </li>
+                                        <li role="menuitem" ui-sref-active="active">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.agenda()" >
+                                                <span>{{'adicionarproximoscontatos' | trans}}</span>
+                                            </a>
+                                        </li>
+                                        <li role="menuitem" ui-sref-active="active">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.Imprimir()" >
+                                                <span>Imprimir Chamado</span>
+                                            </a>
+                                        </li>
+                                        <li role="menuitem" ui-sref-active="active">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.modalEncaminhar()" >
+                                                <span>Encaminhar histórico por e-mail</span>
+                                            </a>
+                                        </li>
+                                        <li role="menuitem" ui-sref-active="active" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.canal == 'E-mail'">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.openEmailModal(tndmnt_dmn_slctcs_shw_cntrllr.entity.atendimento, 1)" >
+                                                <span>Mostrar e-mail original</span>
+                                            </a>
+                                        </li>
+                                        <li class="divider" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.hideCliente"></li>
+                                        <li role="menuitem" ui-sref-active="active" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.hideCliente">
+                                            <a href="" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.hideCliente = false" >Visualizar informações do cliente</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div><!--/headline-sub-->
+                    {% endblock %}
+                    {% block viewedit_view -%}     
+                        <div class="bottom-buffer col-sm-12" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.cliente.status_suporte == 'Bloqueado'">
+                            <div class="alert alert-danger" role="alert">
+                                <div class="c-row">
+                                    <div class="col-sm-12">Cliente com suporte bloqueado!</div>
+                                </div>
+                            </div>
+                        </div>              
+                        <div class="bottom-buffer col-sm-12" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.adiado && tndmnt_dmn_slctcs_shw_cntrllr.entity.data_adiamento > tndmnt_dmn_slctcs_shw_cntrllr.now">
+                            <div class="alert alert-warning" role="alert">
+                                <div class="c-row">
+                                    <div class="col-sm-10 pull-left">Adiado até {{'{{tndmnt_dmn_slctcs_shw_cntrllr.adiamento}}'}}</div>
+                                    <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.permitirAdiamento && tndmnt_dmn_slctcs_shw_cntrllr.entity.responsavel_web === tndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado.email" class="col-sm-2 pull-right"><a href="#" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.naoAdiar()">Não adiar</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="clearfix"></div>
+
+                        <form name="solicitacoesShowController.form" novalidate="novalidate" role="form">
+                            <div id="top" class="row clearfix article ticket-block">
+                                <div class="col-md-12 float-none">
+                                    <div class="label label-info info-mesclado col-md-12" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a!=null">
+                                        <p class="pull-left">
+                                            <i class="fa fa-info-circle"></i> O chamado "#{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.numeroprotocolo}}'}}" foi mesclado ao chamado principal "#{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a_numeroprotocolo}}'}}" e agora a página atual encontra-se disponível <strong>apenas para consulta </strong>
+                                        </p>
+                                        <div class="pull-right">
+                                            <a href ui-sref='atendimento_admin_solicitacoes_show({atendimento : tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a })' class="btn btn-primary"><i class="fa fa-edit"></i> Ir para chamado principal</a>
+                                        </div>
+                                    </div>
+                                    <dl class="dl-horizontal small text-overflow">
+                                        <dt ng-class="{'line-height-campo' : tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0 && tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()}">Atribuído a:</dt>
+                                        <dd>
+                                            <ui-select ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 0 && !tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a && tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()" class="print-visible" ng-model="tndmnt_dmn_slctcs_shw_cntrllr.exibeAtribuido" on-select="tndmnt_dmn_slctcs_shw_cntrllr.atribuir($item)" ng-disabled="tndmnt_dmn_slctcs_shw_cntrllr.submitting">
+                                                <ui-select-match allow-clear="true" placeholder="Selecione ou busque">{{'{{tndmnt_dmn_slctcs_shw_cntrllr.exibeAtribuido }}'}}</ui-select-match>
+                                                <ui-select-choices group-by="tndmnt_dmn_slctcs_shw_cntrllr.agruparPorTipo" repeat="option in tndmnt_dmn_slctcs_shw_cntrllr.optionusuariologado.concat(tndmnt_dmn_slctcs_shw_cntrllr.contas).concat(tndmnt_dmn_slctcs_shw_cntrllr.filas) | filter:$select.search">
+                                                    <div class="row">
+                                                        <div class="col-md-12" ng-bind-html="option.email? (option.nome + ' ('+option.email+')') : option.nome | highlight: $select.search"></div>
+                                                    </div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                                
+                                            <span ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao == 1|| tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a || !tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()">{{'{{tndmnt_dmn_slctcs_shw_cntrllr.exibeAtribuido|| "Sem atribuição"}}'}}</span>
+                                        </dd>
+                                        <dt>Criado:</dt>
+                                        <dd ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.created_at | asDate | amCalendar" tooltip-placement="top-left" uib-tooltip="{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.created_at | asDate | amDateFormat:\'DD/MM/YYYY HH:mm\' }}'}}"></dd>
+                                        <dt>Criado por:</dt>
+                                        <dd >
+                                            <span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.created_by.nome || 'Não informado' " uib-tooltip="{{"{{tndmnt_dmn_slctcs_shw_cntrllr.entity.created_by.email || 'Não informado'}}"}}"></span>
+                                        </dd>
+                                        <dt>Atualizado em:</dt>
+                                        <dd tooltip-placement="top-left" uib-tooltip="{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.updated_at | asDate | amDateFormat:\'DD/MM/YYYY HH:mm\' }}'}}">{{ "{{tndmnt_dmn_slctcs_shw_cntrllr.entity.updated_at | asDate | amCalendar }}" }}</dd>
+
+
+                                        <dt ng-class="{'line-height-campo' : tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim() && tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a && tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()}">Email do contato:</dt>
+                                        <dd ng-show="!tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim() || !tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()">
+                                            <span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.email"></span>
+                                        </dd>
+                                        <dd ng-show="tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim() && !tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a && tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()">
+                                            <div class="email-contato">
+                                                <autocomplete 
+                                                    click-activation="true" 
+                                                    data ="tndmnt_dmn_slctcs_shw_cntrllr.cliente_usuarios" 
+                                                    ng-model="tndmnt_dmn_slctcs_shw_cntrllr.entity.email" 
+                                                >
+                                                </autocomplete>
+                                                <span id="btnSalvarContato" ng-click="tndmnt_dmn_slctcs_shw_cntrllr.saveEmailContato()" uib-tooltip="Salvar e-mail do contato" class="input-group-btn">
+                                                    <button class="btn btn-default"><i class="fa fa-save"></i></button>
+                                                </span>
+                                            </div>
+                                            <div ng-if='tndmnt_dmn_slctcs_shw_cntrllr.email_contato_invalido'>
+                                                <div class="alert alert-danger">
+                                                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                    <span class="sr-only">Erro:</span>
+                                                    O email do contato deve ser um email válido.
+                                                </div>
+                                            </div>
+                                           
+                                        </dd>
+                                        <dt ng-if="tndmnt_dmn_slctcs_shw_cntrllr.exibe_cliente == 1 && !tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a" ng-class="{'line-height-campo' : tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim() && tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()}">Cliente:</dt>
+                                        <dd  ng-if="tndmnt_dmn_slctcs_shw_cntrllr.exibe_cliente == 1 && !tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a">
+                                        <mda-ui-select
+                                            class="print-visible"
+                                            ng-if="tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim() && tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()"
+                                            service="NsClientes"
+                                            constructors="{ 'bloqueado' : false }"
+                                            opts='{ "attr" : { "ng-change" : "tndmnt_dmn_slctcs_shw_cntrllr.alterarCliente()", "ng-model" : "tndmnt_dmn_slctcs_shw_cntrllr.entity.cliente", "ng-disabled" : "tndmnt_dmn_slctcs_shw_cntrllr.entity.submitting", "placeholder" : "",  } , "required" : false, "match" : "nome" }'
+                                            fields='["codigo", "nome"]'
+                                            ></mda-ui-select>
+                                        <a href ui-sref="ns_clientes_show({cliente : tndmnt_dmn_slctcs_shw_cntrllr.entity.cliente.cliente})" ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.cliente.cliente && !tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim() || !tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()">{{ "{{tndmnt_dmn_slctcs_shw_cntrllr.entity.cliente.nome}}" }}</a>
+                                        </dd>
+
+                                        <div ng-repeat="campocustomizado in tndmnt_dmn_slctcs_shw_cntrllr.camposcustomizados">
+                                            <dt ng-class="{'line-height-campo' : tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim()}">{{'{{campocustomizado.label}}'}}</dt>
+
+                                            <dd ng-if="tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim()">
+
+                                                <input id="{{'{{campocustomizado.nome}}'}}" 
+                                                       name="{{'{{campocustomizado.nome}}'}}" 
+                                                       ng-if="campocustomizado.tipo == 'TE'" 
+                                                       type="text" 
+                                                       class="form-control" 
+                                                       ng-model="tndmnt_dmn_slctcs_shw_cntrllr.entity.camposcustomizados[campocustomizado.atendimentocampocustomizado]"
+                                                       ng-change="tndmnt_dmn_slctcs_shw_cntrllr.save(campocustomizado.atendimentocampocustomizado)"
+                                                       ng-required="{{'{{campocustomizado.obrigatorio}}'}}">
+
+                                                <select id="{{'{{campocustomizado.nome}}'}}" 
+                                                        name="{{'{{campocustomizado.nome}}'}}" 
+                                                        ng-if="campocustomizado.tipo == 'CB'" 
+                                                        class="form-control"
+                                                        ng-model="tndmnt_dmn_slctcs_shw_cntrllr.entity.camposcustomizados[campocustomizado.atendimentocampocustomizado]"
+                                                        ng-options="item for item in campocustomizado.opcoes"
+                                                        ng-change="tndmnt_dmn_slctcs_shw_cntrllr.save(campocustomizado.atendimentocampocustomizado)"
+                                                        ng-required="{{'{{campocustomizado.obrigatorio}}'}}">
+                                                </select>
+                                                
+                                                <div ng-if="tndmnt_dmn_slctcs_shw_cntrllr.required[campocustomizado.atendimentocampocustomizado]">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                                        <span class="sr-only">Erro:</span>
+                                                        O campo {{'{{campocustomizado.nome}}'}} não pode ser vazio.
+                                                    </div>
+                                                </div>
+
+                                            </dd>
+
+                                            <dd ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.atribuidoAMim()" ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.camposcustomizados[campocustomizado.atendimentocampocustomizado]"></dd>
+                                        </div>
+
+                                        <dt>Visível para o cliente:</dt>
+                                        <dd>
+                                            <span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.visivelparacliente ? 'Sim': 'Não'"></span>
+                                        </dd>
+                                        <dt>Canal:</dt>
+                                        <dd>
+                                            <span ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.canal"></span>
+                                            <span ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.canal_email != undefined">({{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.canal_email}}'}})</span>
+                                        </dd>
+                                        <dt ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.proximoscontatos.length > 0">Contatos:</dt>
+                                        <dd ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.proximoscontatos.length > 0">
+                                            <div ng-repeat="contato in tndmnt_dmn_slctcs_shw_cntrllr.entity.proximoscontatos">
+                                                <a href ui-sref="crm_proximoscontatos_show({proximocontato : contato.proximocontato})" >{{'{{contato.data | convertToDate}}'}} {{'{{contato.hora | toTime}}'}} - {{'{{contato.assunto.descricao}}'}}</a>
+                                            </div>
+                                        </dd>
+                                        <dt ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.sla">SLA:</dt>
+                                        <dd ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.sla">
+                                          {{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.sla.nome}}'}} 
+                                        </dd>
+                                        <dt ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.proximaviolacaosla">Escala:</dt>
+                                        <dd ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.proximaviolacaosla">
+                                          <span>
+                                                <span>{{'{{tndmnt_dmn_slctcs_shw_cntrllr.entity.proximaviolacaosla | amDateFormat:\'DD/MM/YYYY HH:mm\'}}'}}</span>
+                                          </span>   
+                                        </dd>
+                                        <dt ng-if="tndmnt_dmn_slctcs_shw_cntrllr.habilitarAssunto != 0">Assunto:</dt>
+                                        <dd ng-if="ntndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado.provisao == admin">
+                                        <input  ng-if="ntndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado.provisao == admin" id="resumo" type="text" required="required" 
+                                                ng-blur="tndmnt_dmn_slctcs_shw_cntrllr.entity.resumo.length != undefined && tndmnt_dmn_slctcs_shw_cntrllr.alterarResumo()" 
+                                                name="resumo" ng-model="tndmnt_dmn_slctcs_shw_cntrllr.entity.resumo" 
+                                                ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.resumo"  class="form-control ng-pristine ng-untouched ng-valid"
+                                                ng-keydown="tndmnt_dmn_slctcs_shw_cntrllr.assuntoKeyDown($event)">
+                                        </dd>
+                                        <dd ng-if="tndmnt_dmn_slctcs_shw_cntrllr.habilitarAssunto != 0">
+                                            <span ng-if="ntndmnt_dmn_slctcs_shw_cntrllr.usuarioLogado.provisao != admin" ng-bind="tndmnt_dmn_slctcs_shw_cntrllr.entity.resumo"></span>
+                                        </dd>
+                                        <dt ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.chamadosmesclados.length > 0">Mesclados:</dt>
+                                        <dd ng-if="tndmnt_dmn_slctcs_shw_cntrllr.entity.chamadosmesclados.length > 0">
+                                            <a ng-repeat="chamadosmesclados in tndmnt_dmn_slctcs_shw_cntrllr.entity.chamadosmesclados" class="chamados-mesclados"
+                                            href ui-sref="atendimento_admin_solicitacoes_show({atendimento : chamadosmesclados.atendimento })">
+                                                <span class="label label-info chamados-mesclados"> 
+                                                    Mesclado #{{ '{{ chamadosmesclados.numeroprotocolo }}' }} 
+                                                </span>
+                                            </a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="ticket-replies clearfix">
+                                    <div class="ticket" ng-if="!tndmnt_dmn_slctcs_shw_cntrllr.entity.mesclado_a && !tndmnt_dmn_slctcs_shw_cntrllr.habilitarFollowup && tndmnt_dmn_slctcs_shw_cntrllr.entity.situacao != 2 && tndmnt_dmn_slctcs_shw_cntrllr.usuarioPodeInteragirNoChamado()" >
+                                        <div class="reply-text resposta-comentario">
+                                            {% include '@NasajonAtendimentoAppBundle/Resources/views/Admin/Followups/form.html.twig' %}
+                                        </div><!--/.reply-text-->
+                                    </div><!--/.ticket-->
+
+                                    <historicos atendimento='tndmnt_dmn_slctcs_shw_cntrllr' class="col-md-12"></historicos>
+
+
+                                </div> <!--/.ticket-replies-->
+                            </div><!--/article-->
+                        </form>
+
+                    {% endblock viewedit_view -%}
+                {% endembed %}
+            </div>
+
+            <cliente ng-if="tndmnt_dmn_slctcs_shw_cntrllr.exibe_cliente == 1" controller="tndmnt_dmn_slctcs_shw_cntrllr" class="hidden-print"></cliente>
+        </div>
+    </div>
+</div>

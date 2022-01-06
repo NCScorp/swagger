@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="anexosmodulos" label="anexosmodulos" project="ns" >
+    <entity schema="ns" table="anexosmodulos" >
+        <fieldmodel name="anexomodulo" datatype="guid" isid="true" column="anexomodulo"/>
+        <fieldmodel name="nome" datatype="string" column="arquivo" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="modulodoanexo" datatype="integer" column="modulodoanexo" />
+        <fieldmodel name="id_modulodoanexo" datatype="guid" column="id_modulodoanexo" />
+        <fieldmodel name="documentoged" datatype="guid" column="documentoged" />
+        <fieldmodel name="compartilhado" datatype="boolean" column="compartilhado" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">modulodoanexo</constructoritem>
+        <constructoritem required="true">id_modulodoanexo</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false">
+        <fieldsbrowser>
+            <fieldbrowser alias="anexomodulo" entitylink="anexomodulo" isid="true" visible="false" />
+            <fieldbrowser alias="modulodoanexo" entitylink="modulodoanexo" indefaultorder="true" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="id_modulodoanexo" entitylink="id_modulodoanexo" indefaultorder="true" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="documentoged" entitylink="documentoged" indefaultorder="true" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="created_at" entitylink="created_at" indefaultorder="true" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Nome" entitylink="nome" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Anexo">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="nome" controltype="textedit" entitylink="nome" colspan="8" placeholder="Nome">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo nome não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" colspan="8" placeholder="Descrição"></cell>
+                    <cell name="modulodoanexo" controltype="hidden" entitylink="modulodoanexo" colspan="1"></cell>
+                    <cell name="documentoged" controltype="hidden" entitylink="documentoged" colspan="1"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AnexoModuloNovo</name>
+                <fromto valueapi="arquivo" valueentity="nome"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="modulodoanexo" valueentity="modulodoanexo"/>
+                <fromto valueapi="id_modulodoanexo" valueentity="id_modulodoanexo"/>
+                <fromto valueapi="documentoged" valueentity="documentoged"/>
+                <fromto valueapi="compartilhado" valueentity="compartilhado"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>AnexoModuloExcluir</name>
+                <fromto valueapi="anexomodulo" valueentity="anexomodulo"/>
+            </api>
+        </action>
+    </actions>
+
+</nsjusecase>

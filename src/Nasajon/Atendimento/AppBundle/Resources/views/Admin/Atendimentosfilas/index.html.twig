@@ -1,0 +1,37 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/Atendimentosfilas/index.html.twig' %}
+{% block index_header -%}
+<div class="col-md-12 headline-page ng-scope">
+    <div class="headline clearfix">
+        <div class="breadcrumb-trail hidden-xs hidden-sm pull-left"><a ui-sref="atendimento_admin_configuracoes_list" href title="Configurações">Configurações</a> > <span class="select-page">{{'filaschamados'|trans}}</span></strong></div>
+        <a class="btn btn-xs btn-warning" ui-sref="servicos_atendimentosfilas_new({})" href>
+                <i class="el el-plus"></i> Criar
+            </a>
+    </div>
+</div>
+{% endblock %}
+{% block index_panel_header -%}
+     <div class="headline-sub clearfix hidden-lg hidden-md">
+         <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar às configurações" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> {{'filaschamados'|trans}}</h3>
+    </div>
+{% endblock %}
+{% block index_list -%}
+  <div class="height-full" ng-class="{'onloading' : srvcs_tndmntsfls_lst_cntrllr.isBusy() }">
+    <ul class="list-group reorder" id="servicos_atendimentosfilas_list" dnd-list="srvcs_tndmntsfls_lst_cntrllr.entities">
+        {%- block viewedit_view_list_item %}
+        <li href ui-sref='servicos_atendimentosfilas_edit({atendimentofila : entity.atendimentofila})' class="list-group-item"
+            ng-repeat="entity in srvcs_tndmntsfls_lst_cntrllr.entities"
+            ng-drop="true"
+            ng-drop-success="srvcs_tndmntsfls_lst_cntrllr.order($index, $data)"
+            ui-sref-active="active"
+            ng-class="{'selected': selected === entity}"
+            ng-drag="true" ng-drag-data="entity" ng-class="obj.nome">
+            <span class="ico-move pull-left"><i class="el el-move"></i></span> 
+            <div class="clear-fix"></div>
+            <h4 class="list-group-item-heading">{{'{{ entity.nome }}'}}</h4>
+        </li>
+        {%- endblock viewedit_view_list_item %}
+        <p class="text-center nfound" ng-if="srvcs_tndmntsfls_lst_cntrllr.entities.length == 0 && !srvcs_tndmntsfls_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+    </ul>
+  </div>
+
+{% endblock index_list -%}

@@ -1,0 +1,16 @@
+<div>
+    <div class="headline-sub clearfix custom">
+        <h3 class="pull-left">
+            Escolher data e hora
+        </h3>
+    </div>
+
+    <div class="modal-body modal-date" id="modal-body"> 
+        <div moment-picker="datePickerModal.data" locale="pt-br" min-view="month" max-view="hour" today="true" inline="true" format="YYYY-MM-DD HH:mm" min-date="datePickerModal.minDate"></div>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn btn-default" ng-click="datePickerModal.fechar()">Cancelar</button>
+        <button class="btn btn-primary" ng-click="datePickerModal.salvar()" ng-disabled="datePickerModal.data === null || datePickerModal.data === undefined">Salvar</button>
+    </div>
+</div>

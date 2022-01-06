@@ -1,0 +1,26 @@
+<div class="col-md-12 headline-page">
+    <div class="headline clearfix">
+        <h2>Configurações</h2>
+    </div>
+</div>
+<div class="col-md-12 row height-full-calc panel-default">
+    <div class="col-lg-8 col-md-10 col-sm-12 config-page">
+            <div class="configuracoes-group-item" ng-repeat="menu in tndmnt_clnt_cnfgrcs_lst_cntrllr.gerais">
+                <div class="item-macro row">
+                  <img class="pull-left icone" ng-src="{{'{{menu.icon}}'}}" />
+                  <h4 class="list-group-item-heading">{{'{{menu.titulo}}'}}</h4>
+                  <!--p class="list-group-item-text">{{'{{menu.descricao}}'}}</p-->
+                </div>
+                <div class="lista-configuracoes list-group">
+                    <a href class="list-group-item configuracoes-group-item"ui-sref="{{'{{sub.link}}'}}" ng-repeat="sub in menu.sub" >
+                        <img class="pull-left icone" ng-src="{{'{{sub.icon}}'}}" />
+                        <h4 class="list-group-item-heading">{{'{{sub.titulo}}'}}</h4>
+                        <p class="list-group-item-text">{{'{{sub.descricao}}'}}</p>
+                        <div class='pull-right seta'>
+                            <i class="el el-1x el-chevron-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+    </div>
+</div>

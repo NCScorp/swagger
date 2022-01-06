@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="rateiospadrao" label="rateiospadrao" project="financas" >
+    <entity schema="financas" table="rateiospadrao">
+        <fieldmodel name="rateiopadrao" datatype="guid" isid="true" column="rateiopadrao"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel column="lastupdate" datatype="datetime" name="lastupdate" optimistLock="true" />
+    </entity>
+    <viewbrowser label="Rateios Padrão" >
+        <fieldsbrowser>
+            <fieldbrowser alias="rateiopadrao" entitylink="rateiopadrao" isid="true" />
+            <fieldbrowser alias="Nome" entitylink="nome" cansearch="true" visible="true" avaliable="true" alloworder="true" indefaultorder="true" direction="ASC" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

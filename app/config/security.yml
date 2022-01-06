@@ -1,0 +1,97 @@
+security:
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain:  true
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    providers:
+        nasajon_provider:
+            id: Nasajon\LoginBundle\Provider\SamlProvider
+        apikeyprovider:
+            id: nasajon_login_bundle_provider_api_key
+    firewalls:
+        healthcheck:
+            pattern: ^/healthcheck
+            security: false
+
+        aprovar:
+            pattern: ^/aprovar
+            anonymous: true
+
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        endpoint:
+            pattern: ^/(endpoint|unsubscribe)/
+            security: false
+
+        api_options:
+            methods: [OPTIONS]
+            pattern:   ^/api
+            anonymous: true
+            stateless: true
+            security: false
+
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: apikeyprovider
+            entry_point: nasajon_loginbundle.login_entry_point
+            simple_preauth:
+                authenticator: nasajon_login_bundle_authenticator_api_key
+
+        login_token:
+            context: my_security_context
+            pattern: ^/oauth2/login/token
+            anonymous: ~
+            provider: nasajon_provider
+            simple_preauth:
+                authenticator: Nasajon\LoginBundle\Security\Authentication\BearerTokenAuthenticator
+            logout_on_user_change: true
+
+        secured_area:
+            context: my_security_context
+            light_saml_sp:
+                provider: nasajon_provider
+                login_path: /saml/login
+                check_path: /saml/login_check
+                failure_path: security_error
+                default_target_path: main_index
+            logout:
+                path: logout
+                target: default
+                invalidate_session: false
+                success_handler: nasajon_login_bundle.logout_handler
+            anonymous: ~
+            logout_on_user_change: true
+
+    access_control:
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [OPTIONS] }
+        - { path: ^/api/ , roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [OPTIONS] }
+
+        # Regra ROLE_USER aos chamados, arquivos e tudo do admin
+        - { path: ^/\w+/(chamado|arquivo).*|.*/admin/.*, roles: ROLE_USER }
+
+        # Acesso aos arquivos para o Google
+        - { path: ^/robots.txt$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/sitemapindex$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/\w+/sitemap$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Acesso à home e às principais rotas necessárias para acessar os artigos e as categorias
+        - { path: ^/\w+/home.html$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/private/\w+/artigos/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/private/\w+/categorias/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/\w+/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        # Acesso à rota de artigos, quando se busca um artigo específico
+        - { path: ^/\w+/artigos/(\w+-\w+)+|\w+$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        - { path: ^/oauth2/login/token, roles: ROLE_USER }
+        - { path: ^/aprovar , roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/private/(.*)/assets/download/(.*)$ , roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/saml, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/fosrouting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/, roles: ROLE_USER }

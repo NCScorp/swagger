@@ -1,0 +1,22 @@
+{% embed '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Solicitacoes/index.html.twig' %}
+
+	{% block index_header -%}
+	<div/>
+    {% endblock index_header -%}
+    {% block index_layout %}        
+        <div class='col-md-12 article-area height-full-calc row' ui-view>
+            <div class="bt-new-article new-article message text-center height-full">
+                <div class="initial-msg hidden-sm hidden-xs">                    
+                    <div ng-if="tndmnt_dmn_slctcs_lst_cntrllr.entities.length != 0">                        
+                        <p ng-if="tndmnt_clnt_slctcs_lst_cntrllr.chamadosDescricao == null">Não é possível abrir um chamado pelo atendimento</p>
+                    </div>
+                    <div dynamic="tndmnt_clnt_slctcs_lst_cntrllr.chamadosDescricao"></div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block index_builltin_form -%}
+        <div/>
+    {% endblock index_builltin_form -%}
+{% endembed %}
+

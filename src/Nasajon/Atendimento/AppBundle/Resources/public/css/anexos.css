@@ -1,0 +1,153 @@
+/* Attachments */
+
+.attachments {
+    margin: 0 -15px;
+}
+
+.form-group.attachment {
+    margin-bottom: 0;
+}
+
+.attachments .attach {
+    margin: 5px 0;
+}
+
+.attachments .attach .btn-remove {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+}
+
+.attachments .attach .btn-remove a {
+    color: #000;
+    font-size: 1.2em;
+}
+
+.attachment .btn {
+  margin-right: 10px;
+}
+
+.attachments .attach img {
+    max-width: 120px;
+    width: 100%;
+}
+
+.attachments .block-attach {
+    padding: 5px;
+    border: 1px solid #cacaca;
+    position: relative;
+}
+
+.attachments .block-attach.has-error {
+    border-color:#FF8C8C;
+    background: #FFE8E8;
+}
+
+.attachments .block-attach .msg-erro {
+    color: #a94442;
+    font-size: 0.8em;
+    font-weight: bold;
+    display: inherit;
+    line-height: 1.3;
+}
+
+.attachments .block-attach.has-error .progress,
+.attachments .block-attach.complete .progress {
+    display: none;
+}
+
+.attachments .block-attach span.pdf,
+.attachments .block-attach span.doc,
+.attachments .block-attach span.plain,
+.attachments .block-attach span.xls,
+.attachments .block-attach span.x-zip-compressed,
+.attachments .block-attach span.file {
+    width: 32px;
+    height: 32px;
+    display: block;
+    background-image: url("//s3-us-west-2.amazonaws.com/static.nasajon/img/common/file_extension.png");
+    background-repeat: no-repeat;
+}
+
+.attachments .block-attach span.pdf {
+    background-image: url("//s3-us-west-2.amazonaws.com/static.nasajon/img/common/file_extension_pdf.png");
+}
+
+.attachments .block-attach span.doc {
+    background-image: url("//s3-us-west-2.amazonaws.com/static.nasajon/img/common/file_extension_doc.png");
+}
+
+.attachments .block-attach span.plain {
+    background-image: url("//s3-us-west-2.amazonaws.com/static.nasajon/img/common/file_extension_txt.png");
+}
+
+.attachments .block-attach span.xls {
+    background-image: url("//s3-us-west-2.amazonaws.com/static.nasajon/img/common/file_extension_xls.png");
+}
+
+.attachments .block-attach span.x-zip-compressed {
+    background-image: url("//s3-us-west-2.amazonaws.com/static.nasajon/img/common/file_extension_zip.png");
+}
+
+.attach .nome-arquivo {
+    cursor: pointer;
+    font-size: 0.8em;
+    margin: 3px 0;
+    display: block;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+.attach .nome-arquivo.active {
+    color: #409cbb;
+}
+
+.forms .attach-archive .col-xs-1,
+.forms .attach-archive .col-xs-2,
+.forms .attach-archive .col-xs-3,
+.forms .attach-archive .col-xs-4,
+.forms .attach-archive .col-xs-5,
+.forms .attach-archive .col-xs-6 {
+    padding: 0;
+}
+
+.forms .attach-archive .col-xs-7 {
+    padding: 0 2px;
+}
+
+.attach-archive .progress {
+    margin: 9px 20px 5px 0;
+}
+
+.attach-archive .attach .btn-remove {
+    top: 9px;
+    right: 4px;
+}
+
+.attach-archive .attach .nome-arquivo {
+    margin: 7px 0 0;
+}
+
+/* Progress Bar */
+
+.progress {
+    height: 10px;
+    margin: 0;
+}
+
+@media screen and (min-width: 992px) {
+  .attachments .block-attach .msg-erro {
+      text-align: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .attachments .attach .btn-remove a {
+      font-size: 1.8em;
+  }
+
+  .attach-archive .attach .btn-remove {
+      top: 0;
+  }
+}

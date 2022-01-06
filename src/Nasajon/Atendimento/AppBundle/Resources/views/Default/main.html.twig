@@ -1,0 +1,191 @@
+{% extends 'NasajonAtendimentoAppBundle:Default:layout.html.twig' %}
+{% use 'NasajonAtendimentoAppBundle:Default:header.html.twig' %}
+
+{% block ie_html_title %}
+    <img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/suporte-online.png" alt="{{ nsj_module_name() }}">
+{% endblock %}
+
+{% block metadata %}
+    <meta name="msapplication-config" content="none"/>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid sistema-atendimento" ng-controller='MenuCtrl as controller' ng-cloak>
+
+        <toaster-container toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-center'}"></toaster-container>
+
+        {% block alerta_disponibilidade %}
+            <div>
+                <div class="alerta-usuario alert alert-danger text-center hide" ng-class="{'show': !controller.usuarioDisponivel}" title="{{'{{controller.tituloUsuarioDisponivelQuemDetermina}}'}}">
+                  <i class="el el-user"></i>
+                  Você está indisponível no momento! <button type="button" class="btn btn-xs btn-success" ng-click="controller.alterarDisponibilidade(1)" ng-if="controller.usuarioDisponivelQuemDetermina == 1 || controller.isAdmin" >Ficar disponível</button>
+                </div>
+            </div>
+        {% endblock %}
+        
+        <div ng-class="{ 'geral clearfix' : !('home'| isStateEq), 'home' : ('home'| isStateEq), 'padding-alerta': !controller.usuarioDisponivel && controller.usuarioDisponivel != null}" ui-view>
+            {% block mainpage %}
+
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block stylesheet %}
+    <link rel="icon" href="//s3-us-west-2.amazonaws.com/static.nasajon/img/favicons/favicon-atendimento.ico" />
+
+    <link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/css/bootstrap.css" />
+
+    {% stylesheets
+
+        '@NasajonComponentesInterfaceBundle/Resources/public/css/header.css'
+        '@NasajonComponentesInterfaceBundle/Resources/public/css/nasajon.css'
+        '@NasajonComponentesInterfaceBundle/Resources/public/angular-modules/modules/angularModules.css'
+
+        '@NasajonComponentesInterfaceBundle/Resources/css/default.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/panels-and-lists.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/height-full.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/botoes.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/headlines.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/icons-alerts-infos.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/nav.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/forms.css'
+        '@NasajonComponentesInterfaceBundle/Resources/css/breadcrumb-trail.css'
+
+        '@NasajonAtendimentoAppBundle/Resources/public/css/feeds.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/base-conhecimento-home.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/start-content.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/atendimento.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/artigos.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/flags.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/drag-and-drop.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/verticalmenu-toggle.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/client-infos.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/anexos.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/tickets.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/relatorios.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/popover.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/date-picker.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/dropdown-menu.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/ckeditor.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/tablesort.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/fixed-bar.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/placard.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/autocomplete.css'
+        '@NasajonAtendimentoAppBundle/Resources/public/css/print.css'
+
+        '%kernel.project_dir%/node_modules/angular-wizard/dist/angular-wizard.min.css'
+        '%kernel.project_dir%/node_modules/summernote/dist/summernote.css'
+        '%kernel.project_dir%/node_modules/ui-select/dist/select.css'
+        '%kernel.project_dir%/node_modules/angularjs-toaster/toaster.min.css'
+        '%kernel.project_dir%/node_modules/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.min.css'
+        '%kernel.project_dir%/node_modules/angular-moment-picker/dist/angular-moment-picker.min.css'
+        '%kernel.project_dir%/node_modules/ng-tags-input/build/ng-tags-input.min.css'
+
+        '@NasajonAtendimentoAppBundle/Resources/public/css/cliente/contatos/contatos.css'
+
+        filter='?uglifycss'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Lato:300,400,700'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed">
+    <link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/lib/font-awesome/4.4.0/font-awesome.min.css">
+    <link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/lib/elusive-icons/2.0.0/elusive-icons.min.css">
+
+
+    {% block ie_css %}
+            <!--[if lt IE 9]>
+            {% stylesheets
+                '@NasajonComponentesInterfaceBundle/Resources/public/css/ie8.css'
+            %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+            {% endstylesheets %}
+            <![endif]-->
+    {% endblock %}
+{% endblock stylesheet %}
+
+{% block javascripts %}
+
+    {#    <script src="{{ asset('bundles/nasajoncomponentesinterface/js/lib/nsj/header/header.min.js') }}"></script>
+    #}
+    <script src="{{ asset('bundles/nasajoncomponentesinterface/js/lib/nsj/globals/globals.min.js') }}"></script>
+
+    <script src="{{ path('nsdefault_globals', generate_default_params() ) }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('bundles/nasajonatendimentoapp/js/ckeditor/ckeditor.js') }}"></script>
+
+    {% javascripts
+        '%kernel.project_dir%/node_modules/angular/angular.js'
+        '%kernel.project_dir%/node_modules/angular-messages/angular-messages.min.js'
+        '%kernel.project_dir%/node_modules/angular-locale-pt-br/angular-locale_pt-br.js'
+        '%kernel.project_dir%/node_modules/angular-animate/angular-animate.min.js'
+        '%kernel.project_dir%/node_modules/ng-infinite-scroll/build/ng-infinite-scroll.min.js'
+        '%kernel.project_dir%/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js'
+        '%kernel.project_dir%/node_modules/@uirouter/angularjs/release/angular-ui-router.min.js'
+        '%kernel.project_dir%/node_modules/@uirouter/angularjs/release/stateEvents.min.js'
+        '%kernel.project_dir%/node_modules/angular-sanitize/angular-sanitize.min.js'
+        '%kernel.project_dir%/node_modules/ui-select/dist/select.min.js'
+        '%kernel.project_dir%/node_modules/moment/min/moment.min.js'
+        '%kernel.project_dir%/node_modules/moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js'
+        '%kernel.project_dir%/node_modules/moment/locale/pt-br.js'
+        '%kernel.project_dir%/node_modules/angular-moment/angular-moment.min.js'
+        '%kernel.project_dir%/node_modules/angularjs-toaster/toaster.min.js'
+        '%kernel.project_dir%/node_modules/angular-wizard/dist/angular-wizard.min.js'
+        '%kernel.project_dir%/node_modules/angular-ui-mask/dist/mask.min.js'
+        '%kernel.project_dir%/node_modules/ng-file-upload/dist/ng-file-upload.min.js'
+        '%kernel.project_dir%/node_modules/ng-file-upload/dist/ng-file-upload-shim.min.js'
+        '%kernel.project_dir%/node_modules/clipboard/dist/clipboard.min.js'
+        '%kernel.project_dir%/node_modules/angular-bootstrap-lightbox/dist/angular-bootstrap-lightbox.min.js'
+        '%kernel.project_dir%/node_modules/angular-moment-picker/dist/angular-moment-picker.min.js'
+        '%kernel.project_dir%/node_modules/screenfull/dist/screenfull.js'
+        '%kernel.project_dir%/node_modules/angular-screenfull/dist/angular-screenfull.min.js'
+        '%kernel.project_dir%/node_modules/ng-tags-input/build/ng-tags-input.min.js'
+
+        '@NasajonComponentesInterfaceBundle/Resources/js/is_state_filter.js'
+        '@NasajonComponentesInterfaceBundle/Resources/js/debounce.js'
+        '@NasajonComponentesInterfaceBundle/Resources/js/mdauiselect.js'
+        '@NasajonComponentesInterfaceBundle/Resources/js/convert_to_number.js'
+        '@NasajonComponentesInterfaceBundle/Resources/js/date_input.js'
+
+        
+        '@NasajonAtendimentoAppBundle/Resources/public/js/angular-scroll-complete.js'
+        '@NasajonAtendimentoAppBundle/Resources/public/js/ngDraggable.js'
+        '@NasajonAtendimentoAppBundle/Resources/public/js/ckeditor/plugins/textmatch/plugin.js'
+        '@NasajonAtendimentoAppBundle/Resources/public/js/ckeditor/plugins/autolink/plugin.js'
+        '@NasajonAtendimentoAppBundle/Resources/public/js/ckeditor/plugins/image2/plugin.js'
+        '@NasajonAtendimentoAppBundle/Resources/public/js/ckeditor/plugins/youtube/plugin.js'
+        '@NasajonAtendimentoAppBundle/Resources/public/js/ckeditor/plugins/youtube/lang/pt-br.js'
+        '@NasajonAtendimentoAppBundle/Resources/public/js/ckeditor/plugins/nasajon/nsjimage/nsjimage.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/nsj-routing.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/anexos.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/historicos.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/cliente.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/dynamic.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/imgbox.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/usuariologado.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/toggle.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/404.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/textAngularSetup.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/ng-ckEditor.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/redux.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/redux/ng-redux.min.js'
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/angular-tablesort.js'
+        
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/mda.js'
+
+        '@NasajonAtendimentoAppBundle/Resources/js/lib/stateLoader.js'
+
+        filter='?uglifyjs2'
+
+    %}
+    <script src='{{ asset_url }}'></script>
+
+
+    {% endjavascripts %}
+
+
+{% endblock %}

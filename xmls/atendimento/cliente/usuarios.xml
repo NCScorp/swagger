@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="usuarios" label="usuarios" project="atendimento/cliente" >
+    <entity schema="atendimento" table="clientesfuncoes">
+        <fieldmodel name="clientefuncao" datatype="guid" isid="true" column="clientefuncao"/>
+        <fieldmodel name="cliente" datatype="guid" column="cliente" useCaseLink="ns\clientes" entityJoinType="left" />
+        <fieldmodel name="conta" datatype="string" column="conta"/>
+        <fieldmodel name="funcao" datatype="string" column="funcao" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="notificar" datatype="boolean" column="notificar" />
+        <fieldmodel name="pendente" datatype="boolean" column="pendente" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+        <constructoritem required="false">funcao</constructoritem>
+        <constructoritem required="false">conta</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Usuários">
+        <fieldsbrowser>
+            <fieldbrowser alias="clientefuncao" entitylink="clientefuncao" isid="true" visible="false" />
+            <fieldbrowser alias="Conta" entitylink="conta" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Cliente" entitylink="cliente" visible="true" avaliable="true" />
+            <fieldbrowser alias="Função" entitylink="funcao" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="created_at" entitylink="created_at" width="20" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="notificar" entitylink="notificar" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="pendente" entitylink="pendente" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Usuário">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="Conta" controltype="email" label="Conta" entitylink="conta" placeholder="ex: email@empresa.com.br" colspan="6" readonly="clientefuncao != null">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo conta não pode ser vazio."/>
+                            <validate type="email" displaytext="O campo conta deve ser um email válido."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="funcao" controltype="combobox" label="Função" entitylink="funcao" placeholder="Selecionar" colspan="4">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo função é obrigatório."/>
+                        </validates>
+                        <itenscombobox type="json">{'A':'Admin', 'U':'Usuário'}</itenscombobox>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="notificar" controltype="checkbox" label="Notificar" entitylink="notificar" colspan="2"></cell>
+                    <cell name="pendente" controltype="checkbox" label="Pendente" entitylink="pendente" colspan="2"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>ClienteFuncaoNovo_V3</name>
+                <fromto valueapi="cliente" valueentity="cliente"/>
+                <fromto valueapi="conta" valueentity="conta"/>
+                <fromto valueapi="funcao" valueentity="funcao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="notificar" valueentity="notificar" />
+                <fromto valueapi="pendente" valueentity="pendente" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>ClienteFuncaoAlterar</name>
+                <fromto valueapi="clientefuncao" valueentity="clientefuncao"/>
+                <fromto valueapi="funcao" valueentity="funcao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="notificar" valueentity="notificar"/>
+            </api>
+        </action>
+        <action appendto="viewbrowser">
+            <name>Delete</name>
+            <api>
+                <name>ClienteFuncaoExcluir_V3</name>
+                <fromto valueapi="clientefuncao" valueentity="clientefuncao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action appendto="viewbrowser">
+            <name>Aprovar</name>
+            <api>
+                <name>ClienteFuncaoAprovar</name>
+                <fromto valueapi="clientefuncao" valueentity="clientefuncao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>ClienteFuncaoAprovarPorEmail</name>
+            <api>
+                <name>ClienteFuncaoAprovarPorEmail</name>
+                <fromto valueapi="clientefuncao" valueentity="clientefuncao"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>        
+    </actions>
+</nsjusecase>

@@ -1,0 +1,17 @@
+<div class="headline-sub clearfix">
+    <h3 class="pull-left">
+        <a href ui-sref="atendimento_admin_solicitacoes({})" title="Voltar à lista" class="hidden-md hidden-lg">
+            <i class="el el-chevron-left"></i>
+        </a> {{'Chamados'|trans}}
+    </h3>    
+</div>
+<div class="col-md-6 ">
+    <h4>{{'chamadonaoexiste'|trans}}</h4>
+    <p>
+        Desculpe, não conseguimos encontrar o {{'chamado'|trans}} #<span ng-bind="atendimento"></span>.<br/>
+        Verifique se digitou corretamente o código e tente novamente.
+    </p>
+    <div class="row text-left hidden-lg hidden-md">
+        <button type="button" name="voltar" class="btn btn-primary">Voltar</button>
+    </div>
+</div>

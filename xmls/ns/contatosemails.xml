@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="contatosemails" label="contatosemails" project="ns" >
+    <entity schema="ns" table="contatosemails" >        
+        <fieldmodel name="id"  column="id" datatype="guid" isid="true" />
+        <fieldmodel name="cliente"  column="pessoa_id" datatype="guid" />
+        <fieldmodel name="contato"  column="contato_id" datatype="guid" />
+        <fieldmodel name="email"  column="email" datatype="string" />
+        <fieldmodel name="recebe_nfse"  column="recebe_nfse" datatype="boolean" />
+        <fieldmodel name="envia_nfse_prefeitura"  column="envia_nfse_prefeitura" datatype="boolean" />
+        <fieldmodel name="recebe_nfe"  column="recebe_nfe" datatype="boolean" />
+        <fieldmodel name="envia_nfe_receita"  column="envia_nfe_receita" datatype="boolean" />
+        <fieldmodel name="recebe_boleto"  column="recebe_boleto" datatype="boolean" />
+        <fieldmodel name="recebe_pedido"  column="recebe_pedido" datatype="boolean" />
+        <fieldmodel name="recebe_cotacao_compra"  column="recebe_cotacao_compra" datatype="boolean" />
+        <fieldmodel name="recebe_mala_direta"  column="recebe_mala_direta" datatype="boolean" />
+        <fieldmodel name="recebe_fatura_locacao"  column="recebe_fatura_locacao" datatype="boolean" />
+        <fieldmodel name="principal"  column="principal" datatype="boolean" />
+        <fieldmodel name="tenant"  column="tenant" datatype="int" />
+        <fieldmodel name="created_by"  column="created_by" datatype="json" />
+        <fieldmodel name="created_at"  column="created_at" datatype="datetime" />
+        <fieldmodel name="updated_by"  column="updated_by" datatype="json" />
+        <fieldmodel name="updated_at"  column="updated_at" datatype="datetime" />
+        <fieldmodel name="lastupdate"  column="lastupdate" datatype="datetime" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table">
+        <fieldsbrowser>
+            <fieldbrowser alias="id" entitylink="id" isid="true" />            
+            <fieldbrowser alias="contato" entitylink="contato" isid="true" />            
+            <fieldbrowser alias="email" entitylink="email" width="60" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="principal" entitylink="principal" width="60" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="recebe_boleto" entitylink="recebe_boleto" width="60" cansearch="true" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Artigo">
+        <layout>
+            <headerform>
+                <row>
+                    
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>contatosemailsnovo</name>
+                <fromto valueapi="id_pessoa" valueentity="cliente"/>
+                <fromto valueapi="id_contato" valueentity="contato"/>
+                <fromto valueapi="email" valueentity="email"/>
+                <fromto valueapi="recebe_boleto" valueentity="recebe_boleto"/>
+                <fromto valueapi="principal" valueentity="principal"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>contatosemailsalterar</name>
+                <fromto valueapi="id" valueentity="id"/>
+                <fromto valueapi="email" valueentity="email"/>
+                <fromto valueapi="recebe_boleto" valueentity="recebe_boleto"/>
+                <fromto valueapi="principal" valueentity="principal"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>ContatoExcluir</name>
+                <fromto valueapi="id" valueentity="id"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

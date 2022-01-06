@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="contratoscartoes" label="contratoscartoes" project="financas" >
+    <entity schema="financas" table="contratoscartoes">
+        <fieldmodel name="contratocartao" datatype="guid" isid="true" column="contratocartao"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="tipooperacao" datatype="integer" column="tipooperacao"/>
+        <fieldmodel name="diaspagamento" datatype="integer" column="diaspagamento"/>
+        <fieldmodel name="codigocontabil" datatype="string" column="codigocontabil"/>
+        <fieldmodel name="bandeiracartao" datatype="guid" column="bandeiracartao" useCaseLink="financas\bandeirascartoes" entityJoinType="inner"/>
+        <fieldmodel name="meioeletronicocartao" datatype="guid" column="meioeletronicocartao" useCaseLink="financas\meioseletronicoscartoes" entityJoinType="inner"/>
+        <fieldmodel name="operadoracartao" datatype="guid" column="operadoracartao" useCaseLink="financas\operadorascartoes" entityJoinType="inner"/>
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" useCaseLink="ns\estabelecimento" entityJoinType="inner"/>
+        <fieldmodel name="grupoempresarial" datatype="guid" column="grupoempresarial"/>
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" optimistLock="true" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">estabelecimento</constructoritem>
+    </constructors>
+    <viewbrowser label="Contratos Cartões" >
+        <fieldsbrowser>
+            <fieldbrowser alias="contratocartao" entitylink="contratocartao" isid="true" />
+            <fieldbrowser alias="codigo" entitylink="codigo" cansearch="true" visible="true" avaliable="true" alloworder="true" indefaultorder="true" direction="ASC" />
+            <fieldbrowser alias="descricao" entitylink="descricao" cansearch="true" visible="true" avaliable="true" alloworder="true" />
+            <fieldbrowser alias="tipooperacao" entitylink="tipooperacao" cansearch="false" visible="true" avaliable="true" alloworder="false"/>
+            <fieldbrowser alias="diaspagamento" entitylink="diaspagamento" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+            <fieldbrowser alias="codigocontabil" entitylink="codigocontabil" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+            <fieldbrowser alias="bandeiracartao" entitylink="bandeiracartao" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+            <fieldbrowser alias="meioeletronicocartao" entitylink="meioeletronicocartao" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+            <fieldbrowser alias="operadoracartao" entitylink="operadoracartao" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+            <fieldbrowser alias="grupoempresarial" entitylink="grupoempresarial" cansearch="false" visible="true" avaliable="true" alloworder="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

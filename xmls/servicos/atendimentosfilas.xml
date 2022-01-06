@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentosfilas" label="atendimentosfilas" project="servicos" >
+    <entity schema="servicos" table="atendimentosfilas">
+        <fieldmodel name="atendimentofila" datatype="guid" isid="true" column="atendimentofila"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" optimistLock="true" />
+        <fieldmodel name="observadores" datatype="objectlist" column="atendimentofila" useCaseLink="servicos\atendimentosfilasobservadores" entityJoinType="left" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Filas de Chamados">
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimentofila" entitylink="atendimentofila" isid="true" visible="false" />
+            <fieldbrowser alias="Nome" entitylink="nome" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="ordem" entitylink="ordem" cansearch="false" indefaultorder="true" direction="asc" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Fila de chamado">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="nome" controltype="textedit" entitylink="nome" colspan="8" label="Nome">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Nome não pode ser vazio."/>
+                            <validate type="maxlength" value="30" displaytext="Tamanho não deve exceder 30 caracteres." />
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoFilaNovo</name>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>AtendimentoFilaAlterar</name>
+                <fromto valueapi="atendimentofila" valueentity="atendimentofila"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>AtendimentoFilaExcluir</name>
+                <fromto valueapi="atendimentofila" valueentity="atendimentofila"/>
+            </api>
+        </action>
+        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>AtendimentoFilaReordenar</name>
+                <fromto valueapi="atendimentofila" valueentity="atendimentofila"/>
+                <fromto valueapi="posicaonova" valueentity="ordem"/>
+            </api>
+        </action>
+    </actions>
+
+</nsjusecase>

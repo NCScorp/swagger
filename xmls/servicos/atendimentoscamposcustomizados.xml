@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentoscamposcustomizados" label="atendimentoscamposcustomizados" project="servicos">
+    <entity schema="servicos" table="atendimentoscamposcustomizados">
+        <fieldmodel name="atendimentocampocustomizado" datatype="guid" isid="true" column="atendimentocampocustomizado"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="label" datatype="string" column="label"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="tipo" datatype="string" column="tipo" />
+        <fieldmodel name="ordem" datatype="integer" column="ordem" />
+        <fieldmodel name="exibidoformcontato" datatype="boolean" column="exibidoformcontato" />
+        <fieldmodel name="obrigatorio" datatype="boolean" column="obrigatorio" />
+        <fieldmodel name="opcoes" datatype="json" column="opcoes" />
+        <fieldmodel name="updated_at" datatype="date" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="habilitar_busca" datatype="boolean" column="habilitar_busca" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">tipo</constructoritem>
+        <constructoritem required="false">exibidoformcontato</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Campos customizados">
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimentocampocustomizado" entitylink="atendimentocampocustomizado" isid="true" />
+            <fieldbrowser alias="ordem" entitylink="ordem" width="5" cansearch="false" indefaultorder="true" direction="asc" visible="false" avaliable="true" />
+            <fieldbrowser alias="label" entitylink="label" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="nome" entitylink="nome" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipo" entitylink="tipo" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="exibidoformcontato" entitylink="exibidoformcontato" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="obrigatorio" entitylink="obrigatorio" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="opcoes" entitylink="opcoes" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="habilitar_busca" entitylink="habilitar_busca" width="80" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Campo customizado">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="label" controltype="textedit" entitylink="label" label="Nome do campo">
+                        <validates>
+                            <validate type="vnull" displaytext="O nome do campo não pode ser vazio."/>
+                            <validate type="maxlength" displaytext="O nome do campo não pode ser vazio." value="20"/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" label="Descrição">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo descrição não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="tipo" controltype="radiobutton" entitylink="tipo" label="Tipo">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo tipo não pode ser vazio."/>
+                        </validates>
+                        <itenscombobox type="json">{'TE':'Campo de texto', 'CB':'Combobox'}</itenscombobox>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="exibidoformcontato" controltype="checkbox" entitylink="exibidoformcontato" label="Exibido no formulário de contato"/>
+                </row>
+                <row>
+                    <cell name="habilitar_busca" controltype="checkbox" entitylink="habilitar_busca" label="Considerar campo na sugestão de artigos"/>
+                </row>
+                <row>
+                    <cell name="obrigatorio" controltype="checkbox" entitylink="obrigatorio" label="Obrigatório" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoCampoCustomizadoNovo_V2</name>
+                <fromto valueapi="label" valueentity="label"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="tipo" valueentity="tipo"/>
+                <fromto valueapi="exibidoformcontato" valueentity="exibidoformcontato"/>
+                <fromto valueapi="obrigatorio" valueentity="obrigatorio"/>
+                <fromto valueapi="opcoes" valueentity="opcoes"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="habilitar_busca" valueentity="habilitar_busca"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>AtendimentoCampoCustomizadoAlterar_V2</name>
+                <fromto valueapi="atendimentocampocustomizado" valueentity="atendimentocampocustomizado"/>
+                <fromto valueapi="label" valueentity="label"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="tipo" valueentity="tipo"/>
+                <fromto valueapi="exibidoformcontato" valueentity="exibidoformcontato"/>
+                <fromto valueapi="obrigatorio" valueentity="obrigatorio"/>
+                <fromto valueapi="opcoes" valueentity="opcoes"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="habilitar_busca" valueentity="habilitar_busca"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>AtendimentoCampoCustomizadoExcluir</name>
+                <fromto valueapi="atendimentocampocustomizado" valueentity="atendimentocampocustomizado"/>
+            </api>
+        </action>
+        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>AtendimentoCampoCustomizadoReordenar</name>
+                <fromto valueapi="atendimentocampocustomizado" valueentity="atendimentocampocustomizado"/>
+                <fromto valueapi="posicaonova" valueentity="ordem"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

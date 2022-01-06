@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="Manutencão de Empresas" label="Empresa" project="ns" >
+    <entity schema="ns" table="empresas">
+        <fieldmodel name="id" datatype="guid" isid="true" column="empresa"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="razaosocial" datatype="string" column="razaosocial"/>
+        <fieldmodel name="tipoidentificacao" datatype="integer" column="tipoidentificacao"/>
+        <fieldmodel name="raizcnpj" datatype="string" column="raizcnpj"/>
+        <fieldmodel name="ordemcnpj" datatype="string" column="ordemcnpj"/>
+        <fieldmodel name="cpf" datatype="string" column="cpf"/>
+        <fieldmodel name="idcnae" datatype="string" column="cnae"/>
+        <fieldmodel name="idgrupoempresarial" datatype="guid" column="grupoempresarial"/>
+        <fieldmodel name="inativa" datatype="boolean" column="inativa"/>
+        <fieldmodel name="tipopagamento" datatype="string" column="tipopagamento"/>
+        <fieldmodel name="idnaturezajuridica" datatype="string" column="naturezajuridica"/>
+        <fieldmodel name="logotipo" datatype="string" column="logotipo"/>
+        <fieldmodel name="tipocooperativa" datatype="integer" column="tipocooperativa"/>
+        <fieldmodel name="tipoconstrutora" datatype="integer" column="tipoconstrutora"/>
+        <fieldmodel name="tipopontoeletronico" datatype="integer" column="tipopontoeletronico"/>
+        <fieldmodel name="tiposituacaopj" datatype="integer" column="tiposituacaopj"/>
+        <fieldmodel name="tiposituacaopf" datatype="integer" column="tiposituacaopf"/>
+        <fieldmodel name="multiplastabelasrubrica" datatype="boolean" column="multiplastabelasrubrica"/>
+        <fieldmodel name="acordointernacionalisencaomulta" datatype="boolean" column="acordointernacionalisencaomulta"/>
+        <fieldmodel name="numerocontratoalelo" datatype="string" column="alelonumerocontrato"/>
+        <fieldmodel name="numerosiafi" datatype="string" column="numerosiafi"/>
+        <fieldmodel name="nomecontato" datatype="string" column="nomecontato"/>
+        <fieldmodel name="cpfcontato" datatype="string" column="cpfcontato"/>
+        <fieldmodel name="dddtelfixocontato" datatype="string" column="dddtelfixocontato"/>
+        <fieldmodel name="telefonefixocontato" datatype="string" column="telefonefixocontato"/>
+        <fieldmodel name="dddcelularcontato" datatype="string" column="dddtelcelularcontato"/>
+        <fieldmodel name="telefonecelularcontato" datatype="string" column="telefonecelularcontato"/>
+        <fieldmodel name="dddfaxcontato" datatype="string" column="dddfaxcontato"/>
+        <fieldmodel name="faxcontato" datatype="string" column="faxcontato"/>
+        <fieldmodel name="emailcontato" datatype="string" column="emailcontato"/>
+        <fieldmodel name="ministerioisencao" datatype="string" column="ministerio"/>
+        <fieldmodel name="numerocertificadoisencao" datatype="string" column="numerocertificado"/>
+        <fieldmodel name="dataemissaocertificadoisencao" datatype="date" column="dataemissaocertificado"/>
+        <fieldmodel name="datavencimentocertificadoisencao" datatype="date" column="datavencimentocertificado"/>
+        <fieldmodel name="dataprotocolorenovacaocertificadoisencao" datatype="date" column="dataprotocolorenovacao"/>
+        <fieldmodel name="numeroprotocolorenovacaocertificadoisencao" datatype="string" column="numeroprotocolorenovacao"/>
+        <fieldmodel name="numeropaginadourenovacaocertificadoisencao" datatype="string" column="numeropaginadou"/>
+        <fieldmodel name="datapublicacaodourenovacaocertificadoisencao" datatype="date" column="datapublicacaodou"/>
+    </entity>
+    <viewbrowser paginate="true">
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="id" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="1" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Razão Social" entitylink="razaosocial" width="10" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="ID Grupo" entitylink="idgrupoempresarial" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit>
+        <layout>
+            <headerform>
+                <row mode="V">
+                    <cell>
+                        <groupbox  mode="V">
+                            <caption text="Identificação" />
+                            <row>
+                                <cell name="te_codigo" controltype="textedit" label="Código" charcase="upper" colspan="2" entitylink="codigo">
+                                    <validates>
+                                        <validate type="vnull" displaytext="O campo código não pode ser vazio."/>
+                                    </validates>
+                                </cell>
+                                <cell name="te_razaosocial" controltype="textedit" label="Razão Social" colspan="10" entitylink="razaosocial">
+                                    <validates>
+                                        <validate type="vnull" displaytext="O campo razão social não pode ser vazio."/>
+                                    </validates>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell name="cb_tipoidentificacao" controltype="combobox" label="Tipo" colspan="1" entitylink="tipoidentificacao">
+                                    <validates>
+                                        <validate type="vnull" displaytext="O tipo de identificação não pode ser vazio."/>
+                                    </validates>
+                                    <itenscombobox type="json">['PF','PJ']</itenscombobox>
+                                </cell>
+                                <cell name="te_raizcnpj" controltype="textedit" label="Raiz CNPJ" colspan="1" entitylink="raizcnpj"/>
+                                <cell name="te_ordemcnpj" controltype="textedit" label="Ordem CNPJ" colspan="1" entitylink="ordemcnpj"/>
+<!--                                <cell name="cb_cnae" controltype="lookup" browserlookup="CNAE" projectbrowserlookup="ns" fieldlookup="cnae" fieldaliaslookup="código" label="CNAE" colspan="1" entitylink="idcnae"/>-->
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+            </headerform>
+            <bodyform>
+                <tabs>
+                    <tab caption="Gerais">                        
+                        <row>
+                            <cell>
+                                <groupbox mode="V">
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Grupo" />
+                                                <row>
+<!--                                                    <cell name="cb_grupoempresarial" controltype="lookup" browserlookup="GrupoEmpresarial" projectbrowserlookup="ns" fieldlookup="codigo" fieldaliaslookup="Código" fielddetaillookup="descricao" colspan="1" entitylink="idgrupoempresarial"/>-->
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Status" />
+                                                <row>
+                                                    <cell name="rg_ativa" controltype="radiobutton" label="Ativa" colspan="1" entitylink="inativa"/>
+                                                    <cell name="rg_inativa" controltype="radiobutton" label="Inativa" colspan="1" entitylink="inativa"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Tipo de Pagamento" />
+                                                <row>
+                                                    <cell name="te_tipopagamento" controltype="combobox" colspan="1" entitylink="tipopagamento">
+                                                        <itenscombobox type="json">{"M":"Mensal","S":"Semanal"}</itenscombobox>
+                                                    </cell>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Natureza Jurídica" />
+                                                <row>
+<!--                                                    <cell name="cb_naturezajuridica" controltype="lookup" browserlookup="naturezajuridica" projectbrowserlookup="ns" fieldlookup="naturezajuridica" fieldaliaslookup="Código" fielddetaillookup="descricao" colspan="2" entitylink="idnaturezajuridica"/>-->
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                    <tab caption="Outras Informações">                        
+                        <row>
+                            <cell>
+                                <groupbox mode="V">
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Cooperativa" />
+                                                <row>
+                                                    <cell name="cb_cooperativa" controltype="combobox" colspan="4" entitylink="tipocooperativa" >
+                                                        <itenscombobox type="json">{"0":"Não é Cooperativa","1":"Cooperativa de Trabalho","2":"Cooperativa de Produção","3":"Outras Cooperativas"}</itenscombobox>
+                                                    </cell>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Construtora" />
+                                                <row>
+                                                    <cell name="cb_construtora" controltype="combobox" colspan="4" entitylink="tipoconstrutora" >
+                                                        <itenscombobox type="json">{"0":"Não é construtora","1":"Empresa construtora"}</itenscombobox>
+                                                    </cell>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Número do Contrato Alelo" />
+                                                <row>
+                                                    <cell name="te_alelo" controltype="textedit" colspan="4" entitylink="numerocontratoalelo"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Número SIAFI" />
+                                                <row>
+                                                    <cell name="te_SIAFI" controltype="textedit" colspan="4" entitylink="numerosiafi"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Situação" />
+                                                <row>
+                                                    <cell name="cb_situacaopj" controltype="combobox" colspan="8" entitylink="tiposituacaopj" >
+                                                        <itenscombobox type="json">{"0":"Normal","1":"Extinção","2":"Fusão","3":"Cisão","4":"Incorporação"}</itenscombobox>
+                                                    </cell>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Registro de Ponto Eletrônico" />
+                                                <row>
+                                                    <cell name="cb_ponto" controltype="combobox" colspan="4" entitylink="tipopontoeletronico" >
+                                                        <itenscombobox type="json">{"0":"Empresa não optou","1":"Empresa optou"}</itenscombobox>
+                                                    </cell>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Tabela de Rubricas" />
+                                                <row>
+                                                    <cell name="ck_multiplastabelasrubricas" controltype="checkbox" label="Múltiplas na mesma empresa" colspan="4" entitylink="multiplastabelasrubrica"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Organismos Internacionais" />
+                                                <row>
+                                                    <cell name="ck_acordoisencaomulta" controltype="checkbox" label="Existe acordo para isenção de multa" colspan="4" entitylink="acordointernacionalisencaomulta"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                    <tab caption="Contato">
+                        <row>
+                            <cell>
+                                <groupbox mode="V">
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Dados Pessoais" />
+                                                <row>
+                                                    <cell name="te_nomecontato" controltype="textedit" label="Nome" colspan="1" entitylink="nomecontato"/>
+                                                    <cell name="te_cpf" controltype="textedit" label="CPF" colspan="1" entitylink="cpfcontato"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Telefone Fixo" />
+                                                <row>
+                                                    <cell label="DDD" name="te_dddtelefonefixocontato" controltype="textedit" colspan="1" entitylink="dddtelfixocontato"/>
+                                                    <cell label="Número" name="te_telefonefixocontato" controltype="textedit" colspan="1" entitylink="telefonefixocontato"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Telefone Celular" />
+                                                <row>
+                                                    <cell label="DDD" name="te_dddcelularcontato" controltype="textedit" colspan="1" entitylink="dddcelularcontato"/>
+                                                    <cell label="Número" name="te_celularcontato" controltype="textedit" colspan="1" entitylink="telefonecelularcontato"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="FAX" />
+                                                <row>
+                                                    <cell label="DDD" name="te_dddfaxcontato" controltype="textedit" colspan="1" entitylink="dddfaxcontato"/>
+                                                    <cell label="Número" name="te_faxcontato" controltype="textedit" colspan="1" entitylink="faxcontato"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="E-mail" />
+                                                <row>
+                                                    <cell name="te_emailcontato" controltype="textedit" colspan="1" entitylink="emailcontato"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                    <tab caption="Isenção">
+                        <row>
+                            <cell>
+                                <groupbox mode="V">
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Ministério" />
+                                                <row>
+                                                    <cell name="te_ministerio" controltype="combobox" label="Sigla" colspan="1" entitylink="ministerioisencao">
+                                                        <itenscombobox type="json">{"CNAS":"CNAS","MEC":"MEC","MS":"MS","MDS":"MDS"}</itenscombobox>
+                                                    </cell>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Certificado" />
+                                                <row>
+                                                    <cell name="te_numerocertificado" controltype="textedit" label="Número" colspan="1" entitylink="numerocertificadoisencao"/>
+                                                    <cell name="te_emissaocertificado" controltype="dateedit" label="Emissão" colspan="1" entitylink="dataemissaocertificadoisencao"/>
+                                                    <cell name="te_vencimentocertificado" controltype="dateedit" label="Vencimento" colspan="1" entitylink="datavencimentocertificadoisencao"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                    <row>
+                                        <cell>
+                                            <groupbox mode="V">
+                                                <caption text="Renovação Certificado" />
+                                                <row>
+                                                    <cell label="Data Renovação" name="te_datarenovacaocertificado" controltype="dateedit" colspan="1" entitylink="dataprotocolorenovacaocertificadoisencao"/>
+                                                    <cell label="Nº Renovação" name="te_numerorenovacaocertificado" controltype="textedit" colspan="1" entitylink="numeroprotocolorenovacaocertificadoisencao"/>
+                                                    <cell label="Data Publicação DOU" name="te_datapublicacaorenovacaocertificado" controltype="dateedit" colspan="1" entitylink="datapublicacaodourenovacaocertificadoisencao"/>
+                                                    <cell label="Nº Página DOU" name="te_numeropaginarenovacaocertificado" controltype="textedit" colspan="1" entitylink="numeropaginadourenovacaocertificadoisencao"/>
+                                                </row>
+                                            </groupbox>
+                                        </cell>
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                    </tab>
+                </tabs>
+            </bodyform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>EmpresaNovo</name>
+                <fromto valueapi="IdEmpresa" valueentity ="id"/>
+                <fromto valueapi="GrupoEmpresarial" valueentity ="idgrupoempresarial"/>
+                <fromto valueapi="Codigo" valueentity ="codigo"/>
+                <fromto valueapi="Identificacao" valueentity ="raizcnpj"/>
+                <fromto valueapi="RazaoSocial" valueentity ="razaosocial"/>
+            </api>
+            <api>
+                <name>EmpresaAlterarDadosFolha</name>
+                <fromto valueapi="Empresa" valueentity ="id"/>
+                <fromto valueapi="CodigoCNAE" valueentity ="idcnae"/>
+                <fromto valueapi="CodigoNaturezaJuridica" valueentity ="idnaturezajuridica"/>
+                <fromto valueapi="FormaPagamento" valueentity ="tipopagamento"/>
+                <fromto valueapi="TipoCooperativa" valueentity ="tipocooperativa"/>
+                <fromto valueapi="Construtora" valueentity ="tipoconstrutora"/>
+                <fromto valueapi="PontoEletronico" valueentity ="tipopontoeletronico"/>
+                <fromto valueapi="PossuiMultiplasTabelasRubrica" valueentity ="multiplastabelasrubrica"/>
+                <fromto valueapi="SituacaoPJ" valueentity ="tiposituacaopj"/>
+                <fromto valueapi="SituacaoPF" valueentity ="tiposituacaopf"/>
+            </api>
+            <api>
+                <name>EmpresaAlterarDadosContato</name>
+                <fromto valueapi="Empresa" valueentity ="id"/>
+                <fromto valueapi="Nome" valueentity ="nomecontato"/>
+                <fromto valueapi="CPF" valueentity ="cpfcontato"/>
+                <fromto valueapi="DDDTelefoneFixo" valueentity ="dddtelfixocontato"/>
+                <fromto valueapi="TelefoneFixo" valueentity ="telefonefixocontato"/>
+                <fromto valueapi="DDDTelefoneCelular" valueentity ="dddcelularcontato"/>
+                <fromto valueapi="TelefoneCelular" valueentity ="telefonecelularcontato"/>
+                <fromto valueapi="DDDFAX" valueentity ="dddfaxcontato"/>
+                <fromto valueapi="FAX" valueentity ="faxcontato"/>
+                <fromto valueapi="Email" valueentity ="emailcontato"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>EmpresaAlterarDadosGerais</name>
+                <fromto valueapi="Empresa" valueentity ="id"/>
+                <fromto valueapi="GrupoEmpresarial" valueentity ="idgrupoempresarial"/>
+                <fromto valueapi="Codigo" valueentity ="codigo"/>
+                <fromto valueapi="Identificacao" valueentity ="raizcnpj"/>
+                <fromto valueapi="RazaoSocial" valueentity ="razaosocial"/>
+            </api>
+            <api>
+                <name>EmpresaAlterarDadosFolha</name>
+                <fromto valueapi="Empresa" valueentity ="id"/>
+                <fromto valueapi="CodigoCNAE" valueentity ="idcnae"/>
+                <fromto valueapi="CodigoNaturezaJuridica" valueentity ="idnaturezajuridica"/>
+                <fromto valueapi="FormaPagamento" valueentity ="tipopagamento"/>
+                <fromto valueapi="TipoCooperativa" valueentity ="tipocooperativa"/>
+                <fromto valueapi="Construtora" valueentity ="tipoconstrutora"/>
+                <fromto valueapi="PontoEletronico" valueentity ="tipopontoeletronico"/>
+                <fromto valueapi="PossuiMultiplasTabelasRubrica" valueentity ="multiplastabelasrubrica"/>
+                <fromto valueapi="SituacaoPJ" valueentity ="tiposituacaopj"/>
+                <fromto valueapi="SituacaoPF" valueentity ="tiposituacaopf"/>
+            </api>
+            <api>
+                <name>EmpresaAlterarDadosContato</name>
+                <fromto valueapi="Empresa" valueentity ="id"/>
+                <fromto valueapi="Nome" valueentity ="nomecontato"/>
+                <fromto valueapi="CPF" valueentity ="cpfcontato"/>
+                <fromto valueapi="DDDTelefoneFixo" valueentity ="dddtelfixocontato"/>
+                <fromto valueapi="TelefoneFixo" valueentity ="telefonefixocontato"/>
+                <fromto valueapi="DDDTelefoneCelular" valueentity ="dddcelularcontato"/>
+                <fromto valueapi="TelefoneCelular" valueentity ="telefonecelularcontato"/>
+                <fromto valueapi="DDDFAX" valueentity ="dddfaxcontato"/>
+                <fromto valueapi="FAX" valueentity ="faxcontato"/>
+                <fromto valueapi="Email" valueentity ="emailcontato"/>
+            </api>
+        </action>
+        <action>
+            <name>Excluir</name>
+            <api>
+                <name>EmpresaExcluir</name>
+                <fromto valueapi="empresa" valueentity ="id"/>
+            </api>
+        </action>
+        <action>
+            <name>Estabelecimentos</name>
+            <openbrowser project="ns" usecase="estabelecimento">
+                <openbrowserparam entitylink="id" constructoritem="idbanco" />
+            </openbrowser>
+        </action>
+    </actions>
+</nsjusecase>

@@ -1,0 +1,199 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Admin/Slas/form.html.twig' %}
+
+{% block viewedit_header_toolbar -%}
+    <div class="col-md-12 headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail hidden-xs hidden-sm pull-left">
+              <a ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Configurações">Configurações</a> > 
+              <a ui-sref="atendimento_admin_slas" href="#/slas" title="SLAs">SLAs</a> > 
+              <span class="select-page">SLA</span>
+            </div>
+          <div class="btns-area pull-right">
+            <button type="button" class="btn btn-sm btn-link btn-delete btn-geral" ng-click="tndmnt_dmn_sls_frm_cntrllr.delete()" ng-if="tndmnt_dmn_sls_frm_cntrllr.entity.sla ">
+              <i class="el el-trash"></i> 
+              <span class="hidden-xs">Deletar</span>
+            </button>        
+            <button type="button" class="btn btn-sm btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_slas({})">
+              <i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span>
+            </button>
+            <button type="submit" class="btn btn-sm btn-primary btn-save btn-geral">
+              <i class="el el-ok"></i> <span class="hidden-xs">Salvar</span>
+            </button>
+            <a class="btn btn-sm btn-default hidden-sm hidden-xs" ui-sref="atendimento_admin_slas({})" title="Voltar à lista">Voltar à lista</a>
+          </div>
+        </div>
+    </div>
+{% endblock viewedit_header_toolbar -%}
+
+{% block viewedit_edit %}
+<div class="row">
+    <div class="col-sm-12">
+        {% block viewedit_form_nome %}
+        <div class="form-group">
+            <label class="control-label" for="nome">Nome</label>
+            <input type='text' class="form-control" id="nome" name="nome" required="required" ng-model="tndmnt_dmn_sls_frm_cntrllr.entity.nome"
+                ng-disabled="tndmnt_dmn_sls_frm_cntrllr.entity.$$__submitting" />
+            <div ng-messages="tndmnt_dmn_sls_frm_cntrllr.form.nome.$error" ng-if="tndmnt_dmn_sls_frm_cntrllr.form.nome.$dirty || tndmnt_dmn_sls_frm_cntrllr.submitted">
+                <div class="alert alert-danger" role="alert" ng-message="required">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Erro:</span>
+                    O nome da Sla não pode ser vazio.
+                </div>
+            </div>
+        </div>
+        {% endblock viewedit_form_nome %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12 panel-rules">
+        <h5><strong>Condições:</strong></h5>
+        <div class="panel panel-default">
+            <div class="panel-heading">Combinar todas as condições a seguir:</div>
+
+            <table class="table table-condensed">
+                <tbody>
+                    <tr ng-if="tndmnt_dmn_sls_frm_cntrllr.entity.condicoes_in.length == 0">
+                        <td colspan="4">Nenhuma</td>
+                    </tr>
+                    <tr ng-repeat="opcao in tndmnt_dmn_sls_frm_cntrllr.entity.condicoes_in track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                        <td width="25%">
+                            <select class="form-control" ng-model="opcao.campo" ng-options="key as op.label group by op.category for (key,op) in tndmnt_dmn_sls_frm_cntrllr.optionscondicoes"
+                                ng-change="tndmnt_dmn_sls_frm_cntrllr.selecionaCampo(opcao)"></select>
+                        </td>
+                        <td colspan="3" ng-if="opcao.desativado">
+                            <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="28%">
+                            <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null"
+                                ng-options="key as op.label for (key,op) in tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options"
+                                ng-change="tndmnt_dmn_sls_frm_cntrllr.selecionaOperador(opcao)"></select>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="35%">
+                            <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"
+                                ng-options="op.value as op.label for (key,op) in tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options"></select>
+                            <input class="form-control" type="text" ng-model="opcao.valor" ng-if="tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                            <div class="input-group"
+                                locale="pt-br"
+                                moment-picker="opcao.valor"
+                                format="DD/MM/YYYY HH:mm"
+                                ng-if="tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='datetime'"
+                                >
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </span>
+                                <input class="form-control"
+                                    placeholder="Select a date"
+                                    ng-model="opcao.valor"
+                                    ng-model-options="{ updateOn: 'blur' }">
+                            </div>
+                        </td>
+                        <td width="12%" ng-if="!opcao.desativado" class="text-right">
+                            <a href ng-click="tndmnt_dmn_sls_frm_cntrllr.removeCondicaoIn($index)" class="btn btn-danger btn-sm btns-acoes"><i
+                                    class="el el-remove"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4"><a href ng-click="tndmnt_dmn_sls_frm_cntrllr.addCondicaoIn()">Adicionar
+                                Condição</a></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">E combinar com qualquer uma das seguintes condições:</div>
+
+            <table class="table table-condensed">
+                <tbody>
+                    <tr ng-if="tndmnt_dmn_sls_frm_cntrllr.entity.condicoes_ex.length == 0">
+                        <td colspan="4">Nenhuma</td>
+                    </tr>
+                    <tr ng-repeat="opcao in tndmnt_dmn_sls_frm_cntrllr.entity.condicoes_ex track by $index" ng-class="{'alert-danger': opcao.desativado}">
+                        <td width="25%">
+                            <select class="form-control"
+                                    ng-model="opcao.campo"
+                                    ng-options="key as op.label group by op.category for (key,op) in tndmnt_dmn_sls_frm_cntrllr.optionscondicoes"
+                                    ng-change="tndmnt_dmn_sls_frm_cntrllr.selecionaCampo(opcao)">
+                            </select>
+                        </td>
+                        <td colspan="3" ng-if="opcao.desativado">
+                            <span>Ao salvar este item será removido automaticamente por ter sido desativado.</span>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="28%">
+                            <select class="form-control" ng-model="opcao.operador" ng-if="opcao.operador != null"
+                                ng-options="key as op.label for (key,op) in tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options"
+                                ng-change="tndmnt_dmn_sls_frm_cntrllr.selecionaOperador(opcao)"></select>
+                        </td>
+                        <td ng-if="!opcao.desativado" width="35%">
+                            <select class="form-control" ng-model="opcao.valor" ng-if="tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='select'"
+                                ng-options="op.value as op.label for (key,op) in tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].options"></select>
+                            <input class="form-control" type="text" ng-model="opcao.valor" ng-if="tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='text'" />
+                            <div class="input-group"
+                                locale="pt-br"
+                                moment-picker="opcao.valor"
+                                format="DD/MM/YYYY HH:mm"
+                                ng-if="tndmnt_dmn_sls_frm_cntrllr.optionscondicoes[opcao.campo].options[opcao.operador].type=='datetime'"
+                                >
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </span>
+                                <input class="form-control"
+                                    placeholder="Select a date"
+                                    ng-model="opcao.valor"
+                                    ng-model-options="{ updateOn: 'blur' }">
+                            </div>
+                        </td>
+                        <td width="12%" ng-if="!opcao.desativado" class="text-right">
+                            <a href ng-click="tndmnt_dmn_sls_frm_cntrllr.removeCondicaoEx($index)" class="btn btn-danger btn-sm btns-acoes"><i
+                                    class="el el-remove"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="4"><a href ng-click="tndmnt_dmn_sls_frm_cntrllr.addCondicaoEx()">Adicionar
+                                Condição</a></th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <h5><strong>Tempos de SLA:</strong></h5>
+        <div class="panel panel-default">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th class="text-center" width="10%">Ativo</th>
+                        <th width="50%">Tipo</th>
+                        <th width="40%">Tempo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="temposla in tndmnt_dmn_sls_frm_cntrllr.tempossla track by $index" ng-class="{'active': !tndmnt_dmn_sls_frm_cntrllr.entity[temposla.ativoId]}">
+                        <td class="text-center">
+                            <input type="checkbox" name="tempoativo" ng-model="tndmnt_dmn_sls_frm_cntrllr.entity[temposla.ativoId]" />
+                        </td>
+                        <td ng-class="{'sla-disabled': !tndmnt_dmn_sls_frm_cntrllr.entity[temposla.ativoId]}">
+                            <strong>{{'{{temposla.name}}'}}</strong>
+                            <p>
+                                {{'{{temposla.description}}'}}
+                            </p>
+                        </td>
+                        <td>
+                            <input type="text" 
+                                   ng-disabled="!tndmnt_dmn_sls_frm_cntrllr.entity[temposla.ativoId]" 
+                                   class="form-control"
+                                   model-view-value="true"
+                                   ui-mask="99:99"
+                                   name="slatempo"
+                                   ng-model="tndmnt_dmn_sls_frm_cntrllr.entity[temposla.id]" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

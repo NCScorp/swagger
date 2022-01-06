@@ -1,0 +1,21 @@
+cliente_api:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/api/cliente.yml"
+    type:     rest
+    prefix:   /{tenant}
+    name_prefix: "atendimento_cliente_"
+    options:
+        expose: true
+
+admin_api:
+    resource: "@NasajonAtendimentoAppBundle/Resources/config/routing/api/admin.yml"
+    type:     rest
+    prefix:   /admin/{tenant}/    
+    options:
+        expose: true
+
+oneup_uploader:    
+    prefix:   /{tenant}
+    resource: .
+    type: uploader
+    options:
+        expose: true

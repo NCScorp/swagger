@@ -1,0 +1,13 @@
+aws:
+    resource: "@NasajonAtendimentoAppBundle/Controller/Endpoint/AwsEndpointController.php"
+    type:     rest
+    prefix:   /aws
+    name_prefix: "aws_"
+    defaults: {_format: json}  
+
+mailgun:
+    resource: "@NasajonAtendimentoAppBundle/Controller/Endpoint/MailgunEndpointController.php"
+    type:     rest
+    prefix:   /mailgun
+    name_prefix: "mailgun_"
+    defaults: {_format: json}  

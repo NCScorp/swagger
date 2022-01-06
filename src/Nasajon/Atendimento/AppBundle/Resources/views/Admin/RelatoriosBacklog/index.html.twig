@@ -1,0 +1,144 @@
+<div class="headline-sub clearfix">
+    <h3 class="pull-left">
+        Chamados abertos
+    </h3>
+</div>
+<div class="row clearfix article">
+    <div class="col-md-12">
+
+        <div class="forms col-md-12">
+            {% include 'NasajonAtendimentoAppBundle:Admin/RelatoriosBacklog:filtros.html.twig' %}
+            <div class="col-md-4">
+              <div class="btns-area pull-right">
+                  <button type="button" class="btn btn-sm btn-default btn-fixed" data-export-report ng-click="dmn_rltrs_cntrllr.exportarParaCsv()">
+                      <i class="el el-download-alt"></i>
+                      <span class="hidden-xs">Exportar</span>
+                  </button>
+                  <button type="button" class="btn btn-sm btn-default btn-fixed" onclick="window.print();">
+                      <i class="el el-print"></i>
+                      <span class="hidden-xs">Imprimir</span>
+                  </button>
+              </div>
+            </div>
+            <div class="row clearfix col-md-12 backlog">
+                <div class="chart">
+                    <!-- Aqui entra o gráfico -->
+                </div>
+                <div class="row total-boxes">
+                    <div class="col-sm-2 total-tickets">
+                        <div class="placard text-center">
+                            <div class="placard-value ng-binding" ng-bind="dmn_rltrs_cntrllr.total.total"></div>
+                            <div class="placard-description">Abertos</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 total-tickets">
+                        <div class="placard text-center">
+                            <div class="placard-value ng-binding" ng-bind="dmn_rltrs_cntrllr.total.respondido_pelo_atendente"></div>
+                            <div class="placard-description">Respondidos por último pelo atendente</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 total-tickets">
+                        <div class="placard text-center">
+                            <div class="placard-value ng-binding" ng-bind="dmn_rltrs_cntrllr.total.respondido_pelo_cliente"></div>
+                            <div class="placard-description">Respondidos por último pelo cliente</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 total-tickets">
+                        <div class="placard text-center">
+                            <div class="placard-value ng-binding" ng-bind="dmn_rltrs_cntrllr.total.sem_resposta"></div>
+                            <div class="placard-description">Sem Resposta</div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 total-tickets">
+                        <div class="placard text-center">
+                            <div class="placard-value ng-binding" ng-bind="dmn_rltrs_cntrllr.tempoMedioMask(dmn_rltrs_cntrllr.total.media_tempo_aberto)"></div>
+                            <div class="placard-description">Média de tempo aberto</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-rules" ngsf-fullscreen>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Chamados por atribuição
+                            <button class="btn btn-xs btn-default pull-right" ngsf-toggle-fullscreen show-if-fullscreen-enabled>
+                                <i show-if-fullscreen="false" class="fa fa-arrows-alt" aria-hidden="true"></i>
+                                <i show-if-fullscreen="true" class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                            <div class="btn-group pull-right columnbtn" uib-dropdown auto-close="outsideClick">
+                              <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                                <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="atribuido"><input class="form-check-input" type="checkbox" ng-model="dmn_rltrs_cntrllr.colunas.atribuido" id="atribuido" checked="true"> Atribuido a</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="abertos"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.abertos" id="abertos" checked="true"> Abertos</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="respondidoultimousuario"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.respondidoultimousuario" id="respondidoultimousuario" checked="true"> Respondidos por último pelo atendende</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="respondidoultimocliente"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.respondidoultimocliente" id="respondidoultimocliente" checked="true"> Respondidos por último pelo cliente</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="semresposta"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.semresposta" id="semresposta" checked="true"> Sem resposta</label>
+                                  </li>
+                                  <li class="checkbox padding-content" role="menuitem">
+                                      <label for="mediatempoaberto"><input class="form-check-input" type="checkbox" value="true" ng-model="dmn_rltrs_cntrllr.colunas.mediatempoaberto" id="mediatempoaberto" checked="true"> Média de tempo aberto</label>
+                                  </li>
+                                <li class="divider"></li>
+                                <li role="menuitem"><a href="#" ng-click="dmn_rltrs_cntrllr.mostrarTodasColunas()">Mostrar todos</a></li>
+                              </ul>
+                            </div>
+                        </div>
+                        <div class="height-full" ng-class="{'onloading' : dmn_rltrs_cntrllr.loading }">
+                            <div class="table-responsive" ng-if="!dmn_rltrs_cntrllr.loading">
+                                <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                                    <thead>
+                                        <tr>
+                                            <th ts-criteria="nome|lowercase" width="25%" ng-show="dmn_rltrs_cntrllr.colunas.atribuido"> Atribuido a</th>
+                                            <th ts-criteria="total|parseInt" ts-default="descending" ng-show="dmn_rltrs_cntrllr.colunas.abertos">Abertos(adiados)</th>
+                                            <th ts-criteria="respondido_pelo_atendente|parseInt" ng-show="dmn_rltrs_cntrllr.colunas.respondidoultimousuario">Respondidos por último pelo atendente</th>
+                                            <th ts-criteria="respondido_pelo_cliente|parseInt" ng-show="dmn_rltrs_cntrllr.colunas.respondidoultimocliente">Respondidos por último pelo cliente</th>
+                                            <th ts-criteria="sem_resposta|parseInt" ng-show="dmn_rltrs_cntrllr.colunas.semresposta">Sem respostas</th>
+                                            <th ts-criteria="media_tempo_aberto|parseInt" ng-show="dmn_rltrs_cntrllr.colunas.mediatempoaberto">Média de tempo aberto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="data in dmn_rltrs_cntrllr.tableData['atribuidoa']" ts-repeat >
+                                            <th scope="row" ng-show="dmn_rltrs_cntrllr.colunas.atribuido">
+                                                <a href ui-sref="atendimento_admin_solicitacoes({atribuidoa : data.responsavel_web, situacao : 0})">{{'{{data.nome}}'}}</a>
+                                            </th>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.abertos">{{'{{data.total}}'~'({{data.qnt_adiado}})'}}</td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.respondidoultimousuario">{{'{{data.respondido_pelo_atendente}}'}}</td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.respondidoultimocliente">{{'{{data.respondido_pelo_cliente}}'}}</td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.semresposta">{{'{{data.sem_resposta}}'}}</td>
+                                            <td ng-show="dmn_rltrs_cntrllr.colunas.mediatempoaberto">{{'{{ dmn_rltrs_cntrllr.tempoMedioMask(data.media_tempo_aberto) }}'}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>{{'{{dmn_rltrs_cntrllr.total.total }}'}} ({{'{{dmn_rltrs_cntrllr.total.adiados}}'}}) </td>
+                                            <td>{{'{{dmn_rltrs_cntrllr.total.respondido_pelo_atendente }}'}} </td>
+                                            <td>{{'{{dmn_rltrs_cntrllr.total.respondido_pelo_cliente }}'}} </td>
+                                            <td>{{'{{dmn_rltrs_cntrllr.total.sem_resposta }}'}} </td>
+                                            <td>{{'{{dmn_rltrs_cntrllr.tempoMedioMask(dmn_rltrs_cntrllr.total.media_tempo_aberto)}}'}} </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.panel-rules-->
+
+            </div>
+        </div><!--/.forms-->
+
+    </div>
+
+</div><!--/.article-->

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="documentositens" label="documentositens" project="ns" orphan="false" >
+    <entity schema="ns" table="vw_documentositenscomsaldos">
+        <fieldmodel name="documentoitem" datatype="guid" isid="true" column="documentoitem" />
+        <fieldmodel name="id_documento_associado" datatype="guid" column="id_documento_associado" />
+        <fieldmodel name="linha_tipo" datatype="integer" column="linha_tipo" />
+        <fieldmodel name="linha_ordem" datatype="integer" column="linha_ordem" />
+        <fieldmodel name="linha_owner" datatype="guid" column="linha_owner" />
+        <fieldmodel name="linha_object" datatype="guid" column="linha_object" />
+        <fieldmodel name="object_codigo" datatype="string" column="object_codigo" />
+        <fieldmodel name="object_descricao" datatype="string" column="object_descricao" />
+        <fieldmodel name="object_quantidade" datatype="float" column="object_quantidade" />
+        <fieldmodel name="object_unidade" datatype="guid" column="object_unidade" />
+        <fieldmodel name="object_valor_unitario" datatype="float" column="object_valor_unitario" />
+        <fieldmodel name="object_valor_desconto" datatype="float" column="object_valor_desconto" />
+        <fieldmodel name="object_valor_total" datatype="float" column="object_valor_total" />
+        <fieldmodel name="linha_id" datatype="guid" column="linha_id" />
+        <fieldmodel name="tipocapitulo" datatype="integer" column="tipocapitulo" />
+        <fieldmodel name="aprovado" datatype="boolean" column="aprovado" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="id_capitulo" datatype="guid" column="id_capitulo" />
+        <fieldmodel name="object_unidade_codigo" datatype="string" column="object_unidade_codigo" />
+        <fieldmodel name="object_unidade_descricao" datatype="string" column="object_unidade_descricao" />
+        <fieldmodel name="object_unidade_decimais" datatype="string" column="object_unidade_decimais" />
+        <fieldmodel name="saldo" datatype="float" column="saldo" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">id_capitulo</constructoritem>
+    </constructors>
+    <viewbrowser label="Itens da Proposta" layout="list" paginate="false" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser alias="documentoitem" alloworder="false" avaliable="false" cansearch="false" isid="true" entitylink="documentoitem" />
+            <fieldbrowser alias="id_documento_associado" avaliable="true" cansearch="false" unique="false" visible="false" entitylink="id_documento_associado" />
+            <fieldbrowser alias="Ordem" alloworder="true" indefaultorder="true" avaliable="true" cansearch="true" visible="true" entitylink="linha_ordem" />
+            <fieldbrowser alias="object_codigo" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_codigo" />
+            <fieldbrowser alias="object_descricao" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_descricao" />
+            <fieldbrowser alias="object_quantidade" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_quantidade" />
+            <fieldbrowser alias="object_unidade" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_unidade" />
+            <fieldbrowser alias="object_valor_unitario" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_valor_unitario" />
+            <fieldbrowser alias="object_valor_desconto" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_valor_desconto" />
+            <fieldbrowser alias="object_valor_total" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_valor_total" />
+            <fieldbrowser alias="object_unidade_codigo" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_unidade_codigo" />
+            <fieldbrowser alias="object_unidade_descricao" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_unidade_descricao" />
+            <fieldbrowser alias="object_unidade_decimais" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="object_unidade_decimais" />
+            <fieldbrowser alias="saldo" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="saldo" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

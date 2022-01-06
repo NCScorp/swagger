@@ -1,0 +1,222 @@
+/* Tickets */
+
+.article .ticket img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ticket {
+    margin-bottom: 20px;
+}
+
+.ticket-reply-tab {
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    font-weight: normal;
+    margin-bottom: 0;
+    background: #ededed;
+}
+
+.ticket-reply-tabs {
+    margin-top: 20px;
+}
+
+.ticket-reply-tab.active {
+    border: 1px solid #cccccc;
+    border-bottom: 0;
+    margin-bottom: 0;
+    margin-bottom: -1px;
+    padding-bottom: 1px;
+    background: #FFF;
+}
+
+.ticket-reply-tab a {
+    padding: 8px 10px;
+    display: block;
+}
+
+.ticket-reply-tab a:hover {
+    text-decoration: none;
+}
+
+.ticket-reply-tab.active a {
+    color: #2c2d33;
+}
+
+.ticket-reply-tabs .nav-tabs {
+  padding: 0 15px;
+  margin: 0 -15px;
+}
+
+.ticket-reply-tabs-content .forms,
+.ticket-reply-tabs-content .ticket-reply-tabs-content-ta-message-wrap,
+.reply-text .tab-content {
+    margin-bottom: 20px;
+}
+
+.reply-text .tab-content {
+  padding: 0 15px;
+}
+
+.ticket-reply-tabs-content .text-area {
+    margin-bottom: 5px;
+}
+
+.ticket-reply-tabs-content .ticket-reply-tabs-content-ta-message-wrap {
+    padding: 15px 0;
+}
+
+.atendimento_cliente_solicitacoes .ticket-replies .forms {
+    margin: 0;
+}
+
+.ticket-reply-tabs-content .forms .ta-text {
+    margin-bottom: 0;
+}
+
+.ticket-reply-tabs-content-ta-message textarea {
+    border-radius: 0 4px 4px 4px;
+    -moz-border-radius: 0 4px 4px 4px;
+    -webkit-border-radius: 0 4px 4px 4px;
+    resize: none;
+}
+
+.ticket-reply-tabs-content-ta .forms {
+  padding: 0;
+}
+
+.all-tickets h5 {
+    font-size: 1.3em;
+    margin: 18px 0;
+    padding: 22px 0 0;
+    border-top: 1px solid #ddd;
+}
+
+.ticket-block {
+    padding-bottom: 25px;
+}
+
+/* Replies and Comments*/
+
+.infos-atendimento .reply-header {
+    padding-left: 10px;
+}
+
+.infos-atendimento .reply-client {
+    background: #E8F3FF;
+}
+
+.reply.received .reply-ico {
+    color: #fff;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 26px 31px 0 0;
+    border-color: #699db0 transparent transparent transparent;
+    position: relative;
+    top: 15px;
+    margin-left: -15px;
+    display: initial;
+    margin-right: 0;
+}
+
+.reply.received .reply-ico>i {
+    position: absolute;
+    top: -23px;
+    left: 5px;
+    -moz-transform: none;
+    -o-transform: none;
+    -webkit-transform: none;
+    transform: none;
+    filter: none;
+    -ms-filter: none;
+}
+
+.reply .reply-ico {
+    margin-right: 5px;
+}
+
+.reply-client .reply-ico>i {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+    left: 8px;
+}
+
+.reply-header {
+    padding: 10px 15px 0;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.reply {
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    margin: -1px -15px 0;
+    background: #FFF;
+    position: relative;
+}
+
+.reply-client {
+    background: #F7F7F7;
+}
+
+.reply .reply-text {
+    padding: 0 15px 10px;
+}
+
+.reply .reply-text-historico {
+  padding: 0 15px;
+  font-size: 0.8em;
+}
+
+.reply .reply-text p {
+    margin-bottom: 5px;
+}
+
+.comment {
+    background: #fff6d9;
+}
+
+.reply dd, .reply dt, .reply dl {
+  width: auto;
+  margin: auto;
+}
+
+.reply dt {
+  margin-right: 5px;
+}
+
+@media screen and (min-width: 992px) {
+  .reply {
+      z-index: 1;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .ticket-reply-tabs-content-ta .forms {
+      padding: 15px;
+      margin-bottom: 15px;
+  }
+
+  .all-tickets .feeds {
+      margin: 0;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .reply {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .all-tickets .date {
+      padding-left: 15px;
+  }
+}

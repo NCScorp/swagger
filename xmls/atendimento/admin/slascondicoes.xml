@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="slascondicoes" label="slascondicoes" project="atendimento/admin">
+    <entity schema="atendimento" table="slascondicoes">
+        <fieldmodel name="slacondicao" datatype="guid" isid="true" column="slacondicao"/>
+        <fieldmodel name="sla" datatype="guid" column="sla" useCaseLink="atendimento\admin\slas" entityJoinType="left" />
+        <fieldmodel name="campo" datatype="string" column="campo"/>
+        <fieldmodel name="tipo" datatype="integer" column="tipo" />
+        <fieldmodel name="operador" datatype="string" column="operador"/>
+        <fieldmodel name="valor" datatype="string" column="valor"/>
+        <fieldmodel name="tipoentidade" datatype="integer" column="tipoentidade"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">sla</constructoritem>
+        <constructoritem required="true">tipo</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser alias="tipoentidade" entitylink="tipoentidade" />
+            <fieldbrowser alias="slacondicao" entitylink="slacondicao" isid="true" />
+            <fieldbrowser alias="campo" entitylink="campo" width="20" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipo" entitylink="tipo" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="operador" entitylink="operador" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="valor" entitylink="valor" width="80" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="campo" controltype="textedit" entitylink="campo" label="Campo">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="operador" controltype="textedit" entitylink="operador" label="Operador">
+                        <validates>
+                            <validate type="vnull" displaytext="Operador não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="valor" controltype="textedit" entitylink="valor" label="Valor"></cell>
+                </row>
+                <row>
+                    <cell name="tipoentidade" controltype="textedit" entitylink="tipoentidade" label="Tipo Entidade"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>slaCondicaoNovo_v2</name>
+                <fromto valueapi="sla" valueentity="sla"/>
+                <fromto valueapi="campo" valueentity="campo"/>
+                <fromto valueapi="tipo" valueentity="tipo"/>
+                <fromto valueapi="tipoentidade" valueentity="tipoentidade"/>
+                <fromto valueapi="operador" valueentity="operador"/>
+                <fromto valueapi="valor" valueentity="valor"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

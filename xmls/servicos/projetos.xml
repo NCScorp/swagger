@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="projetos" label="projetos" project="servicos">
+    <entity schema="financas" table="projetos">
+        <fieldmodel name="projeto" datatype="guid" isid="true" column="projeto"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="finalizado" datatype="boolean" column="finalizado"/>
+        <fieldmodel name="datainicio" datatype="date" column="datainicio" />
+        <fieldmodel name="datafim" datatype="date" column="datafim" />
+        <fieldmodel name="grupoempresarial" datatype="guid" column="grupoempresarial" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="clienteid" datatype="guid" column="cliente_id" />
+        <fieldmodel name="importacao_hash" datatype="string" column="importacao_hash" />
+        <fieldmodel name="estabelecimentoid" datatype="guid" column="estabelecimento_id" useCaseLink="ns\estabelecimento" entityJoinType="left" />
+        <fieldmodel name="tipoprojeto" datatype="guid" column="tipoprojeto_id" useCaseLink="servicos\tipodeProjeto" entityJoinType="left" />
+        <fieldmodel name="observacao" datatype="string" column="observacao" />
+        <fieldmodel name="situacao" datatype="integer" column="situacao" />
+        <fieldmodel name="datacriacao" datatype="datetime" column="data_criacao" />
+        <fieldmodel name="criadopor" datatype="guid" column="criado_por" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Projetos" >
+        <fieldsbrowser>
+            <fieldbrowser alias="projeto" entitylink="projeto" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="false" />
+            <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="false"/>
+            <!--<fieldbrowser alias="Tipo" entitylink="tipoprojeto" visible="true" cansearch="false"/>-->
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Projeto">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="codigo" controltype="textedit" entitylink="codigo" label="Código" colspan="6" placeholder="Ex: H12045" />
+                    <cell name="tipoprojeto" controltype="lookup" entitylink="tipoprojeto" label="Tipo de Projeto" colspan="6"  browserlookup="tipodeprojeto" projectbrowserlookup="servicos" fieldlookup="tipoprojeto" fieldaliaslookup="tipoprojeto" fielddetaillookup="descricao" />
+                </row>
+                <row>
+                    <cell name="estabelecimentoid" controltype="lookup" entitylink="estabelecimentoid" label="Estabelecimento" colspan="12"  browserlookup="estabelecimento" projectbrowserlookup="ns" fieldlookup="codigo" fieldaliaslookup="id" fielddetaillookup="nomefantasia" />
+                </row>
+                <row>
+                    <cell name="tituloDoProjeto" controltype="textedit" entitylink="nome" label="Título do projeto" colspan="12" placeholder="Título" />
+                </row>
+                <row>
+                    <cell name="dataDeInicio" controltype="dateedit" entitylink="datainicio" label="Data de início" colspan="6"  />
+                    <cell name="dataDeFinalizacao" controltype="dateedit" entitylink="datafim" label="Data de finalização" colspan="6"  />
+                </row>
+                <row>
+                    <cell name="observacao" controltype="textarea" entitylink="observacao" label="Observação" colspan="12" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>ProjetoNovo</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="projeto" valueentity="projeto" />
+                <fromto valueapi="estabelecimento" valueentity="estabelecimentoid" />
+                <fromto valueapi="tipoprojeto" valueentity="tipoprojeto" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="nome" valueentity="nome" />
+                <fromto valueapi="observacao" valueentity="observacao" />
+                <fromto valueapi="datacriacao" valueentity="datacriacao" />
+                <fromto valueapi="criadopor" valueentity="logged_user" />
+                <fromto valueapi="situacao" valueentity="situacao" />
+                <fromto valueapi="datainicio" valueentity="datainicio" />
+                <fromto valueapi="datafim" valueentity="datafim" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>ProjetoAlterar</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="projeto" valueentity="projeto" />
+                <fromto valueapi="estabelecimento" valueentity="estabelecimentoid" />		
+                <fromto valueapi="tipoprojeto" valueentity="tipoprojeto" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="nome" valueentity="nome" />
+                <fromto valueapi="observacao" valueentity="observacao" />
+                <fromto valueapi="situacao" valueentity="situacao" />
+                <fromto valueapi="datainicio" valueentity="datainicio" />
+                <fromto valueapi="datafim" valueentity="datafim" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>ProjetoExcluir</name>
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="projeto" valueentity="projeto" />
+                <fromto valueapi="estabelecimento" valueentity="estabelecimentoid" />		
+            </api>
+        </action>
+    </actions>
+</nsjusecase>       

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="documentosged" label="documentosged" project="ns" >
+    <entity schema="ns" table="documentosged">
+        <fieldmodel name="documentoged" datatype="guid" isid="true" column="documentoged"/>
+        <fieldmodel name="data" datatype="datetime" column="data" />
+        <fieldmodel name="nome" datatype="string" column="nome" />
+        <fieldmodel name="uuidarquivo" datatype="string" column="uuidarquivo" />
+        <fieldmodel name="mimetype" datatype="string" column="mimetype" />
+        <fieldmodel name="cpfcnpj" datatype="string" column="cpfcnpj" />
+        <fieldmodel name="nomefantasiaempresa" datatype="string" column="nomefantasiaempresa" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="hash" datatype="string" column="hash" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" label="Documendosged" >
+        <fieldsbrowser>
+            <fieldbrowser alias="documentoged" entitylink="documentoged" isid="true" visible="false" />
+            <fieldbrowser alias="Nome" entitylink="nome" indefaultorder="true" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="created_by" entitylink="created_by" indefaultorder="true" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="created_at" entitylink="created_at" indefaultorder="true" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Documento GED">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="uuidarquivo" controltype="textedit" entitylink="uuidarquivo" colspan="8" />
+                </row>
+                <row>
+                    <cell name="nome" controltype="textedit" entitylink="nome" colspan="8"></cell>
+                </row>
+                <row>
+                    <cell name="documentoged" controltype="textedit" entitylink="documentoged" colspan="8">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Arquivo não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>DocumentogedNovo</name>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="uuidarquivo" valueentity="uuidarquivo"/>
+                <fromto valueapi="mimetype" valueentity="mimetype"/>
+                <fromto valueapi="cpfcnpj" valueentity="cpfcnpj"/>
+                <fromto valueapi="nomefantasiaempresa" valueentity="nomefantasiaempresa"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>DocumentogedExcluir</name>
+                <fromto valueapi="documentoged" valueentity="documentoged"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

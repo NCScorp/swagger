@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="contatos" label="contatos" project="atendimento/cliente" >
+    <entity schema="ns" table="vwclientes_atendimento" >
+        <fieldmodel name="id" datatype="guid" isid="true" column="id"/>
+        <fieldmodel name="id_pessoa" datatype="guid" column="id_pessoa"/>
+        <fieldmodel name="conta" datatype="string" column="conta"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="nascimento" datatype="string" column="nascimento"/>
+        <fieldmodel name="sexomasculino" datatype="boolean" column="sexomasculino"/>
+        <fieldmodel name="observacao" datatype="boolean" column="observacao"/>
+        <fieldmodel name="primeironome" datatype="string" column="primeironome"/>
+        <fieldmodel name="sobrenome" datatype="string" column="sobrenome"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+        <fieldmodel name="setor" datatype="string" column="setor"/>
+        <fieldmodel name="nomefantasia" datatype="string" column="nomefantasia"/>
+        <fieldmodel name="cnpj" datatype="string" column="cnpj"/>
+        <fieldmodel name="cargo" datatype="string" column="cargo"/>
+        <fieldmodel name="emailprincipal" datatype="string" column="email"/>
+        <fieldmodel name="emailcobranca" datatype="string" column="emailcobranca"/>
+        <fieldmodel name="principal" datatype="boolean" column="principal" notMapped="true"/>
+        <fieldmodel name="contatosemails" datatype="objectlist" column="cliente" useCaseLink="ns\contatosemails" />
+        <fieldmodel name="contatos" datatype="objectlist" column="cliente" useCaseLink="ns\contatos" />
+        <fieldmodel name="telefones" datatype="objectlist" column="cliente" useCaseLink="ns\telefones" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>    
+        <constructoritem required="false">conta</constructoritem>    
+    </constructors>
+
+    <viewbrowser paginate="false" layout="table">
+        <fieldsbrowser>
+            <fieldbrowser alias="id" entitylink="id" isid="true" />
+            <fieldbrowser alias="nome" entitylink="nome" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="nomefantasia" entitylink="nomefantasia" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="cnpj" entitylink="cnpj" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="emailprincipal" entitylink="emailprincipal" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="emailcobranca" entitylink="emailcobranca" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="tenant" entitylink="tenant" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="observacao" entitylink="observacao" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="principal" entitylink="principal" cansearch="true" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+
+
+    <viewedit mode="view" label="Informações de Clientes">
+        <layout>
+            <headerform>
+                <row>
+                    <cell colspan="6">
+                        <row>
+                            <cell name="nome" controltype="textedit" entitylink="nome" label="Nome" />
+                        </row>
+                        <row>
+                            <cell name="cargo" controltype="textedit" entitylink="cargo" label="Cargo" />
+                        </row>
+                    </cell>                    
+                </row>
+            </headerform>
+            <bodyform>
+                <tabs>
+                    <tab caption="Contatos" ></tab>
+                </tabs>
+            </bodyform>
+        </layout>
+    </viewedit>
+
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>ContatoNovo_v2</name>
+                <fromto valueapi="id_pessoa" valueentity="id_pessoa"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="nascimento" valueentity="nascimento"/>
+                <fromto valueapi="cargo" valueentity="cargo" />
+                <fromto valueapi="sexomasculino" valueentity="sexomasculino" />
+                <fromto valueapi="observacao" valueentity="observacao" />
+                <fromto valueapi="email" valueentity="emailprincipal" />
+                <fromto valueapi="primeironome" valueentity="primeironome" />
+                <fromto valueapi="sobrenome" valueentity="sobrenome" />
+                <fromto valueapi="setor" valueentity="setor" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="principal" valueentity="principal" />
+            </api>
+        </action>
+
+        <action>
+            <name>Update</name>
+            <api>
+                <name>ContatoAlterar_v3</name>
+                <fromto valueapi="id" valueentity="id"/>
+                <fromto valueapi="id_pessoa" valueentity="id_pessoa"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="nascimento" valueentity="nascimento"/>
+                <fromto valueapi="cargo" valueentity="cargo" />
+                <fromto valueapi="sexomasculino" valueentity="sexomasculino" />
+                <fromto valueapi="observacao" valueentity="observacao" />
+                <fromto valueapi="email" valueentity="emailprincipal" />
+                <fromto valueapi="primeironome" valueentity="primeironome" />
+                <fromto valueapi="sobrenome" valueentity="sobrenome" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="principal" valueentity="principal" />
+                <fromto valueapi="setor" valueentity="setor" />
+            </api>
+        </action>
+
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>ContatoExcluir_v2</name>
+                <fromto valueapi="id" valueentity="id"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

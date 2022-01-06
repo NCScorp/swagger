@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="bandeirascartoes" label="bandeirascartoes" project="financas" >
+    <entity schema="financas" table="bandeirascartoes">
+        <fieldmodel name="bandeiracartao" datatype="guid" isid="true" column="bandeiracartao"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" optimistLock="true" />
+    </entity>
+    <viewbrowser label="Contratos Cartões">
+        <fieldsbrowser>
+            <fieldbrowser alias="bandeiracartao" entitylink="bandeiracartao" isid="true" />
+            <fieldbrowser alias="codigo" entitylink="codigo" cansearch="true" visible="true" avaliable="true" alloworder="true" indefaultorder="true" direction="ASC"/>
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

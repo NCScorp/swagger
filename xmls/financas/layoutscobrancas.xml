@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="layoutscobrancas" label="layoutscobrancas" project="financas" >
+    <entity schema="financas" table="layoutscobrancas" >
+        <fieldmodel name="layoutcobranca" datatype="guid" isid="true" column="layoutcobranca"/>
+        <fieldmodel name="nome" datatype="string" column="nome" />
+        <fieldmodel name="implementacao" datatype="integer" column="implementacao" />
+        <fieldmodel name="layoutrelatorio" datatype="integer" column="layoutrelatorio"/>
+        <fieldmodel name="bloqueado" datatype="boolean" column="bloqueado" />
+        <fieldmodel name="banco" datatype="guid" column="banco" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">banco</constructoritem>
+    </constructors>
+    <viewbrowser label="Layouts de Cobrança">
+        <fieldsbrowser>
+            <fieldbrowser alias="layoutcobranca" entitylink="layoutcobranca" isid="true" />
+            <fieldbrowser alias="nome" entitylink="nome" width="20" indefaultorder="true" direction="ASC" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

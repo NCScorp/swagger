@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="ServicoTecnico" label="ServicoTecnico" project="Servicos">
+    <entity schema="servicos" table="servicostecnicos" >
+        <fieldmodel name="servicotecnico" datatype="guid" column="servicotecnico" isid="true" />
+        <fieldmodel name="codigo" datatype="string" column="codigo" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="bloqueado" datatype="integer" column="bloqueado" />
+        <fieldmodel name="codigocontabil" datatype="string" column="codigocontabil" />
+        <fieldmodel name="insspercentualincidencia" datatype="float" column="insspercentualincidencia" />
+        <fieldmodel name="aliquotainss" datatype="float" column="aliquotainss" />
+        <fieldmodel name="descontocobranca" datatype="integer" column="descontocobranca" />
+        <fieldmodel name="valor" datatype="float" column="valor" />
+        <fieldmodel name="incidecomissao" datatype="integer" column="incidecomissao" />
+        <fieldmodel name="cfop" datatype="integer" column="cfop" />
+        <fieldmodel name="classificacaofinanceira" datatype="guid" column="classificacaofinanceira" />
+        <fieldmodel name="tiposervico" datatype="guid" column="tiposervico" />
+        <fieldmodel name="unidademedida" datatype="guid" column="unidademedida" />
+        <fieldmodel name="servicocatalogo" datatype="guid" column="servicocatalogo" />
+        <fieldmodel name="cor" datatype="string" column="cor" />
+        <fieldmodel name="incluinopedidovenda" datatype="integer" column="incluinopedidovenda" />
+        <fieldmodel name="minimohorascontratadas" datatype="integer" column="minimohorascontratadas" />
+        <fieldmodel name="idGrupoEmpresarial" datatype="guid" column="id_grupoempresarial" />
+        <fieldmodel name="servicovinculado" datatype="guid" column="servicovinculado" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="servicostecnicoschecklist" datatype="objectlist" useCaseLink="servicos\ServicoTecnico\Checklist" entityJoinType="left" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">idGrupoEmpresarial</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Servicos Técnicos" >
+        <fieldsbrowser>
+            <fieldbrowser alias="servicotecnico" entitylink="servicotecnico" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" cansearch="true" />
+            <fieldbrowser alias="Bloqueado" entitylink="bloqueado" visible="true" />
+            <fieldbrowser alias="Valor" entitylink="valor" visible="true" cansearch="true" />   
+            <fieldbrowser alias="Cor" entitylink="valor" visible="true" />   
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Servico Técnico">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="codigo" entitylink="codigo" controltype="textedit" colspan="3" label="Código" placeholder="Ex: 123" />
+                    <cell name="descricao" entitylink="descricao" controltype="textedit" colspan="6" label="Descrição" placeholder="Descrição" /> 
+                    <cell name="bloqueado" entitylink="bloqueado" controltype="radiobutton" colspan="3" label="Bloqueado">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo não pode ser vazio."/>
+                        </validates>
+                        <itenscombobox type="json">{'0':'Não', '1':'Sim'}</itenscombobox>
+                        
+                    </cell>
+                </row>
+                <row>
+                    <cell name="valor" entitylink="valor" controltype="floatedit" colspan="3" label="Valor" />
+                    <cell name="cfop" entitylink="cfop" controltype="textedit" colspan="9" label="CFOP" />
+                </row>
+                <row>
+                    <cell name="tiposervico" entitylink="tiposervico" controltype="textedit" label="Tipo de Serviço" colspan="12" />
+                </row>
+                <row>
+                    <cell name="servicovinculado" entitylink="servicovinculado" controltype="textedit" label="Item de faturamento vinculado" colspan="12" />
+                </row>
+                <row>
+                    <cell name="classificacaofinanceira" entitylink="classificacaofinanceira" controltype="textedit" label="Classificação Financeira" colspan="12" />
+                </row>
+                <row>
+                    <cell name="incluinopedidovenda" entitylink="incluinopedidovenda" controltype="textedit" label="Inclui no pedido de venda" colspan="2" />
+                    <cell name="minimohorascontratadas" entitylink="minimohorascontratadas" controltype="spinedit" label="Mínimo horas contratadas" colspan="2" />
+                    <cell colspan="6">
+                        <groupbox>
+                            <caption text="Retenção INSS" />
+                            <row>
+                                <cell name="insspercentualincidencia" entitylink="insspercentualincidencia" controltype="floatedit" label="% Incidência" colspan="6" />
+                                <cell name="aliquotainss" entitylink="aliquotainss" controltype="floatedit" label="Aliquota" colspan="6" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                    <cell name="cor" entitylink="cor" controltype="textedit" label="Cor para agendamento" colspan="2" />
+                </row>
+            </headerform>
+            <bodyform>
+                <tabs>
+                    <tab caption="Checklist">
+                        <row>
+                            <cell name="servicostecnicoschecklist" controltype="objectlist" entitylink="servicostecnicoschecklist" label="" colspan="12" />
+                        </row>
+                    </tab>
+                </tabs>
+            </bodyform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>insert</name>
+            <api>
+                <name>ServicosTecnicosNovo</name>
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="bloqueado" valueentity="bloqueado" />
+                <fromto valueapi="codigocontabil" valueentity="codigocontabil" />
+                <fromto valueapi="insspercentualincidencia" valueentity="insspercentualincidencia" />
+                <fromto valueapi="aliquotainss" valueentity="aliquotainss" />
+                <fromto valueapi="descontocobranca" valueentity="descontocobranca" />
+                <fromto valueapi="valor" valueentity="valor" />
+                <fromto valueapi="incidecomissao" valueentity="incidecomissao" />
+                <fromto valueapi="cfop" valueentity="cfop" />
+                <fromto valueapi="classificacaofinanceira" valueentity="classificacaofinanceira" />
+                <fromto valueapi="tiposervico" valueentity="tiposervico" />
+                <fromto valueapi="unidademedida" valueentity="unidademedida" />
+                <fromto valueapi="servicocatalogo" valueentity="servicocatalogo" />
+                <fromto valueapi="cor" valueentity="cor" />
+                <fromto valueapi="incluinopedidovenda" valueentity="incluinopedidovenda" />
+                <fromto valueapi="minimohorascontratadas" valueentity="minimohorascontratadas" />
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+                <fromto valueapi="servicovinculado" valueentity="servicovinculado" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>update</name>
+            <api>
+                <name>ServicosTecnicosAlterar</name>
+                <fromto valueapi="servicotecnico" valueentity="servicotecnico" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="bloqueado" valueentity="bloqueado" />
+                <fromto valueapi="codigocontabil" valueentity="codigocontabil" />
+                <fromto valueapi="insspercentualincidencia" valueentity="insspercentualincidencia" />
+                <fromto valueapi="aliquotainss" valueentity="aliquotainss" />
+                <fromto valueapi="descontocobranca" valueentity="descontocobranca" />
+                <fromto valueapi="valor" valueentity="valor" />
+                <fromto valueapi="incidecomissao" valueentity="incidecomissao" />
+                <fromto valueapi="cfop" valueentity="cfop" />
+                <fromto valueapi="classificacaofinanceira" valueentity="classificacaofinanceira" />
+                <fromto valueapi="tiposervico" valueentity="tiposervico" />
+                <fromto valueapi="unidademedida" valueentity="unidademedida" />
+                <fromto valueapi="servicocatalogo" valueentity="servicocatalogo" />
+                <fromto valueapi="cor" valueentity="cor" />
+                <fromto valueapi="incluinopedidovenda" valueentity="incluinopedidovenda" />
+                <fromto valueapi="minimohorascontratadas" valueentity="minimohorascontratadas" />
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+                <fromto valueapi="servicovinculado" valueentity="servicovinculado" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>delete</name>
+            <api>
+                <name>ServicosTecnicosExcluir</name>
+                <fromto valueapi="servicotecnico" valueentity="servicotecnico" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

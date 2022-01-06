@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="ServicosCatalogo" label="ServicosCatalogo" project="atendimento">
+    <entity schema="servicos" table="servicoscatalogo">
+        <fieldmodel name="servicocatalogo" datatype="guid" isid="true" column="servicocatalogo"/>            
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="tenant" datatype="string" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Catálogo de Serviços" >
+        <fieldsbrowser>
+            <fieldbrowser alias="servicocatalogo" entitylink="servicocatalogo" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Catálogo de Serviços">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="codigo" controltype="textedit" entitylink="codigo" label="Código" colspan="4" placeholder="Ex: 123" >
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Código deve ser preenchido." />
+                            <validate type="maxlength" value="30" displaytext="O campo Código ultrapassa o limite de 30 caracteres. "/>
+                        </validates>
+                    </cell>
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" label="Descrição" colspan="8" placeholder="Digite a descrição">
+                        <validates>
+                            <validate type="maxlength" value="150" displaytext="O campo Descrição ultrapassa o limite de 150 caracteres. "/>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+</nsjusecase>

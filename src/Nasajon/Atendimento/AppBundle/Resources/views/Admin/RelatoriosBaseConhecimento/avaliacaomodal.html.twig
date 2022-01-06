@@ -1,0 +1,24 @@
+<div>
+    <div class="headline-sub clearfix" style="margin:0;">
+        <h3>Avaliações do Artigo</h3>
+    </div>
+
+    <hr>
+
+    <div class="modal-body reset-top" id="modal-body"> 
+        <div ng-repeat="avaliacao in dmn_rltrs_cntrllr.listaAvaliacoes">
+            <span style="display: flex; align-items: center; margin-bottom: 5px;">
+                <strong class="comentario-user" style="margin-bottom: unset; margin-right: 8px;">{{'{{ avaliacao.created_by.nome }}'}}</strong>
+                <i ng-if="avaliacao.util" class="el el-thumbs-up"></i>
+                <i ng-if="!avaliacao.util" class="el el-thumbs-down"></i>
+            </span>
+            <p ng-if="avaliacao.justificativa" class="comentario-desc">
+              - {{'{{ avaliacao.justificativa }}'}}
+            </p>
+        </div>
+    </div>
+            
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="dmn_rltrs_cntrllr.fecharModal()" data-dismiss="modal">Fechar</button>
+    </div>
+</div>

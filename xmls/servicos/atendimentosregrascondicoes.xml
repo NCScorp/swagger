@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="atendimentosregrascondicoes" label="atendimentosregrascondicoes" project="servicos">
+    <entity schema="servicos" table="atendimentosregrascondicoes">
+        <fieldmodel name="atendimentoregracondicao" datatype="guid" isid="true" column="atendimentoregracondicao"/>
+        <fieldmodel name="atendimentoregra" datatype="guid" column="atendimentoregra" useCaseLink="servicos\atendimentosregras" entityJoinType="left" />
+        <fieldmodel name="campo" datatype="string" column="campo"/>
+        <fieldmodel name="tipo" datatype="integer" column="tipo" />
+        <fieldmodel name="operador" datatype="string" column="operador"/>
+        <fieldmodel name="valor" datatype="string" column="valor"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="tipoentidade" datatype="integer" column="tipoentidade" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">atendimentoregra</constructoritem>
+        <constructoritem required="true">tipo</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser alias="atendimentoregracondicao" entitylink="atendimentoregracondicao" isid="true" />
+            <fieldbrowser alias="campo" entitylink="campo" width="20" unique="true" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipo" entitylink="tipo" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="operador" entitylink="operador" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="valor" entitylink="valor" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipoentidade" entitylink="tipoentidade" width="80" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="campo" controltype="textedit" entitylink="campo" label="Campo">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="operador" controltype="textedit" entitylink="operador" label="Operador">
+                        <validates>
+                            <validate type="vnull" displaytext="Operador não pode ser vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="valor" controltype="textedit" entitylink="valor" label="Valor"></cell>
+                </row>
+                <row>
+                    <cell name="tipoentidade" controltype="textedit" entitylink="tipoentidade" label="Tipo Entidade"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>AtendimentoRegraCondicaoNovo_v2</name>
+                <fromto valueapi="atendimentoregra" valueentity="atendimentoregra"/>
+                <fromto valueapi="campo" valueentity="campo"/>
+                <fromto valueapi="tipo" valueentity="tipo"/>
+                <fromto valueapi="tipoentidade" valueentity="tipoentidade"/>
+                <fromto valueapi="operador" valueentity="operador"/>
+                <fromto valueapi="valor" valueentity="valor"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

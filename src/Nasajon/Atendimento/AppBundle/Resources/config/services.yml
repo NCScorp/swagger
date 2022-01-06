@@ -1,0 +1,197 @@
+imports:
+    - { resource: 'services/repository.yml' }
+    - { resource: 'services/voter.yml' }
+    - { resource: 'services/event.yml' }
+
+services:
+    memcached:
+        class: Memcached
+        calls:
+            - [ addServer, [ "%env(memcached_host)%", "%env(memcached_port)%" ]]
+    session.handler.memcached:
+        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\MemcachedSessionHandler
+        arguments: [ "@memcached", { prefix: "%env(session_prefix)%", expiretime: "%env(session_lifetime)%" } ]
+
+    nasajon_atendimento_app_bundle.upload_service:
+        class: Nasajon\Atendimento\AppBundle\Service\UploadService
+        arguments:
+            - "@nasajon_mda.ns_anexosmodulos_repository"
+            - "@router"
+            - "@doctrine.orm.entity_manager"
+
+    nasajon_atendimento_app_bundle.atendimentos_service:
+        class: Nasajon\Atendimento\AppBundle\Service\AtendimentosService
+        public: true
+        arguments:
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - "@nasajon_login_bundle_cache"
+
+    nasajon_atendimento_app_bundle.regras_atendimento_service:
+        class: Nasajon\Atendimento\AppBundle\Service\RegrasAtendimentoService
+        arguments:
+            - "@nasajon_mda.servicos_atendimentosregras_repository"
+            - "@nasajon_mda.atendimento_admin_enderecosemails_repository"
+            - "@nasajon_mda.ns_clientes_repository"
+            - "@nasajon_mda.servicos_atendimentosfilas_repository"
+    
+    nasajon_atendimento_app_bundle.regras_slas_service:
+        class: Nasajon\Atendimento\AppBundle\Service\RegrasSlasService
+        arguments:
+            - "@nasajon_mda.atendimento_admin_slas_repository"
+            - "@nasajon_mda.atendimento_admin_enderecosemails_repository"
+            - "@nasajon_mda.ns_clientes_repository"
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - "@old_sound_rabbit_mq.chamados_slas_violacao_producer"
+
+
+    nasajon_atendimento_app_bundle.mail_receiver_service:
+        class: Nasajon\Atendimento\AppBundle\Service\MailReceiverService
+        arguments:
+            - "@nasajon_mda.atendimento_cliente_solicitacoes_repository"
+            - "@nasajon_mda.atendimento_cliente_followups_repository"
+            - "@nasajon_mda.atendimento_admin_followups_repository"
+            - "@nasajon_mda.ns_documentosged_repository"
+            - "@nasajon_mda.atendimento_cliente_usuarios_repository"
+            - "@nasajon_mda.ns_clientes_repository"
+            - "@nasajon_mda.servicos_atendimentosemailsoriginais_repository"
+            - "@doctrine.orm.entity_manager"
+            - "%env(mailgun_api_key)%"
+            - "@nasajon_mda.atendimento_admin_enderecosemails_repository"
+            - "@gaufrette.anexos_filesystem"
+            - "@modelbundle.service.configuracoes"
+            - "@exercise_html_purifier.default"
+            - "@knp_gaufrette.filesystem_map"
+            - "@gaufrette.imagens_filesystem"
+
+    nasajon_atendimento_app_bundle.usuarios_dispinibilidades_service:
+        class: Nasajon\Atendimento\AppBundle\Service\UsuariosDisponibilidadesService
+        arguments:
+            - "@nasajon_atendimento_app_bundle.usuariosdisponibilidades_repository"
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - "@old_sound_rabbit_mq.chamados_regras_producer"
+#            - "@nasajon_login_bundle_cache"
+
+    nasajon_atendimento_app_bundle.mda_fixed_attribute_listener:
+        class : Nasajon\Atendimento\AppBundle\EventListener\MDAFixedAttributesListener        
+        tags:
+           - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 100 }
+        arguments :
+              - "@security.token_storage"
+              - "@nasajon_mda.fixed_attributes"    
+              - '@Nasajon\ModelBundle\Repository\Ns\TenantsRepository'
+              - "@modelbundle.service.configuracoes"
+
+
+    nasajon_atendimento_app_bundle.upload_listener:
+        class : Nasajon\Atendimento\AppBundle\EventListener\UploadListener
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+        arguments :
+            - "@knp_gaufrette.filesystem_map"
+            - "@nasajon_mda.ns_documentosged_repository"
+            - "@security.token_storage"
+            - "@nasajon_mda.fixed_attributes"
+            - "@aws.s3"
+            - "%env(s3_bucket_name)%"
+            - %anexos_adapter_path%
+
+    nasajon_atendimento_app_bundle.notification_event_listener:
+        class : Nasajon\Atendimento\AppBundle\EventListener\NotificationsEventListener
+        arguments:
+            - "@aws.sns"
+            - "%env(sns_event_notification_topic)%"
+        tags:
+            - { name: kernel.event_listener, event: followup.create, method: handler }
+            - { name: kernel.event_listener, event: atendimento_cliente.create, method: handler }
+            - { name: kernel.event_listener, event: atendimento_admin_atribuicao.update, method: handler }
+            - { name: kernel.event_listener, event: atendimento_admin.create, method: handler }
+
+    nasajon_atendimento_app_bundle.authentication_entrypoint:
+        class: Nasajon\Atendimento\AppBundle\Security\Http\EntryPoint\AuthenticationEntryPoint
+
+    nasajon_atendimento_app_bundle.notification_dispatcher:
+        class: Nasajon\Atendimento\AppBundle\Notification\NotificationDispatcher
+        arguments:
+            - "@nasajon_sdk.maladireta"
+
+    nasajon_atendimento_app_bundle.flagcliente_service:
+        class: Nasajon\Atendimento\AppBundle\Service\FlagclienteService
+        arguments:
+            - "@nasajon_mda.atendimento_admin_flagcliente_repository"
+
+    nasajon_atendimento_app_bundle.equipe_cliente_filter_service:
+        class: Nasajon\Atendimento\AppBundle\Service\EquipeClienteFilterService
+        arguments:
+            - "@nasajon_mda.atendimento_equipes_repository"
+            - "@nasajon_mda.fixed_attributes"
+            - "@nasajon_loginbundle_provisao"
+            
+    Nasajon\ModelBundle\Repository\Ns\TenantsRepository:
+        factory: 'Doctrine\ORM\EntityManagerInterface:getRepository'
+        arguments:
+            - Nasajon\ModelBundle\Entity\Ns\Tenants
+
+    nasajon_atendimento_app_bundle.slas_consumer:
+        class : Nasajon\Atendimento\AppBundle\Consumer\SlasConsumer
+        arguments :
+              - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+              - "@old_sound_rabbit_mq.chamados_slas_producer"
+
+    nasajon_atendimento_app_bundle.chamados_regras_consumer:
+        class : Nasajon\Atendimento\AppBundle\Consumer\ChamadosRegrasConsumer
+        arguments :
+              - "@nasajon_atendimento_app_bundle.regras_atendimento_service"
+              - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+              - "@nasajon_mda.servicos_atendimentosregrasacoes_repository"
+              - "@old_sound_rabbit_mq.chamados_slas_producer"
+              - "@old_sound_rabbit_mq.emails_processar_producer"
+    
+    nasajon_atendimento_app_bundle.chamados_slas_consumer:
+        class : Nasajon\Atendimento\AppBundle\Consumer\ChamadosSlasConsumer
+        arguments :
+              - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+              - "@nasajon_atendimento_app_bundle.regras_slas_service"
+    
+    nasajon_atendimento_app_bundle.chamados_slas_violacao_consumer:
+        class : Nasajon\Atendimento\AppBundle\Consumer\ChamadosSlasViolacaoConsumer
+        arguments :
+              - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+              - "@nasajon_atendimento_app_bundle.hora_util_service"
+              - "@monolog.logger"
+
+    nasajon_atendimento_app_bundle.hora_util_service:
+        class: Nasajon\Atendimento\AppBundle\Service\HoraUtilService
+        arguments:
+            - "@nasajon_mda.atendimento_horariosatendimento_repository"
+            - "@nasajon_mda.atendimento_feriados_repository"
+            - "@modelbundle.service.configuracoes"
+
+    nasajon_atendimento_app_bundle.chamados_sla_registra_violacao_sla_consumer:
+        class: Nasajon\Atendimento\AppBundle\Consumer\ChamadosSlasRegistraViolacaoSlaConsumer
+        arguments:
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+
+    nasajon_atendimento_app_bundle.emails_processar_consumer:
+        class : Nasajon\Atendimento\AppBundle\Consumer\EmailsProcessarConsumer
+        arguments:
+            - "@nasajon_mda.servicos_atendimentosfilas_repository"
+            - "@nasajon_mda.atendimento_admin_solicitacoes_repository"
+            - '@Nasajon\ModelBundle\Repository\Ns\TenantsRepository'
+            - "@old_sound_rabbit_mq.emails_enviar_producer"
+            - '%env(email_subdomain)%'
+            - '@nasajon_mda.ns_clientes_repository'
+            - '@modelbundle.service.configuracoes'
+            - '@nasajon_mda.servicos_atendimentosobservadores_repository'
+            
+    nasajon_atendimento_app_bundle.emails_enviar_consumer:
+        class : Nasajon\Atendimento\AppBundle\Consumer\EmailsEnviarConsumer
+        arguments:
+            - '@nasajon_sdk.diretorio'
+            - "@old_sound_rabbit_mq.emails_processar_producer"
+
+    nasajon_atendimento_app_bundle.permissao_usuario_service:
+        class: Nasajon\Atendimento\AppBundle\Service\PermissaoUsuarioService
+        public: true
+        arguments:
+            - "@nasajon_loginbundle_provisao"
+            - "@nasajon_mda.atendimento_equipesusuarios_repository"

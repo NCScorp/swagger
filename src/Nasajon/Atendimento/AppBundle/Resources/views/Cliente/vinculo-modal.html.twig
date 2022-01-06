@@ -1,0 +1,60 @@
+{% verbatim %}
+<div class="modal-body mobile-page" id="modal-body">
+    <h3 class="primary-title">Vincular Cliente</h3>
+
+    <div ng-if="self.situacao < 0">
+        <form ng-submit="self.ok()" name="self.form">
+            <div class="form-group">
+                <label>Insira o CNPJ ou CPF sem máscara somente números abaixo para prosseguir:</label>
+                <input ng-model="self.cnpj" type="text"  ng-change="self.changemask()" autofocus class="form-control" ui-mask="{{ self.cnpjMask}}" ui-options="{ 'clearOnBlur' : 'false', 'allowInvalidValue' : 'true'}" ui-mask-placeholder ui-mask-placeholder-char="space" />
+            </div>
+            <p>
+                Uma mensagem será enviada ao email de cobrança cadastrado conosco e após a confirmação da autenticidade da sua conta, seu acesso será liberado.
+            </p>
+
+            <div class="clearfix">
+                <div class="pull-right">
+                    <button type="submit" class="btn-cancel btn btn-primary">Vincular</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div ng-if="self.situacao == 0">
+        <img src="//s3-us-west-2.amazonaws.com/static.nasajon/img/loading.gif" />
+    </div>
+    <div ng-if="self.situacao == 1">
+
+        <p>
+            <strong>Obrigado!</strong>
+        </p>
+        <p>
+            Um email foi enviado para <span ng-if="self.emails.length == 1">o endereço</span><span ng-if="self.emails.length > 1">os endereços</span>: 
+
+        </p>
+        <ul>
+            <li ng-repeat="email in self.emails">{{email}}</li>
+        </ul>
+        <p>
+            Por favor, confira a sua caixa de entrada e siga os passos descritos lá. <br />
+            Após isso, você terá acesso ao Sistema de Licenças da Nasajon.            
+        </p>        
+        <div class="clearfix">
+            <div class="pull-right">
+                <button type="button" ng-click="self.close()" class="btn-cancel btn btn-primary">Fechar</button>
+            </div>
+        </div>
+    </div>
+    <div ng-if="self.situacao == 2">
+
+        <p>
+            <strong>Ops! Ocorreu um erro ao tentar vincular:</strong>
+        </p>
+        <p ng-bind="self.error"></p>
+        <div class="clearfix">
+            <div class="pull-right">
+                <button type="button" ng-click="self.close()" class="btn-cancel btn btn-primary">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endverbatim %}

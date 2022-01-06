@@ -1,0 +1,248 @@
+<div ng-if="!tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.isBusy()" class="height-full col-md-12 article-area row">
+    {% set form_name = form.vars.original_type %}
+    <form name="{{form_name}}" novalidate="novalidate" role="form"  ng-submit="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.submit({{form_name}})" class="config-grs">
+        <div class="headline-page ng-scope">
+            <div class="headline clearfix">
+                <div class="breadcrumb-trail pull-left">
+                    <a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page">Configurações gerais</span></strong></div>
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-xs btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                    <button type="submit" class="btn btn-xs btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+                </div>
+            </div>
+        </div>
+        <div class="headline-sub clearfix hidden-lg hidden-md">
+            <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar à lista" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a> Configurações Gerais</h3>
+            <div class="btns-area pull-right">
+                <button type="button" class="btn btn-sm btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                <button type="submit" class="btn btn-sm btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="row" style="display: flex; flex-wrap: wrap; align-items: center;"> 
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="DISPONIBILIZAR_ARQUIVOS">Disponibilizar a funcionalidade de Arquivos</label>
+                        
+                        <select id="DISPONIBILIZAR_ARQUIVOS" name="DISPONIBILIZAR_ARQUIVOS" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.DISPONIBILIZAR_ARQUIVOS" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="ARQUIVOS_DOWNLOADS_SUPORTE_ATIVO">Impedir o acesso de clientes bloqueados na área de downloads</label>
+                        
+                        <select id="ARQUIVOS_DOWNLOADS_SUPORTE_ATIVO" name="ARQUIVOS_DOWNLOADS_SUPORTE_ATIVO" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.ARQUIVOS_DOWNLOADS_SUPORTE_ATIVO" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="0">Não</option>
+                            <option value="1">Sim</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="USUARIO_SEM_CLIENTE_CRIAR_CHAMADO">Usuário sem cliente associado pode criar chamado</label>
+                        
+                        <select id="USUARIO_SEM_CLIENTE_CRIAR_CHAMADO" name="USUARIO_SEM_CLIENTE_CRIAR_CHAMADO" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.USUARIO_SEM_CLIENTE_CRIAR_CHAMADO" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="CHAMADOS_VISIVELCLIENTE_PADRAO">Chamado é visível para o cliente por padrão</label>
+                        
+                        <select id="CHAMADOS_VISIVELCLIENTE_PADRAO" name="CHAMADOS_VISIVELCLIENTE_PADRAO" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.CHAMADOS_VISIVELCLIENTE_PADRAO" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                {# <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="USUARIO_SEM_EQUIPE_PODE_ACESSAR_CHAMADOS_CLIENTES">Usuário sem equipe acessa chamados e clientes</label>
+                        
+                        <select id="USUARIO_SEM_EQUIPE_PODE_ACESSAR_CHAMADOS_CLIENTES" name="USUARIO_SEM_EQUIPE_PODE_ACESSAR_CHAMADOS_CLIENTES" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.USUARIO_SEM_EQUIPE_PODE_ACESSAR_CHAMADOS_CLIENTES" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div> #}
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="HABILITAR_CAMPO_ASSUNTO_NOS_CHAMADOS">Permitir cadastro do campo assunto em chamados</label>
+                        
+                        <select id="HABILITAR_CAMPO_ASSUNTO_NOS_CHAMADOS" name="HABILITAR_CAMPO_ASSUNTO_NOS_CHAMADOS" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.HABILITAR_CAMPO_ASSUNTO_NOS_CHAMADOS" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="0">Não</option>
+                            <option value="1">Somente para os usuários</option>
+                            <option value="2">Para clientes e usuários</option></select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="CADASTRAR_CONTATO_SEM_CLIENTE">Permitir cadastro de contatos sem cliente vinculado</label>
+                        
+                        <select id="CADASTRAR_CONTATO_SEM_CLIENTE" name="CADASTRAR_CONTATO_SEM_CLIENTE" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.CADASTRAR_CONTATO_SEM_CLIENTE" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                  <div class="form-group">
+                    <label class="control-label" for="URL_AVALIACAO_RESPOSTA_CHAMADO">URL da Pesquisa de Avaliação para respostas</label> <a uib-popover-html="'<div><div class=\'modal-header\'><h3>URL da Pesquisa de Avaliação</h3></div><div class=\'modal-body\'>Utilize as seguintes TAGS na URL para passar informações para o formulário da Pesquisa de Avaliação:<br /><br /><strong>[[chamado]]</strong>: Número do Chamado<br /><strong>[[cliente]]</strong>: Código do Cliente<br /><strong>[[nome_atendente]]</strong>: Nome do Atendente<br /><strong>[[email_atendente]]</strong>: E-mail do Atendente<br/><strong>[[email_cliente]]</strong>: E-mail do Cliente</div></div>'" popover-placement="right-bottom" popover-append-to-body="true"  popover-animation='false' popover-trigger="'outsideClick'"><i class="el el-info-circle"></i></a>
+
+                    <input type="text" id="URL_AVALIACAO_RESPOSTA_CHAMADO" name="URL_AVALIACAO_RESPOSTA_CHAMADO" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.URL_AVALIACAO_RESPOSTA_CHAMADO" class="form-control">
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="ARTIGO_TAG_OBRIGATORIO">Campo TAG obrigatório na criação de artigos</label>
+                        <select id="ARTIGO_TAG_OBRIGATORIO" name="ARTIGO_TAG_OBRIGATORIO" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.ARTIGO_TAG_OBRIGATORIO" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="CLIENTE_SITUACAO_SEM_RESTRICAO_LABEL">Descrição da situação de clientes não bloqueados</label>
+                        <input type="text" id="CLIENTE_SITUACAO_SEM_RESTRICAO_LABEL" name="CLIENTE_SITUACAO_SEM_RESTRICAO_LABEL" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.CLIENTE_SITUACAO_SEM_RESTRICAO_LABEL" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label" for="CHAMADO_SINTOMA_LABEL"> Label do campo descrição </label>
+                        <input type="text" id="CHAMADO_SINTOMA_LABEL" name="CHAMADO_SINTOMA_LABEL" required="true" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.CHAMADO_SINTOMA_LABEL" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label" for="CHAMADO_SINTOMA_OBSERVACAO"> Observação do campo descrição </label>
+                        <input type="text" id="CHAMADO_SINTOMA_OBSERVACAO" name="CHAMADO_SINTOMA_OBSERVACAO" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.CHAMADO_SINTOMA_OBSERVACAO" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="CHAMADO_POR_EMAIL_HTML">Receber e-mail com HTML 
+                         <a uib-popover-html="'<div><div class=\'modal-body\'>
+                            Não recomendada a ativação, pois o e-mail com HTML pode conter conteúdo malicioso.
+                            </div></div>'" 
+                            popover-placement="right-bottom" popover-append-to-body="true" popover-animation='false' popover-trigger="'outsideClick'"><i class="el el-info-circle"></i></a>
+                        </label>
+                        
+                        <select id="CHAMADO_POR_EMAIL_HTML" name="CHAMADO_POR_EMAIL_HTML" required="required" ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.CHAMADO_POR_EMAIL_HTML" ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="ATENDENTE_CRIA_CHAMADO_SEM_CLIENTE">Atendente pode criar chamado sem cliente</label>
+                        <select id="ATENDENTE_CRIA_CHAMADO_SEM_CLIENTE" 
+                                name="ATENDENTE_CRIA_CHAMADO_SEM_CLIENTE" 
+                                required="required" 
+                                ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.ATENDENTE_CRIA_CHAMADO_SEM_CLIENTE" 
+                                ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" 
+                                class="form-control">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="ENVIA_EMAIL_CRIACAO_CHAMADO_ADMIN">Envia e-mail na criação do chamado pelo Atendente</label>
+                        <select id="ENVIA_EMAIL_CRIACAO_CHAMADO_ADMIN" 
+                                name="ENVIA_EMAIL_CRIACAO_CHAMADO_ADMIN" 
+                                required="required" 
+                                ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.ENVIA_EMAIL_CRIACAO_CHAMADO_ADMIN" 
+                                ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" 
+                                class="form-control">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="EXIBE_CLIENTE">Exibe cliente no chamado e menu</label>
+                        <select id="EXIBE_CLIENTE" 
+                                name="EXIBE_CLIENTE" 
+                                required="required" 
+                                ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.EXIBE_CLIENTE" 
+                                ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" 
+                                class="form-control">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12" ng-if="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.TORNAR_PUBLICO_ACESSO_BASE_CONHECIMENTO.length > 0">
+                    <div class="form-group">
+                        <label class="control-label required" for="TORNAR_PUBLICO_ACESSO_BASE_CONHECIMENTO">Tornar público o acesso à base de conhecimento?</label>
+                        <select id="TORNAR_PUBLICO_ACESSO_BASE_CONHECIMENTO" 
+                                name="TORNAR_PUBLICO_ACESSO_BASE_CONHECIMENTO" 
+                                required="required" 
+                                ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.TORNAR_PUBLICO_ACESSO_BASE_CONHECIMENTO" 
+                                ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" 
+                                class="form-control">
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12" ng-if="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.ACESSO_CHAMADOS_VISAO_CLIENTE.length > 0">
+                    <div class="form-group">
+                        <label class="control-label required" for="ACESSO_CHAMADOS_VISAO_CLIENTE">Acesso aos chamados na visão do cliente</label>
+                        <select id="ACESSO_CHAMADOS_VISAO_CLIENTE" 
+                                name="ACESSO_CHAMADOS_VISAO_CLIENTE" 
+                                required="required" 
+                                ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.ACESSO_CHAMADOS_VISAO_CLIENTE" 
+                                ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" 
+                                class="form-control">
+                            <option value="0">Usuários do mesmo cliente visualizam todos os chamados</option>
+                            <option value="1">Cada usuário visualiza seu próprio chamado, exceto o Administrador</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="HABILITAR_CCO_CHAMADOS">Habilitar CCO aos chamados</label>
+                        <select 
+                            id="HABILITAR_CCO_CHAMADOS" 
+                            name="HABILITAR_CCO_CHAMADOS" 
+                            required="required" 
+                            ng-model="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.HABILITAR_CCO_CHAMADOS" 
+                            ng-disabled="tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.entity.submitting" 
+                            class="form-control"
+                        >
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <script type="text/ng-template" id="myPopoverTemplate.tmpl.html">
+                <div><div class='modal-header'><h3>URL da Pesquisa de Avaliação</h3></div><div class='modal-body'>Utilize as seguintes TAGS na URL para passar informações para o formulário da Pesquisa de Avaliação:<br /><br /><strong>[[chamado]]</strong>: Número do Chamado<br /><strong>[[cliente]]</strong>: Código do Cliente<br /><strong>[[nome_atendente]]</strong>: Nome do Atendente<br /><strong>[[email_atendente]]</strong>: E-mail do Atendente</div></div>
+            </script>
+            
+            <br />
+
+            <ul class="list-unstyled list-inline pull-right">
+                <li>
+                    <button type="submit" id="salvar" name="salvar" class="pull-right btn btn-primary" >Salvar</button>
+                </li>
+            </ul>
+
+        </div>
+
+        {{ form_end(form, {'render_rest': false}) }}
+
+</div>
+
+<div ng-class="{'onloading' : tndmnt_dmn_cnfgrcs_prtl_frm_cntrllr.isBusy() }" class="text-center"></div>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="tiposfollowups" label="tiposfollowups" project="ns" >
+    <entity schema="ns" table="tiposfollowups">
+        <fieldmodel name="tipofollowup" datatype="guid" isid="true" column="tipofollowup"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="ativo" datatype="boolean" column="ativo" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" >
+        <fieldsbrowser>
+            <fieldbrowser alias="tipofollowup" entitylink="tipofollowup" isid="true" />
+            <fieldbrowser alias="codigo" entitylink="codigo" width="20" unique="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="descricao" entitylink="descricao" width="80" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

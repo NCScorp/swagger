@@ -1,0 +1,126 @@
+/* Dropdown Menu */
+.scrollable-menu {
+    height: auto;
+    max-height: 182px;
+    overflow-x: hidden;
+}
+
+.dropdown-menu {
+    padding: 0;
+    width: 260px;
+}
+
+.dropdown-menu button.btn-dropdown {
+  border: none;
+  background: none;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-menu button.btn-dropdown:hover {
+  background: #f5f5f5;
+}
+
+.dropdown-menu>li>a,
+.dropdown-menu>li button.btn-dropdown {
+    padding: 10px;
+    
+    white-space: normal;
+    line-height:1em;
+    padding-left: 25px;
+}
+
+.dropdown-menu.drop-padrao>li>a,
+.dropdown-menu.drop-padrao>li>button.btn-dropdown {
+    padding: 8px 10px;
+}
+
+.dropdown-menu>li>a:before,
+.dropdown-menu>li>button.btn-dropdown:before {
+  width: 14px;
+  display: inline-block;
+  content: " ";
+  
+     position: absolute;
+    left: 7px;
+}
+
+.dropdown-menu.drop-padrao>li>a:before,
+.dropdown-menu.drop-padrao>li>button.btn-dropdown:before {
+  content: none;
+  width: 0;
+}
+
+.dropdown-menu.drop-padrao .divider {
+  margin: 0;
+}
+
+.dropdown-menu>.active>a:before,
+.dropdown-menu>li>.btn-dropdown.active:before {
+    content: "✔ ";
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus
+.dropdown-menu>li>.btn-dropdown.active, .dropdown-menu>li>.btn-dropdown.active:hover, .dropdown-menu>li>.btn-dropdown.active:focus
+{
+    background-color: #FFF;
+    cursor: default;
+    color: #262626;
+}
+
+.dropdown-order {
+    margin-left: 5%;
+}
+
+.dropdown-header {
+  padding: 5px 10px 0;
+}
+
+/* Dropdown Submenu */
+
+.dropdown-submenu {
+    position: relative;
+    z-index: 100;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px 6px;
+    border-radius: 0 6px 6px 6px;
+    z-index: 2000;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu > a:after {
+    display: block;
+    float: right;
+    width: 0;
+    height: 0;
+    margin-top: 5px;
+    border-color: transparent;
+    border-left-color: #cccccc;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    content: " ";
+}
+
+/* Dropdown Seleção de Cor */
+.select-cor .box-cor {
+  border: 1px solid #cdcdcd;
+  width:18px;
+  height:14px;
+  display:inline-block;
+  vertical-align: middle;
+}
+
+.select-cor .selected {
+  text-transform: uppercase;
+}

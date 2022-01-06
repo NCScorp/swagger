@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Termo de serviço</h1>
+  <div class="conteudo">
+    <div ng-bind-html="termo_texto"></div>
+  </div>
+  <div class="col-sm-12 navbar-fixed-bottom">
+    <div class="text-center">
+      <input type="checkbox" ng-model="termoLido" /> Li e Entendi
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" ng-disabled="(!termoLido)" ng-click="aceitarTermo()">Aceitar</button>
+    </div>
+  </div>
+</div>

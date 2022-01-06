@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../schemas/nsjusecase.xsd" name="horariosatendimento" label="horariosatendimento" project="atendimento" >
+    <entity schema="atendimento" table="horariosatendimento">
+            <fieldmodel name="horarioatendimento" datatype="guid" isid="true" column="horarioatendimento"/>
+            <fieldmodel name="tenant" datatype="integer" column="tenant" />
+            <fieldmodel name="equipe" datatype="guid" column="equipe" useCaseLink="atendimento\equipes" entityJoinType="left" />
+            <fieldmodel name="timezone" datatype="string" column="timezone" />            
+            <fieldmodel name="segunda" datatype="boolean" column="segunda" />
+            <fieldmodel name="segunda_inicio_expediente" datatype="time" column="segunda_inicio_expediente" />
+            <fieldmodel name="segunda_inicio_intervalo" datatype="time" column="segunda_inicio_intervalo" />
+            <fieldmodel name="segunda_fim_intervalo" datatype="time" column="segunda_fim_intervalo" />
+            <fieldmodel name="segunda_fim_expediente" datatype="time" column="segunda_fim_expediente" />
+            <fieldmodel name="terca" datatype="boolean" column="terca" />
+            <fieldmodel name="terca_inicio_expediente" datatype="time" column="terca_inicio_expediente" />
+            <fieldmodel name="terca_inicio_intervalo" datatype="time" column="terca_inicio_intervalo" />
+            <fieldmodel name="terca_fim_intervalo" datatype="time" column="terca_fim_intervalo" />
+            <fieldmodel name="terca_fim_expediente" datatype="time" column="terca_fim_expediente" />
+            <fieldmodel name="quarta" datatype="boolean" column="quarta" />
+            <fieldmodel name="quarta_inicio_expediente" datatype="time" column="quarta_inicio_expediente" />
+            <fieldmodel name="quarta_inicio_intervalo" datatype="time" column="quarta_inicio_intervalo" />
+            <fieldmodel name="quarta_fim_intervalo" datatype="time" column="quarta_fim_intervalo" />
+            <fieldmodel name="quarta_fim_expediente" datatype="time" column="quarta_fim_expediente" />
+            <fieldmodel name="quinta" datatype="boolean" column="quinta" />
+            <fieldmodel name="quinta_inicio_expediente" datatype="time" column="quinta_inicio_expediente" />
+            <fieldmodel name="quinta_inicio_intervalo" datatype="time" column="quinta_inicio_intervalo" />
+            <fieldmodel name="quinta_fim_intervalo" datatype="time" column="quinta_fim_intervalo" />
+            <fieldmodel name="quinta_fim_expediente" datatype="time" column="quinta_fim_expediente" />
+            <fieldmodel name="sexta" datatype="boolean" column="sexta" />
+            <fieldmodel name="sexta_inicio_expediente" datatype="time" column="sexta_inicio_expediente" />
+            <fieldmodel name="sexta_inicio_intervalo" datatype="time" column="sexta_inicio_intervalo" />
+            <fieldmodel name="sexta_fim_intervalo" datatype="time" column="sexta_fim_intervalo" />
+            <fieldmodel name="sexta_fim_expediente" datatype="time" column="sexta_fim_expediente" />
+            <fieldmodel name="sabado" datatype="boolean" column="sabado" />
+            <fieldmodel name="sabado_inicio_expediente" datatype="time" column="sabado_inicio_expediente" />
+            <fieldmodel name="sabado_inicio_intervalo" datatype="time" column="sabado_inicio_intervalo" />
+            <fieldmodel name="sabado_fim_intervalo" datatype="time" column="sabado_fim_intervalo" />
+            <fieldmodel name="sabado_fim_expediente" datatype="time" column="sabado_fim_expediente" />
+            <fieldmodel name="domingo" datatype="boolean" column="domingo" />
+            <fieldmodel name="domingo_inicio_expediente" datatype="time" column="domingo_inicio_expediente" />
+            <fieldmodel name="domingo_inicio_intervalo" datatype="time" column="domingo_inicio_intervalo" />
+            <fieldmodel name="domingo_fim_intervalo" datatype="time" column="domingo_fim_intervalo" />
+            <fieldmodel name="domingo_fim_expediente" datatype="time" column="domingo_fim_expediente" />
+            <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+            <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">equipe</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Horários de Atendimento">
+        <fieldsbrowser>
+            <fieldbrowser alias="Horário de Atendimento" entitylink="horarioatendimento" isid="true" visible="false" />
+            <fieldbrowser alias="Equipe" entitylink="equipe" width="20" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="Timezone" entitylink="timezone" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Segunda" entitylink="segunda" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Segunda Início Expediente" entitylink="segunda_inicio_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Segunda Início Intervalo" entitylink="segunda_inicio_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Segunda Fim Intervalo" entitylink="segunda_fim_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Segunda Fim Expediente" entitylink="segunda_fim_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Terca" entitylink="terca" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Terca Início Expediente" entitylink="terca_inicio_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Terca Início Intervalo" entitylink="terca_inicio_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Terca Fim Intervalo" entitylink="terca_fim_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Terca Fim Expediente" entitylink="terca_fim_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quarta" entitylink="quarta" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quarta Início Expediente" entitylink="quarta_inicio_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quarta Início Intervalo" entitylink="quarta_inicio_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quarta Fim Intervalo" entitylink="quarta_fim_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quarta Fim Expediente" entitylink="quarta_fim_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quinta" entitylink="quinta" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quinta Início Expediente" entitylink="quinta_inicio_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quinta Início Intervalo" entitylink="quinta_inicio_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quinta Fim Intervalo" entitylink="quinta_fim_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Quinta Fim Expediente" entitylink="quinta_fim_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sexta" entitylink="sexta" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sexta Início Expediente" entitylink="sexta_inicio_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sexta Início Intervalo" entitylink="sexta_inicio_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sexta Fim Intervalo" entitylink="sexta_fim_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sexta Fim Expediente" entitylink="sexta_fim_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sabado" entitylink="sabado" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sabado Início Expediente" entitylink="sabado_inicio_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sabado Início Intervalo" entitylink="sabado_inicio_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sabado Fim Intervalo" entitylink="sabado_fim_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Sabado Fim Expediente" entitylink="sabado_fim_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Domingo" entitylink="domingo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Domingo Início Expediente" entitylink="domingo_inicio_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Domingo Início Intervalo" entitylink="domingo_inicio_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Domingo Fim Intervalo" entitylink="domingo_fim_intervalo" width="20" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Domingo Fim Expediente" entitylink="domingo_fim_expediente" width="20" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Horários de Atendimento">
+        <layout>
+            <headerform>
+                <row >
+                    <cell name="timezone" controltype="textedit" entitylink="timezone" colspan="12" placeholder="Fuso horário" label="Fuso horário">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo fuso horário deve ser preenchido" />
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="segunda" controltype="checkbox" entitylink="segunda" colspan="2" placeholder="Segunda-feira" label="Segunda-feira"></cell>
+                    <cell name="segunda_inicio_expediente" controltype="textedit" entitylink="segunda_inicio_expediente" colspan="2" placeholder="Início Expediente" label="Início Expediente"></cell>
+                    <cell name="segunda_inicio_intervalo" controltype="textedit" entitylink="segunda_inicio_intervalo" colspan="2" placeholder="Início Intervalo" label="Início Intervalo"></cell>
+                    <cell name="segunda_fim_intervalo" controltype="textedit" entitylink="segunda_fim_intervalo" colspan="2" placeholder="Fim Intervalo" label="Fim Intervalo"></cell>
+                    <cell name="segunda_fim_expediente" controltype="textedit" entitylink="segunda_fim_expediente" colspan="2" placeholder="Fim Expediente" label="Fim Expediente"></cell>
+                </row>
+                <row>
+                    <cell name="terca" controltype="checkbox" entitylink="terca" colspan="2" placeholder="Terça-feira" label="Terça-feira"></cell>
+                    <cell ame="terca_inicio_expediente" controltype="textedit" entitylink="terca_inicio_expediente" colspan="2" placeholder="Início Expediente" label="Início Expediente"></cell>
+                    <cell ame="terca_inicio_intervalo" controltype="textedit" entitylink="terca_inicio_intervalo" colspan="2" placeholder="Início Intervalo" label="Início Intervalo"></cell>
+                    <cell ame="terca_fim_intervalo" controltype="textedit" entitylink="terca_fim_intervalo" colspan="2" placeholder="Fim Intervalo" label="Fim Intervalo"></cell>
+                    <cell ame="terca_fim_expediente" controltype="textedit" entitylink="terca_fim_expediente" colspan="2" placeholder="Fim Expediente" label="Fim Expediente"></cell>
+                </row>
+                <row>
+                    <cell name="quarta" controltype="checkbox" entitylink="quarta" colspan="2" placeholder="Quarta-feira" label="Quarta-feira"></cell>
+                    <cell name="quarta_inicio_expediente" controltype="textedit" entitylink="quarta_inicio_expediente" colspan="2" placeholder="Início Expediente" label="Início Expediente"></cell>
+                    <cell name="quarta_inicio_intervalo" controltype="textedit" entitylink="quarta_inicio_intervalo" colspan="2" placeholder="Início Intervalo" label="Início Intervalo"></cell>
+                    <cell name="quarta_fim_intervalo" controltype="textedit" entitylink="quarta_fim_intervalo" colspan="2" placeholder="Fim Intervalo" label="Fim Intervalo"></cell>
+                    <cell name="quarta_fim_expediente" controltype="textedit" entitylink="quarta_fim_expediente" colspan="2" placeholder="Fim Expediente" label="Fim Expediente"></cell>
+                </row>
+                <row>
+                    <cell name="quinta" controltype="checkbox" entitylink="quinta" colspan="2" placeholder="Quinta-feira" label="Quinta-feira"></cell>
+                    <cell name="quinta_inicio_expediente" controltype="textedit" entitylink="quinta_inicio_expediente" colspan="2" placeholder="Início Expediente" label="Início Expediente"></cell>
+                    <cell name="quinta_inicio_intervalo" controltype="textedit" entitylink="quinta_inicio_intervalo" colspan="2" placeholder="Início Intervalo" label="Início Intervalo"></cell>
+                    <cell name="quinta_fim_intervalo" controltype="textedit" entitylink="quinta_fim_intervalo" colspan="2" placeholder="Fim Intervalo" label="Fim Intervalo"></cell>
+                    <cell name="quinta_fim_expediente" controltype="textedit" entitylink="quinta_fim_expediente" colspan="2" placeholder="Fim Expediente" label="Fim Expediente"></cell>
+                </row>
+                <row>
+                    <cell name="sexta" controltype="checkbox" entitylink="sexta" colspan="2" placeholder="Sexta-feira" label="Sexta-feira"></cell>
+                    <cell ame="sexta_inicio_expediente" controltype="textedit" entitylink="sexta_inicio_expediente" colspan="2" placeholder="Início Expediente" label="Início Expediente"></cell>
+                    <cell ame="sexta_inicio_intervalo" controltype="textedit" entitylink="sexta_inicio_intervalo" colspan="2" placeholder="Início Intervalo" label="Início Intervalo"></cell>
+                    <cell ame="sexta_fim_intervalo" controltype="textedit" entitylink="sexta_fim_intervalo" colspan="2" placeholder="Fim Intervalo" label="Fim Intervalo"></cell>
+                    <cell ame="sexta_fim_expediente" controltype="textedit" entitylink="sexta_fim_expediente" colspan="2" placeholder="Fim Expediente" label="Fim Expediente"></cell>
+                </row>
+                <row>
+                    <cell name="sabado" controltype="checkbox" entitylink="sabado" colspan="2" placeholder="Sábado" label="Sábado"></cell>
+                    <cell name="sabado_inicio_expediente" controltype="textedit" entitylink="sabado_inicio_expediente" colspan="2" placeholder="Início Expediente" label="Início Expediente"></cell>
+                    <cell name="sabado_inicio_intervalo" controltype="textedit" entitylink="sabado_inicio_intervalo" colspan="2" placeholder="Início Intervalo" label="Início Intervalo"></cell>
+                    <cell name="sabado_fim_intervalo" controltype="textedit" entitylink="sabado_fim_intervalo" colspan="2" placeholder="Fim Intervalo" label="Fim Intervalo"></cell>
+                    <cell name="sabado_fim_expediente" controltype="textedit" entitylink="sabado_fim_expediente" colspan="2" placeholder="Fim Expediente" label="Fim Expediente"></cell>
+                </row>
+                <row>
+                    <cell name="domingo" controltype="checkbox" entitylink="domingo" colspan="2" placeholder="Domingo" label="Domingo"></cell>
+                    <cell name="domingo_inicio_expediente" controltype="textedit" entitylink="domingo_inicio_expediente" colspan="2" placeholder="Início Expediente" label="Início Expediente"></cell>
+                    <cell name="domingo_inicio_intervalo" controltype="textedit" entitylink="domingo_inicio_intervalo" colspan="2" placeholder="Início Intervalo" label="Início Intervalo"></cell>
+                    <cell name="domingo_fim_intervalo" controltype="textedit" entitylink="domingo_fim_intervalo" colspan="2" placeholder="Fim Intervalo" label="Fim Intervalo"></cell>
+                    <cell name="domingo_fim_expediente" controltype="textedit" entitylink="domingo_fim_expediente" colspan="2" placeholder="Fim Expediente" label="Fim Expediente"></cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>HorarioAtendimentoAlterar</name>
+                <fromto valueapi="horarioatendimento" valueentity="horarioatendimento"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="equipe" valueentity="equipe"/>
+                <fromto valueapi="timezone" valueentity="timezone"/>
+                <fromto valueapi="segunda" valueentity="segunda"/>
+                <fromto valueapi="segunda_inicio_expediente" valueentity="segunda_inicio_expediente"/>
+                <fromto valueapi="segunda_inicio_intervalo" valueentity="segunda_inicio_intervalo"/>
+                <fromto valueapi="segunda_fim_intervalo" valueentity="segunda_fim_intervalo"/>
+                <fromto valueapi="segunda_fim_expediente" valueentity="segunda_fim_expediente"/>
+                <fromto valueapi="terca" valueentity="terca"/>
+                <fromto valueapi="terca_inicio_expediente" valueentity="terca_inicio_expediente"/>
+                <fromto valueapi="terca_inicio_intervalo" valueentity="terca_inicio_intervalo"/>
+                <fromto valueapi="terca_fim_intervalo" valueentity="terca_fim_intervalo"/>
+                <fromto valueapi="terca_fim_expediente" valueentity="terca_fim_expediente"/>
+                <fromto valueapi="quarta" valueentity="quarta"/>
+                <fromto valueapi="quarta_inicio_expediente" valueentity="quarta_inicio_expediente"/>
+                <fromto valueapi="quarta_inicio_intervalo" valueentity="quarta_inicio_intervalo"/>
+                <fromto valueapi="quarta_fim_intervalo" valueentity="quarta_fim_intervalo"/>
+                <fromto valueapi="quarta_fim_expediente" valueentity="quarta_fim_expediente"/>
+                <fromto valueapi="quinta" valueentity="quinta"/>
+                <fromto valueapi="quinta_inicio_expediente" valueentity="quinta_inicio_expediente"/>
+                <fromto valueapi="quinta_inicio_intervalo" valueentity="quinta_inicio_intervalo"/>
+                <fromto valueapi="quinta_fim_intervalo" valueentity="quinta_fim_intervalo"/>
+                <fromto valueapi="quinta_fim_expediente" valueentity="quinta_fim_expediente"/>
+                <fromto valueapi="sexta" valueentity="sexta"/>
+                <fromto valueapi="sexta_inicio_expediente" valueentity="sexta_inicio_expediente"/>
+                <fromto valueapi="sexta_inicio_intervalo" valueentity="sexta_inicio_intervalo"/>
+                <fromto valueapi="sexta_fim_intervalo" valueentity="sexta_fim_intervalo"/>
+                <fromto valueapi="sexta_fim_expediente" valueentity="sexta_fim_expediente"/>
+                <fromto valueapi="sabado" valueentity="sabado"/>
+                <fromto valueapi="sabado_inicio_expediente" valueentity="sabado_inicio_expediente"/>
+                <fromto valueapi="sabado_inicio_intervalo" valueentity="sabado_inicio_intervalo"/>
+                <fromto valueapi="sabado_fim_intervalo" valueentity="sabado_fim_intervalo"/>
+                <fromto valueapi="sabado_fim_expediente" valueentity="sabado_fim_expediente"/>
+                <fromto valueapi="domingo" valueentity="domingo"/>
+                <fromto valueapi="domingo_inicio_expediente" valueentity="domingo_inicio_expediente"/>
+                <fromto valueapi="domingo_inicio_intervalo" valueentity="domingo_inicio_intervalo"/>
+                <fromto valueapi="domingo_fim_intervalo" valueentity="domingo_fim_intervalo"/>
+                <fromto valueapi="domingo_fim_expediente" valueentity="domingo_fim_expediente"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

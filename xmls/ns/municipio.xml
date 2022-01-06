@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="municipio" label="municipio" project="ns">
+    <entity schema="ns" table="municipios">
+        <fieldmodel name="ibge" column="ibge" isid="true" datatype="string" />
+        <fieldmodel name="federal" column="federal" datatype="string" />
+        <fieldmodel name="estadual" column="estadual" datatype="string" />
+        <fieldmodel name="uf" column="uf" datatype="string" />
+        <fieldmodel name="ddd" column="ddd" datatype="string" />
+        <fieldmodel name="nome" column="nome" datatype="string" />
+        <fieldmodel name="aliquotaiss" column="aliquotaiss" datatype="float" />
+        <fieldmodel name="zfm" column="zfm" datatype="boolean" />
+        <fieldmodel name="versao" column="versao" datatype="integer" />
+        <fieldmodel name="lastupdate" column="lastupdate" datatype="datetime" />
+    </entity>
+    <viewbrowser label="Municípios" layout="list" paginate="false" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="ibge" entitylink="ibge" visible="true" isid="true" />
+            <fieldbrowser alias="federal" entitylink="federal" visible="true" />
+            <fieldbrowser alias="estadual" entitylink="estadual" visible="true" />
+            <fieldbrowser alias="uf" entitylink="uf" visible="true" />
+            <fieldbrowser alias="nome" entitylink="nome" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

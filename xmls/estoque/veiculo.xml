@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="veiculo" label="veiculo" project="estoque" orphan="false" >
+    <entity schema="estoque" table="veiculos">
+        <fieldmodel name="veiculo" column="veiculo" datatype="guid" isid="true" />
+        <fieldmodel name="codigo" column="codigo" datatype="string" />
+        <fieldmodel name="placa" column="placa" datatype="string" />
+        <fieldmodel name="renavam" column="renavam" datatype="string" /> 
+        <fieldmodel name="tarakg" column="tarakg" datatype="integer" />
+        <fieldmodel name="capacidadekg" column="capacidadekg" datatype="integer" />
+        <fieldmodel name="capacidadem3" column="capacidadem3" datatype="integer" />
+        <fieldmodel name="capacidadem3" column="capacidadem3" datatype="integer" />
+        <fieldmodel name="tipoveiculo" column="tipoveiculo" datatype="integer" />
+        <fieldmodel name="tipocarroceria" column="tipocarroceria" datatype="integer" />
+        <fieldmodel name="uflicenciamento" column="uflicenciamento" datatype="string" />
+        <fieldmodel name="proprietario" column="proprietario" datatype="guid" />
+        <fieldmodel name="motorista" column="motorista" datatype="guid" />
+        <fieldmodel name="empresa" column="empresa" datatype="guid" />
+        <fieldmodel name="lastupdate" column="lastupdate" datatype="datetime" />
+        <fieldmodel name="ano" column="ano" datatype="integer" />
+        <fieldmodel name="modelo" column="modelo" datatype="string" />
+        <fieldmodel name="rntc" column="rntc" datatype="string" />
+        <fieldmodel name="tipo" column="tipo" datatype="integer" />
+        <fieldmodel name="tenant" column="tenant" datatype="integer" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser label="Veículos" layout="list" paginate="false" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="veiculo" entitylink="veiculo" isid="true" />
+            <fieldbrowser alias="codigo" entitylink="codigo" cansearch="true" visible="true" />
+            <fieldbrowser alias="placa" entitylink="placa" cansearch="true" visible="true" />
+            <fieldbrowser alias="ano" entitylink="ano" cansearch="true" visible="true" />
+            <fieldbrowser alias="modelo" entitylink="modelo" cansearch="true" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

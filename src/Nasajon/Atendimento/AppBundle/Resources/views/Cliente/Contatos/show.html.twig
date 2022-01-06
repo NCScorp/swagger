@@ -1,0 +1,139 @@
+{% extends'@NasajonMDABundle/Resources/js/Atendimento/Cliente/Contatos/show.html.twig' %}
+
+{% block viewedit_toolbar %}{% endblock viewedit_toolbar %}
+
+{% block viewedit_view %}
+
+<div class="row div-row-titulo">
+    <div class="col-sm-12 div-col-titulo-informacoes">
+        <span class="span-info-clientes">Informações de Clientes</span>
+
+        <ui-select class="ui-select-clientes-contatos"
+            ng-model="tndmnt_clnt_cntts_frm_cntrllr.entity" 
+            ng-change="tndmnt_clnt_cntts_frm_cntrllr.setClienteSelecionado(tndmnt_clnt_cntts_frm_cntrllr.entity)"
+            ng-disabled="tndmnt_clnt_cntts_frm_cntrllr.isDeleting"
+            ng-if="tndmnt_clnt_cntts_frm_cntrllr.clientes.length > 1">
+            <ui-select-match allow-clear="false"
+                placeholder="Selecione o Cliente">
+                {{'{{tndmnt_clnt_cntts_frm_cntrllr.entity.nomefantasia}}'}}
+            </ui-select-match>
+            <ui-select-choices repeat="cliente in tndmnt_clnt_cntts_frm_cntrllr.clientes | filter:$select.search">
+                <div ng-bind-html="cliente.nomefantasia | highlight: $select.search"></div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="div-cliente-info">
+            <div class="div-cliente-info-nomefantasia">
+                <div class="div-cliente-nomefantasia"><strong>Nome Fantasia</strong></div>
+                <div class="div-cliente-nomefantasia-value"><label>{{'{{tndmnt_clnt_cntts_frm_cntrllr.entity.nomefantasia}}'}}</label></div>
+            </div>
+            <div class="div-cliente-info-cnpj">
+                <div class="div-cliente-cnpj"><strong>CNPJ</strong></div>
+                <div class="div-cliente-cnpj-value"><label>{{'{{tndmnt_clnt_cntts_frm_cntrllr.entity.cnpj}}'}}</label></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<uib-tabset class="tab-contatos">
+	{% block viewedit_form_tabstart %}{% endblock viewedit_form_tabstart %}
+	
+    <uib-tab heading="Contatos"> 
+        {% block viewedit_form_tab_cntts %}
+            <div class="clearfix">
+                <div class="pull-left">
+                    <h4><i class="el el-address-book"></i> Contatos</h4>
+                </div>
+
+                <a ng-click="tndmnt_clnt_cntts_frm_cntrllr.adicionarContato()" class="btn btn-default pull-right" style="margin-right: 15px;" ng-disabled="tndmnt_clnt_cntts_frm_cntrllr.isDeleting"><i class="fa fa-plus"></i> Adicionar</a>
+            </div>
+
+            <div class="email-principal-cobranca_AbaContatos">
+                <div>
+                <span class="email-principal-cobranca_title_AbaContatos">E-mail Principal: </span> 
+                <span class="email-principal-cobranca_text_AbaContatos">
+                    {{'{{ tndmnt_clnt_cntts_frm_cntrllr.entity.emailprincipal ? tndmnt_clnt_cntts_frm_cntrllr.entity.emailprincipal : "Não há e-mail principal cadastrado." }}'}}
+                </span>
+                </div>
+                <div>
+                <span class="email-principal-cobranca_title_AbaContatos">E-mail de Cobrança: </span> 
+                <span class="email-principal-cobranca_text_AbaContatos">
+                    {{'{{ tndmnt_clnt_cntts_frm_cntrllr.entity.emailcobranca ? tndmnt_clnt_cntts_frm_cntrllr.entity.emailcobranca : "Não há e-mail de cobrança cadastrado." }}'}}
+                </span>
+                </div>
+            </div>
+
+            <hr>
+
+            {# Contatos #}
+            <div ng-if="tndmnt_clnt_cntts_frm_cntrllr.entity.contatos.length > 0"> 
+
+                <div ng-repeat="contato in tndmnt_clnt_cntts_frm_cntrllr.entity.contatos">
+
+                <div class="nome_AbaContatos">
+                    {{"{{ contato.nome }}"}}
+                    <span class="cargo_AbaContatos" ng-if="contato.cargo">({{"{{ contato.cargo }}"}})</span>
+
+                    <a ng-disabled="tndmnt_clnt_cntts_frm_cntrllr.isDeleting" ng-click="tndmnt_clnt_cntts_frm_cntrllr.editarContato(contato)" title="Editar" class="a-contato-editar"><i class="fa fa-pencil"></i></a>
+                    <a ng-disabled="tndmnt_clnt_cntts_frm_cntrllr.isDeleting" ng-click="tndmnt_clnt_cntts_frm_cntrllr.excluirContato(contato)" title="Excluir" class="a-contato-excluir"><i class="fa fa-trash"></i></a>
+                </div>
+
+                <div class="classificador-contato_AbaContatos" ng-if="contato.principal">
+                    Principal - {{"{{ contato.cargo }}"}}
+                </div>
+                
+                {# Emails #}
+                <table class="table_AbaContatos">
+                    <tr ng-repeat="contatoemail in contato.contatosemails">
+                        <td width="23" ng-class="$last ? 'espaco-top-bottom_AbaContatos' : ''">
+                            <i class="el el-envelope icon_AbaContatos" ng-if="$first"></i> 
+                        </td>
+                        <td ng-class="$last ? 'espaco-top-bottom_AbaContatos' : ''">
+                            <span class="email_AbaContatos">{{"{{ contatoemail.email }}"}}</span>
+                        </td>
+                    </tr>
+                </table>
+                {# Cada contato atualmente só tem um e-mail. Caso tenha-se mais no futuro basta implementar um ng-repeat com os e-mails e utilizar um ng-if="$first" para exibição correta do icone de e-mail apenas no primeiro item #}
+
+                {# Telefones #}
+                <table class="table_AbaContatos" ng-if="contato.telefones.length > 0">
+                    <tr ng-repeat="telefone in contato.telefones">
+                    <td width="23">
+                        <i class="el el-phone icon_AbaContatos" ng-if="$first"></i>
+                    </td>
+                    <td>
+                        <span>{{"{{ telefone.ddi }}"}} {{"{{ telefone.ddd }}"}} {{"{{ telefone.telefone }}"}} {{"{{ telefone.ramal }}"}}</span>
+                        <span class="tel-descricao_AbaContatos">
+                        <span ng-if="telefone.tptelefone == 0">RESIDENCIAL</span>
+                        <span ng-if="telefone.tptelefone == 1">COMERCIAL</span>
+                        <span ng-if="telefone.tptelefone == 2">CELULAR</span>
+                        <span ng-if="telefone.tptelefone == 3">FAX</span>
+                        <span ng-if="telefone.tptelefone == 4">PAGER</span>
+                        <span ng-if="telefone.tptelefone == 5">VIRTUAL</span>
+                        <span ng-if="telefone.tptelefone == 6">RECADO</span>
+                        <span ng-if="telefone.tptelefone == 7">TELEFAX</span>
+                        </span>
+                    </td>
+                    </tr>
+                </table>
+
+                <div class="obs-title_AbaContatos espaco-top_AbaContatos">
+                    Observações:
+                    <span class="obs-text_AbaContatos">{{"{{ contato.observacao }}"}}.</span>
+                </div>
+                {# As observações vem da tabela contato, pois atualmente não existem em telefone #}
+                <hr ng-if="!$last">
+                </div>
+            
+            </div>
+        {% endblock viewedit_form_tab_cntts %}
+    </uib-tab>
+    
+    {% block viewedit_form_tabend %}{% endblock viewedit_form_tabend %}
+</uib-tabset>
+
+{% endblock viewedit_view -%}

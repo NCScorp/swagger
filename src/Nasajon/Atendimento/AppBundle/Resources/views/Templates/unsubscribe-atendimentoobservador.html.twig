@@ -1,0 +1,29 @@
+{% extends 'NasajonAtendimentoAppBundle:Default:blank.html.twig' %}
+
+{% block content %}
+
+    {% if atendimentoobservador is not null %}
+
+        {% if confirmado is null %}
+
+            <p>Deseja que o usuário <strong>{{ atendimentoobservador.usuario }}</strong> não seja mais um observador do chamado <strong>#{{ atendimento.numeroprotocolo }}</strong>?</p>
+
+            <p>Após a confirmação, o usuário não receberá mais e-mails quando houver uma nova resposta neste chamado.</p>
+
+            <p>Para confirmar, clique no botão abaixo.</p>
+
+            <a href="{{path('nasajon_atendimento_app_unsubscribe_chamadoconfirmar', {'atendimentoobservador': atendimentoobservador.atendimentoobservador})}}" class="btn btn-success">Confirmar</a>
+
+        {% else %}
+
+            <p>O usuário <strong>{{ atendimentoobservador.usuario }}</strong> foi excluído com sucesso como observador do chamado <strong>#{{ atendimento.numeroprotocolo }}</strong>.</p>
+
+        {% endif %}
+
+    {% else %}
+
+        <p>Solicitação inválida. Possivelmente, o usuário já foi excluído deste chamado.</p>
+
+    {% endif %}
+
+{% endblock content %}

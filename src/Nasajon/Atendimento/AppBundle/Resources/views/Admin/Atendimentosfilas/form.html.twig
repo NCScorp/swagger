@@ -1,0 +1,61 @@
+{% extends '@NasajonMDABundle/Resources/js/Servicos/Atendimentosfilas/form.html.twig' %}
+
+{% block viewedit_toolbar_btn_area %}
+
+    <button type="button" class="btn btn-sm btn-link btn-delete btn-geral" ng-click="srvcs_tndmntsfls_frm_cntrllr.delete()" ng-if="srvcs_tndmntsfls_frm_cntrllr.entity.atendimentofila"><i class="el el-trash"></i> <span class="hidden-xs">Deletar</span></button>
+    <button type="button" class="btn btn-sm btn-link btn-cancel btn-geral" ui-sref="servicos_atendimentosfilas({'tenant' : controller.constructors.tenant,})"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+    <button type="submit" class="btn btn-sm btn-primary btn-save btn-geral"><span class="hidden-lg hidden-md hidden-sm"><i class="el el-ok"></i></span> <span class="hidden-xs">Salvar</span></button>
+
+{% endblock viewedit_toolbar_btn_area %}
+
+{% block viewedit_edit %}
+
+    {{ parent() }}
+
+    <div class="row">
+        <div class="col-sm-8">
+            <p><strong>Adicione seguidores para essa fila:</strong></p>
+                        
+            <div class="panel-rules">
+                <div class="panel panel-default div-sobrescrita-mostra-usuarios">
+                    <div class="clearfix panel-heading">
+                        <div>
+                            <ui-select tagging ng-model="srvcs_tndmntsfls_frm_cntrllr.usuario" 
+                                       on-select="srvcs_tndmntsfls_frm_cntrllr.seguidor = $item">
+                                <ui-select-match 
+                                    allow-clear="false" 
+                                    placeholder="Selecione o usuário">
+                                        {{'{{srvcs_tndmntsfls_frm_cntrllr.usuario.email}}'}}
+                                </ui-select-match>
+                                <ui-select-choices repeat="option in srvcs_tndmntsfls_frm_cntrllr.optionsobservadores | filter:$select.search">
+                                    <div>
+                                        <div ng-bind-html="srvcs_tndmntsfls_frm_cntrllr.bindObservador(option) | highlight: $select.search "></div>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <button 
+                                type="button" 
+                                ng-click="srvcs_tndmntsfls_frm_cntrllr.addObservador()"
+                                class="btn btn-warning pull-right btn-margin-top"> <i class="el el-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-condensed">
+                        <tbody>
+                            <tr ng-if="srvcs_tndmntsfls_frm_cntrllr.entity.observadores.length == 0">
+                                <td colspan="4">Nenhum seguidor para a fila</td>
+                            </tr>
+                            <tr ng-repeat="observador in srvcs_tndmntsfls_frm_cntrllr.entity.observadores track by $index">
+                                <td><a href="#">{{'{{observador.usuario}}'}}</a></td>
+                                <td class="text-right">
+                                  <a class="btn btn-danger btn-xs btns-acoes" ng-click="srvcs_tndmntsfls_frm_cntrllr.removeObservador($index)"  href title="Remover Usuário"><i class="el el-remove"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

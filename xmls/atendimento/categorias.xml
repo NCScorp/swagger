@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="categorias" label="categorias" project="atendimento" >
+    <entity schema="atendimento" table="categorias">
+            <fieldmodel name="categoria" datatype="guid" isid="true" column="categoria"/>
+            <fieldmodel name="titulo" datatype="string" column="titulo"/>
+            <fieldmodel name="tenant" datatype="integer" column="tenant" />
+            <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+            <fieldmodel name="created_by" datatype="json" column="created_by" />
+            <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+            <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+            <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" optimistLock="true" />
+            <fieldmodel name="ordem" datatype="integer" column="ordem" />
+            <fieldmodel name="tipo" datatype="integer" column="tipo" />
+            <fieldmodel name="descricao" datatype="string" column="descricao" />
+            <fieldmodel name="status" datatype="integer" column="status" />
+            <fieldmodel name="tipoordenacao" datatype="integer" column="tipoordenacao" />
+            <fieldmodel name="categoriapai" datatype="guid" column="categoriapai" entityJoinType="left" useCaseLink="atendimento\categorias" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">tipo</constructoritem>
+        <constructoritem required="false">categoriapai</constructoritem>
+        <constructoritem required="false">status</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Categorias">
+        <fieldsbrowser>
+            <fieldbrowser alias="categoria" entitylink="categoria" isid="true" visible="false" />
+            <fieldbrowser alias="Titulo" entitylink="titulo" cansearch="false" visible="true" avaliable="true"  />
+            <fieldbrowser alias="Descrição" entitylink="descricao" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Status" entitylink="status" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="tipo" entitylink="tipo" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="Tipoordenação" entitylink="tipoordenacao" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="categoriapai" entitylink="categoriapai" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="ordem" entitylink="ordem" cansearch="false" indefaultorder="true" direction="asc" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Categoria">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="titulo" controltype="textedit" entitylink="titulo" colspan="12" placeholder="Nome da categoria">
+                        <validates>
+                            <validate type="vnull" displaytext="Campo título deve ser preenchido" />
+                            <validate type="maxlength" value="25" displaytext="Tamanho máximo do título da categoria é de 25 caracteres " />
+                        </validates>
+                    </cell>
+                </row>
+                 <row>
+                    <cell name="descricao" controltype="textedit" entitylink="descricao" colspan="12" placeholde="descricao" />
+                </row>
+                <row>
+                    <cell name="status" controltype="textedit" entitylink="status" colspan="12" label="status" ></cell>
+                </row>
+                <row>
+                    <cell label="Categoria" name="categoriapai" controltype="textedit" entitylink="categoriapai" colspan="4"  placeholder="Escolha a categoria Pai"></cell>
+                </row>
+                <row>
+                    <cell label="tipoordenacao" name="tipoordencao" controltype="textedit" entitylink="tipoordenacao" colspan="4" placeholder="Tipo de Ordenação" />
+                </row>
+                <row>
+                    <cell name="tipo" controltype="combobox" label="tipo" entitylink="tipo" placeholder="Selecionar" colspan="4">
+                        <itenscombobox type="json">{ '1' : 'cat', '2': 'sub', '3': 'sec'}</itenscombobox>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+      <action>
+          <name>Insert</name>
+          <api>
+            <name>CategoriaNovo_v2</name>
+            <fromto valueapi="titulo" valueentity="titulo"/>
+            <fromto valueapi="descricao" valueentity="descricao" />
+            <fromto valueapi="categoriapai" valueentity="categoriapai" />
+            <fromto valueapi="tipo" valueentity="tipo" />
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="status" valueentity="status"/>
+            <fromto valueapi="tipoordenacao" valueentity="tipoordenacao" />
+          </api>
+     </action>
+     <action>
+            <name>Update</name>
+            <api>
+                <name>CategoriaAlterar_v2</name>
+                <fromto valueapi="categoria" valueentity="categoria"/>
+                <fromto valueapi="titulo" valueentity="titulo"/>
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="tipo" valueentity="tipo" />
+                <fromto valueapi="categoriapai" valueentity="categoriapai" />
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="status" valueentity="status"/>
+                <fromto valueapi="tipoordenacao" valueentity="tipoordenacao" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>CategoriaExcluir_v2</name>
+                <fromto valueapi="categoria" valueentity="categoria" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>CategoriasReordenar_v2</name>
+                <fromto valueapi="categoria" valueentity="categoria"/>
+                <fromto valueapi="categoriapai" valueentity="categoriapai"/>
+                <fromto valueapi="ordem" valueentity="ordem"/>
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

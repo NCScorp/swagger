@@ -1,0 +1,26 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Admin/Flagcliente/index.html.twig' %}
+{% block index_header -%}
+    <div class="col-md-12 headline-page ng-scope">
+        <div class="headline clearfix">
+            <div class="breadcrumb-trail hidden-xs hidden-sm pull-left"><a ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Configurações">Configurações</a> > <span class="select-page">Avisos de Cliente</span></strong></div>
+            <a class="btn btn-xs btn-warning" ui-sref="atendimento_admin_flagcliente_new({})" href="#/configuracoes/flagcliente/new">
+                <i class="el el-plus"></i> Criar
+            </a>
+        </div>
+    </div>
+{% endblock %}
+{% block index_panel_header -%}
+    <div class="headline-sub clearfix hidden-lg hidden-md">
+        <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" href="#/configuracoes" title="Voltar às configurações" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a>Avisos de Cliente</h3>
+    </div>
+{% endblock %}
+{% block index_builltin_form -%}
+    <div class='col-md-{{12 - index_layout_size}} article-area height-full-calc row' ui-view state-loader>
+        <div class="bt-new-article new-article text-center height-full">
+            <a  class="btn btn-sm btn-fixed btn-warning"
+                ui-sref="atendimento_admin_flagcliente_new({})">
+                    <i class="el el-plus"></i> <span class="hidden-xs hidden-sm">Criar</span>
+            </a>
+        </div>
+    </div>
+{% endblock index_builltin_form -%}

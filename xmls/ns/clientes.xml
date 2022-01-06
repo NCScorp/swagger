@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="clientes" label="clientes" project="ns" >
+    <entity schema="ns" table="vwclientes_atendimento" >
+        <fieldmodel name="cliente" datatype="guid" isid="true" column="id"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome" />
+        <fieldmodel name="nomefantasia" datatype="string" column="nomefantasia" />
+        <fieldmodel name="cpf" datatype="string" column="cpf" />
+        <fieldmodel name="cnpj" datatype="string" column="cnpj" />
+        <fieldmodel name="datacliente" datatype="string" column="datacliente" />
+        <fieldmodel name="bloqueado" datatype="boolean" column="bloqueado" />
+        <fieldmodel name="suporte" datatype="boolean" notMapped="true" />
+        <fieldmodel name="justificativasituacaopagamento" datatype="string" />
+        <fieldmodel name="justificativatipoclientepagamento" datatype="string" />
+        <fieldmodel name="vendedor" datatype="guid" column="vendedor" useCaseLink="atendimento\vendedor" entityJoinType="left" />
+        <fieldmodel name="representante" datatype="guid" column="representante" useCaseLink="atendimento\representantecomercial" entityJoinType="left" />
+        <fieldmodel name="representante_tecnico" datatype="guid" column="representante_tecnico" useCaseLink="atendimento\representantetecnico" entityJoinType="left" />
+        <fieldmodel name="usuarios" datatype="objectlist" column="cliente" useCaseLink="atendimento\cliente\usuarios" />
+        <fieldmodel name="contatos" datatype="objectlist" column="cliente" useCaseLink="ns\contatos" />
+        <fieldmodel name="telefones" datatype="objectlist" column="cliente" useCaseLink="ns\telefones" />
+        <fieldmodel name="ativos" datatype="objectlist" column="cliente" useCaseLink="servicos\ativos" />
+        <!--<fieldmodel name="enderecos" datatype="objectlist" column="cliente" useCaseLink="ns\enderecos" />-->
+        <!--<fieldmodel name="contratos" datatype="objectlist" column="cliente" useCaseLink="financas\contrato" />-->
+        <fieldmodel name="classificadores" datatype="objectlist" column="cliente" useCaseLink="ns\clientes\classificadores" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="observacao" datatype="string" column="observacao"/>
+        <fieldmodel name="anotacao" datatype="string" column="anotacao"/>
+        <fieldmodel name="proximoscontatos" datatype="objectlist" column="cliente" useCaseLink="crm\proximoscontatos" />
+        <fieldmodel name="email" datatype="string" column="email" />
+        <fieldmodel name="emailcobranca" datatype="string" column="emailcobranca" />
+        <fieldmodel name="status_suporte" datatype="string" column="status_suporte" />
+        <fieldmodel name="restricaocobranca1" datatype="guid" column="restricaocobranca1" entityJoinType="left" useCaseLink="financas\restricoescobrancas" />
+        <fieldmodel name="restricaocobranca2" datatype="guid" column="restricaocobranca2" entityJoinType="left" useCaseLink="financas\restricoescobrancas" />
+        <!--<fieldmodel name="restricaocobranca3" datatype="guid" column="restricaocobranca3" entityJoinType="left" useCaseLink="financas\restricoescobrancas" />-->
+        <fieldmodel name="datasituacaopagamento" datatype="date" column="datasituacaopagamento" />
+        <fieldmodel name="datatipoclientepagamento" datatype="date" column="datatipoclientepagamento" />
+        <fieldmodel name="situacaopagamento" datatype="integer" column="situacaopagamento" />
+        <fieldmodel name="tipoclientepagamento" datatype="integer" column="tipoclientepagamento" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">bloqueado</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Clientes">
+        <fieldsbrowser>
+            <fieldbrowser alias="Cliente" entitylink="cliente" isid="true" />
+            <fieldbrowser alias="Nome" entitylink="nome" width="20" unique="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Nome Fantasia" entitylink="nomefantasia" width="20" cansearch="true" visible="false" avaliable="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="80" indefaultorder="true" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="CPF/CNPJ" entitylink="cnpj" width="80" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="cpf" entitylink="cpf" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="vendedor" entitylink="vendedor" cansearch="false" visible="false" avaliable="true" />
+            <fieldbrowser alias="status_suporte" entitylink="status_suporte" cansearch="true" visible="false" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Cliente">
+        <layout>
+            <headerform>
+                <row>
+                    <cell colspan="6">
+                        <groupbox>
+                            <row>
+                                <cell name="codigo" controltype="textedit" entitylink="codigo" label="Código" />
+                            </row>
+                            <row>
+                                <cell name="nome" controltype="textedit" entitylink="nome" label="Nome" />
+                            </row>
+                            <row>
+                                <cell name="nomefantasia" controltype="textedit" entitylink="nomefantasia" label="Nome Fantasia" />
+                            </row>
+                            <row>
+                                <cell name="cnpj" controltype="textedit" entitylink="cnpj" label="CPF/CNPJ" />
+                            </row>
+                            <row>
+                                <cell name="datacliente" controltype="textedit" entitylink="datacliente" label="Cliente Desde" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                    <cell colspan="6">
+                        <groupbox>
+                            <row>
+                                <cell name="vendedor" controltype="textedit" entitylink="vendedor" label="Vendedor" />
+                            </row>
+                            <row>
+                                <cell name="representante" controltype="textedit" entitylink="representante" label="Representante" />
+                            </row>
+                            <row>
+                                <cell name="representante_tecnico" controltype="textedit" entitylink="representante_tecnico" label="Representante Técnico" />
+                            </row>
+                            <row>
+                                <cell name="bloqueado" controltype="checkbox" entitylink="bloqueado" label="Bloqueado" />
+                            </row>
+                            <row>
+                                <cell name="suporte" controltype="textedit" entitylink="suporte" label="Suporte" />
+                            </row>
+                            <row>
+                                <cell name="restricoes" controltype="textedit" entitylink="restricaocobranca1" label="Restrições" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                    <cell colspan="12">
+                        <groupbox>
+                            <row>
+                                <cell name="observacao" controltype="textedit" entitylink="observacao" label="Observação" />
+                            </row>
+                        </groupbox>
+                    </cell>
+                </row>
+            </headerform>
+            <bodyform>
+                <tabs>
+                    <tab caption="Chamados" >
+                    </tab>
+                    <tab caption="Endereços">
+
+                    </tab>
+                    <tab caption="Contatos">
+
+                    </tab>
+                    <tab caption="Ativos">
+
+                    </tab>
+                    
+                    <tab caption="Usuários">
+
+                    </tab>
+                    <tab caption="Classificadores">
+                    </tab>
+                    <tab caption="Anotações">
+                    </tab>
+
+                    <tab caption="Agenda de Contatos">
+                    </tab>
+                </tabs>
+            </bodyform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>UsuariosGrupos</name>
+            <api>
+                <name>AtendimentoAlterarCliente</name>
+                <fromto valueapi="cliente" valueentity="cliente" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

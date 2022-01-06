@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="tipoManutencao" label="tipoManutencao" project="Servicos">
+    <entity table="tiposmanutencoes" schema="servicos">
+        <fieldmodel name="tipomanutencao" datatype="guid" column="tipomanutencao" isid="true" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="ativo" datatype="boolean" column="ativo" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Tipos de Manutenção" >
+        <fieldsbrowser>
+            <fieldbrowser alias="tipomanutencao" entitylink="tipomanutencao" isid="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" cansearch="true" />
+            <fieldbrowser alias="Ativo" entitylink="ativo" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="view" label="Tipo de Manutenção">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="descricao" entitylink="descricao" controltype="textedit" colspan="10" label="Descrição" />
+                    <cell name="ativo" entitylink="ativo" controltype="checkbox" colspan="2" label="Ativo" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>tipoManutencaoNovo</name>
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>tipoManutencaoAlterar</name>
+                <fromto valueapi="tipomanutencao" valueentity="tipomanutencao" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="ativo" valueentity="ativo" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>tipoManutencaoExcluir</name>
+                <fromto valueapi="tipomanutencao" valueentity="tipomanutencao" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

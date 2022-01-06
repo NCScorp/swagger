@@ -1,0 +1,49 @@
+/* Date Picker */
+
+.uib-datepicker-popup .btn-default {
+  border: none;
+}
+
+.uib-datepicker-popup.dropdown-menu {
+  padding: 10px;
+  width:auto;
+}
+
+.uib-datepicker-popup .uib-button-bar {
+  padding: 10px 0;
+}
+
+.forms .uib-datepicker-popup li button {
+  margin-right: 0;
+}
+
+.uib-datepicker-popup .btn-info:hover,
+.uib-datepicker-popup .btn-info:focus,
+.uib-datepicker-popup .btn-info:active,
+.uib-datepicker-popup .btn-info.active,
+.uib-datepicker-popup .open>.dropdown-toggle.btn-info {
+  background-color: #3071a9;
+  border-color: #285e8e;
+}
+
+.uib-datepicker-popup .btn-info {
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+
+.uib-datepicker-popup .uib-close {
+  visibility: hidden;
+}
+
+.uib-datepicker-popup .text-info {
+  font-weight: bold;
+}
+
+.btn-info.active .text-info {
+  color: #FFF;
+}
+
+.uib-datepicker:focus, .uib-daypicker:focus {
+  outline: none;
+  border: none;
+}

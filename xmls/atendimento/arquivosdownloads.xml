@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="arquivosdownloads" label="arquivosdownloads" project="atendimento" >
+    <entity schema="atendimento" table="arquivosdownloadshistoricos">
+        <fieldmodel name="arquivodownload" datatype="guid" isid="true" column="arquivodownload"/>
+        <fieldmodel name="arquivo" datatype="guid" column="arquivo"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="datahora" datatype="datetime" column="datahora"/>
+        <fieldmodel name="usuario" datatype="string" column="usuario"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Arquivos Downloads"> 
+        <fieldsbrowser>
+            <fieldbrowser alias="Arquivo Download" entitylink="arquivodownload" isid="true" visible="false" />
+            <fieldbrowser alias="Arquivo" entitylink="arquivo" visible="true" />
+            <fieldbrowser alias="Usuário" entitylink="usuario" visible="true" />
+            <fieldbrowser alias="Data Hora" entitylink="datahora" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Arquivo Download">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="arquivo" controltype="textedit" entitylink="arquivo" colspan="4" placeholder="Arquivo" label="Arquivo" />
+                    <cell name="usuario" controltype="textedit" entitylink="usuario" colspan="4" placeholder="Usuário" label="Usuário" />
+                    <cell name="datahora" controltype="dateedit" entitylink="datahora" colspan="4" placeholder="Data Hora" label="Data Hora" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+</nsjusecase>

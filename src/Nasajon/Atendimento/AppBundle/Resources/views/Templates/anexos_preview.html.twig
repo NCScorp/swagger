@@ -1,0 +1,25 @@
+<div class="anexos-preview modal-body" ng-swipe-left="Lightbox.nextImage()"
+     ng-swipe-right="Lightbox.prevImage()">
+
+  <!-- button -->
+  <div class="row">
+    <div class="pull-right" style="margin-right: 15px;">
+        <button ng-click="Lightbox.modalInstance.close()" class="btn btn-xs btn-default"><i class="fa fa-close"></i></button>
+      </div>
+    <div style="text-align: center;">
+      <div class="btn-group ng-scope">
+        <p>
+          <a class="btn btn-xs btn-default ng-click-active" ng-if="Lightbox.images.length > 1" ng-click="Lightbox.prevImage()">‹ Anterior</a> 
+          <a ng-href="{{'{{Lightbox.imageUrl}}'}}" target="_blank" class="btn btn-xs btn-default" 
+            title="Download" href="{{'{{Lightbox.imageUrl}}'}}">Download</a> 
+          <a class="btn btn-xs btn-default" ng-if="Lightbox.images.length > 1" ng-click="Lightbox.nextImage()">Próxima ›</a>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- image -->
+  <div class="lightbox-image-container">
+    <img imageonload lightbox-src="{{'{{Lightbox.imageUrl}}'}}">
+  </div>
+</div>

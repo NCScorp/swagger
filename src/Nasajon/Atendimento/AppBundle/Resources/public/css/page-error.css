@@ -1,0 +1,14 @@
+/* PAGE ERROR */
+.page-error {
+    padding: 30px 50px 50px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 860px;
+    margin: 50px auto;
+}
+
+.page-error p {font-size: 14px;}
+.page-error p.info-post {font-size: 11px;}
+
+

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="ativos" label="ativos" project="servicos" >
+    <entity schema="servicos" table="vwativos_atendimento">
+        <fieldmodel name="servico_id" datatype="guid" isid="true" column="servico_id"/>
+        <fieldmodel name="servico_codigo" datatype="string" column="servico_codigo"/>
+        <fieldmodel name="servico_descricao" datatype="string" column="servico_nome" />
+        <fieldmodel name="oferta_id" datatype="guid" column="oferta_id"/>
+        <fieldmodel name="oferta_codigo" datatype="string" column="oferta_codigo"/>
+        <fieldmodel name="oferta_descricao" datatype="string" column="oferta_descricao" />
+        <fieldmodel name="oferta_ativa" datatype="boolean" column="oferta_ativa" />
+        <fieldmodel name="oferta_pacote" datatype="boolean" column="oferta_pacote" />
+        <fieldmodel name="oferta_servicocatalogo" datatype="guid" column="oferta_servicocatalogo"/>
+        <fieldmodel name="oferta_pacote_pai" datatype="guid" column="oferta_pacote_pai" />
+        <fieldmodel name="componente_id" datatype="guid" column="componente_id"/>
+        <fieldmodel name="componente_codigo" datatype="string" column="componente_codigo"/>
+        <fieldmodel name="componente_descricao" datatype="string" column="componente_descricao" />
+        <fieldmodel name="componente_ativa" datatype="boolean" column="componente_ativa" />
+        <fieldmodel name="componente_quantidade" datatype="boolean" column="componente_quantidade" />
+        <fieldmodel name="cliente" datatype="guid" column="cliente" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="contrato_id" datatype="guid" column="contrato_id" />
+        <fieldmodel name="contrato_codigo" datatype="string" column="contrato_codigo" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cliente</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="servico_id" isid="true" />
+            <fieldbrowser entitylink="servico_codigo" width="20" indefaultorder="true" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="servico_descricao" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="oferta_pacote_pai" width="80" indefaultorder="true" direction="DESC" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="oferta_id" width="80" indefaultorder="true" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="oferta_codigo" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="oferta_descricao" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="oferta_ativa" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="oferta_pacote" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="oferta_servicocatalogo" width="80" indefaultorder="true" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="componente_id" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="componente_codigo" indefaultorder="true" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="componente_descricao" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="componente_ativa" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="componente_quantidade" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="contrato_id" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser entitylink="contrato_codigo" width="80" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>
+

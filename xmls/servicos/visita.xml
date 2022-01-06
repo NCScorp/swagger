@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="visita" label="visita" project="Servicos" orphan="false" >
+    <config>
+        <autosave>true</autosave>
+    </config>
+    <entity schema="servicos" table="ordensservicosvisitas">
+        <fieldmodel name="ordemservicovisita" datatype="guid" isid="true" column="ordemservicovisita" />
+        <fieldmodel name="ordemservico" datatype="guid" column="ordemservico" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="datavisita" datatype="date" column="datavisita" />
+        <fieldmodel name="horasestimadas" datatype="time" column="horasestimadas" />
+        <fieldmodel name="horasexecutadas" datatype="time" column="horasexecutadas" />
+        <fieldmodel name="agendado" datatype="integer" column="agendado" />
+        <fieldmodel name="executado" datatype="integer" column="executado" />
+        <fieldmodel name="enderecoparticipante" datatype="guid" column="enderecoparticipante" />
+        <fieldmodel name="atendimento_consecutivo" datatype="boolean" column="atendimento_consecutivo" />
+        <fieldmodel name="deslocamento" datatype="boolean" column="deslocamento" />
+        <fieldmodel name="hora_chegada_cliente" datatype="time" column="hora_chegada_cliente" />
+        <fieldmodel name="hora_inicio_manutencao" datatype="time" column="hora_inicio_manutencao" />
+        <fieldmodel name="hora_termino_manutencao" datatype="time" column="hora_termino_manutencao" />
+        <fieldmodel name="parada_para_almoco" datatype="boolean" column="parada_para_almoco" />
+        <fieldmodel name="hora_inicio_almoco" datatype="time" column="hora_inicio_almoco" />
+        <fieldmodel name="hora_termino_almoco" datatype="time" column="hora_termino_almoco" />
+        <fieldmodel name="origem_saida" datatype="string" column="origem_saida" />
+        <fieldmodel name="hora_saida" datatype="time" column="hora_saida" />
+        <fieldmodel name="km_saida" datatype="float" column="km_saida" />
+        <fieldmodel name="km_chegada_cliente" datatype="float" column="km_chegada_cliente" />
+        <fieldmodel name="deslocamento_extra" datatype="boolean" column="deslocamento_extra" />
+        <fieldmodel name="motivo_deslocamento" datatype="string" column="motivo_deslocamento" />
+        <fieldmodel name="hora_saida_deslocamento" datatype="time" column="hora_saida_deslocamento" />
+        <fieldmodel name="hora_chegada_deslocamento" datatype="time" column="hora_chegada_deslocamento" />
+        <fieldmodel name="km_saida_deslocamento" datatype="float" column="km_saida_deslocamento" />
+        <fieldmodel name="km_chegada_deslocamento" datatype="float" column="km_chegada_deslocamento" />
+        <fieldmodel name="hora_saida_cliente" datatype="time" column="hora_saida_cliente" />
+        <fieldmodel name="veiculo_id" datatype="guid" column="veiculo_id" useCaseLink="estoque\veiculo" entityJoinType="left" />
+        <fieldmodel name="hora_estimada_inicio" datatype="time" column="hora_estimada_inicio" />
+        <fieldmodel name="hora_estimada_fim" datatype="time" column="hora_estimada_fim" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="tecnico" datatype="objectlist" column="ordemservicovisita" useCaseLink="servicos\visita\tecnico" entityJoinType="left"  />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">ordemservico</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table" target="builtin" label="Visitas" >
+        <fieldsbrowser>
+            <fieldbrowser alias="ordemservicovisita" entitylink="ordemservicovisita" isid="true" />
+            <fieldbrowser alias="ordemservico" entitylink="ordemservico" />
+            <fieldbrowser alias="Data Visita" entitylink="datavisita" visible="true"  />
+            <fieldbrowser alias="De" entitylink="hora_estimada_inicio" visible="true"  />
+            <fieldbrowser alias="às" entitylink="hora_estimada_fim" visible="true"  />
+            <fieldbrowser alias="Consecutivo" entitylink="atendimento_consecutivo" visible="true" />
+            <fieldbrowser alias="Local Saída" entitylink="origem_saida" visible="true" />
+            <fieldbrowser alias="Hora Saída" entitylink="hora_saida" visible="true" />
+            <fieldbrowser alias="KM Saída" entitylink="km_saida" visible="true" />
+            <fieldbrowser alias="Hora Saída Deslocamento Extra" entitylink="hora_saida_deslocamento" visible="true" />
+            <fieldbrowser alias="KM Saída Deslocamento Extra" entitylink="km_saida_deslocamento" visible="true" />
+            <fieldbrowser alias="Hora Chegada Deslocamento Extra" entitylink="hora_chegada_deslocamento" visible="true" />
+            <fieldbrowser alias="KM Chegada Deslocamento Extra" entitylink="km_chegada_deslocamento" visible="true" />
+            <fieldbrowser alias="Motivo Deslocamento" entitylink="motivo_deslocamento" visible="true" />
+            <fieldbrowser alias="Hora Chegada Cliente" entitylink="hora_chegada_cliente" visible="true" />
+            <fieldbrowser alias="KM Chegada Cliente" entitylink="km_chegada_cliente" visible="true" />
+            <fieldbrowser alias="Hora Saida Cliente" entitylink="hora_saida_cliente" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Visita">
+        <layout>    
+            <headerform>
+                <row>
+                    <cell name="ordemservico" controltype="textedit" entitylink="ordemservico" label="ordemservice" colspan="3" />
+                    <cell name="datavisita" controltype="dateedit" entitylink="datavisita" label="Data visita" colspan="3" />
+                    <cell name="agendado" controltype="spinedit" entitylink="agendado" label="Agendado" colspan="3" />
+                    <cell name="hora_estimada_inicio" controltype="textedit" entitylink="hora_estimada_inicio" label="De" colspan="3" />
+                    <cell name="hora_estimada_fim" controltype="textedit" entitylink="hora_estimada_fim" label="às" colspan="3" />
+                    <cell name="atendimento_consecutivo" controltype="checkbox" entitylink="atendimento_consecutivo" label="Consecutiva" colspan="3" />
+                    <cell name="origem_saida" controltype="textedit" entitylink="origem_saida" label="Local Saída" colspan="10" />
+                    <cell name="hora_saida" controltype="textedit" entitylink="hora_saida" label="Hora Saída" colspan="2" />
+                    <cell name="km_saida" controltype="textedit" entitylink="km_saida" label="KM Saída" colspan="2" />
+                    <cell name="hora_saida_deslocamento" controltype="textedit" entitylink="hora_saida_deslocamento" label="Hora Saída Deslocamento Extra" colspan="3" />
+                    <cell name="km_saida_deslocamento" controltype="textedit" entitylink="km_saida_deslocamento" label="KM Saída Deslocamento Extra" colspan="3" />
+                    <cell name="hora_chegada_deslocamento" controltype="textedit" entitylink="hora_chegada_deslocamento" label="KM Chegada Deslocamento Extra" colspan="3" />
+                    <cell name="km_chegada_deslocamento" controltype="textedit" entitylink="km_chegada_deslocamento" label="KM Chegada Deslocamento Extra" colspan="3" />
+                    <cell name="motivo_deslocamento" controltype="textedit" entitylink="motivo_deslocamento" label="Motivo Deslocamento" colspan="3" />
+                    <cell name="hora_chegada_cliente" controltype="textedit" entitylink="hora_chegada_cliente" label="Hora Chegada Cliente" colspan="3" />
+                    <cell name="km_chegada_cliente" controltype="textedit" entitylink="km_chegada_cliente" label="KM Chegada Cliente" colspan="3" />
+                    <cell name="hora_saida_cliente" controltype="textedit" entitylink="hora_saida_cliente" label="Hora Saida Cliente" colspan="3" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>OrdemServicoVisitaNovo</name>
+                <fromto valueapi="ordemservico" valueentity="ordemservico" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="datavisita" valueentity="datavisita" />
+                <fromto valueapi="agendado" valueentity="agendado" />
+                <fromto valueapi="executado" valueentity="executado" />
+                <fromto valueapi="enderecoparticipante" valueentity="enderecoparticipante" />
+                <fromto valueapi="atendimento_consecutivo" valueentity="atendimento_consecutivo" />
+                <fromto valueapi="deslocamento" valueentity="deslocamento" />
+                <fromto valueapi="hora_chegada_cliente" valueentity="hora_chegada_cliente" />
+                <fromto valueapi="hora_inicio_manutencao" valueentity="hora_inicio_manutencao" />
+                <fromto valueapi="hora_termino_manutencao" valueentity="hora_termino_manutencao" />
+                <fromto valueapi="parada_para_almoco" valueentity="parada_para_almoco" />
+                <fromto valueapi="hora_inicio_almoco" valueentity="hora_inicio_almoco" />
+                <fromto valueapi="hora_termino_almoco" valueentity="hora_termino_almoco" />
+                <fromto valueapi="origem_saida" valueentity="origem_saida" />
+                <fromto valueapi="hora_saida" valueentity="hora_saida" />
+                <fromto valueapi="km_saida" valueentity="km_saida" />
+                <fromto valueapi="km_chegada_cliente" valueentity="km_chegada_cliente" />
+                <fromto valueapi="deslocamento_extra" valueentity="deslocamento_extra" />
+                <fromto valueapi="motivo_deslocamento" valueentity="motivo_deslocamento" />
+                <fromto valueapi="hora_saida_deslocamento" valueentity="hora_saida_deslocamento" />
+                <fromto valueapi="hora_chegada_deslocamento" valueentity="hora_chegada_deslocamento" />
+                <fromto valueapi="km_saida_deslocamento" valueentity="km_saida_deslocamento" />
+                <fromto valueapi="km_chegada_deslocamento" valueentity="km_chegada_deslocamento" />
+                <fromto valueapi="hora_saida_cliente" valueentity="hora_saida_cliente" />
+                <fromto valueapi="veiculo_id" valueentity="veiculo_id" />
+                <fromto valueapi="horasexecutadas" valueentity="horasexecutadas" />
+                <fromto valueapi="horasestimadas" valueentity="horasestimadas" />
+                <fromto valueapi="hora_estimada_inicio" valueentity="hora_estimada_inicio" />
+                <fromto valueapi="hora_estimada_fim" valueentity="hora_estimada_fim" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>OrdemServicoVisitaAlterar</name>
+                <fromto valueapi="ordemservicovisita" valueentity="ordemservicovisita" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="datavisita" valueentity="datavisita" />
+                <fromto valueapi="agendado" valueentity="agendado" />
+                <fromto valueapi="executado" valueentity="executado" />
+                <fromto valueapi="enderecoparticipante" valueentity="enderecoparticipante" />
+                <fromto valueapi="atendimento_consecutivo" valueentity="atendimento_consecutivo" />
+                <fromto valueapi="deslocamento" valueentity="deslocamento" />
+                <fromto valueapi="hora_chegada_cliente" valueentity="hora_chegada_cliente" />
+                <fromto valueapi="hora_inicio_manutencao" valueentity="hora_inicio_manutencao" />
+                <fromto valueapi="hora_termino_manutencao" valueentity="hora_termino_manutencao" />
+                <fromto valueapi="parada_para_almoco" valueentity="parada_para_almoco" />
+                <fromto valueapi="hora_inicio_almoco" valueentity="hora_inicio_almoco" />
+                <fromto valueapi="hora_termino_almoco" valueentity="hora_termino_almoco" />
+                <fromto valueapi="origem_saida" valueentity="origem_saida" />
+                <fromto valueapi="hora_saida" valueentity="hora_saida" />
+                <fromto valueapi="km_saida" valueentity="km_saida" />
+                <fromto valueapi="km_chegada_cliente" valueentity="km_chegada_cliente" />
+                <fromto valueapi="deslocamento_extra" valueentity="deslocamento_extra" />
+                <fromto valueapi="motivo_deslocamento" valueentity="motivo_deslocamento" />
+                <fromto valueapi="hora_saida_deslocamento" valueentity="hora_saida_deslocamento" />
+                <fromto valueapi="hora_chegada_deslocamento" valueentity="hora_chegada_deslocamento" />
+                <fromto valueapi="km_saida_deslocamento" valueentity="km_saida_deslocamento" />
+                <fromto valueapi="km_chegada_deslocamento" valueentity="km_chegada_deslocamento" />
+                <fromto valueapi="hora_saida_cliente" valueentity="hora_saida_cliente" />
+                <fromto valueapi="veiculo_id" valueentity="veiculo_id" />
+                <fromto valueapi="horasestimadas" valueentity="horasestimadas" />
+                <fromto valueapi="horasexecutadas" valueentity="horasexecutadas" />
+                <fromto valueapi="hora_estimada_inicio" valueentity="hora_estimada_inicio" />
+                <fromto valueapi="hora_estimada_fim" valueentity="hora_estimada_fim" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>OrdemServicoVisitaExcluir</name>
+                <fromto valueapi="ordemservicovisita" valueentity="ordemservicovisita" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>OrdemServicoVisitaCheckin</name>
+            <api>
+                <name>OrdemServicoVisitaCheckin</name>
+                <fromto valueapi="ordemservicovisita" valueentity="ordemservicovisita" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+            </api>
+        </action>
+        <action>
+            <name>OrdemServicoVisitaCheckout</name>
+            <api>
+                <name>OrdemServicoVisitaCheckout</name>
+                <fromto valueapi="ordemservicovisita" valueentity="ordemservicovisita" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>        
+
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="checklist" label="checklist" project="servicos\ServicoTecnico" orphan="false">
+    <entity schema="servicos" table="servicostecnicoschecklist" >
+        <fieldmodel name="servicotecnicochecklist" datatype="guid" column="servicotecnicochecklist" isid="true" />
+        <fieldmodel name="servicotecnico" datatype="guid" column="servicotecnico" />
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">servicotecnico</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Checklists" >
+        <fieldsbrowser>
+            <fieldbrowser alias="servicotecnicochecklist" entitylink="servicotecnicochecklist"  isid="true"  /> 
+            <fieldbrowser alias="Descrição" entitylink="descricao"  visible="true"  /> 
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit mode="edit" label="Checklist">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="descricao" entitylink="descricao" controltype="textedit" />
+                </row>
+            </headerform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>servicostecnicoschecklistNovo</name>
+                <fromto valueapi="servicotecnico" valueentity="servicotecnico" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="tenant" valueentity="tenant" />    
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>servicostecnicoschecklistAlterar</name>
+                <fromto valueapi="servicotecnicochecklist" valueentity="servicotecnicochecklist" />
+                <fromto valueapi="servicotecnico" valueentity="servicotecnico" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="tenant" valueentity="tenant" />    
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>servicostecnicoschecklistExcluir</name>
+                <fromto valueapi="servicotecnicochecklist" valueentity="servicotecnicochecklist" />
+                <fromto valueapi="tenant" valueentity="tenant" />    
+            </api>
+        </action>
+    </actions>  
+</nsjusecase>

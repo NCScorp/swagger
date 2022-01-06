@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="formaspagamentos" label="formaspagamentos" project="ns" >
+    <entity schema="ns" table="formaspagamentos">
+        <fieldmodel column="formapagamento" datatype="guid" name="formapagamento" isid="true" />
+        <fieldmodel column="codigo" datatype="string" name="codigo" />
+        <fieldmodel column="descricao" datatype="string" name="descricao" />
+        <fieldmodel column="tipo" datatype="integer" name="tipo" />
+        <fieldmodel column="padrao" datatype="boolean" name="padrao" />
+        <fieldmodel column="lastupdate" datatype="datetime" name="lastupdate" optimistLock="true" />
+    </entity>
+    <viewbrowser label="Formas de Pagamentos">
+        <fieldsbrowser>
+            <fieldbrowser alias="formapagamento" alloworder="false" avaliable="false" cansearch="false" isid="true" entitylink="formapagamento" />
+            <fieldbrowser alias="Código" alloworder="true" avaliable="true" cansearch="true" indefaultorder="true" direction="ASC" entitylink="codigo" />
+            <fieldbrowser alias="Descrição" alloworder="true" avaliable="true" cansearch="true" entitylink="descricao" />
+            <fieldbrowser alias="Tipo" alloworder="true" avaliable="true" cansearch="true" entitylink="tipo" />
+            <fieldbrowser alias="Padrão" alloworder="true" avaliable="true" cansearch="true" entitylink="padrao" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

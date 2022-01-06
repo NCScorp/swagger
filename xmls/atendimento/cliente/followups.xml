@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schemas/nsjusecase.xsd" name="followups" label="followups" project="atendimento/cliente" >
+    <entity schema="ns" table="vwfollowupsvisualizacaoclientes">
+        <fieldmodel name="followup" datatype="guid" isid="true" column="followup" />
+        <fieldmodel name="atendimento" datatype="guid" column="atendimento" useCaseLink="atendimento\cliente\solicitacoes" entityJoinType="left"  />
+        <fieldmodel name="anexos" datatype="objectlist" column="atendimento" useCaseLink="ns\documentosged" entityJoinType="left" notMapped="true" />
+        <fieldmodel name="historico" datatype="string" column="historico" />
+        <fieldmodel name="resumo" datatype="string" column="resumo" />
+        <fieldmodel name="cliente" datatype="guid" column="participante" useCaseLink="ns\clientes" entityJoinType="left" />
+        <fieldmodel name="criador" datatype="boolean" column="criadopelocliente" />
+        <fieldmodel name="created_at" datatype="date" column="data" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="canal" datatype="string" column="canal"/>
+        <fieldmodel name="canal_email" datatype="string" column="canal_email"/>
+        <fieldmodel name="conteudo_textual" datatype="string" column="conteudo_textual" notMapped="true"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">atendimento</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list">
+        <fieldsbrowser>
+            <fieldbrowser alias="followup" entitylink="followup" isid="true" />
+            <fieldbrowser alias="data" entitylink="created_at" width="20" unique="true" indefaultorder="true" direction="asc" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="responsavel" entitylink="created_by" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="historico" entitylink="historico" width="80" cansearch="false" visible="true" avaliable="true" />
+            <fieldbrowser alias="criador" entitylink="criador" width="80" cansearch="false" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit>
+        <layout>
+            <bodyform>
+                <tabs>
+                    <tab caption="Resposta">
+                        <row>
+                            <cell colspan="12" name="historico" placeholder="Digite sua resposta..." controltype="wysiwyg" entitylink="historico" />
+                        </row>
+                    </tab>
+                </tabs>
+            </bodyform>
+        </layout>
+    </viewedit>
+    <actions>
+        <action>
+            <name>insert</name>
+            <api>
+                <name>FollowUpClienteNovo_V2</name>
+                <fromto valueapi="atendimento" valueentity="atendimento" />
+                <fromto valueapi="historico" valueentity="historico" />
+                <fromto valueapi="resumo" valueentity="resumo" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="participante" valueentity="cliente" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="canal" valueentity="canal" />
+                <fromto valueapi="canal_email" valueentity="canal_email" />
+                <fromto valueapi="conteudo_textual" valueentity="conteudo_textual" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

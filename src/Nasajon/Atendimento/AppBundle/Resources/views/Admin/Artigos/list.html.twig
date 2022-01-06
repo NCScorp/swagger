@@ -1,0 +1,516 @@
+<div class="panel-heading">
+    <div class="row">
+        <h4 class="col-xs-8">
+            <div class="row">
+                <ol class="col-md-10 breadcrumb no-background" >
+                    <li ng-if="tndmnt_dmn_rtgs_lst_cntrllr.getCategoriaPai(tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai,'titulo')">
+                        <a ng-bind="tndmnt_dmn_rtgs_lst_cntrllr.getCategoriaPai(tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai,'titulo')"
+                            ui-sref-opts="{inherit:false,reload:true}"
+                            ui-sref="atendimento_admin_artigos_list({categoria:tndmnt_dmn_rtgs_lst_cntrllr.getCategoriaPai(
+                                tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai
+                            )})"
+                        ></a>
+                    </li>
+                    <li class="active" ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai.titulo">
+                        <a ui-sref="atendimento_admin_artigos_list({categoria: tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai.categoria})"
+                            ui-sref-opts="{inherit:false,reload:true}"
+                            ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity.tipo == 2">
+                            {{'{{tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai.titulo}}'}}
+                        </a>
+                        <a ui-sref="atendimento_admin_artigos_list({subcategoria: tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai.categoria})"
+                            ui-sref-opts="{inherit:false,reload:true}"
+                            ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity.tipo != 2">
+                            {{'{{tndmnt_dmn_rtgs_lst_cntrllr.entity.categoriapai.titulo}}'}}
+                        </a>
+                    </li>
+                    <li ng-bind="tndmnt_dmn_rtgs_lst_cntrllr.entity.titulo" class="active"></li>
+                </ol>
+
+                <button id="btnCriarArtigo" type="button"
+                ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity.tipo === 3"
+                class="btn btn-xs btn-warning"
+                ui-sref="atendimento_admin_artigos_new({secao: tndmnt_dmn_rtgs_lst_cntrllr.entity.categoria})"
+                ui-sref-opts="{inherit:false}">
+                    <i class="el el-plus"></i> 
+                    {{'criarartigo'|trans}}
+                </button>
+
+            </div>
+        </h4>
+        <div class="col-xs-4">
+            <div class="panel-heading clearfix">
+                <div>
+                    <div>
+                        <input  id="txtBuscaArtigos"
+                                type="text"
+                                name="key"
+                                class="form-control campo-busca"
+                                ng-model="tndmnt_dmn_rtgs_lst_cntrllr.filter.key"
+                                ng-change="tndmnt_dmn_rtgs_lst_cntrllr.buscar()"
+                                ng-model-options='{ debounce: 500 }'
+                                placeholder="Buscar..." />
+                    </div><!-- /input-group -->
+                </div>
+                <div class="row col-md-12" ng-if="tndmnt_dmn_rtgs_lst_cntrllr.tags">
+                    Filtros ativos:
+                    <span class="label label-primary label-filter"> Tags
+                        <span class="content-filter label">
+                            <span ng-bind="tndmnt_dmn_rtgs_lst_cntrllr.tags" class="content" title=""></span>
+                            <a href ui-sref="atendimento_admin_artigos({tags: null})"
+                                title="Remover filtro" class="remove-filter text-white">
+                                <strong class="text-white">x</strong>
+                            </a>  
+                        </span>
+                    </span>
+                    <a href ng-click="tndmnt_dmn_rtgs_lst_cntrllr.limparTags()"
+                        style="padding-left: 5px">Limpar
+                    </a>
+                </div>
+            </div><!--/panel-head-->
+        </div>
+    </div>
+
+    <div class="row" ng-show="(tndmnt_dmn_rtgs_lst_cntrllr.artigos || tndmnt_dmn_rtgs_lst_cntrllr.atendimentoAdminArtigos.busy)
+                        && (tndmnt_dmn_rtgs_lst_cntrllr.tags || tndmnt_dmn_rtgs_lst_cntrllr.filter.key)">
+
+        {# Tabela dos resultados da pesquisa de artigos #}
+        <div class="panel-rules" ngsf-fullscreen>
+            <div class="panel panel-default">
+                <div class="panel-heading">Artigos
+                    <div class="btn-group pull-right columnbtn" uib-dropdown auto-close="outsideClick">
+                        <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                        <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="titulo">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo" id="titulo" checked="true">
+                                        Título
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="publicado">
+                                    <input class="form-check-input" type="checkbox" value="true" 
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado" id="publicado" checked="true">
+                                    Publicado
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="created_at">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.created_at" id="created_at" checked="true">
+                                    Data criação
+                                </label>
+                            </li>
+
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="created_at">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.created_at" id="created_at" checked="true">
+                                    Data criação
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="gostaram">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.gostaram" id="gostaram" checked="true">
+                                    Gostaram
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="naogostaram">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.naogostaram" id="naogostaram" checked="true">
+                                    Não gostaram
+                                </label>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem"><a href="#" ng-click="tndmnt_dmn_rtgs_lst_cntrllr.colunas.mostrarTodasColunas()">Mostrar todos</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div ng-class="{'onloading': tndmnt_dmn_rtgs_lst_cntrllr.atendimentoAdminArtigos.busy}"></div>
+                <div class="height-full" ng-show=" !tndmnt_dmn_rtgs_lst_cntrllr.atendimentoAdminArtigos.busy
+                                                && !tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                            <thead>
+                                <tr>
+                                    <th ts-criteria="titulo|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">Título</th>
+                                    <th ts-criteria="status|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">Publicado</th>
+                                    <th ts-criteria="created_at|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.created_at">Data criação</th>
+                                    <th ts-criteria="gostaram|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.gostaram">Gostaram</th>
+                                    <th ts-criteria="naogostaram|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.naogostaram">Não gostaram</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr ng-repeat="artigo in tndmnt_dmn_rtgs_lst_cntrllr.artigos" ts-repeat>
+                                    
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">
+                                        <a ng-bind="artigo.titulo"
+                                        ui-sref="atendimento_admin_artigos_show({artigo: artigo.artigo})"
+                                        ui-sref-opts="{inherit:false}">
+                                        </a>
+                                    </td>
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">
+                                        <div ng-if="artigo.status==1">Sim</div>
+                                        <div ng-if="artigo.status==0">Não</div>
+                                    </td>
+
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.created_at">
+                                        {{'{{artigo.created_at | asDate | date:"dd/MM/yyyy"}}'}}
+                                    </td>
+                                    <td ng-bind="artigo.gostaram"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.gostaram">
+                                    </td>
+                                    <td ng-bind="artigo.naogostaram"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.naogostaram">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# Tabela de categorias #}
+    <div class="panel-rules" ngsf-fullscreen ng-if="!tndmnt_dmn_rtgs_lst_cntrllr.entity 
+                                                && !tndmnt_dmn_rtgs_lst_cntrllr.filter.key
+                                                && !tndmnt_dmn_rtgs_lst_cntrllr.tags">
+        <div class="panel panel-default">
+            <div class="panel-heading">Categorias
+                <div class="btn-group pull-right columnbtn" uib-dropdown auto-close="outsideClick">
+                    <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                    <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                        
+                        <li class="checkbox padding-content" role="menuitem">
+                            <label for="titulo">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                    ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo" id="titulo" checked="true">
+                                    Título
+                            </label>
+                        </li>
+                        <li class="checkbox padding-content" role="menuitem">
+                            <label for="publicado">
+                                <input class="form-check-input" type="checkbox" value="true" 
+                                    ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado" id="publicado" checked="true">
+                                Publicado
+                            </label>
+                        </li>
+                        <li class="checkbox padding-content" role="menuitem">
+                            <label for="qtdSubCategorias">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                    ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdSubCategorias" id="qtdSubCategorias" checked="true">
+                                    Qtd. subcategorias
+                            </label>
+                        </li>
+                        <li class="divider"></li>
+                        <li role="menuitem"><a href="#" ng-click="tndmnt_dmn_rtgs_lst_cntrllr.colunas.mostrarTodasColunas()">Mostrar todos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-class="{'onloading': tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy}"></div>
+
+            <div class="height-full" ng-show="!tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy">
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                        <thead>
+                            <tr>
+                                <th ts-criteria="titulo|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">Título</th>
+                                <th ts-criteria="status|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">Publicado</th>
+                                <th ts-criteria="qtdfilhos|parseInt" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdSubCategorias">Qtd. subcategorias</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr ng-repeat="cat in tndmnt_dmn_rtgs_lst_cntrllr.listaCategorias" ts-repeat 
+                                ng-click="tndmnt_dmn_rtgs_lst_cntrllr.selecionaCategoria(cat,$index)">
+                                
+                                <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">
+                                    <a ng-bind="cat.titulo"></a>
+                                </td>
+                                <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">
+                                    <div ng-if="cat.status==1">Sim</div>
+                                    <div ng-if="cat.status==0">Não</div>
+                                </td>
+                                <td ng-bind="cat.qtdfilhos"
+                                    ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdSubCategorias">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity && !tndmnt_dmn_rtgs_lst_cntrllr.filter.key">
+        
+        {# Tabela de subcategorias #}            
+        <div class="panel-rules" ngsf-fullscreen ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity.tipo === 1">
+            <div class="panel panel-default">
+                <div class="panel-heading">Subcategorias
+                    <div class="btn-group pull-right columnbtn" uib-dropdown auto-close="outsideClick">
+                        <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                        <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="abertos">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo" id="abertos" checked="true">
+                                    Título
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="respondidoultimousuario">
+                                    <input class="form-check-input" type="checkbox" value="true" 
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado" id="respondidoultimousuario" checked="true">
+                                    Publicado
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="respondidoultimocliente">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdSecoes" id="respondidoultimocliente" checked="true">
+                                    Qtd. seções
+                                </label>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem"><a href="#" ng-click="tndmnt_dmn_rtgs_lst_cntrllr.colunas.mostrarTodasColunas()">Mostrar todos</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div ng-class="{'onloading': tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy}"></div>
+
+                <div class="height-full" ng-show="!tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                            <thead>
+                                <tr>
+                                    <th ts-criteria="titulo|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">Título</th>
+                                    <th ts-criteria="status|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">Publicado</th>
+                                    <th ts-criteria="qtdfilhos|parseInt" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdSecoes">Qtd. seções</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr ng-repeat="subC in tndmnt_dmn_rtgs_lst_cntrllr.entity.subcategorias" ts-repeat 
+                                    ng-click="tndmnt_dmn_rtgs_lst_cntrllr.selecionaCategoria(subC,$index)">
+                                    
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo"
+                                        ng-click="tndmnt_dmn_rtgs_lst_cntrllr.selecionaCategoria(subC,$index)">
+                                        <a href ng-bind="subC.titulo"></a>
+                                    </td>
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">
+                                        <div ng-if="subC.status==1">Sim</div>
+                                        <div ng-if="subC.status==0">Não</div>
+                                    </td>
+                                    <td ng-bind="subC.qtdfilhos"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdSecoes">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        {# Tabela de seções #}
+        <div class="panel-rules" ngsf-fullscreen ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity.tipo === 2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Seções
+                    <div class="btn-group pull-right columnbtn" uib-dropdown auto-close="outsideClick">
+                        <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                        <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="abertos">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo" id="abertos" checked="true">
+                                        Título
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="publicado">
+                                    <input class="form-check-input" type="checkbox" value="true" 
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado" id="publicado" checked="true">
+                                    Publicado
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="qtdArtigos">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigos"
+                                        id="qtdArtigos" checked="true">
+                                    Qtd. artigos
+                                </label>
+                            </li>
+
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="qtdArtigosPublicados">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigosPublicados"
+                                        id="qtdArtigosPublicados" checked="true">
+                                    Qtd. artigos Publicados
+                                </label>
+                            </li>
+
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="qtdArtigosNaopublicados">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigosNaoPublicados"
+                                        id="qtdArtigosNaoPublicados" checked="true">
+                                    Qtd. Artigos Não Publicados
+                                </label>
+                            </li>
+                            
+                            <li class="divider"></li>
+                            <li role="menuitem"><a href="#" ng-click="tndmnt_dmn_rtgs_lst_cntrllr.colunas.mostrarTodasColunas()">Mostrar todos</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div ng-class="{'onloading': tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy}"></div>
+
+                <div class="height-full" ng-show="!tndmnt_dmn_rtgs_lst_cntrllr.todasCategorias.busy">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                            <thead>
+                                <tr>
+                                    <th ts-criteria="titulo|lowercase"  ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">Título</th>
+                                    <th ts-criteria="status|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">Publicado</th>
+                                    <th ts-criteria="qtdfilhos|parseInt" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigos">Qtd. artigos</th>
+                                    <th ts-criteria="qtdartigospublicados|parseInt" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigosPublicados">Qtd. Publicados</th>
+                                    <th ts-criteria="qtdartigosnaopublicados|parseInt" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigosNaoPublicados">Qtd. Não publicados</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr ng-repeat="secao in tndmnt_dmn_rtgs_lst_cntrllr.entity.secoes" ts-repeat 
+                                    ng-click="tndmnt_dmn_rtgs_lst_cntrllr.selecionaCategoria(secao)">
+                                    
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">
+                                        <a href ng-bind="secao.titulo"></a>
+                                    </td>
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">
+                                        <div ng-if="secao.status==1">Sim</div>
+                                        <div ng-if="secao.status==0">Não</div>
+                                    </td>
+                                    <td ng-bind="secao.qtdfilhos"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdSecoes">
+                                    </td>
+                                    <td ng-bind="secao.qtdartigospublicados"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigosPublicados">
+                                    </td>
+                                    <td ng-bind="secao.qtdartigosnaopublicados"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.qtdArtigosNaoPublicados">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# Tabela de artigos dentro de uma seção #}
+        <div class="panel-rules" ngsf-fullscreen ng-if="tndmnt_dmn_rtgs_lst_cntrllr.entity.tipo === 3">
+            <div class="panel panel-default">
+                <div class="panel-heading">Artigos
+                    <div class="btn-group pull-right columnbtn" uib-dropdown auto-close="outsideClick">
+                        <button id="single-button" type="button" class="btn btn-default btn-xs dropdown-toggle" uib-dropdown-toggle ng-disabled="disabled">
+                        <i class="fa fa-columns" aria-hidden="true"></i> Colunas <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="abertos">
+                                    <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo" id="abertos" checked="true">
+                                        Título
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="respondidoultimousuario">
+                                    <input class="form-check-input" type="checkbox" value="true" 
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado" id="respondidoultimousuario" checked="true">
+                                    Publicado
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="gostaram">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.gostaram" id="gostaram" checked="true">
+                                    Gostaram
+                                </label>
+                            </li>
+                            <li class="checkbox padding-content" role="menuitem">
+                                <label for="naogostaram">
+                                <input class="form-check-input" type="checkbox" value="true"
+                                        ng-model="tndmnt_dmn_rtgs_lst_cntrllr.colunas.naogostaram" id="naogostaram" checked="true">
+                                    Não gostaram
+                                </label>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem"><a href="#" ng-click="tndmnt_dmn_rtgs_lst_cntrllr.colunas.mostrarTodasColunas()">Mostrar todos</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div ng-class="{'onloading': tndmnt_dmn_rtgs_lst_cntrllr.busy || tndmnt_dmn_rtgs_lst_cntrllr.isLoadingArticles}"></div>
+
+                <div class="height-full" ng-show="!tndmnt_dmn_rtgs_lst_cntrllr.busy && !tndmnt_dmn_rtgs_lst_cntrllr.isLoadingArticles">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+                            <thead>
+                                <tr>
+                                    <th ts-criteria="titulo|lowercase"  ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">Título</th>
+                                    <th ts-criteria="status|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">Publicado</th>
+                                    <th ts-criteria="gostaram|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.gostaram">Gostaram</th>
+                                    <th ts-criteria="naogostaram|lowercase" ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.naogostaram">Não gostaram</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr ng-repeat="artigo in tndmnt_dmn_rtgs_lst_cntrllr.entity.artigos" ts-repeat >
+                                    
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.titulo">
+                                        <a ng-bind="artigo.titulo"
+                                        ui-sref="atendimento_admin_artigos_show({artigo: artigo.artigo})"
+                                        ui-sref-opts="{inherit:false}">
+                                        </a>
+                                    </td>
+                                    <td ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.publicado">
+                                        <div ng-if="artigo.status==1">Sim</div>
+                                        <div ng-if="artigo.status==0">Não</div>
+                                    </td>
+                                    <td ng-bind="artigo.gostaram"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.gostaram">
+                                    </td>
+                                    <td ng-bind="artigo.naogostaram"
+                                        ng-show="tndmnt_dmn_rtgs_lst_cntrllr.colunas.naogostaram">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

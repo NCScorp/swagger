@@ -1,0 +1,88 @@
+<div ng-if="!tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.isBusy()" class="height-full col-md-12 article-area row">
+
+    {% set form_name = form.vars.original_type %}
+    <form name="{{form_name}}" novalidate="novalidate" role="form"  ng-submit="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.submit({{form_name}})" class="config-grs">
+        <div class="headline-page ng-scope">
+            <div class="headline clearfix">
+                <div class="breadcrumb-trail pull-left"><a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page">Configurações de Disponibilidade</span></strong></div>
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-xs btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                    <button type="submit" class="btn btn-xs btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+                </div>
+            </div>
+
+        </div>
+        <div class="headline-sub clearfix hidden-lg hidden-md">
+            <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar à lista" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a>Configurações de Disponibilidade</h2>
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-sm btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                    <button type="submit" class="btn btn-sm btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+                </div>
+        </div>
+
+
+        <div class="forms">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="USUARIOSDISP_QUEM_DETERMINA">Quem determina disponibilidade do atendente?</label>
+                        
+                        <select id="USUARIOSDISP_QUEM_DETERMINA" name="USUARIOSDISP_QUEM_DETERMINA" required="required" ng-model="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.USUARIOSDISP_QUEM_DETERMINA" ng-disabled="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="0">Somente Administradores</option>
+                            <option value="1">Administradores e Atendente</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="USUARIOSDISP_USUARIO_HABILITADO_CHAMADOS">Atendente indisponível interage em chamados?</label>
+                        
+                        <select id="USUARIOSDISP_USUARIO_HABILITADO_CHAMADOS" name="USUARIOSDISP_USUARIO_HABILITADO_CHAMADOS" required="required" ng-model="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.USUARIOSDISP_USUARIO_HABILITADO_CHAMADOS" ng-disabled="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.submitting" class="form-control" style="">
+                            <option value="0">Não</option>
+                            <option value="1">Sim</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="USUARIOSDISP_USUARIO_PODE_SER_ATRIBUIDO_AO_CHAMADO">Atendente indisponível pode ser atribuído a um chamado?</label>
+                        
+                        <select id="USUARIOSDISP_USUARIO_PODE_SER_ATRIBUIDO_AO_CHAMADO" name="USUARIOSDISP_USUARIO_PODE_SER_ATRIBUIDO_AO_CHAMADO" required="required" ng-model="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.USUARIOSDISP_USUARIO_PODE_SER_ATRIBUIDO_AO_CHAMADO" ng-disabled="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.submitting" class="form-control">
+                            <option value="0">Não</option>
+                            <option value="1">Sim</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="USUARIOSDISP_USUARIO_NOTIFICACOES_DE_CHAMADOS">Atendente indisponível recebe notificações de chamados?</label>
+                        
+                        <select id="USUARIOSDISP_USUARIO_NOTIFICACOES_DE_CHAMADOS" name="USUARIOSDISP_USUARIO_NOTIFICACOES_DE_CHAMADOS" required="required" ng-model="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.USUARIOSDISP_USUARIO_NOTIFICACOES_DE_CHAMADOS" ng-disabled="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.submitting" class="form-control">
+                            <option value="0">Não</option>
+                            <option value="1">Sim</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="USUARIOSDISP_ATRIBUICAO_EM_CHAMADO_COM_RESPOSTA">Atribuição de chamado a atendente indisponível</label>
+                        
+                        <select id="USUARIOSDISP_ATRIBUICAO_EM_CHAMADO_COM_RESPOSTA" name="USUARIOSDISP_ATRIBUICAO_EM_CHAMADO_COM_RESPOSTA" required="required" ng-model="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.USUARIOSDISP_ATRIBUICAO_EM_CHAMADO_COM_RESPOSTA" ng-disabled="tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.entity.submitting" class="form-control">
+                            <option value="0">Manter atribuição</option>
+                            <option value="1">Deixar sem atribuição</option>
+                            <option value="2">Reatribuir para a última Fila em que esteve. Caso não exista, manter atribuição</option>
+                            <option value="3">Reatribuir para a última Fila em que esteve. Caso não exista, deixar sem atribuição</option>
+                            <option value="4">Reatribuir para a última Fila em que esteve. Caso não exista, direcionar à Regras</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <ul class="list-unstyled list-inline pull-right">
+                <li><button type="submit" id="salvar" name="salvar" class="pull-right btn btn-primary" >Salvar</button></li>
+            </ul>
+        </div>
+        {{ form_end(form, {'render_rest': false}) }}
+</div>
+
+<div ng-class="{'onloading' : tndmnt_dmn_cnfgrcs_srs_dspnbldds_frm_cntrllr.isBusy() }" class="text-center"></div>

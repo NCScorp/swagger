@@ -1,0 +1,94 @@
+{% extends '@NasajonMDABundle/Resources/js/Atendimento/Cliente/Titulos/index.html.twig' %}
+
+{% block index_header -%}
+    <div class="col-md-12 headline-page">
+        <div class="headline clearfix">
+            <h2 class="pull-left">Boletos e Faturas</h2>
+
+        </div>
+    </div>
+{% endblock index_header -%}
+{% block index_panel_header -%}
+    {% if descricao != null %}
+        <div class='col-md-{{12 - index_layout_size}} article-area row' ui-view>
+            <div class="bt-new-article new-article message text-center">
+                <div class="initial-msg hidden-sm hidden-xs" dynamic="tndmnt_clnt_ttls_lst_cntrllr.titulosDescricao"></div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="panel-heading">
+        <div class="form-inline">
+            <label class="control-label" for="cliente">Cliente:</label>
+            <select class="form-control" id="cliente" ng-options="item.value as item.label for item in tndmnt_clnt_ttls_lst_cntrllr.clientes track by item.value" ng-change="tndmnt_clnt_ttls_lst_cntrllr.changeCliente(tndmnt_clnt_ttls_lst_cntrllr.clienteSelecionado)" ng-model="tndmnt_clnt_ttls_lst_cntrllr.clienteSelecionado"></select>
+        </div>
+    </div>
+{% endblock index_panel_header -%}
+{% block index_list -%}
+    <div class="table-default tabela-boletos">
+        <table class="table table-striped table-hover" ts-wrapper ts-no-data-text="Nenhum dado encontrado">
+            <thead>
+                <tr>
+                    <th ts-criteria="numero">Número</th>
+                    <th ts-criteria="vencimento" ts-default="descending">Vencimento</th>
+                    <th ts-criteria="valor">Valor</th>
+                    <th ts-criteria="situacaotexto" class="text-center">Situação</th>
+                    <th class="compact"></th>
+                </tr>
+            </thead>
+            <tbody id="atendimento_cliente_titulos_list"  >
+                <tr ng-repeat="entity in tndmnt_clnt_ttls_lst_cntrllr.entities" ui-sref-active="active" ts-repeat ts-hide-no-data>
+                    <td><strong>{{'{{ entity.numero }} '}}</strong></td>
+                    <td>{{'{{ entity.vencimento | asDate | amDateFormat: "DD/MM/YYYY"  }} '}}</td>
+                    <td>{{'{{ entity.valorbruto | currency }} '}}</td>
+                    <td class="text-center">
+                        <span class="label label-warning" ng-if="entity.situacao == 0">
+                            {{'Em Aberto'|trans}}
+                        </span>
+                        <span class="label label-success" ng-if="entity.situacao == 1">
+                            {{'Quitado'|trans}}
+                        </span>
+                        <span class="label label-danger" ng-if="entity.situacao == 2">
+                            {{'Em Débito'|trans}}
+                        </span>
+                        <span class="label label-default" ng-if="entity.situacao == 3">
+                            {{'Cancelado'|trans}}
+                        </span>
+                        <span class="label label-default" ng-if="entity.situacao == 4">
+                            {{'Protestado'|trans}}
+                        </span>
+                        <span class="label label-default" ng-if="entity.situacao == 5">
+                            {{'Estornado'|trans}}
+                        </span>
+                        <span class="label label-info" ng-if="entity.situacao == 6">
+                            {{'Agendado'|trans}}
+                        </span>
+                        <span class="label label-default" ng-if="entity.situacao == 7">
+                            {{'Suspenso'|trans}}
+                        </span>
+                    </td>
+                    <td class="compact" width="320" style="white-space: nowrap;">                        
+                        <a title="Visualizar boleto"  ng-if="entity.links.boleto && ( entity.codigobanco == '341' || entity.codigobanco == '60701190' || entity.boleto_anexo ) && tndmnt_clnt_ttls_lst_cntrllr.exibirBoleto" onclick="ga('send', 'event', 'Painel Cliente', 'Título', 'Boleto');" href="{{ "{{entity.links.boleto}}" }}" class="btn btn-default"><i class="glyphicon glyphicon-barcode"></i></a>
+                        <a id="btnLinhaDigitavel" uib-tooltip='Copiado!' tooltip-animation='false' tooltip-trigger="{'click':'mouseleave'}" title="Copiar linha digitável" 
+                            ng-click="tndmnt_clnt_ttls_lst_cntrllr.copiarLinhaDigitavel()" ng-if="entity.situacao == 0 && entity.linhadigitavel && entity.links.boleto && tndmnt_clnt_ttls_lst_cntrllr.exibirBoleto && (entity.codigobanco == '341' || entity.boleto_anexo)" data-clipboard-text="{{'{{entity.linhadigitavel}}'}}" class="btn btn-default"><i class="fa fa-clipboard"></i></a>
+                        <span ng-show="tndmnt_clnt_ttls_lst_cntrllr.exibirNotaFiscal">
+                            <a title="Faça download do XML desta nota" onclick="ga('send', 'event', 'Painel Cliente', 'Título', 'NFSE XML');" ng-if="entity.links.nfse_xml" href="{{ "{{entity.links.nfse_xml}}" }}" class="btn btn-default" target="_blank" ><img style="margin-top:-2px;" width="15" src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/common/file-xml.png" alt="XML" /></a>
+                            <a title="Faça download do PDF desta nota" onclick="ga('send', 'event', 'Painel Cliente', 'Título', 'NFSE PDF');" ng-if="entity.links.nfse_pdf" href="{{ "{{entity.links.nfse_pdf}}" }}" class="btn btn-default" target="_blank" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                            <a title="Faça download do XML desta nota" onclick="ga('send', 'event', 'Painel Cliente', 'Título', 'NFE XML');" ng-if="entity.links.nfe_xml" href="{{ "{{entity.links.nfe_xml}}" }}" class="btn btn-default" target="_blank" ><img style="margin-top:-2px;" width="15" src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/common/file-xml.png" alt="XML" /></a>
+                            <a title="Faça download do PDF desta nota" onclick="ga('send', 'event', 'Painel Cliente', 'Título', 'NFE PDF');" ng-if="entity.links.nfe_pdf" href="{{ "{{entity.links.nfe_pdf}}" }}" class="btn btn-default" target="_blank" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+                        </span>
+
+                        <span class="label" style="color: black; font-size: 15px;" ng-if="entity.situacao == 0 && (entity.codigobanco != '341' && !entity.boleto_anexo)">
+                            O boleto ainda não foi gerado!
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot ng-show='tndmnt_clnt_ttls_lst_cntrllr.isBusy()'>
+                <tr><td colspan="6" class="text-center">Carregando dados...</td></tr>
+            </tfoot>
+            <tfoot ng-if="tndmnt_clnt_ttls_lst_cntrllr.entities.length == 0 && !tndmnt_clnt_ttls_lst_cntrllr.isBusy()">
+                <tr><td colspan="6">Nenhum dado encontrado</td></tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock index_list -%}

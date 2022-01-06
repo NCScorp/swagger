@@ -1,0 +1,120 @@
+<div class="row">
+    <dl class="dl-horizontal small text-overflow">
+        <div class='col-md-3'>
+            <dt class="line-height-campo">Inicio:</dt>
+            <dd>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker6'>
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dmn_rltrs_cntrllr.dtInicio" is-open="dmn_rltrs_cntrllr.dtInicioOpened" datepicker-options="dmn_rltrs_cntrllr.dateOptions" ng-required="true" current-text="Hoje" clear-text="Limpar" alt-input-formats="altInputFormats" ng-change="dmn_rltrs_cntrllr.reloadData()" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="dmn_rltrs_cntrllr.dtInicioOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+
+                </div>
+            </dd>
+        </div>
+        <div class='col-md-3'>
+            <dt class="line-height-campo">Fim:</dt>
+            <dd>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker7'>
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dmn_rltrs_cntrllr.dtFim" is-open="dmn_rltrs_cntrllr.dtFimOpened" datepicker-options="dateOptions" ng-required="true" current-text="Hoje" clear-text="Limpar" alt-input-formats="altInputFormats" ng-change="dmn_rltrs_cntrllr.reloadData()" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="dmn_rltrs_cntrllr.dtFimOpened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </dd>
+        </div>
+        <div class="col-md-6">
+          <div class="btns-area pull-right">
+              <button type="button" class="btn btn-sm btn-default btn-fixed" data-export-report ng-click="dmn_rltrs_cntrllr.exportarParaCsv()">
+                  <i class="el el-download-alt"></i>
+                  <span class="hidden-xs">Exportar</span>
+              </button>
+              <button type="button" class="btn btn-sm btn-default btn-fixed" onclick="window.print();">
+                  <i class="el el-print"></i>
+                  <span class="hidden-xs">Imprimir</span>
+              </button>
+          </div>
+        </div>
+    </dl>
+    <dl class="dl-horizontal small text-overflow">
+        <dt>
+            <div ng-messages ng-if="!dmn_rltrs_cntrllr.dtValida" class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Erro:</span>
+                    A diferença máxima entre as datas deve ser 30 dias
+                </div>
+            </div>
+        </dt>
+    </dl>
+</div>
+<div class="row filter clearfix">
+  <div class="col-md-8">
+    <form name="dmn_rltrs_cntrllr.form_filtros_relatorios">
+        <table class="table">
+            <tbody>
+                <tr ng-repeat="filtro in dmn_rltrs_cntrllr.filtros track by $index">
+                    <td width="25%">
+                        <select id="add-filtro" name="add-filtro" class="form-control" required ng-model="filtro.campo" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro" ng-change="dmn_rltrs_cntrllr.reloadData()">
+                            <option value="" disabled="disabled">Selecione</option>
+                        </select>
+                    </td>
+                    <td width="28%">
+                        <select id="add-condicao" name="add-condicao" class="form-control" required ng-model="filtro.operador" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro[filtro.campo].options" ng-change="dmn_rltrs_cntrllr.reloadData()">
+                            <option value="" disabled="disabled">Condição</option>
+                        </select>
+                    </td>
+                    <td width="35%">
+                        <mda-ui-select
+                        ng-if="filtro.campo == 'cliente' && filtro.operador != 'is_set' && filtro.operador != 'is_not_set'" 
+                        class="print-visible"
+                        service="NsClientes"
+                        constructors="{ 'bloqueado' : false }"
+                        id="add-resultado"
+                        name="add-resultado"
+                        opts='{ "attr" : { "ng-change" : "dmn_rltrs_cntrllr.reloadData()", "ng-model" : "filtro.valor", "placeholder" : "",  } , "required" : false, "match" : "nome" }'
+                        fields='["codigo", "nome"]'
+                        ></mda-ui-select>
+                        
+                        <select 
+                        ng-if="filtro.campo != 'cliente' && filtro.operador != 'is_set' && filtro.operador != 'is_not_set'" 
+                        id="add-resultado" 
+                        name="add-resultado" 
+                        class="form-control" 
+                        required 
+                        ng-model="filtro.valor"
+                        indice-id="{{'{{filtro.campo }}'}}-{{'{{$index}}'}}"
+                        ng-options="op.value as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro[filtro.campo].options[filtro.operador].options" 
+                        ng-change="dmn_rltrs_cntrllr.reloadData()"
+                        >
+                        <option value="" disabled="disabled">Selecione</option>
+                        </select>
+                    </td>
+                    <td width="12%" class="text-left">
+                        <a href  ng-click="dmn_rltrs_cntrllr.removeFiltro($index);" class="btn btn-danger btn-md btns-acoes"><i class="el el-remove"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4">
+            <div class="col-sm-3">
+                <select id="add-filtro" name="add-filtro" class="form-control" ng-model="dmn_rltrs_cntrllr.novoFiltro" ng-options="key as op.label disable when op.disabled for (key,op) in dmn_rltrs_cntrllr.opcoesFiltro" ng-change="dmn_rltrs_cntrllr.addFiltros()">
+                    <option value="" disabled="disabled">Adicionar filtro</option>
+                </select>
+            </div>
+            </th>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
+  </div>
+</div>

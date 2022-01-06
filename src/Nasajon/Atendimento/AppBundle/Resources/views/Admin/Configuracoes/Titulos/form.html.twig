@@ -1,0 +1,97 @@
+<div ng-if="!tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.isBusy()" class="height-full col-md-12 article-area row">
+
+    {% set form_name = form.vars.original_type %}
+    <form name="{{form_name}}" novalidate="novalidate" role="form"  ng-submit="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.submit({{form_name}})" class="config-grs">
+
+
+        <div class="headline-page ng-scope">
+            <div class="headline clearfix">
+                <div class="breadcrumb-trail pull-left"><a ui-sref="atendimento_admin_configuracoes_list" title="Configurações">Configurações</a> > <span class="select-page">Boletos e Faturas</span></strong></div>
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-xs btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                    <button type="submit" class="btn btn-xs btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+                </div>
+            </div>
+
+        </div>
+        <div class="headline-sub clearfix hidden-lg hidden-md">
+            <h3 class="pull-left"><a href  ui-sref="atendimento_admin_configuracoes_list" title="Voltar à lista" class="hidden-md hidden-lg"><i class="el el-chevron-left"></i></a>Boletos e Faturas</h2>
+                <div class="btns-area pull-right">
+                    <button type="button" class="btn btn-sm btn-link btn-cancel btn-geral" ui-sref="atendimento_admin_configuracoes_list"><i class="el el-remove"></i> <span class="hidden-xs">Cancelar</span></button>
+                    <button type="submit" class="btn btn-sm btn-primary btn-save btn-geral"><i class="el el-ok"></i> <span class="hidden-xs">Salvar</span></button>
+                </div>
+        </div>
+
+
+        <div class="forms">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label required" for="TITULOS_EXIBIR_SEGUINTES_SITUACOES">Cliente visualiza boletos e faturas nas seguintes situações</label>
+                        <div ng-repeat=' situacao in tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.situacoesTitulo'>
+                            <input type="checkbox"
+                                   name="TITULOS_EXIBIR_SEGUINTES_SITUACOES"
+                                   ng-model="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.situacoesTitulo[$index].marcado"
+                                   ng-disabled="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.entity.submitting">
+                            {{'{{situacao.nome}}'}}<br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 form-inline">
+                    <label class="control-label required" for="TITULO_PERIODO_DE_EXIBICAO_PASSADO">Exibir boletos e faturas com vencimento de </label>
+                    <select id="TITULO_PERIODO_DE_EXIBICAO_PASSADO" name="TITULO_PERIODO_DE_EXIBICAO_PASSADO" required="required" 
+                            ng-model="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.entity.TITULO_PERIODO_DE_EXIBICAO_PASSADO" ng-disabled="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.entity.submitting" 
+                            class="form-control">
+                        <option value="0">Todos</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="24">24</option>
+                        <option value="36">36</option>
+                    </select>
+                    
+                    <b>mês(es) atrás até o dia atual</b>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label for="TITULOS_EXIBIR_PARA_CLIENTE_BOLETO">
+                                <input type="checkbox" id="TITULOS_EXIBIR_PARA_CLIENTE_BOLETO" name="TITULOS_EXIBIR_PARA_CLIENTE_BOLETO" ng-model="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.entity.TITULOS_EXIBIR_PARA_CLIENTE_BOLETO" ng-disabled="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.entity.submitting" value="1">
+                                Permitir ao cliente gerar segunda via de boleto</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label for="TITULOS_EXIBIR_PARA_CLIENTE_NOTA_FISCAL">
+                                <input type="checkbox" id="TITULOS_EXIBIR_PARA_CLIENTE_NOTA_FISCAL" name="TITULOS_EXIBIR_PARA_CLIENTE_NOTA_FISCAL" ng-model="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.entity.TITULOS_EXIBIR_PARA_CLIENTE_NOTA_FISCAL" ng-disabled="tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.entity.submitting" value="1">
+                                Permitir ao cliente gerar segunda via da nota fiscal
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-unstyled list-inline pull-right">
+                <li><button type="submit" id="salvar" name="salvar" class="pull-right btn btn-primary" >Salvar</button></li>
+            </ul>
+        </div>
+        {{ form_end(form, {'render_rest': false}) }}
+</div>
+
+<div ng-class="{'onloading' : tndmnt_dmn_cnfgrcs_ttls_frm_cntrllr.isBusy() }" class="text-center"></div>

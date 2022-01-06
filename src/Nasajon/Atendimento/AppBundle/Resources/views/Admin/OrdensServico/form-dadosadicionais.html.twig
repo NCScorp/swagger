@@ -1,0 +1,112 @@
+<div style="padding: 0px 40px 20px 40px;">
+    <h3>Dados Adicionais</h3>
+
+    <fieldset>
+        <legend><h4>Saída para atendimento</h4></legend>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="control-label">Local</label>
+                    <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                        {#{{ form_widget(form.visitas.vars.prototype.origem_saida, {
+                    'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].origem_saida',
+                    'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                    })
+                        }}#}
+                    </div>
+                    <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].origem_saida}}'}}</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Hora</label>
+                    <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                        {#{{ form_widget(form.visitas.vars.prototype.hora_saida, {
+                    'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_saida',
+                    'ui-mask':'99:99:99',
+                    'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                    })
+                        }}#}
+                    </div>
+                    <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_saida}}'}}</div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label class="control-label">Km</label>
+                    <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                        {#{{ form_widget(form.visitas.vars.prototype.km_saida, {
+                    'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_saida',
+                    'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                    })
+                        }}#}
+                    </div>
+                    <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_saida}}'}}</div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="row">
+        <div class="col-md-6">
+            <fieldset>
+                <legend><h4>Chegada no cliente</h4></legend>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">Hora</label>
+                            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                                {#{{ form_widget(form.visitas.vars.prototype.hora_chegada_cliente, {
+                    'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_chegada_cliente',
+                    'ui-mask':'99:99:99',
+                    'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                        })
+                                }}#}
+                            </div>
+                            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_chegada_cliente}}'}}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label">KM</label>
+                            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                                {#{{ form_widget(form.visitas.vars.prototype.km_chegada_cliente,{
+                        'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_chegada_cliente',
+                        'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                        })
+                                }}#}
+                            </div>
+                            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].km_chegada_cliente}}'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-md-6">
+            <fieldset>
+                <legend><h4>Saída do cliente</h4></legend>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label">Hora</label>
+                            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao==0">
+                                {#{{ form_widget(form.visitas.vars.prototype.hora_saida_cliente, {
+                        'attr': { 'ng-model': 'srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_saida_cliente',
+                        'ui-mask':'99:99:99',
+                        'ng-change': 'srvcs_rdns_srvc_frm_cntrllr.saveVisita(visitaindex)' }
+                        })
+                                }}#}
+                            </div>
+                            <div ng-if="srvcs_rdns_srvc_frm_cntrllr.entity.situacao!=0">{{'{{srvcs_rdns_srvc_frm_cntrllr.entity.visitas[visitaindex].hora_saida_cliente}}'}}</div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <a class="btn btn-primary" ng-click="srvcs_rdns_srvc_frm_cntrllr.modalDadosAdicionais.close()">Fechar e salvar</a>
+        </div>
+    </div>
+</div>
