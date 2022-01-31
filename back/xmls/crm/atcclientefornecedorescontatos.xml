@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcclientefornecedorescontatos" label="atcclientefornecedorescontatos" project="crm" >
+    <!-- XML exclusivo para buscas nos contatos do cliente/fornecedores envolvidos do atendimento -->
+    <entity schema="crm" table="vw_atcclientefornecedorescontatos_v4">
+        <fieldmodel name="contato" datatype="guid" isid="true" column="contato_id"/>
+        <fieldmodel name="pessoa" datatype="guid" column="pessoa"/>
+        <fieldmodel name="negocio" datatype="guid" column="negocio"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="primeironome" datatype="string" column="primeironome"/>
+        <fieldmodel name="sobrenome" datatype="string" column="sobrenome"/>
+        <fieldmodel name="nomecompleto" datatype="string" column="nomecompleto"/>
+        <fieldmodel name="cargo" datatype="string" column="cargo"/>
+        <fieldmodel name="setor" datatype="string" column="setor"/>
+        <fieldmodel name="email" datatype="string" column="email"/>
+        <fieldmodel name="principal" datatype="boolean" column="principal" />
+        <fieldmodel name="pessoanomefantasia" datatype="string" column="pessoanomefantasia"/>
+        <fieldmodel name="tipo" datatype="integer" column="tipo">
+            <options>{"1":"Cliente", "2":"Fornecedor", "3": "Seguradora Produto"}</options>
+        </fieldmodel>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">id_grupoempresarial</constructoritem>
+      <constructoritem required="true">negocio</constructoritem>
+    </constructors>
+    <viewbrowser layout="table" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="contato" isid="true" visible="false"/>
+            <fieldbrowser entitylink="pessoa" />
+            <fieldbrowser entitylink="negocio"/>
+            <fieldbrowser entitylink="nome" cansearch="true" />
+            <fieldbrowser entitylink="primeironome" />
+            <fieldbrowser entitylink="sobrenome" />
+            <fieldbrowser entitylink="nomecompleto" cansearch="true" />
+            <fieldbrowser entitylink="cargo" />
+            <fieldbrowser entitylink="setor" />
+            <fieldbrowser entitylink="email" cansearch="true" />
+            <fieldbrowser entitylink="tipo" />
+            <fieldbrowser entitylink="pessoanomefantasia" cansearch="true" />
+            <fieldbrowser entitylink="principal" cansearch="true" />
+        </fieldsbrowser>
+        <filters>
+            <fieldsfilters>
+                <!-- Filtro por pessoa -->
+                <fieldfilter entitylink="pessoa" maxoccurs="unbounded" visible="false">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+                <!-- Filtro por tipo de contato -->
+                <fieldfilter entitylink="tipo" maxoccurs="unbounded" visible="false">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="principal" maxoccurs="unbounded" visible="false">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+    </viewbrowser>
+    <forms>
+    </forms>
+</nsjusecase>

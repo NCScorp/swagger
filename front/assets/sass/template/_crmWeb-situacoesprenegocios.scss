@@ -1,0 +1,21 @@
+.situacoes-prenegocio{
+    .label-cor{
+        display: block;
+    }
+
+    .lista-cores{
+        display: flex;
+        flex-wrap: wrap;
+
+        .cor{
+            display: inline-flex;
+            height: 40px;
+            width: 40px;
+            border: none;
+            margin: 5px;
+            color: white;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

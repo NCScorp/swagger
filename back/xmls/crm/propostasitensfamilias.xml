@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="propostasitensfamilias" label="propostasitensfamilias" project="crm">
+  <entity schema="crm" table="propostasitensfamilias">
+    <fieldmodel name="propostaitemfamilia" datatype="guid" isid="true" column="propostaitemfamilia"/>
+    <fieldmodel name="propostaitem" datatype="guid" column="propostaitem"/>
+    <fieldmodel name="familia" datatype="guid"  column="familia" useCaseLink="estoque\familias" entityJoinType="left"/>
+    <fieldmodel name="quantidade" datatype="integer" column="quantidade"/>
+    <fieldmodel name="valor" datatype="moeda" column="valor"/>
+    <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+    <fieldmodel name="created_by" datatype="json" column="created_by"/>
+    <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    <fieldmodel name="composicaofamilia" datatype="guid" column="composicaofamilia"/>
+    <fieldmodel name="composicao" datatype="guid" column="composicao"/>
+    <fieldmodel name="itemcontrato" datatype="guid" column="itemcontrato" useCaseLink="financas\itenscontratos" entityJoinType="left"/>
+    <fieldmodel name="itemcontratoAPagar" datatype="guid" column="itemcontratoAPagar" useCaseLink="financas\itenscontratos" entityJoinType="left"/>
+    <fieldmodel name="templateproposta" datatype="guid" column="templateproposta" useCaseLink="crm\templatespropostas" entityJoinType="left"/>
+    <fieldmodel name="templatepropostacomposicaofamilia" datatype="guid" column="templatepropostacomposicaofamilia" useCaseLink="crm\templatescomposicoesfamilias" entityJoinType="left"/>
+    <fieldmodel name="contrato" datatype="string" notMapped="true"></fieldmodel>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial"/>
+    <fieldmodel name="nomefamiliaalterado" datatype="boolean" column="nomefamiliaalterado"/>
+    <fieldmodel name="nome" datatype="string" column="nome"/>
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+    <constructoritem required="true">propostaitem</constructoritem>
+    <constructoritem required="true">id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="list" target="window" label="Proposta Item Família">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="propostaitemfamilia" visible="false" isid="true"/>
+      <fieldbrowser entitylink="quantidade" visible="true" cansearch="true"/>
+      <fieldbrowser entitylink="propostaitem" visible="true" cansearch="true"/>
+      <fieldbrowser entitylink="valor" visible="true" cansearch="true"/>
+      <fieldbrowser alias="familia" entitylink="familia" visible="true" fielddetaillookup="{'descricao':'Descrição'}" avaliable="true" />
+      <fieldbrowser entitylink="itemcontrato" visible="false" />
+      <fieldbrowser entitylink="itemcontratoAPagar" visible="false" />
+      <fieldbrowser entitylink="templateproposta" visible="false" />
+      <fieldbrowser entitylink="templatepropostacomposicaofamilia" visible="false" />
+      <fieldbrowser entitylink="contrato" visible="false" cansearch="false" />
+      <fieldbrowser entitylink="nomefamiliaalterado" visible="true" cansearch="false" />
+      <fieldbrowser entitylink="nome" visible="true" cansearch="false" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Vincular item da proposta a família de produto">
+      <layout>
+        <headerform>
+          <row>
+            <cell>
+              <groupbox>
+                <row>
+                  <cell name="familia" controltype="lookup" label="Família" colspan="12" entitylink="familia" fielddetaillookup="{'descricao':'Descrição','codigo':'Código'}">
+                    <validates>
+                      <validate type="vnull" displaytext="O campo família não pode ser vazio."/>
+                    </validates>
+                  </cell>
+                  <cell controltype="textedit" label="Descrição" colspan="12" entitylink="nome">
+                    <validates>
+                      <validate type="maxlength" value="150" displaytext="O campo Nome aceita no máximo 150 caracteres"/>
+                    </validates>
+                  </cell>
+                  <cell label="Nome Família Alterado" controltype="checkbox" entitylink="nomefamiliaalterado" colspan="12" />
+                  <cell name="valor" controltype="money" label="Valor" colspan="4" entitylink="valor">
+                    <validates>
+                      <!-- Valor é passado com um ponto separando as casas decimais, por isso value 11 -->
+                      <validate type="maxlength" value="11" displaytext="O campo Valor aceita no máximo 10 caracteres"/>
+                    </validates>
+                    <!-- <validates>
+                      <validate type="vnull" displaytext="O campo valor não pode ser vazio"/>
+                    </validates> -->
+                  </cell>
+                  <cell name="quantidade" controltype="number" label="Quantidade" colspan="4" entitylink="quantidade">
+                    <validates>
+                      <validate type="vnull" displaytext="O campo quantidade não pode ser vazio"/>
+                      <validate type="greaterthan" value="0" displaytext="A quantidade deve ser maior que 0."/>
+                    </validates>
+                  </cell>
+                </row>
+              </groupbox>
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+    <form name="edicao" label="Editar item da proposta a família de produto">
+      <layout>
+        <headerform>
+          <row>
+            <cell controltype="textedit" label="Descrição" colspan="12" entitylink="nome">
+              <validates>
+                <validate type="maxlength" value="150" displaytext="O campo Nome aceita no máximo 150 caracteres"/>
+              </validates>
+            </cell>
+            <cell label="Nome Família Alterado" controltype="checkbox" entitylink="nomefamiliaalterado" colspan="12" />
+            <cell name="valor" label="Valor" controltype="money" colspan="6" entitylink="valor"/>                
+            <cell name="quantidade" label="Quantidade" controltype="number" colspan="6" entitylink="quantidade">
+              <validates>
+                <validate type="vnull" displaytext="O campo quantidade não pode ser vazio"/>
+                <validate type="greaterthan" value="0" displaytext="A quantidade deve ser maior que 0."/>
+              </validates>
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action>
+      <name>Retrieve</name>
+    </action>
+    <action>
+      <name>Insert</name>
+      <api>
+        <name>propostaItemFamiliaNovo_v3</name>
+        <fromto valueapi="propostaitem" valueentity="propostaitem"/>
+        <fromto valueapi="familia" valueentity="familia"/>
+        <fromto valueapi="quantidade" valueentity="quantidade"/>
+        <fromto valueapi="valor" valueentity="valor"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="nomefamiliaalterado" valueentity="nomefamiliaalterado"/>
+      </api>
+    </action>
+    <action form="edicao">
+      <name>Update</name>
+      <api>
+        <name>propostaItemFamiliaAlterar_v3</name>
+        <fromto valueapi="propostaitemfamilia" valueentity="propostaitemfamilia"/>
+        <fromto valueapi="propostaitem" valueentity="propostaitem"/>
+        <fromto valueapi="familia" valueentity="familia"/>
+        <fromto valueapi="quantidade" valueentity="quantidade"/>
+        <fromto valueapi="valor" valueentity="valor"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="nomefamiliaalterado" valueentity="nomefamiliaalterado"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+      </api>
+    </action>
+    <action>
+      <name>Delete</name>
+      <api>
+        <name>propostaItemFamiliaExcluir_v3</name>
+        <fromto valueapi="propostaitemfamilia" valueentity="propostaitemfamilia"/>
+        <fromto valueapi="tenant" valueentity ="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="deleted_by" valueentity="logged_user"/>
+      </api>
+    </action>
+    <action layer="back">
+      <name>editaItemContratoNaPropostaItemFamilia</name>
+      <api>
+        <name>editaItemContratoNaPropostaItemFamilia_v2</name>
+        <fromto valueapi="propostaitemfamilia" valueentity="propostaitemfamilia" />
+        <fromto valueapi="itemcontrato" valueentity="itemcontrato" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action>
+    <action layer="back">
+      <name>editaItemContratoAPagarNaPropostaItemFamilia</name>
+      <api>
+        <name>editaItemContratoAPagarNaPropostaItemFamilia_v2</name>
+        <fromto valueapi="propostaitemfamilia" valueentity="propostaitemfamilia" />
+        <fromto valueapi="itemcontratoAPagar" valueentity="itemcontratoAPagar" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

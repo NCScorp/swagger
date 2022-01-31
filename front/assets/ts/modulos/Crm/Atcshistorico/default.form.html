@@ -1,0 +1,120 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        ng-click="crm_hstrc_ngc_frm_mdl_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h2 class="modal-title" id="modal-title">Histórico</h2>
+</div>
+<form id="form-historico-pendencias" nsg-focus name="crm_hstrc_ngc_frm_mdl_cntrllr.form" novalidate="novalidate" role="form"
+    ng-submit="crm_hstrc_ngc_frm_mdl_cntrllr.submit()">
+    <div>
+        <div class="col-sm-12">
+
+            <div class="form-group ajuste-topo">
+                <div class="row row-form-view">
+                    <div class="col-sm-12">
+
+                        <!-- Data de início -->
+                        <div class="col-sm-5 input-filtros-paineis pull-left-custom">
+                            <span class="input-group-addon label-filtros-paineis">Data inicial</span>
+                            <nsj-date-picker 
+                                datepickeropts="{'disable-days-after': 'crm_hstrc_ngc_frm_mdl_cntrllr.filtros.dataFinal'}"
+                                class="filter-date-pickers" editable='true'
+                                init-value='crm_hstrc_ngc_frm_mdl_cntrllr.filtros.dataInicial' date-position="right" type-select="single"
+                                opts="{'class':'form-control input-filtros-data', 'id':'dataInicial', 'name':'dataInicial' , 'ng-model':'crm_hstrc_ngc_frm_mdl_cntrllr.filtros.dataInicial', 'placeholder': 'Digite ou selecione a data inicial' }"
+                                >
+                            </nsj-date-picker>
+                            <span class="input-group-addon label-filtros-paineis">
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                        </div>
+
+                        <!-- Data de fim -->
+                        <div class="col-sm-5 input-filtros-paineis pull-right-custom">
+                            <span class="input-group-addon label-filtros-paineis">Data final</span>
+                            <nsj-date-picker
+                                datepickeropts="{'disable-days-before': 'crm_hstrc_ngc_frm_mdl_cntrllr.filtros.dataInicial'}"
+                                class="filter-date-pickers" editable='true'
+                                init-value='crm_hstrc_ngc_frm_mdl_cntrllr.filtros.dataFinal' date-position="right" type-select="single"
+                                opts="{'class':'form-control input-filtros-data', 'id':'datahorafim', 'name':'datahorafim' , 'ng-model':'crm_hstrc_ngc_frm_mdl_cntrllr.filtros.dataFinal', 'placeholder': 'Digite ou selecione a data final' }"
+                                >
+                            </nsj-date-picker>
+                            <span class="input-group-addon label-filtros-paineis">
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-form-view ajuste-topo">
+                    <!-- <div class="col-sm-12"> -->
+
+                            <nsj-toolbar 
+                                ng-on-change_toolbar="crm_hstrc_ngc_frm_mdl_cntrllr.carregarPainel($event.detail)"
+                                search="true"
+                                refresh="true"
+                                holder="Busca" 
+                                model-search="{{crm_hstrc_ngc_frm_mdl_cntrllr.filtros.filter}}"
+                            >
+                            </nsj-toolbar>
+                    <!-- </div> -->
+                </div>
+
+                <div class="row row-form-view">
+                    <div class="col-sm-12">
+                        <div class="form-group clearfix">
+                            <div class="object-list">
+                                <div class="limite-vertical">
+
+                                    <table class="table table-striped table-hover table-condensed table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Data
+                                                </th>
+                                                <th>
+                                                    Ação
+                                                </th>
+                                                <th>
+                                                    Autor
+                                                </th>
+                                                <th class="obs">
+                                                    Observação
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="subentity in crm_hstrc_ngc_frm_mdl_cntrllr.entities">
+                                                <td> {{ subentity.created_at | asDateTime | date: "dd/MM/yyyy HH:mm:ss" }}
+                                                </td>
+                                                <td> {{ subentity.acao }} </td>
+                                                <td> {{ subentity.created_by.nome }} </td>
+                                                <td class="obs" ng-bind-html="subentity.observacao"></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot ng-if="crm_hstrc_ngc_frm_mdl_cntrllr.entities.length == 0">
+                                            <tr>
+                                                <td colspan="7" class="state-empty">
+                                                    <div class="empty-list">
+                                                        <p class="text-center"> Não existem itens para mostrar nesta lista.
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+    </div>
+</form>
+<div class="content-loading" ng-if="crm_hstrc_ngc_frm_mdl_cntrllr.busy">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>

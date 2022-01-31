@@ -1,0 +1,63 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="mensagemqualificacao_pn">Mensagem para o
+                    consultor</label><textarea class="form-control" id="mensagemqualificacao_pn"
+                    name="mensagemqualificacao_pn" ng-model="$ctrl.entity.mensagemqualificacao_pn"
+                    ng-disabled="$ctrl.entity.$$__submitting"></textarea></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="dataqualificacao_pn">Data para contato</label>
+                <nsj-date-picker editable='true' init-value='$ctrl.entity.dataqualificacao_pn' date-position="right"
+                    type-select="single"
+                    opts="{'class':'form-control', 'id':'dataqualificacao_pn', 'name':'dataqualificacao_pn' , 'ng-model':'$ctrl.entity.dataqualificacao_pn' , 'ng-disabled':'$ctrl.entity.$$__submitting' }">
+                </nsj-date-picker>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="periodoqualificacao_pn">Preferência de horário
+                    para contato</label><select class="form-control" id="periodoqualificacao_pn"
+                    name="periodoqualificacao_pn" ng-model="$ctrl.entity.periodoqualificacao_pn"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" " convert-to-number>
+                    <option value="0">Qualquer horário</option>
+                    <option value="1">Manhã</option>
+                    <option value="2">Tarde</option>
+                </select></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <div class="vendedor-header">
+                    <label class="control-label" for="vendedor">Atribuir à</label>
+                    <label class="custom-checkbox check-listadavez">
+                        <span class="text">Lista da vez</span>
+                        <input 
+                            type="checkbox" 
+                            ng-checked="$ctrl.utilizarListDaVez" 
+                            ng-click="$ctrl.onListaDaVezCheckboxClick()" />
+                        <span class="checkmark">
+                        </span>
+                    </label>
+                </div>
+                <nsj-lookup 
+                    name="vendedor" 
+                    id-name="vendedor_id" 
+                    factory="NsVendedores"
+                    ng-model="$ctrl.entity.vendedor" 
+                    max-label="2" 
+                    constructor="{  }"
+                    config='{ "vendedor_nome":"Nome",  }' 
+                    disabled="$ctrl.entity.$$__submitting || $ctrl.utilizarListDaVez"
+                    ng-change="$ctrl.onLookupVendedorChange()"
+                >
+                </nsj-lookup>
+            </div>
+        </div>
+    </div>
+</form>

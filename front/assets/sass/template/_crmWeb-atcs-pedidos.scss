@@ -1,0 +1,146 @@
+#crm-atcs {
+    .div-pedidos {
+        .container-tabela {
+            overflow-x: auto;
+
+            // Definindo que a primeiro coluna da tree de pedidos, que possui ícones da hierarquia, tenha largura de 5% do espaço disponível
+            table thead tr th.expand-property{
+                width: 5% !important;
+            }
+
+        }
+        // Tree-grid
+        table.tree-grid {
+            tr {
+                td {
+                    animation: fade-in 800ms;
+                    -webkit-animation: fade-in 800ms;
+                }
+            }
+        }
+
+        // Skeleton
+        .skeleton-container {
+            &.totais-superiores {
+                display: flex;
+                margin-bottom: 10px;
+                justify-content: space-between;
+                flex-direction: row;
+
+                .item-skeleton {
+                    width: 200px;
+                }
+            }
+
+            table.table.table-skeleton-pedidos {
+                .item-skeleton {
+                    width: 100%;
+                }
+
+                // Header
+                thead {
+                    tr {
+                        th {
+                            &:nth-child(2){
+                                .item-skeleton {
+                                    max-width: 130px;
+                                }
+                            }
+                            &:nth-child(3){
+                                .item-skeleton {
+                                    max-width: 155px;
+                                }
+                            }
+                            &:nth-child(4){
+                                .item-skeleton {
+                                    max-width: 135px;
+                                }
+                            }
+                            &:nth-child(5){
+                                .item-skeleton {
+                                    max-width: 40px;
+                                }
+                            }
+                            &:nth-child(6){
+                                .item-skeleton {
+                                    max-width: 85px;
+                                }
+                            }
+                            &:nth-child(7){
+                                .item-skeleton {
+                                    max-width: 100px;
+                                }
+                            }
+                            &:nth-child(8){
+                                .item-skeleton {
+                                    max-width: 130px;
+                                }
+                            }
+                            &:last-child {
+                                .item-skeleton {
+                                    max-width: 80px;
+                                }
+                            }
+                        }
+                    }
+                }
+                // Body
+                tbody {
+                    tr {
+                        &:first-child {
+                            td {
+                                &:first-child {
+                                    .item-skeleton {
+                                        margin-left: 0;
+                                    }
+                                }
+                            }
+                        }
+                        td {
+                            border: none !important;
+
+                            &:first-child {
+                                width: 100px;
+
+                                .item-skeleton {
+                                    margin-left: 25px;
+                                }
+                            }
+
+                            &:nth-child(1), &:nth-child(4){
+                                .item-skeleton {
+                                    max-width: 18px;
+                                }
+                            }
+                            &:nth-child(2){
+                                .item-skeleton {
+                                    max-width: 130px;
+                                }
+                            }
+                            &:nth-child(3){
+                                .item-skeleton {
+                                    max-width: 155px;
+                                }
+                            }
+                            &:nth-child(5){
+                                .item-skeleton {
+                                    max-width: 40px;
+                                }
+                            }
+                            &:nth-child(6),&:nth-child(7),&:nth-child(8){
+                                .item-skeleton {
+                                    max-width: 50px;
+                                }
+                            }
+                            &:last-child {
+                                .item-skeleton {
+                                    max-width: 80px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

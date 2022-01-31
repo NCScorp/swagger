@@ -1,0 +1,21 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="motivodesqualificacao_pn">Motivo</label>
+                <nsj-lookup name="motivodesqualificacao_pn" id-name="motivodesqualificacaoprenegocio"
+                    factory="CrmMotivosdesqualificacoesprenegocios" ng-model="$ctrl.entity.motivodesqualificacao_pn"
+                    max-label="2" constructor="{  }" config='{ "codigo":"codigo", "descricao":"descricao",  }'
+                    disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="observacaodesqualificacao_pn">Observações sobre a
+                    Desqualificação</label><textarea class="form-control" id="observacaodesqualificacao_pn"
+                    name="observacaodesqualificacao_pn" ng-model="$ctrl.entity.observacaodesqualificacao_pn"
+                    ng-disabled="$ctrl.entity.$$__submitting"></textarea></div>
+        </div>
+    </div>
+</form>

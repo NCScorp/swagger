@@ -1,0 +1,43 @@
+templates-os-item-form {
+    // Form de adição de checklist
+    .add-checklist-container {
+        display: flex;
+        align-items: flex-end;
+
+        .form-checklist {
+            flex-grow: 1;
+            padding: 0 15px;
+        }
+
+        .btn-add-checklist {
+            padding: 0 15px;
+
+            button {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+        }
+    }
+
+    // Tabela de ações
+    table.nsj-table.btns-actions {
+        tbody {
+            tr {
+                td {
+                    &:last-child {
+                        width: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    // Mensagem de erro de carregamento
+    .erro-carregamento {
+        // Botão de recarregar
+        .btn-retry {
+            font-weight: 600;
+            cursor: pointer;
+        }
+    }
+}

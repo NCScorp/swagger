@@ -1,0 +1,38 @@
+
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="ns_dvrtncs_frm_xclr_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="modal-title">Excluir advertência</h3>
+        <span ng-if='ns_dvrtncs_frm_xclr_cntrllr.action == "insert"'>
+        <div >
+
+        
+        
+        
+        
+                
+        
+     
+    </div>
+        </span>
+    </div>
+        <form nsg-focus name="ns_dvrtncs_frm_xclr_cntrllr.form" novalidate="novalidate" role="form"  ng-submit="ns_dvrtncs_frm_xclr_cntrllr.submit()">
+    <div class="modal-body" id="modal-body">
+                            <ns-advertencias-excluir entity="ns_dvrtncs_frm_xclr_cntrllr.entity" form="ns_dvrtncs_frm_xclr_cntrllr.form" action="ns_dvrtncs_frm_xclr_cntrllr.action" constructors="ns_dvrtncs_frm_xclr_cntrllr.constructors" busy="ns_dvrtncs_frm_xclr_cntrllr.busy"></ns-advertencias-excluir>
+                    </div>
+        <div class="modal-footer">
+        <div class="pull-left">
+            
+            <button type="submit" name="submit" ng-disabled="ns_dvrtncs_frm_xclr_cntrllr.form.$pristine || ns_dvrtncs_frm_xclr_cntrllr.entity.$$__submitting" class="btn btn-warning" ng-class="{loading:ns_dvrtncs_frm_xclr_cntrllr.entity.$$__submitting}">
+                 Salvar
+            </button>
+            <a class="btn btn-sm" ng-click="ns_dvrtncs_frm_xclr_cntrllr.close()"><i class="fa fa-times" aria-hidden="true"></i> Fechar</a>
+            
+        </div>
+    </div>
+            </form>
+        <div class="content-loading"  ng-if="ns_dvrtncs_frm_xclr_cntrllr.busy">
+        <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+        </div>
+    </div>

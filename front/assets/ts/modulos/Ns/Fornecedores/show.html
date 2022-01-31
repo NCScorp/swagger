@@ -1,0 +1,63 @@
+<div class="height-full layout-list">    
+            <nsj-headline>
+        <div class="nsfornecedoresshow-container-headline">
+            <div class="btn-upload-imagem">
+                <div class="imagem-fornecedor-container">
+                    <div class="icone-vazio-container" ng-if="!ns_frncdrs_frm_shw_cntrllr.entity.pathlogo">
+                        <i class="fas fa-image icone-imagem-vazio" ></i>
+                    </div>
+                    
+                    <img class="img-fornecedor" ng-if="ns_frncdrs_frm_shw_cntrllr.entity.pathlogo" 
+                        ng-src="{{ns_frncdrs_frm_shw_cntrllr.entity.pathlogo}}">
+                </div>
+                <div class="mensagem-mouseover" ng-click="ns_frncdrs_frm_shw_cntrllr.abrirModalUploadLogo()">
+                    <i class="fas fa-pen icone"></i>
+                    <span>Atualizar imagem</span>
+                </div>
+            </div>
+            <div class="info-fornecedor-container">
+                <div class="title-fornecedor">
+                    <h2 class="nome-fornecedor">{{ ns_frncdrs_frm_shw_cntrllr.entity.razaosocial }}</h2>
+                    <span class="label label-default label-status-fornecedor" ng-class='{"label-success": ns_frncdrs_frm_shw_cntrllr.entity.status === "0","label-danger": ns_frncdrs_frm_shw_cntrllr.entity.status !== "0", }'>
+                        <span ng-bind="[&quot;Ativa&quot;,&quot;Suspensa&quot;,&quot;Banida&quot;][ns_frncdrs_frm_shw_cntrllr.entity.status]"></span>
+                    </span>
+                </div>
+                <div class="acoes">
+                    
+                    <button tem-permissao="ns_fornecedores_suspender" type="button" class="btn btn-sm btn-acao btn-suspender btn-geral" ng-if="   !(ns_frncdrs_frm_shw_cntrllr.entity.status !== '0')" ng-click="ns_frncdrs_frm_shw_cntrllr.suspender(ns_frncdrs_frm_shw_cntrllr.entity)">
+                        <i class="fas fa-fas fa-ban"></i>
+                        <span>Suspender</span>
+                    </button>
+                    <button tem-permissao="ns_fornecedores_fornecedorreativar" type="button" class="btn btn-sm btn-acao btn-remover-suspensao btn-geral" ng-if="   !(ns_frncdrs_frm_shw_cntrllr.entity.status === '0')" ng-click="ns_frncdrs_frm_shw_cntrllr.fornecedorreativar(ns_frncdrs_frm_shw_cntrllr.entity)">
+                        <span>Remover Suspensão</span>
+                    </button>
+                    <button tem-permissao="ns_fornecedores_fornecedoradvertir" type="button" class="btn btn-sm btn-acao btn-advertir btn-geral" ng-click="ns_frncdrs_frm_shw_cntrllr.fornecedoradvertir(ns_frncdrs_frm_shw_cntrllr.entity)">
+                        <i class="fas fa-fas fa-exclamation-triangle"></i>
+                        <span>Advertir</span>
+                    </button>
+        
+                            
+                    <button tem-permissao="ns_fornecedores_put" type="button" class="btn btn-sm btn-acao btn-edit" ui-sref="ns_fornecedores_edit({ 'fornecedor' : ns_frncdrs_frm_shw_cntrllr.entity.fornecedor})">
+                        <i class="fas fa-edit"></i>
+                        <span class="hidden-xs">Editar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+	</nsj-headline>
+<div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : ns_frncdrs_frm_shw_cntrllr.busy }">
+        <div class="nsj-form-view top-buffer bottom-buffer">
+            <ns-fornecedores-show-show entity="ns_frncdrs_frm_shw_cntrllr.entity" action="ns_frncdrs_frm_shw_cntrllr.action" busy="ns_frncdrs_frm_shw_cntrllr.busy" constructors="ns_frncdrs_frm_shw_cntrllr.constructors"></ns-fornecedores-show-show>
+                                </div>
+        
+<div class="form-group pull-left">
+        
+        
+            </div>        <div class="content-loading"  ng-if="ns_frncdrs_frm_shw_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+        </div>
+    </div>
+</div>

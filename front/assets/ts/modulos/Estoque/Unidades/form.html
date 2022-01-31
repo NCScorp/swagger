@@ -1,0 +1,48 @@
+<div class="height-full layout-list">
+  <form
+    nsj-focus
+    name="stq_ndds_frm_cntrllr.form"
+    novalidate="novalidate"
+    ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : stq_ndds_frm_cntrllr.busy }"
+    role="form"
+    ng-submit="stq_ndds_frm_cntrllr.submit()"
+    class="height-full"
+  >
+    <nsj-headline headline-title="Unidade " headline-sub="true">
+      <ul class="list-unstyled list-inline pull-right">
+        <li>
+          <div class="form-group pull-right">
+            <button
+              type="button"
+              ng-click="stq_ndds_frm_cntrllr.submit()"
+              ng-class="{loading:stq_ndds_frm_cntrllr.entity.$$__submitting}"
+              ng-disabled="stq_ndds_frm_cntrllr.entity.$$__submitting || stq_ndds_frm_cntrllr.form.$pristine"
+              class="btn btn-sm btn-warning btn-save btn-geral"
+            >
+              <i class="fa fa-check"></i> Salvar
+            </button>
+
+            <a class="btn btn-sm btn-default" ui-sref="estoque_unidades({})"
+              ><i class="fa fa-times" aria-hidden="true"></i> Descartar</a
+            >
+          </div>
+        </li>
+      </ul>
+    </nsj-headline>
+    <div class="nsj-form padding-content">
+      <estoque-unidades-default
+        entity="stq_ndds_frm_cntrllr.entity"
+        form="stq_ndds_frm_cntrllr.form"
+        busy="stq_ndds_frm_cntrllr.busy"
+        action="stq_ndds_frm_cntrllr.action"
+        constructors="stq_ndds_frm_cntrllr.constructors"
+      ></estoque-unidades-default>
+    </div>
+    <div class="content-loading" ng-if="stq_ndds_frm_cntrllr.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </form>
+</div>

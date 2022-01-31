@@ -1,0 +1,422 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <uib-tabset class='top-buffer aba-ativa'>
+        <uib-tab heading="Dados Gerais">
+            <div class="row ">
+                <div class="col-sm-12">
+                    <fieldset style="margin-bottom: 0px;">
+                        <legend>
+                            Dados Gerais
+                        </legend>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <div class="form-group"><label class="control-label" for="nomefantasia">Nome
+                                        Fantasia</label><input type='text' class="form-control" id="nomefantasia"
+                                        name="nomefantasia" maxlength="150" ng-model="$ctrl.entity.nomefantasia"
+                                        ng-disabled="$ctrl.entity.$$__submitting"
+                                        ng-required="($ctrl.entity.$$__submitting) !== true" />
+                                    <div ng-messages="$ctrl.form.nomefantasia.$error"
+                                        ng-if="$ctrl.form.nomefantasia.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+
+
+                                            O campo Nome Fantasia aceita no máximo 150 caracteres
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+                                            O campo Nome Fantasia não pode ser vazio
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group"><label class="control-label" for="razaosocial">Razão
+                                        Social</label><input type='text' class="form-control" id="razaosocial"
+                                        name="razaosocial" maxlength="150" ng-model="$ctrl.entity.razaosocial"
+                                        ng-disabled="$ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting"
+                                        ng-required="($ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting) !== true" />
+                                    <div ng-messages="$ctrl.form.razaosocial.$error"
+                                        ng-if="$ctrl.form.razaosocial.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+
+
+                                            O campo Razão Social aceita no máximo 150 caracteres
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+                                            O campo Razão Social não pode ser vazio
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-sm-6">
+                                <div class="form-group"><label class="control-label" for="codigo">Código</label><input
+                                        type='text' class="form-control" id="codigo" name="codigo" maxlength="30"
+                                        ng-model="$ctrl.entity.codigo"
+                                        ng-disabled="$ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting"
+                                        ng-required="($ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting) !== true" />
+                                    <div ng-messages="$ctrl.form.codigo.$error"
+                                        ng-if="$ctrl.form.codigo.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+
+
+                                            O campo Código aceita no máximo 30 caracteres
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+                                            O campo Código não pode ser vazio
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" ng-if="$ctrl.entity.cadastro !== 3">
+                                <div class="form-group">
+                                    <label class="control-label" for="cadastro">Cadastro</label>
+                                    <select class="form-control" id="cadastro"
+                                        name="cadastro" ng-model="$ctrl.entity.cadastro"
+                                        ng-disabled="$ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting"
+                                        convert-to-number=" " convert-to-number
+                                        ng-required="($ctrl.entity.$$__submitting) !== true">
+                                        <option value="1">CNPJ</option>
+                                        <option value="2">CPF</option>
+                                    </select>
+                                    <div ng-messages="$ctrl.form.cadastro.$error"
+										ng-if="$ctrl.form.cadastro.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+											O campo Cadastro não pode ser vazio
+										</div>
+									</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" ng-if="$ctrl.entity.cadastro === 2">
+                                <div class="form-group">
+                                    <label class="control-label" for="cpf">CPF</label>
+                                    <input
+                                        type='cpf' class="form-control" id="cpf" name="cpf" placeholder="___.___.___-__"
+                                        maxlength="18" ng-model="$ctrl.entity.cpf"
+                                        ng-disabled="$ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting"
+                                        ng-required="($ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting) !== true"
+                                        ui-br-cpf-mask />
+                                    <div ng-messages="$ctrl.form.cpf.$error"
+                                        ng-if="$ctrl.form.cpf.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="cpf"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+                                            CPF inválido.
+
+
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+
+
+                                            O campo CPF aceita no máximo 11 caracteres
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+                                            O campo CPF não pode ser vazio
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" ng-if="$ctrl.entity.cadastro === 1">
+                                <div class="form-group">
+                                    <label class="control-label" for="cnpj">CNPJ</label>
+                                    <input
+                                        type='cnpj' class="form-control" id="cnpj" name="cnpj"
+                                        placeholder="___.___.___/____-__" maxlength="18" ng-model="$ctrl.entity.cnpj"
+                                        ng-disabled="$ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting"
+                                        ng-required="($ctrl.entity.cliente||$ctrl.entity.cliente||$ctrl.entity.$$__submitting) !== true"
+                                        ui-br-cnpj-mask />
+                                    <div ng-messages="$ctrl.form.cnpj.$error"
+                                        ng-if="$ctrl.form.cnpj.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="cnpj"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+                                            CNPJ inválido.
+
+
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+
+
+                                            O campo CNPJ aceita no máximo 18 caracteres
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+                                            O campo CNPJ não pode ser vazio
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group"><label class="control-label" for="inscricaomunicipal">Inscrição
+                                        Municipal</label><input type='text' class="form-control" id="inscricaomunicipal"
+                                        name="inscricaomunicipal" maxlength="20"
+                                        ng-model="$ctrl.entity.inscricaomunicipal"
+                                        ng-disabled="$ctrl.entity.$$__submitting" />
+                                    <div ng-messages="$ctrl.form.inscricaomunicipal.$error"
+                                        ng-if="$ctrl.form.inscricaomunicipal.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                                                class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                class="sr-only">Erro:</span>
+
+
+                                            O campo Inscrição Municipal aceita no máximo 20 caracteres
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group"><label class="control-label" for="formapagamento">Forma de
+                                        Pagamento Padrão</label>
+                                    <nsj-lookup name="formapagamento" id-name="formapagamento"
+                                        factory="NsFormaspagamentos" ng-model="$ctrl.entity.formapagamento"
+                                        max-label="1" constructor="{  }" config='{ "descricao":"Descrição",  }'
+                                        disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group"><label class="control-label" for="contas">Conta</label>
+                                    <nsj-lookup name="contas" id-name="contas"
+                                        factory="FinancasContas" ng-model="$ctrl.entity.conta"
+                                        max-label="1" constructor="{  }" config='{ "nome":"Conta",  }'
+                                        disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                            class="control-label" for="realizapagamentoempresas"><input type='checkbox' class=""
+                                id="realizapagamentoempresas" name="realizapagamentoempresas"
+                                ng-model="$ctrl.entity.realizapagamentoempresas"
+                                ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                            Seguradora realiza pagamento a empresas
+                        </label></div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                            class="control-label" for="seguradora"><input type='checkbox' class="" id="seguradora"
+                                name="seguradora" ng-model="$ctrl.entity.seguradora"
+                                ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                            Seguradora
+                        </label></div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Contatos">
+            <div class="row ">
+                <div class="col-sm-12 tabela-contatos">
+                    <nsj-objectlist key="nome" ng-prop-columns="$ctrl.contatosConfig"
+                        ng-prop-config="$ctrl.montaListaContatos" ng-prop-list="$ctrl.entity.contatos"
+                        ng-on-list_change="$ctrl.atualizaContatos($event.detail.data)">
+                        <div>
+                            <fieldset style="margin-bottom: 0px;">
+                                <legend>
+                                    Contatos
+                                </legend>
+                            </fieldset>
+                            <div class="pull-right bottom-buffer">
+                                <a class="btn btn-md btn-warning botao-add-table" ng-click="$ctrl.NsContatosForm()">
+                                    <i class="fas fa-plus"></i>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                    </nsj-objectlist>
+
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Endereços">
+            <div class="row ">
+                <div class="col-sm-12 tabela-enderecos">
+                    <nsj-objectlist 
+                        key="nome" 
+                        ng-prop-columns="$ctrl.enderecosConfig"
+                        ng-prop-config="$ctrl.montaListaEnderecos" 
+                        ng-prop-list="$ctrl.entity.endereco"
+                        ng-on-list_change="$ctrl.atualizaEnderecos($event.detail.data)"
+                    >
+                        <div>
+                            <fieldset style="margin-bottom: 0px;">
+                                <legend>
+                                    Endereços
+                                </legend>
+                            </fieldset>
+                            <div class="pull-right bottom-buffer">
+                                <a class="btn btn-md btn-warning botao-add-table" ng-click="$ctrl.nsEnderecosForm()">
+                                    <i class="fas fa-plus"></i>
+                                    Adicionar
+                                </a>
+                            </div>
+                        </div>
+                    </nsj-objectlist>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Dados Bancários">
+            <fieldset style="margin-bottom: 0px;">
+                <legend>
+                    Dados Bancários
+                </legend>
+            </fieldset>
+            <div class="row ">
+                <div class="col-sm-6">
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <label class="control-label" for="diasparavencimento" style="margin-top: 15px;">Vencimento do pagamento em:</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <input type='number' class="form-control" id="diasparavencimento"
+                            name="diasparavencimento" ng-model="$ctrl.entity.diasparavencimento"
+                            ng-disabled="$ctrl.entity.$$__submitting" min="1" />
+                    </div>
+                </div>
+                <label class="control-label label-diasvencimento" for="diasparavencimento" style="margin-top: 5px;">Dia(s)</label>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Tipos de Atividade">
+            <fieldset style="margin-bottom: 0px;">
+                <legend>
+                    Tipos de Atividade
+                </legend>
+            </fieldset>
+            <div class="row ">
+                <div class="col-sm-12 tabela-tipo-atividades">
+
+                    <nsj-objectlist ng-on-list_change="$ctrl.atualizaTiposatividades($event.detail.data)"
+                        ng-prop-columns="$ctrl.tiposatividadeConfig" ng-prop-config="$ctrl.montaListaTiposatividades"
+                        ng-prop-entity="$ctrl.tipoatividade" ng-prop-list="$ctrl.entity.tiposatividades">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="object-list-add">
+                                    <ng-form class="form-add clearfix" inner-form name="oblistctrl.form" role="form">
+                                        <div class="box-add" style="border: 0px; padding-left: 0px;">
+                                            <div class="align-itens clearfix">
+                                                <div class="clearfix inputs-area">
+                                                    <ns-pessoastiposatividades-default
+                                                        collection="$ctrl.entity.tiposatividades"
+                                                        constructors="{ 'pessoa' : $ctrl.entity.pessoa,  }"
+                                                        entity="$ctrl.tipoatividade" form="oblistctrl.form"
+                                                        change="$ctrl.add(tipoatividade)">
+                                                    </ns-pessoastiposatividades-default>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-form>
+                                </div>
+                            </div>
+                        </div>
+                    </nsj-objectlist>
+
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Documentos">
+            <div class="row ">
+                <div class="col-sm-12 tabela-documentos">
+                    <nsj-objectlist 
+                        key="clientedocumento" 
+                        ng-prop-columns="$ctrl.documentosConfig"
+                        ng-prop-config="$ctrl.montaListaDocumentos" 
+                        ng-prop-list="$ctrl.entity.clientesdocumentos"
+                        ng-on-list_change="$ctrl.atualizaDocumentos($event.detail.data)"
+                    >
+                        <div>
+                            <fieldset style="margin-bottom: 0px;">
+                                <legend>
+                                    Documentos
+                                </legend>
+                            </fieldset>
+                            <div class="pull-right bottom-buffer">
+                                <a class="btn btn-md btn-warning botao-add-table" ng-click="$ctrl.nsClientesdocumentosForm(service.constructors)">
+                                    <i class="fas fa-plus"></i> Adicionar
+                                </a>
+                            </div>
+                        </div>
+                    </nsj-objectlist>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Anotações">
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <fieldset style="margin-bottom: 0px;">
+                            <legend>
+                                Anotações
+                            </legend>
+                        </fieldset>
+                        <textarea class="form-control" rows="15" id="anotacao" name="anotacao"
+                            ng-model="$ctrl.entity.anotacao" ng-disabled="$ctrl.entity.$$__submitting"></textarea>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Anexos">
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <fieldset style="margin-bottom: 0px;">
+                            <legend>
+                                Anexos
+                            </legend>
+                        </fieldset>
+
+                        <ns-dropzone 
+                            model="$ctrl.modelDropzone"
+                            options="$ctrl.optionsDropzone"
+                            add-file="$ctrl.addFile(file)"
+                            remove-file="$ctrl.removeFile(file)"
+                            success-file="$ctrl.successFile(response)"
+                            error-file="$ctrl.errorFile(response)"
+                        ></ns-dropzone>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</form>

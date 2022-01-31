@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="contasfornecedores" label="contasfornecedores" orphan="false" project="financas">
+    <entity schema="financas" table="contasfornecedores">
+        <fieldmodel name="contafornecedor" datatype="guid" isid="true" column="contafornecedor"/>
+        <fieldmodel name="banco" datatype="string"  column="banco"/>
+        <fieldmodel name="id_banco" datatype="guid"  column="banco" useCaseLink="financas\bancos" entityJoinType="left" notMapped="true"/>
+        <fieldmodel name="agencianome" datatype="string"  column="agencianome"/>
+        <fieldmodel name="agencianumero" datatype="string"  column="agencianumero"/>
+        <fieldmodel name="agenciadv" datatype="string"  column="agenciadv"/>
+        <fieldmodel name="contanumero" datatype="string"  column="contanumero"/>
+        <fieldmodel name="contadv" datatype="string"  column="contadv"/>
+        <fieldmodel name="tipoconta" datatype="integer" column="tipoconta">
+          <options> {"1":"Conta Corrente","2":"Conta Poupança"} </options>
+        </fieldmodel>
+        <fieldmodel name="fornecedor" datatype="guid"  column="id_fornecedor" />
+        <fieldmodel name="padrao" datatype="boolean"  column="padrao"/>
+        <fieldmodel name="excluida" datatype="boolean"  column="excluida"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+        <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+        <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">fornecedor</constructoritem>
+      <constructoritem filter="true" filtercondition="eq" filtervalue="false">excluida</constructoritem>
+    </constructors>
+    <viewbrowser label="Contas" layout="list" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="contafornecedor" isid="true" visible="false"/>
+            <fieldbrowser entitylink="fornecedor" visible="false"/>
+            <fieldbrowser alias="Padrão" entitylink="padrao" visible="true"/>
+            <fieldbrowser alias="Banco" entitylink="banco" visible="true"/>
+            <fieldbrowser alias="Agência" entitylink="agencianome" visible="true"/>
+            <fieldbrowser alias="Agência Número" entitylink="agencianumero" visible="true"/>
+            <fieldbrowser alias="Agência DV" entitylink="agenciadv" visible="true"/>
+            <fieldbrowser alias="Conta" entitylink="contanumero" visible="true"/>
+            <fieldbrowser alias="Conta DV" entitylink="contadv"  visible="true" />
+            <fieldbrowser alias="Tipo Conta" entitylink="tipoconta"  visible="false" />
+            <fieldbrowser entitylink="excluida" visible="false"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Dados Bancários">
+          <layout>
+            <headerform>
+              <row>
+              <cell name="banco" controltype="textedit" label="Banco" colspan="0" entitylink="banco"/>
+              <cell name="Banco" controltype="lookup" label="Banco" colspan="4" entitylink="id_banco" fielddetaillookup="{'nome':'Nome', 'numero':'Número'}" amountfieldslookup="2">
+                    <validates>
+                      <validate type="vnull" displaytext="O campo Banco da listagem de Dados Bancários não pode ser vazio"/>
+                    </validates>
+                  </cell>
+              </row>
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Agência"/>
+                    <row>
+                      <cell name="agencianome" controltype="textedit" label="Nome" colspan="6" entitylink="agencianome">
+                        <validates>
+                          <validate type="maxlength" value="50" displaytext="O campo Nome aceita no máximo 50 caracteres"/>
+                        </validates>
+                      </cell>
+                      <cell name="agencianumero" controltype="textedit" label="Número" colspan="6" entitylink="agencianumero">
+                        <validates>
+                          <validate type="maxlength" value="10" displaytext="O campo Número aceita no máximo 10 caracteres"/>
+                          <validate type="vnull" displaytext="O campo Número da Agência da listagem de Dados Bancários não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                      <cell name="agenciadv" controltype="textedit" label="DV" colspan="6" entitylink="agenciadv">
+                        <validates>
+                          <validate type="maxlength" value="5" displaytext="O campo DV aceita no máximo 5 caracteres"/>
+                        </validates>
+                      </cell>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row> 
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Conta"/>
+                    <row>
+                      <cell name="tipoconta" controltype="combobox" label="Tipo de Conta" colspan="6" entitylink="tipoconta">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Tipo de Conta da listagem de Dados Bancários não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                    </row>
+                    <row>  
+                      <cell name="contanumero" controltype="textedit" label="Número" colspan="6" entitylink="contanumero">
+                        <validates>
+                          <validate type="maxlength" value="20" displaytext="O campo Número aceita no máximo 20 caracteres"/>
+                          <validate type="vnull" displaytext="O campo Número da Conta da listagem de Dados Bancários não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                      <cell name="contadv" controltype="textedit" label="DV" colspan="6" entitylink="contadv">
+                        <validates>
+                          <validate type="maxlength" value="5" displaytext="O campo DV aceita no máximo 5 caracteres"/>
+                          <validate type="vnull" displaytext="O campo DV da listagem de Dados Bancários não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row> 
+              <row> 
+                <cell name="padrao" controltype="checkbox" label="Conta principal" colspan="6" entitylink="padrao"/>
+              </row> 
+            </headerform>
+          </layout>
+      </form>
+      <form name="show" label="Dados Bancários">
+          <layout>
+            <headerform>
+              <row>
+                  <cell name="banco" controltype="textedit" label="Banco" colspan="4" entitylink="banco">
+                    <validates>
+                      <validate type="maxlength" value="3" displaytext="O campo Banco aceita no máximo 3 caracteres"/>
+                      <validate type="vnull" displaytext="O campo Banco não pode ser vazio"/>
+                    </validates>
+                  </cell>
+              </row>
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Agência"/>
+                    <row>
+                      <cell name="agencianome" controltype="textedit" label="Nome" colspan="6" entitylink="agencianome">
+                        <validates>
+                          <validate type="maxlength" value="50" displaytext="O campo Nome aceita no máximo 50 caracteres"/>
+                        </validates>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell name="agencianumero" controltype="textedit" label="Número" colspan="6" entitylink="agencianumero">
+                        <validates>
+                          <validate type="maxlength" value="10" displaytext="O campo Número aceita no máximo 10 caracteres"/>
+                          <validate type="vnull" displaytext="O campo Número não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell name="agenciadv" controltype="textedit" label="DV" colspan="6" entitylink="agenciadv">
+                        <validates>
+                          <validate type="maxlength" value="5" displaytext="O campo DV aceita no máximo 5 caracteres"/>
+                          <validate type="vnull" displaytext="O campo DV não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row> 
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Conta"/>
+                    <row>
+                      <cell name="tipoconta" controltype="combobox" label="Tipo de Conta" colspan="6" entitylink="tipoconta">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Tipo de Conta não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell name="contanumero" controltype="textedit" label="Número" colspan="6" entitylink="contanumero">
+                        <validates>
+                          <validate type="maxlength" value="20" displaytext="O campo Número aceita no máximo 20 caracteres"/>
+                          <validate type="vnull" displaytext="O campo Número não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell name="contadv" controltype="textedit" label="DV" colspan="6" entitylink="contadv">
+                        <validates>
+                          <validate type="maxlength" value="5" displaytext="O campo DV aceita no máximo 5 caracteres"/>
+                          <validate type="vnull" displaytext="O campo DV não pode ser vazio"/>
+                        </validates>
+                      </cell>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row> 
+              <row> 
+                <cell name="padrao" controltype="checkbox" label="Conta principal" colspan="6" entitylink="padrao"/>
+              </row> 
+            </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action form="show">
+          <name>retrieve</name>
+        </action>
+        <action>
+          <name>insert</name>
+          <api>
+            <name>ContaFornecedorNovo</name>
+            <fromto valueapi="banco" valueentity="banco"/>
+            <fromto valueapi="agencianumero" valueentity="agencianumero"/>
+            <fromto valueapi="agenciadv" valueentity="agenciadv"/>
+            <fromto valueapi="agencianome" valueentity="agencianome"/>
+            <fromto valueapi="contanumero" valueentity="contanumero"/>
+            <fromto valueapi="contadv" valueentity="contadv"/>
+            <fromto valueapi="tipoconta" valueentity="tipoconta"/>
+            <fromto valueapi="id_fornecedor" valueentity="fornecedor"/>
+            <fromto valueapi="padrao" valueentity="padrao"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+          </api>
+        </action>
+        <action>
+          <name>update</name>
+          <api>
+            <name>ContaFornecedorAlterar</name>
+            <fromto valueapi="contafornecedor" valueentity="contafornecedor"/>
+            <fromto valueapi="banco" valueentity="banco"/>
+            <fromto valueapi="agencianumero" valueentity="agencianumero"/>
+            <fromto valueapi="agenciadv" valueentity="agenciadv"/>
+            <fromto valueapi="agencianome" valueentity="agencianome"/>
+            <fromto valueapi="contanumero" valueentity="contanumero"/>
+            <fromto valueapi="contadv" valueentity="contadv"/>
+            <fromto valueapi="tipoconta" valueentity="tipoconta"/>
+            <fromto valueapi="id_fornecedor" valueentity="fornecedor"/>
+            <fromto valueapi="padrao" valueentity="padrao"/>
+            <fromto valueapi="updated_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+          </api>
+        </action>
+        <action>
+          <name>delete</name>
+          <api>
+            <name>ContaFornecedorExcluir</name>
+            <fromto valueapi="contafornecedor" valueentity="contafornecedor"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+          </api>
+        </action>
+    </actions>
+</nsjusecase>

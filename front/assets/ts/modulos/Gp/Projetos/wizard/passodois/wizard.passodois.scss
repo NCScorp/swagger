@@ -1,0 +1,29 @@
+.form-detalhes-projeto {
+  padding: 10px 50px;
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  background-color: white;
+
+  .cell-data-inicio {
+    padding-left: 0px;
+  }
+
+  .cell-data-fim {
+    padding-right: 0px;
+  }
+
+  .cell-horas-planejadas {
+    padding-left: 0px;
+  }
+
+  //Inputs de data do formulário
+  .cels-datas-input {
+    display: table;
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  .indica-campo-obrigatorio {
+    color: red;
+  }
+}

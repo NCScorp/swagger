@@ -1,0 +1,76 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        ng-click="crm_cntrt_pgnt_cs_mdl_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Aplicar modo de divisão em massa</h3>
+</div>
+<form nsg-focus name="crm_cntrt_pgnt_cs_mdl_cntrllr.form" novalidate="novalidate" role="form"
+    ng-submit="crm_cntrt_pgnt_cs_mdl_cntrllr.submit()">
+    <div class="modal-body" id="modal-body">
+        <p>Ao aplicar a ação em massa para 
+            <strong>{{crm_cntrt_pgnt_cs_mdl_cntrllr.entity.nomeExibicaoItem}}</strong>, 
+            <span ng-if="crm_cntrt_pgnt_cs_mdl_cntrllr.entity.nomeExibicaoItem == 'todos os itens'">todos os serviços e produtos terão seus modos de divisão redefinidos.</span>
+            <span ng-if="crm_cntrt_pgnt_cs_mdl_cntrllr.entity.nomeExibicaoItem != 'todos os itens'">todos serviços ou produtos nele contidos, terão seus modos de divisão redefinidos.</span>
+        </p>
+        <div class="form-group">
+            <label>Modo de divisão</label>
+            <select class="form-control" name="modoDivisao" id="modoDivisao"
+                ng-change="crm_cntrt_pgnt_cs_mdl_cntrllr.resetaSelecionados()"
+                ng-model="crm_cntrt_pgnt_cs_mdl_cntrllr.tipoDivisao"
+                ng-selected="crm_cntrt_pgnt_cs_mdl_cntrllr.tipoDivisao"
+                ng-options="modo as modo.label for modo in crm_cntrt_pgnt_cs_mdl_cntrllr.entity.modoDivisao track by modo.valor"></select>
+        </div>
+        <section id="formAplicarEmMassa">
+            <table class="table table-striped table-hover table-condensed nsj-table">
+                <thead>
+                    <tr>
+                        <th>Responsáveis financeiros</th>
+                        <th> CPF/CNPJ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in crm_cntrt_pgnt_cs_mdl_cntrllr.entity.responsaveisFinanceiros">
+                        <td>
+                            <div class="custom-radio radio checkbox"
+                                ng-if="crm_cntrt_pgnt_cs_mdl_cntrllr.tipoDivisao.valor === 'semDivisao'">
+                                <label>
+                                    <input type="radio" name="responsavelfinanceiro"
+                                        ng-model="crm_cntrt_pgnt_cs_mdl_cntrllr.selecionado"
+                                        ng-value="item.responsavelfinanceiro"
+                                        ng-change="crm_cntrt_pgnt_cs_mdl_cntrllr.manipularResponsabilidade(item.responsavelfinanceiro ,$event)">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+
+                            <nsj-checkbox ng-if="crm_cntrt_pgnt_cs_mdl_cntrllr.tipoDivisao.valor !== 'semDivisao'"
+                                type="checkbox"
+                                name="responsavelfinanceiro{{item.responsavelfinanceiro.cliente}}"
+                                ng-on-ns_change="crm_cntrt_pgnt_cs_mdl_cntrllr.manipularResponsabilidade(item.responsavelfinanceiro ,$event)">
+                            </nsj-checkbox>
+                            {{item.responsavelfinanceiro.nomefantasia || item.responsavelfinanceiro.razaosocial}}
+                        </td>
+                        <td>
+                            {{item.responsavelfinanceiro.cpf || item.responsavelfinanceiro.cnpj}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-right">
+            <a class="btn btn-sm" ng-click="crm_cntrt_pgnt_cs_mdl_cntrllr.close()"><i class="fa fa-times"
+                    aria-hidden="true"></i> Fechar</a>
+            <button type="submit" name="submit"
+                ng-disabled="crm_cntrt_pgnt_cs_mdl_cntrllr.form.$pristine || crm_cntrt_pgnt_cs_mdl_cntrllr.entity.$$__submitting"
+                class="btn btn-warning" ng-class="{loading:crm_cntrt_pgnt_cs_mdl_cntrllr.entity.$$__submitting}">
+                Aplicar modo de divisão
+            </button>
+        </div>
+    </div>
+</form>
+<div class="content-loading" ng-if="crm_cntrt_pgnt_cs_mdl_cntrllr.busy">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>

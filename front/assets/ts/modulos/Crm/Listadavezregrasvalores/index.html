@@ -1,0 +1,60 @@
+<div ng-class="{'nsj-loading-page' : crm_lstdvzrgrsvlrs_lst_cntrllr.busy }"
+    class='crm_listadavezregrasvalores nsj-layout '>
+    <div class="nsj-aside-list height-full col-md-12"
+        ng-class="{ 'hidden-sm hidden-xs' : (('crm_listadavezregrasvalores_show'| isStateEq) || ('crm_listadavezregrasvalores_edit'| isStateEq) || ('crm_listadavezregrasvalores_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+                <nsj-headline headline-title="Itens da Regra"
+                    ng-class="{ 'hidden-sm hidden-xs' : (('crm_listadavezregrasvalores_show'| isStateEq) || ('crm_listadavezregrasvalores_edit'| isStateEq) || ('crm_listadavezregrasvalores_new'| isStateEq ))}">
+                </nsj-headline>
+
+                <nsj-toolbar ng-on-change_toolbar="crm_lstdvzrgrsvlrs_lst_cntrllr.search($event.detail)" search="false"
+                    refresh="true" holder="Busca" model-search="{{crm_lstdvzrgrsvlrs_lst_cntrllr.service.filter}}"
+                    select="{{crm_lstdvzrgrsvlrs_lst_cntrllr.selectPage && crm_lstdvzrgrsvlrs_lst_cntrllr.selected.length === crm_lstdvzrgrsvlrs_lst_cntrllr.entities.length && !crm_lstdvzrgrsvlrs_lst_cntrllr.selectAll && !crm_lstdvzrgrsvlrs_lst_cntrllr.service.loadParams.finished}}"
+                    select-all="{{crm_lstdvzrgrsvlrs_lst_cntrllr.selectAll}}"
+                    item-in-page="{{crm_lstdvzrgrsvlrs_lst_cntrllr.entities.length}}"
+                    item-all="{{crm_lstdvzrgrsvlrs_lst_cntrllr.entities[0].full_count}}">
+                </nsj-toolbar>
+                <div class="panel-body height-full">
+                    <div class="list-group" id="crm_listadavezregrasvalores_list"
+                        infinite-scroll='crm_lstdvzrgrsvlrs_lst_cntrllr.nextPage()'
+                        infinite-scroll-disabled='crm_lstdvzrgrsvlrs_lst_cntrllr.isBusy()' infinite-scroll-distance='1'>
+                        <a href
+                            ui-sref='crm_listadavezregrasvalores_show({listadavezregra : crm_lstdvzrgrsvlrs_lst_cntrllr.constructors.listadavezregra,listadavezregravalor : entity.listadavezregravalor})'
+                            class="list-group-item" ng-repeat="entity in crm_lstdvzrgrsvlrs_lst_cntrllr.entities"
+                            ui-sref-active="active">
+
+                            <h4 class="list-group-item-heading">
+                                {{ entity.nome }}
+                            </h4>
+                            <p class="list-group-item-text"><strong>Valor:</strong>
+                                {{ entity.valor }}
+                            </p>
+                        </a>
+                        <p class="list-group-item"
+                            ng-if="!crm_lstdvzrgrsvlrs_lst_cntrllr.finished && (crm_lstdvzrgrsvlrs_lst_cntrllr.service.to_load <= 0)">
+                            <a href="" ng-click="crm_lstdvzrgrsvlrs_lst_cntrllr.loadMore()">Ver mais...</a>
+                        </p>
+                        <p class="text-center article-loading height-full"
+                            ng-class="{'onloading' : crm_lstdvzrgrsvlrs_lst_cntrllr.isBusy() }"
+                            ng-if="crm_lstdvzrgrsvlrs_lst_cntrllr.isBusy()"></p>
+                        <p class="text-center nfound"
+                            ng-if="crm_lstdvzrgrsvlrs_lst_cntrllr.entities.length == 0 && !crm_lstdvzrgrsvlrs_lst_cntrllr.isBusy()">
+                            Nenhum dado encontrado</p>
+                    </div>
+
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+
+    <div class="content-loading" ng-if="crm_lstdvzrgrsvlrs_lst_cntrllr.busy">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+    </div>
+</div>

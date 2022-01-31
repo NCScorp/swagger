@@ -1,0 +1,70 @@
+<div class='operacoesdocumentostemplates nsj-layout '
+     ng-class="{'nsj-loading-page' : prcsdcmntstmplts_lst_cntrllr.busy }">
+    <div class="nsj-aside-list height-full col-md-12"
+         ng-class="{ 'hidden-sm hidden-xs' : (('operacoesdocumentostemplates_show'| isStateEq) || ('operacoesdocumentostemplates_edit'| isStateEq) || ('operacoesdocumentostemplates_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+                <nsj-headline headline-title="Operacões Documentos Templates"
+                              ng-class="{ 'hidden-sm hidden-xs' : (('operacoesdocumentostemplates_show'| isStateEq) || ('operacoesdocumentostemplates_edit'| isStateEq) || ('operacoesdocumentostemplates_new'| isStateEq ))}">
+
+                    <nsj-button class="hidden-xs" color="warning" icon="fa fa-plus" size="xs"
+                                ui-sref="operacoesdocumentostemplates_new({operacaoordemservico : prcsdcmntstmplts_lst_cntrllr.constructors.operacaoordemservico})"
+
+                    >
+                        Criar
+                    </nsj-button>
+                    <nsj-button class="hidden-sm hidden-md hidden-lg" color="warning" format="fixed circle" icon="fa fa-plus"
+                                size="lg"
+                                ui-sref="operacoesdocumentostemplates_new({operacaoordemservico : prcsdcmntstmplts_lst_cntrllr.constructors.operacaoordemservico})"
+
+                    >
+                        <span class="hidden-xs">Criar</span>
+                    </nsj-button>
+                </nsj-headline>
+
+                <nsj-toolbar holder="Busca" item-all="{{prcsdcmntstmplts_lst_cntrllr.entities[0].full_count}}"
+                             item-in-page="{{prcsdcmntstmplts_lst_cntrllr.entities.length}}" model-search="{{prcsdcmntstmplts_lst_cntrllr.service.filter}}"
+                             ng-on-change_toolbar="prcsdcmntstmplts_lst_cntrllr.search($event.detail)"
+                             refresh="true"
+                             search="true"
+                             select="{{prcsdcmntstmplts_lst_cntrllr.selectPage && prcsdcmntstmplts_lst_cntrllr.selected.length === prcsdcmntstmplts_lst_cntrllr.entities.length && !prcsdcmntstmplts_lst_cntrllr.selectAll && !prcsdcmntstmplts_lst_cntrllr.service.loadParams.finished}}"
+                             select-all="{{prcsdcmntstmplts_lst_cntrllr.selectAll}}">
+                </nsj-toolbar>
+                <div class="panel-body body-list">
+                    <div class="list-group" id="operacoesdocumentostemplates_list"
+                         infinite-scroll='prcsdcmntstmplts_lst_cntrllr.nextPage()'
+                         infinite-scroll-disabled='prcsdcmntstmplts_lst_cntrllr.isBusy()' infinite-scroll-distance='1'>
+                        <a class="list-group-item"
+                           href
+                           ng-repeat="entity in prcsdcmntstmplts_lst_cntrllr.entities" ui-sref='operacoesdocumentostemplates_show({operacaoordemservico : prcsdcmntstmplts_lst_cntrllr.constructors.operacaoordemservico,operacaodocumentotemplate : entity.operacaodocumentotemplate})'
+                           ui-sref-active="active">
+
+                            <h4 class="list-group-item-heading">
+                                {{ entity.created_by | asDate | date: "dd/MM/yyyy" }}
+                            </h4>
+                        </a>
+                        <p class="list-group-item"
+                           ng-if="!prcsdcmntstmplts_lst_cntrllr.finished && (prcsdcmntstmplts_lst_cntrllr.service.to_load <= 0)">
+                            <a href="" ng-click="prcsdcmntstmplts_lst_cntrllr.loadMore()">Ver mais...</a>
+                        </p>
+                        <p class="text-center article-loading height-full"
+                           ng-class="{'onloading' : prcsdcmntstmplts_lst_cntrllr.isBusy() }"
+                           ng-if="prcsdcmntstmplts_lst_cntrllr.isBusy()"></p>
+                        <p class="text-center nfound"
+                           ng-if="prcsdcmntstmplts_lst_cntrllr.entities.length == 0 && !prcsdcmntstmplts_lst_cntrllr.isBusy()">
+                            Nenhum dado encontrado</p>
+                    </div>
+
+                </div><!--/panel-body-->
+            </div><!--/panel-->
+        </div>
+    </div>
+
+    <div class="content-loading" ng-if="prcsdcmntstmplts_lst_cntrllr.busy">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd"
+    name="configuracoestaxasadministrativas" label="configuracoestaxasadministrativas" project="crm" >
+    <entity schema="crm" table="configuracoestaxasadministrativas">
+        <fieldmodel name="configuracaotaxaadm" datatype="guid" isid="true" column="configuracaotaxaadm"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" useCaseLink="ns\estabelecimentos" entityJoinType="left"/>
+        <fieldmodel name="seguradora" datatype="guid" column="seguradora" useCaseLink="ns\clientes" entityJoinType="left"/>
+        <fieldmodel name="itemfaturamento" datatype="guid" column="itemfaturamento" useCaseLink="servicos\itensdefaturamento" entityJoinType="left"/>
+        <fieldmodel name="formapagamento" datatype="guid" column="formapagamento" useCaseLink="ns\formaspagamentos" entityJoinType="left"/>
+        <fieldmodel name="municipioprestacao" datatype="guid" column="municipioprestacao"  useCaseLink="servicos\pessoasmunicipios" entityJoinType="left"/>
+        <fieldmodel name="pessoa" datatype="guid" notMapped="true"/>
+        <fieldmodel name="valor" datatype="moeda" column="valor"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+    </entity>
+    <constructors>
+      <constructoritem>tenant</constructoritem>
+      <constructoritem>id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser layout="table" paginate="true" target="window">
+        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="seguradora" maxoccurs="unbounded" visible="false">
+                    <conditions>
+                    <condition type="eq" />
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="estabelecimento" maxoccurs="unbounded" visible="false">
+                    <conditions>
+                    <condition type="eq" />
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="configuracaotaxaadm" isid="true" visible="false"/>
+            <fieldbrowser entitylink="id_grupoempresarial" />
+            <fieldbrowser entitylink="tenant" />
+            <fieldbrowser entitylink="estabelecimento" />
+            <fieldbrowser entitylink="seguradora" />
+            <fieldbrowser entitylink="itemfaturamento" />
+            <fieldbrowser entitylink="formapagamento" />
+            <fieldbrowser entitylink="municipioprestacao" />
+            <fieldbrowser entitylink="valor" />
+            <fieldbrowser entitylink="created_at" />
+            <fieldbrowser entitylink="created_by" />
+            <fieldbrowser entitylink="updated_at" />
+            <fieldbrowser entitylink="updated_by" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Configuração de taxa administrativa">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell controltype="lookup" label="estabelecimento" colspan="6" entitylink="estabelecimento" fielddetaillookup="nomefantasia">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo estabelecimento não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                        <cell controltype="lookup" label="seguradora" colspan="6" entitylink="seguradora" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="2">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo seguradora não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell controltype="lookup" label="itemfaturamento" colspan="6" entitylink="itemfaturamento" amountfieldslookup="2" fielddetaillookup="{'servico': 'Servico', 'descricao': 'Descricao'}">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo itemfaturamento não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                        <cell controltype="lookup" label="formapagamento" colspan="6" entitylink="formapagamento" fielddetaillookup="{'descricao':'Descrição'}" amountfieldslookup="1">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo formapagamento não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell controltype="lookup" label="municipioprestacao" colspan="6" entitylink="municipioprestacao" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo municipioprestacao não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                        <cell controltype="money" label="valor" colspan="6" entitylink="valor" amountfieldslookup="3">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo valor não pode ser vazio."/>
+                                <validate type="maxlength" value="11" displaytext="O campo Valor aceita no máximo 10 dígitos" />
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell controltype="textedit" label="pessoa" colspan="6" entitylink="pessoa">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo pessoa não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+            <name>retrieve</name>
+        </action>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>configuracaotaxaadministrativanovo</name>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="estabelecimento" valueentity ="estabelecimento"/>
+                <fromto valueapi="seguradora" valueentity ="seguradora"/>
+                <fromto valueapi="itemfaturamento" valueentity ="itemfaturamento"/>
+                <fromto valueapi="formapagamento" valueentity ="formapagamento"/>
+                <fromto valueapi="municipioprestacao" valueentity ="municipioprestacao"/>
+                <fromto valueapi="valor" valueentity ="valor"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>configuracaotaxaadministrativaalterar</name>
+                <fromto valueapi="configuracaotaxaadm" valueentity="configuracaotaxaadm"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="estabelecimento" valueentity ="estabelecimento"/>
+                <fromto valueapi="seguradora" valueentity ="seguradora"/>
+                <fromto valueapi="itemfaturamento" valueentity ="itemfaturamento"/>
+                <fromto valueapi="formapagamento" valueentity ="formapagamento"/>
+                <fromto valueapi="municipioprestacao" valueentity ="municipioprestacao"/>
+                <fromto valueapi="valor" valueentity ="valor"/>
+                <fromto valueapi="updated_by" valueentity ="logged_user"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>configuracaotaxaadministrativaexcluir</name>
+                <fromto valueapi="configuracaotaxaadm" valueentity="configuracaotaxaadm"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

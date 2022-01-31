@@ -1,0 +1,41 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="vendedor">Vendedor</label>
+                <nsj-lookup name="vendedor" id-name="vendedor_id" factory="NsVendedores"
+                    ng-model="$ctrl.entity.vendedor" max-label="1" constructor="{  }" config='{ "":"",  }'
+                    disabled="$ctrl.entity.$$__submitting" required="($ctrl.entity.$$__submitting) !== true">
+                </nsj-lookup>
+                <div ng-messages="$ctrl.form.vendedor.$error"
+                    ng-if="$ctrl.form.vendedor.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo vendedor não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="posicao">Posição</label><input type='text'
+                    class="form-control" id="posicao" name="posicao" ng-model="$ctrl.entity.posicao"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" "
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.posicao.$error" ng-if="$ctrl.form.posicao.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo posicao não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

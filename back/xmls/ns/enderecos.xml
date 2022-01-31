@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="enderecos" label="enderecos" project="ns" orphan="false">
+  <entity schema="ns" table="enderecos">
+    <fieldmodel name="endereco" datatype="guid" isid="true" column="endereco"/>
+    <fieldmodel name="cep" datatype="string"  column="cep"/>
+    <fieldmodel name= "tipologradouro" datatype="string" column="tipologradouro" useCaseLink="ns\tiposlogradouros" entityJoinType="left"/>
+    <fieldmodel name="rua" datatype="string"  column="logradouro"/>
+    <fieldmodel name="numero" datatype="string"  column="numero"/>
+    <fieldmodel name="complemento" datatype="string"  column="complemento"/>
+    <fieldmodel name="bairro" datatype="string"  column="bairro"/>
+    <fieldmodel name="referencia" datatype="string"  column="referencia"/>
+    <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    <fieldmodel name="id_pessoa" datatype="guid" column="id_pessoa"/>
+    <fieldmodel name="nome" datatype="string" column="nome"/>
+    <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+    <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+    <fieldmodel name="estado" datatype="string" column="uf" useCaseLink="ns\estados"  entityJoinType="left"/>
+    <fieldmodel name="pais" datatype="string" column="pais" useCaseLink="ns\paises"  entityJoinType="left"/>
+    <fieldmodel name="municipio" datatype="string" column="ibge" useCaseLink="ns\municipios"  entityJoinType="left"/>
+    <fieldmodel name="cidadeestrangeira" datatype="guid" column="cidadeestrangeira" useCaseLink="ns\cidadesestrangeiras" entityJoinType="left"/>
+    <fieldmodel name="tipoendereco" datatype="integer" column="tipoendereco">
+          <options> {"0":"Local","1":"Entrega","2":"Cobrança", "3":"Comercial"} </options>
+    </fieldmodel>
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem required="false">id_pessoa</constructoritem> <!-- Depreciado, verificar como substituir o required="false" sem quebrar o campo procurar local ao criar um novo negocio com localizacao ativa-->
+  </constructors>
+  <viewbrowser label="Enderecos" layout="list" paginate="true" target="window">
+      <filters style="fixed">
+        <fieldsfilters>
+          <fieldfilter entitylink="nome" visible="false"  maxoccurs='unbounded' >
+            <conditions>
+                <condition type="isNotNull"/>
+            </conditions>
+          </fieldfilter>
+        </fieldsfilters>
+      </filters>
+      <fieldsbrowser>
+          <fieldbrowser entitylink="endereco" isid="true" visible="false"/>
+          <fieldbrowser entitylink="id_pessoa" visible="false"/>
+          <fieldbrowser entitylink="nome" visible="true" alias="nome" cansearch="true"/>
+          <fieldbrowser entitylink="tipoendereco" visible="true" alias="Tipo de endereço"/>
+          <fieldbrowser entitylink="cep" visible="false" alias="cep"/>
+          <fieldbrowser entitylink="tipologradouro" visible="false" alias="tipologradouro"/>
+          <fieldbrowser entitylink="rua" visible="true" alias="rua"/>
+          <fieldbrowser entitylink="numero" visible="true" alias="Número"/>
+          <fieldbrowser entitylink="complemento" visible="false" alias="complemento"/>
+          <fieldbrowser entitylink="bairro" visible="false" alias="bairro"/>
+          <fieldbrowser entitylink="pais" visible="false" alias="pais"/>
+          <fieldbrowser entitylink="estado" visible="false" alias="estado"/>
+          <fieldbrowser entitylink="municipio" visible="false" alias="municipio"/>
+          <fieldbrowser entitylink="cidadeestrangeira" visible="false" alias="cidadeestrangeira"/>
+          <fieldbrowser entitylink="referencia" visible="false" alias="referencia"/>
+      </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Endereço">
+      <layout>
+        <headerform>
+        <row> 
+            <cell name="nome" controltype="textedit" label="Nome" colspan="6" entitylink="nome">
+              <validates>
+                  <!-- <validate type="vnull" displaytext="O campo Nome não pode ser vazio"/> -->
+                  <validate type="maxlength" value="150" displaytext="O campo Nome aceita no máximo 150 caracteres"/>
+              </validates>
+            </cell>
+            <cell name="tipoendereco" controltype="combobox" label="Tipo de Endereço" colspan="6" entitylink="tipoendereco">
+              <validates>
+                  <validate type="vnull" displaytext="O campo Tipo de Endereço não pode ser vazio"/>
+              </validates>
+            </cell>
+        </row>       
+          <row> 
+            <cell name="pais" controltype="lookup" label="País" colspan="4" entitylink="pais" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+              <validates>
+                  <validate type="vnull" displaytext="O campo País não pode ser vazio"/>
+              </validates>
+            </cell>
+            <cell name="estado" controltype="lookup" visible="pais.pais == '1058'" label="Estado" colspan="4" entitylink="estado" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+              <validates>
+                <validate type="vnull" displaytext="O campo Estado não pode ser vazio"/>
+              </validates>
+            </cell>
+            <cell name="municipio" controltype="lookup" visible="pais.pais == '1058'" label="Município" colspan="4" entitylink="municipio" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+              <validates>
+                <validate type="vnull" displaytext="O campo Município não pode ser vazio"/>
+              </validates>
+            </cell>
+            <cell label="Cidades estrangeiras" entitylink="cidadeestrangeira" visible="pais.pais != '1058'" controltype="lookup" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" colspan="4">
+              <validates>
+                <validate type="vnull" displaytext="O campo Cidade Estrangeira não pode ser vazio"/>
+              </validates>
+            </cell>   
+          </row> 
+          <row> 
+            <cell name="cep" controltype="textedit" label="CEP" colspan="4" entitylink="cep">
+              <validates>
+                <validate type="maxlength" value="10" displaytext="O campo CEP aceita no máximo 10 caracteres"/>
+              </validates>
+            </cell>
+            <cell name="bairro" controltype="textedit" label="Bairro" colspan="4" entitylink="bairro">
+              <validates>
+                <validate type="maxlength" value="60" displaytext="O campo Bairro aceita no máximo 60 caracteres"/>
+              </validates>
+            </cell>
+             <cell name="tipologradouro" controltype="lookup" label="Tipo" colspan="4" entitylink="tipologradouro" fielddetaillookup="{'tipologradouro':'Tipo', 'descricao':'Descricao'}" amountfieldslookup="2">
+              <validates>
+                  <validate type="vnull" displaytext="O campo Tipo de Logradouro não pode ser vazio"/>
+              </validates>
+            </cell> 
+          </row>               
+          <row> 
+          <cell name="complemento" controltype="textedit" label="Complemento" colspan="4" entitylink="complemento">
+              <validates>
+                <validate type="maxlength" value="60"  displaytext="O campo Complemento aceita no máximo 60 caracteres"/>
+              </validates>
+            </cell> 
+            <cell name="rua" controltype="textedit" label="Rua" colspan="4" entitylink="rua">
+              <validates>
+                <validate type="maxlength" value="150" displaytext="O campo Rua aceita no máximo 150 caracteres"/>
+                <validate type="vnull" displaytext="O campo Rua não pode ser vazio"/>
+              </validates>
+            </cell>
+            <cell name="numero" controltype="textedit" label="Número" colspan="4" entitylink="numero">
+              <validates>
+                <validate type="maxlength" value="10" displaytext="O campo Numero aceita no máximo 10 caracteres"/>
+                <validate type="vnull" displaytext="O campo Número não pode ser vazio"/>
+              </validates>
+            </cell>
+          </row>  
+          <row> 
+            <cell name="referencia" controltype="textarea" label="Pontos de Referência" colspan="12" entitylink="referencia"/>
+          </row>  
+        </headerform>           
+      </layout>
+    </form>
+    <form name="show" label="Endereço">
+     <layout>
+        <headerform>
+           <row> 
+             <cell name="nome" controltype="textedit" label="Nome" colspan="6" entitylink="nome"/>
+           </row>     
+           <row> 
+             <cell name="tipoendereco" controltype="combobox" label="Tipo de Endereço" colspan="6" entitylink="tipoendereco"/>
+           </row>  
+          <row> 
+            <cell name="pais" controltype="lookup" label="País" colspan="4" entitylink="pais" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+          </row>       
+          <row>
+            <cell name="estado" controltype="lookup" visible="pais.pais == '1058'" label="Estado" colspan="4" entitylink="estado" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+          </row>       
+          <row>
+            <cell name="municipio" controltype="lookup" visible="pais.pais == '1058'"  label="Município" colspan="4" entitylink="municipio" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+          </row>       
+          <row>
+            <cell label="Cidades estrangeiras" entitylink="cidadeestrangeira" visible="pais.pais != '1058'" controltype="lookup" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" colspan="4"/>
+          </row> 
+          <row> 
+            <cell name="cep" controltype="textedit" label="CEP" colspan="4" entitylink="cep"/>
+          </row>       
+          <row>
+            <cell name="bairro" controltype="textedit" label="Bairro" colspan="4" entitylink="bairro"/>
+          </row>       
+          <row>
+             <cell name="tipologradouro" controltype="lookup" label="Tipo" colspan="4" entitylink="tipologradouro" fielddetaillookup="{'tipologradouro':'Tipo', 'descricao':'Descricao'}" amountfieldslookup="2"/>
+          </row>               
+          <row> 
+          <cell name="complemento" controltype="textedit" label="Complemento" colspan="4" entitylink="complemento"/>
+          </row>       
+          <row>
+            <cell name="rua" controltype="textedit" label="Rua" colspan="4" entitylink="rua"/>
+          </row>       
+          <row>
+            <cell name="numero" controltype="textedit" label="Número" colspan="4" entitylink="numero"/>
+          </row>  
+          <row> 
+            <cell name="referencia" controltype="textarea" label="Pontos de Referência" colspan="6" entitylink="referencia"/>
+          </row>  
+        </headerform>           
+      </layout>
+      </form>
+  </forms>
+  <actions>
+    <action form="show">
+      <name>retrieve</name>
+    </action>
+    <action>
+      <name>insert</name>
+      <api>
+        <name>enderecoNovo_v3</name>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="tipologradouro" valueentity="tipologradouro"/>
+        <fromto valueapi="logradouro" valueentity="rua"/>
+        <fromto valueapi="numero" valueentity="numero"/>
+        <fromto valueapi="complemento" valueentity="complemento"/>
+        <fromto valueapi="cep" valueentity="cep"/>
+        <fromto valueapi="bairro" valueentity="bairro"/>
+        <fromto valueapi="cidadeestrangeira" valueentity="cidadeestrangeira"/>
+        <fromto valueapi="pais" valueentity="pais"/>
+        <fromto valueapi="uf" valueentity="estado"/>
+        <fromto valueapi="municipio" valueentity="municipio"/>
+        <fromto valueapi="referencia" valueentity="referencia"/>
+        <fromto valueapi="id_pessoa" valueentity="id_pessoa"/>
+        <fromto valueapi="created_by" valueentity="created_by"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="tipoendereco" valueentity="tipoendereco"/>
+      </api>
+    </action>
+    <action>
+      <name>update</name>
+      <api>
+        <name>enderecoAlterar_v3</name>
+        <fromto valueapi="endereco" valueentity="endereco"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="tipologradouro" valueentity="tipologradouro"/>
+        <fromto valueapi="logradouro" valueentity="rua"/>
+        <fromto valueapi="numero" valueentity="numero"/>
+        <fromto valueapi="complemento" valueentity="complemento"/>
+        <fromto valueapi="cep" valueentity="cep"/>
+        <fromto valueapi="bairro" valueentity="bairro"/>
+        <fromto valueapi="cidadeestrangeira" valueentity="cidadeestrangeira"/>
+        <fromto valueapi="pais" valueentity="pais"/>
+        <fromto valueapi="uf" valueentity="estado"/>
+        <fromto valueapi="municipio" valueentity="municipio"/>
+        <fromto valueapi="referencia" valueentity="referencia"/>
+        <fromto valueapi="id_pessoa" valueentity="id_pessoa"/>
+        <fromto valueapi="created_by" valueentity="created_by"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="tipoendereco" valueentity="tipoendereco"/>
+      </api>
+    </action>
+    <action>
+      <name>delete</name>
+      <api>
+        <name>enderecoExcluir_v2</name>
+        <fromto valueapi="endereco" valueentity="endereco"/>
+         <fromto valueapi="tenant" valueentity="tenant"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

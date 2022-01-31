@@ -1,0 +1,113 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full crm-malote-default-form">
+    <!-- Accordion de Informações do Malote -->
+    <nsj-accordion init-open headline="Informações" class="informacoes-accordion">
+        <div class="informacoes-accordion-container">
+            <div class="row ">
+                <div class="col-sm-12">
+                    <div class="row ">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="codigo">Lote</label>
+                                <input type='text' class="form-control" id="codigo" name="codigo"
+                                    ng-model="$ctrl.entity.codigo" ng-disabled="$ctrl.entity.$$__submitting" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="control-label" for="dtenvio">Envio</label>
+                                <nsj-date-picker editable='false' init-value='$ctrl.entity.dtenvio'
+                                    date-position="right" type-select="single"
+                                    opts="{'class':'form-control', 'id':'dtenvio', 'name':'dtenvio' , 'ng-model':'$ctrl.entity.dtenvio' , 'ng-disabled':'true||true||$ctrl.entity.$$__submitting' }">
+                                </nsj-date-picker>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label" for="requisitantecliente">Requisitante Cliente</label>
+                                <nsj-lookup name="requisitantecliente" id-name="cliente" factory="NsClientes"
+                                    ng-model="$ctrl.entity.requisitantecliente" template="ns-clientes-default"
+                                    max-label="1" constructor="{  }" config='{ "nomefantasia":"Nome Fantasia",  }'
+                                    disabled="$ctrl.entity.$$__submitting">
+                                </nsj-lookup>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nsj-accordion>
+
+    <!-- Accordion de Documentos do Malote -->
+    <nsj-accordion init-open headline="Documentos" class="documentos-accordion">
+        <nsj-button slot="right" custom-class="btn btn-warning btn-add-documento" icon="fas fa-plus"
+            ng-click="$ctrl.onBtnAdicionarDocumentosClick()" ng-disabled="!$ctrl.entity.requisitantecliente"
+            ng-if="(!$ctrl.entity.malote || $ctrl.entity.status == 0)">
+            Adicionar
+        </nsj-button>
+        <div class="filtros-container">
+
+            <div class="filtro-status-container" style="display:inline-flex">
+                <div class="titulo">Tipo de Cópia</div>
+                <div class="select">
+                    <select class="form-control" id="documento-tipocopia" name="documento-tipocopia"
+                        ng-model="$ctrl.filtersDocumentos.documentostipocopia" convert-to-number=" "
+                        ng-disabled="$ctrl.entity.$$__submitting" ng-change="$ctrl.carregarDocumentos()">
+                        <option value="-1">Todos</option>
+                        <option value="0">Original</option>
+                        <option value="1">Cópia Autenticada</option>
+                        <option value="2">Cópia Simples</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filtro-status-container" style="display:inline-flex">
+                <div class="titulo">Status</div>
+                <div class="select">
+                    <select class="form-control" id="documento-status" name="documento-status"
+                        ng-model="$ctrl.filtersDocumentos.documentostatus" convert-to-number=" "
+                        ng-disabled="$ctrl.entity.$$__submitting" ng-change="$ctrl.carregarDocumentos()">
+                        <option value="-1">Todos</option>
+                        <option value="0">Pendente</option>
+                        <option value="1">Recebido</option>
+                        <option value="2">Pré-Aprovado</option>
+                        <option value="3">Enviado para Requisitante</option>
+                        <option value="4">Aprovado</option>
+                        <option value="5">Recusado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row col-sm-12">
+
+            <div ng-show="$ctrl.documentosParaListar.length > 0">
+                <nsj-actions>
+
+                    <label class="custom-checkbox check-seleciona-todos">
+                        <input type="checkbox" name="select-all" class="select-all"
+                            ng-checked="$ctrl.estaoTodosSelecionados()" ng-click="$ctrl.selectAll()">
+                        <span class="checkmark">
+                        </span>
+                    </label>
+
+                    <nsj-action title="Apagar Documentos Selecionados" icon='fas fa-trash-alt'
+                        ng-click='$ctrl.apagaDocumentosEmMassa($ctrl.documentosParaListar)'>
+                    </nsj-action>
+
+                </nsj-actions>
+            </div>
+        </div>
+        <div class="documentos-accordion-container">
+            <div class="div-atcsdocumentos">
+                <div class="row div-documentos">
+                    <nsj-objectlist ng-prop-list="$ctrl.documentosParaListar" ng-prop-columns="$ctrl.configObjectlist"
+                        ng-prop-config="$ctrl.montaListaDocumentos" view-mode="list"
+                        ng-prop-acoesemmassamode="$ctrl.mostrarAcoesEmMassa"
+                        ng-on-list_change="$ctrl.atualizarListaDocumentos($event.detail.data)">
+                    </nsj-objectlist>
+                </div>
+            </div>
+        </div>
+    </nsj-accordion>
+</form>

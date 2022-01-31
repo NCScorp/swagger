@@ -1,0 +1,19 @@
+ <form name="$ctrl.form" novalidate="novalidate" role="form"  class="height-full">
+               
+                    <div class="row " ><div class="col-sm-12" >
+                                                    <div class="form-group"><label class="control-label" for="nome">Nome</label><input type='text' class="form-control"     id="nome" name="nome"          maxlength="50"
+                                                                                    ng-minlength="2" ng-model="$ctrl.entity.nome" ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" /><div ng-messages="$ctrl.form.nome.$error"  ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted"><div class="alert alert-danger" role="alert" ng-message="required" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    O campo nome não pode estar vazio
+                    
+                    
+                </div><div class="alert alert-danger" role="alert" ng-message="maxlength" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    
+                    
+                    O campo aceita no máximo 50 caracteres
+                </div><div class="alert alert-danger" role="alert" ng-message="minlength" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    
+                    O campo aceita no mínimo 2 caracteres
+                    
+                </div></div></div>
+                        </div></div>
+</form>

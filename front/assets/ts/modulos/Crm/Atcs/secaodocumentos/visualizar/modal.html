@@ -1,0 +1,108 @@
+<div class="div-documentos-modal">
+
+    <h2 class="titulo-modal">Análise de documento</h2>
+
+	<hr>
+
+	<div class="row">
+		<div class="col-sm-6">
+            <nsj-carousel 
+                ng-prop-slide="ctrlModal.arrImagensCarousel"
+                auto-play="false"
+                slide-height="400"
+                slide-width="400"
+                class="apresentacao-slides"
+            >
+            </nsj-carousel>
+		</div>
+
+		<div class="col-sm-6">
+
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Documento: </label>
+				{{ ctrlModal.documentoTela.atctipodocumentorequisitante.tipodocumento.nome }}
+
+                <span class="span-status-modal {{ ctrlModal.documentoTela.statusClasseLabel }}">
+                    {{ ctrlModal.documentoTela.statusDescricao }}
+                </span>
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Recebido em:</label>
+				{{ctrlModal.documentoTela.ultimodocumento.created_at | amDateFormat:"DD/MM/YYYY" }}
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Exige cópia simples:</label>
+				{{ctrlModal.documentoTela.atctipodocumentorequisitante.copiasimples ? 'Sim ' + '('+ ctrlModal.documentoTela.requisitante +')' : 'Não'}} 
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Exige cópia autenticada:</label>
+				{{ctrlModal.documentoTela.atctipodocumentorequisitante.copiaautenticada ? 'Sim ' + '('+ ctrlModal.documentoTela.requisitante +')': 'Não'}}
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Exige original:</label>
+				{{ctrlModal.documentoTela.atctipodocumentorequisitante.original ? 'Sim ' + '('+ ctrlModal.documentoTela.requisitante +')' : 'Não'}}
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Aguardado por:</label>
+				{{ ctrlModal.documentoTela.requisitante }}
+            </p>
+            <p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Enviar por e-mail:</label>
+				{{ ctrlModal.documentoTela.atctipodocumentorequisitante.permiteenvioemail ? 'Sim ' : 'Não'}}
+			</p>
+            <p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Pedir informações adicionais:</label>
+				{{ctrlModal.documentoTela.atctipodocumentorequisitante.pedirinformacoesadicionais ? 'Sim ' : 'Não'}}
+			</p>
+            <p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Não exibir nos relatórios de documentos automáticos:</label>
+				{{ctrlModal.documentoTela.atctipodocumentorequisitante.naoexibiremrelatorios ? 'Sim ' : 'Não'}}
+			</p>
+
+			<div class="div-modal-resultado" ng-if="ctrlModal.analiseFinalizada == false">
+				<fieldset class="field-set">
+					<legend>Resultado da análise</legend>
+					
+					<div>
+                        <input type="radio" id="status" name="status" 
+                            ng-value="ctrlModal.ECrmAtcDocumentoSituacao.cadsPreAprovado" 
+                            ng-model="ctrlModal.novoStatus" 
+                            ng-checked="ctrlModal.novoStatus == ctrlModal.ECrmAtcDocumentoSituacao.cadsPreAprovado"> Aprovado
+					</div>
+					<div>
+                        <input type="radio" id="status" name="status" 
+                            ng-value="ctrlModal.ECrmAtcDocumentoSituacao.cadsRecusado" 
+                            ng-model="ctrlModal.novoStatus"  
+                            ng-checked="ctrlModal.novoStatus == ctrlModal.ECrmAtcDocumentoSituacao.cadsRecusado"> Reprovado
+					</div>
+				</fieldset>
+
+				<div class="div-descricao">
+						<div ng-show="ctrlModal.novoStatus == ctrlModal.ECrmAtcDocumentoSituacao.cadsRecusado">
+						<label>Descrição:
+						</label>
+						<br>
+						<textarea id="descricao" name="descricao" ng-model="ctrlModal.descricao">
+						</textarea>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="div-modal-resultado" ng-if="ctrlModal.analiseFinalizada">
+				<span ng-if="ctrlModal.documentoTela.ultimodocumento.status == ctrlModal.ECrmAtcDocumentoSituacao.cadsRecusado">
+                    <label class="lbl-atcdocumento-geral">Recusado porque:</label> 
+                    {{ctrlModal.documentoTela.ultimodocumento.descricao}}
+                </span>
+			</div>
+
+			<div class="div-bottom">
+				<hr>
+
+				<button ng-if="!ctrlModal.analiseFinalizada" class="btn btn-warning" ng-click="ctrlModal.finalizarAnalise()">Finalizar Análise</button>
+    			<button ng-if="!ctrlModal.analiseFinalizada" class="btn btn-default" ng-click="ctrlModal.close()">Cancelar</button>
+				<button ng-if="ctrlModal.analiseFinalizada" class="btn btn-default" ng-click="ctrlModal.close()">Fechar</button>
+			</div>
+		</div>
+	</div>
+</div>

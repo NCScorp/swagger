@@ -1,0 +1,79 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="tipogeracaoprestadora">Tipo de Geração para
+                    Prestadora</label><select class="form-control" id="tipogeracaoprestadora"
+                    name="tipogeracaoprestadora" ng-model="$ctrl.entity.tipogeracaoprestadora"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" "
+                    ng-required="($ctrl.entity.$$__submitting) !== true" convert-to-number>
+                    <option value="1">Não gerar documentos</option>
+                    <option value="2">Gerar documentos para cada prestadora de serviços</option>
+                </select>
+                <div ng-messages="$ctrl.form.tipogeracaoprestadora.$error"
+                    ng-if="$ctrl.form.tipogeracaoprestadora.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Tipo de Geração para Prestadora não pode ser vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="tipogeracaoseguradora">Tipo de Geração para
+                    Seguradora</label><select class="form-control" id="tipogeracaoseguradora"
+                    name="tipogeracaoseguradora" ng-model="$ctrl.entity.tipogeracaoseguradora"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" "
+                    ng-required="($ctrl.entity.$$__submitting) !== true" convert-to-number>
+                    <option value="1">Não gerar documentos</option>
+                    <option value="2">Gerar documentos para cada prestadora de serviços</option>
+                </select>
+                <div ng-messages="$ctrl.form.tipogeracaoseguradora.$error"
+                    ng-if="$ctrl.form.tipogeracaoseguradora.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Tipo de Geração para Seguradora não pode ser vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <object-list class="object-list" entities='$ctrl.entity.atcsconfiguracoesdocumentositens'
+                service="CrmAtcsconfiguracoesdocumentositens"
+                constructors="{ 'atcconfiguracaodocumento' : $ctrl.entity.atcconfiguracaodocumento,  }"
+                autosaveEnabled=></object-list>
+        </div>
+        <div class="col-sm-6">
+            <object-list class="object-list" entities='$ctrl.entity.atcsconfiguracoestemplatesemails'
+                service="CrmAtcsconfiguracoestemplatesemails"
+                constructors="{ 'atcconfiguracaodocumento' : $ctrl.entity.atcconfiguracaodocumento,  }"
+                autosaveEnabled=></object-list>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="emailpadrao">Email Padrão</label><input
+                    type='text' class="form-control" id="emailpadrao" name="emailpadrao" maxlength="250"
+                    ng-model="$ctrl.entity.emailpadrao" ng-disabled="$ctrl.entity.$$__submitting" />
+                <div ng-messages="$ctrl.form.emailpadrao.$error"
+                    ng-if="$ctrl.form.emailpadrao.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+
+
+                        O campo Email Padrão não pode ter mais do que 250 caracteres.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

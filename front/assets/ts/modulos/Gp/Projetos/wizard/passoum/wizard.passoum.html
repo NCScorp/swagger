@@ -1,0 +1,44 @@
+<div class="height-full layout-list">
+  <div class="col-md-12 templates-projeto">
+    <div class="templates-projetos_container">
+      <div
+        class="col-md-3 em-branco"
+        ng-class="{ 'template-selecionado' : projetoTemplate.selecionado }"
+        ng-repeat="projetoTemplate in $ctrl.entity.projetosTemplates"
+        ng-click="$ctrl.selecionaTemplate(projetoTemplate)"
+        ng-if="!$ctrl.busy"
+      >
+        <div class="col-md-12 em-branco-interno">
+          <!--Ícone do template-->
+          <i
+            class="icone-template fa fa-plus"
+            ng-if="!projetoTemplate.projeto"
+          ></i>
+          <img
+            class="icone-template"
+            src="https://s3.sa-east-1.amazonaws.com/imagens.nasajon/geral/icones/project-template.svg"
+            ng-if="projetoTemplate.projeto"
+          />
+        </div>
+
+        <div class="titulo-descricao-template">
+          <div class="titulo-template">{{ projetoTemplate.templatenome }}</div>
+          <div class="descricao-template" ng-init="limit = 40">
+            {{projetoTemplate.templatedescricao | limitTo: limit}}
+            <span ng-if="projetoTemplate.templatedescricao.length > limit">
+              <nsj-tooltip tooltip-position="top">
+                <p>{{ projetoTemplate.templatedescricao }}</p> </nsj-tooltip
+              ><b>...</b>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content-loading" ng-if="$ctrl.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+           
+                    <div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Nome </label><p class="form-control-static" ><span
+                                    id="nome" class="form-control-static" ng-bind="($ctrl.entity.nome) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Primeiro nome </label><p class="form-control-static" ><span
+                                    id="primeironome" class="form-control-static" ng-bind="($ctrl.entity.primeironome) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Sobrenome </label><p class="form-control-static" ><span
+                                    id="sobrenome" class="form-control-static" ng-bind="($ctrl.entity.sobrenome) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Cargo </label><p class="form-control-static" ><span
+                                    id="cargo" class="form-control-static" ng-bind="($ctrl.entity.cargo) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Setor </label><p class="form-control-static" ><span
+                                    id="setor" class="form-control-static" ng-bind="($ctrl.entity.setor) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Email </label><p class="form-control-static" ><span
+                                    id="email" class="form-control-static" ng-bind="($ctrl.entity.email) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-12" >
+                                                    <div class="form-group clearfix"><label class="control-label">Observação </label><p class="form-control-static" ><span
+                                    id="observacao" class="form-control-static" ng-bind="$ctrl.entity.observacao|| 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-12" >
+                                                    <div class="form-group clearfix"><label class="control-label">Principal </label><p class="form-control-static" ><span
+                                    id="principal" ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.principal] || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row " ><div class="col-sm-12" >
+							
+						<fieldset>
+							<legend>
+								Telefones
+							</legend>
+							<div class="row">
+								<div class="col-sm-12">
+									<nsj-objectlist 
+										key="nome" 
+										ng-prop-columns="$ctrl.telefonesConfig"
+										ng-prop-config="$ctrl.montaListaTelefones" 
+										ng-prop-list="$ctrl.entity.telefones"
+									>
+									</nsj-objectlist>
+								</div>
+							</div>
+						</fieldset>
+</div>
+</div>

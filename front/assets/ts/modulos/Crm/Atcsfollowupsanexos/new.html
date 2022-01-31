@@ -1,0 +1,57 @@
+<div class="height-full layout-table">
+
+    <form nsj-focus name="crm_tcsfllwpsnxs_frm_nw_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'table' === 'table','nsj-loading-page' : crm_tcsfllwpsnxs_frm_nw_cntrllr.busy }"
+        role="form" ng-submit="crm_tcsfllwpsnxs_frm_nw_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="" headline-sub="true">
+            <div class="pull-right">
+
+
+
+                <button type="button" class="btn btn-sm btn-default btn-delete btn-geral"
+                    ng-click="crm_tcsfllwpsnxs_frm_nw_cntrllr.delete()"
+                    ng-if="crm_tcsfllwpsnxs_frm_nw_cntrllr.entity.negociofollowupanexo  "><i class="fas fa-trash"></i>
+                    <span class="hidden-xs">Excluir</span></button>
+
+
+
+
+
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <crm-atcsfollowupsanexos-default entity="crm_tcsfllwpsnxs_frm_nw_cntrllr.entity"
+                form="crm_tcsfllwpsnxs_frm_nw_cntrllr.form" busy="crm_tcsfllwpsnxs_frm_nw_cntrllr.busy"
+                action="crm_tcsfllwpsnxs_frm_nw_cntrllr.action"
+                constructors="crm_tcsfllwpsnxs_frm_nw_cntrllr.constructors"></crm-atcsfollowupsanexos-default>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+
+                    <div class="form-group pull-left">
+
+                        <button type="button" ng-click="crm_tcsfllwpsnxs_frm_nw_cntrllr.submit()"
+                            ng-class="{loading:crm_tcsfllwpsnxs_frm_nw_cntrllr.entity.$$__submitting}"
+                            ng-disabled="crm_tcsfllwpsnxs_frm_nw_cntrllr.entity.$$__submitting || crm_tcsfllwpsnxs_frm_nw_cntrllr.form.$pristine"
+                            class="btn btn-sm btn-warning btn-save btn-geral">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-sm"
+                            ui-sref="crm_atcsfollowupsanexos({'negociofollowup' : crm_tcsfllwpsnxs_frm_nw_cntrllr.constructors.negociofollowup,})"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="crm_tcsfllwpsnxs_frm_nw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

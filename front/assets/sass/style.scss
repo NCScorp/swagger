@@ -1,0 +1,18 @@
+/*
+* APPLICATION VARIABLES
+*/
+$custom-color-1: #F9821A;
+$custom-color-2: #F9821A;
+$custom-color-3: #E07517;
+$custom-color-4: #F9821A;
+
+/*
+* NASAJON UI 
+*/
+
+$bootstrap-sass-asset-helper: true;
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+@import '~nasajon-ui/lib/nasajon-ui';
+@import '~nasajon-ui/lib/theme';
+
+@import './index.scss';

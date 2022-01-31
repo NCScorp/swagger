@@ -1,0 +1,174 @@
+// Header da tela de visualização
+.nsfornecedoresshow-container-headline{
+    display: flex;
+
+    .btn-upload-imagem{
+        display: inline-flex;
+        border: 1px solid #e7e7e7;
+        padding: 3px;
+        width: 120px;
+        min-width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        align-items: center;
+        text-align: center;
+        position: relative;
+
+        .imagem-fornecedor-container, .mensagem-mouseover{
+            background: #e7e7e7;
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .imagem-fornecedor-container {
+            display: flex;
+            overflow: hidden;
+
+            .icone-imagem-vazio{
+                font-size: 40px;
+                color: #999999;
+            }
+        }
+
+        .mensagem-mouseover {
+            display: none;
+            position: absolute; //Defino como absoluto, pois deve ficar em cima do fundo, porém um pouco transparente
+            left: 3px;
+            top: 3px;
+            height: calc(100% - 6px);
+            width: calc(100% - 6px);
+            background: rgba(0, 0, 0, 0.67);
+            color: white;
+            cursor: pointer;
+
+            .icone {
+                font-size: 15px;
+            }
+        }
+
+        &:hover {
+            .mensagem-mouseover {
+                display: flex;
+                flex-direction: column;
+            }
+        }
+
+
+    }
+
+    .info-fornecedor-container{
+        display: block;
+        margin-left: 10px;
+
+        .title-fornecedor{
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+
+            .nome-fornecedor{
+                margin: 0;
+            }
+
+            .label-status-fornecedor{
+                margin-left: 10px;
+            }
+        }
+        .acoes {
+            margin-top: 10px;
+
+            .btn-acao{
+                background: $custom-color-1;
+                color: white;
+            }
+        }
+    }
+}
+
+// Modal de upload de imagens
+.uploadimagem-modal{
+    .modal-body{
+        .tela-container{
+            display: flex;
+            flex-direction: row;
+            min-height: 250px;
+
+            .dropzone-container, .info-container{
+                width: 50%;
+            }
+
+            .dropzone-container {
+                .dropzone-component {
+                    div.dropzone{
+                        width: 250px;
+                        height: 250px;
+                        padding: 0;
+                        overflow: hidden;
+
+                        .dz-preview.dz-image-preview{
+                            margin: 0;
+                            width: 250px;
+                            height: 250px;
+
+                            .dz-image {
+                                .container-imagem {
+                                    align-items: center;
+
+                                    img {
+                                        height: fit-content;
+                                        width: fit-content;
+                                    }
+                                }
+                            }
+                        }
+                        .dz-progress {
+                            display: none;
+                        }
+                    }
+
+                    &.dz-started{
+                        border: 2px dashed rgb(204,204,204);
+                    }
+                }
+            }
+
+            .info-container{
+                padding-left: 10px;
+
+                .info {
+                    .titulo {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+    .modal-footer{
+        .btn-salvar{
+            background: #75aa46;
+            border: none;
+            color: white;
+        }
+    }
+}
+
+// Ajustando alinhamento do botão de atualizar que está ao lado do campo de busca
+.clearfix.flex-search{
+    button{
+        margin-right: 0px;
+    }
+}
+
+table.tabela-lista-objlist{
+    td{
+        max-width: 200px;
+        word-wrap: break-word;
+    }
+}
+
+.tabela-scroll-horizontal{
+    overflow-x: auto;
+    overflow-y: hidden;
+}

@@ -1,0 +1,97 @@
+<!-- Header da tela -->
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="crm_prpststns_fncd_mdl_ctrl.close()"><span
+            aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Selecione o Prestador de Serviço</h3>
+</div>
+<!-- Corpo da tela -->
+<div class="body-modal-selecionar-prestador">
+    <!-- Toolbar com filtros -->
+    <div class="filtros">
+        <nsj-toolbar ng-on-change_toolbar="crm_prpststns_fncd_mdl_ctrl.search($event.detail)" search="true"
+            refresh="true" holder="Buscar..." model-search="{{crm_prpststns_fncd_mdl_ctrl.service.filter}}"
+            item-in-page="{{crm_prpststns_fncd_mdl_ctrl.entities.length}}">
+        </nsj-toolbar>
+    </div>
+    <div class="modal-body-list" id="modal-body">
+        <!-- Listagem de dados -->
+        <table class="table table-striped table-hover table-condensed table-bordered lst-prestadoras"
+            ng-if="!crm_prpststns_fncd_mdl_ctrl.isBusy()">
+            <thead>
+                <tr>
+                    <th>
+                        Prestadora de Serviços
+                    </th>
+                    <th>
+                        Documento
+                    </th>
+                    <th>
+                        Ranqueada em
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                 
+                <tr ng-repeat="prestadora in crm_prpststns_fncd_mdl_ctrl.entities" class="linha-prestadora"
+                    ng-click="crm_prpststns_fncd_mdl_ctrl.onPrestadoraClick(prestadora)">
+
+                    <td class="nome">
+                        <span class="icon" ng-if="prestadora.origemconsulta == crm_prpststns_fncd_mdl_ctrl.EnumOrigemConsulta.pocRanking">
+                            <span class="fas fa-award"></span>
+                        </span>
+                        <span class="ordem" ng-if="prestadora.origemconsulta == crm_prpststns_fncd_mdl_ctrl.EnumOrigemConsulta.pocRanking">{{ prestadora.ordem }}º</span>
+                        
+                        <!-- Exibir o nome fantasia. Caso não tenha, exibir razão social -->
+                        <span class="valor" ng-if="prestadora.nomefantasia" >{{ prestadora.nomefantasia }} </span>
+                        <span class="valor" ng-if="!prestadora.nomefantasia">{{ prestadora.razaosocial }} </span>
+                    </td>
+                    <td class="documento-prestadora">
+                        {{ crm_prpststns_fncd_mdl_ctrl.getDocumentoFormatado(prestadora.cnpj) }} 
+                    </td>
+                    <td class="ultimaatualizacao">
+                        {{ crm_prpststns_fncd_mdl_ctrl.getData(prestadora.ultimaatualizacao) }} 
+                    </td>
+                    <td class="status">
+                        <div class="status-container">
+                            <div class="status-label" ng-class="{
+                                'label-success ativa': prestadora.status == crm_prpststns_fncd_mdl_ctrl.EnumPrestadoraStatus.psAtiva, 
+                                'suspensa': prestadora.status == crm_prpststns_fncd_mdl_ctrl.EnumPrestadoraStatus.psSuspensa, 
+                                'banida': prestadora.status == crm_prpststns_fncd_mdl_ctrl.EnumPrestadoraStatus.psBanida
+                            }">
+                                {{ crm_prpststns_fncd_mdl_ctrl.getStatusNome(prestadora.status) }} 
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot ng-if="crm_prpststns_fncd_mdl_ctrl.entities.length == 0">
+                <tr>
+                    <td colspan="12" class="state-empty">
+                        <div class="empty-list">
+                            <p class="text-center">
+                                Não existem itens para mostrar nesta lista.
+                            </p>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <!-- Loading da lista -->
+        <div class="content-loading" ng-if="crm_prpststns_fncd_mdl_ctrl.isBusy()">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-right">
+            <a class="btn btn-sm btn-cancelar" ng-click="crm_prpststns_fncd_mdl_ctrl.close()">
+                Cancelar
+            </a>
+        </div>
+    </div>
+</div>

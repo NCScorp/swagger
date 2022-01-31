@@ -1,0 +1,15 @@
+.form-infos-adicionais {
+  padding: 10px 50px;
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  background-color: white;
+
+  .inputs-textarea {
+    resize: none !important;
+  }
+}
+
+.passoquatro-empty {
+  color: #999;
+  font-style: italic;
+}

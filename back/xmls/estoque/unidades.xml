@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="unidades" label="unidades" project="estoque">
+    <entity schema="estoque" table="vwunidades">
+        <fieldmodel name="unidade" datatype="string" isid="true" column="unidade_id"/>
+        <fieldmodel name="codigo" datatype="string" column="unidade_codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="unidade_descricao"/>
+        <fieldmodel name="decimais" datatype="integer" column="unidade_decimais" />
+        <fieldmodel name="created_at" datatype="datetime" column="unidade_created_at"/>
+        <fieldmodel name="updated_at" datatype="datetime" column="unidade_updated_at"/>
+        <fieldmodel name="created_by" datatype="json" column="unidade_created_by"/>
+        <fieldmodel name="updated_by" datatype="json" column="unidade_updated_by" />
+        <fieldmodel name="tenant" datatype="integer" column="unidade_tenant"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Unidades">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="unidade" visible="false" isid="true"/>
+            <fieldbrowser alias="Descricao" entitylink="descricao" visible="true" cansearch="true"/>
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="true" />
+            <fieldbrowser  entitylink="decimais" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Unidade">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell  colspan="12" name="codigo" controltype="textedit" entitylink="codigo" label="Código">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo código não pode ser vazio."/>
+                              <validate type="maxlength" value="6" displaytext="O campo código aceita no máximo 6 caracteres."/>
+                          </validates>
+                      </cell>
+                  </row>
+                  <row>
+                      <cell  colspan="12" name="nome" controltype="textedit" entitylink="descricao" label="Descrição">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo descrição não pode ser vazio."/>
+                              <validate type="maxlength" value="40" displaytext="O campo nome aceita no máximo 40 caracteres."/>
+                          </validates>
+                      </cell>
+                  </row>
+                <row>
+                    <cell name="decimais" entitylink="decimais" colspan="12" controltype="number"  label="Decimais">
+                        <help placement="bottom" html="html">
+                            Quantidade de casas decimais disponíveis no uso da Unidade. Máximo de quatro casas decimais.
+                        </help>
+                        <validates>
+                            <!-- Validação para não permitir entrada de valores negativos e maiores que 4 no default.form.html.twig sobrescrito -->
+                            <validate type="vnull" displaytext="O campo decimais não pode ser vazio."/>
+                            <validate type="maxlength" value="1" displaytext="O campo decimais não aceita mais de um número."/>
+                        </validates>
+                    </cell>
+                </row>     
+              </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Retrieve</name>
+        </action>
+        <action successMsg="A Unidade foi criada com sucesso!" failMsg="Ocorreu um erro ao criar a Unidade!">
+            <name>Insert</name>
+            <api>
+                <name>UnidadeNovo_v2</name>
+                <fromto valueapi="codigo" valueentity ="codigo"/>
+                <fromto valueapi="descricao" valueentity ="descricao"/>
+                <fromto valueapi="decimais" valueentity ="decimais"/>
+                <fromto valueapi="created_by" valueentity ="logged_user"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+        <action successMsg="A Unidade foi editada com sucesso!" failMsg="Ocorreu um erro ao editar a Unidade!">
+            <name>Update</name>
+            <api>
+                <name>UnidadesAlterar_v3</name>
+                <fromto valueapi="unidade" valueentity="unidade"/>
+                <fromto valueapi="codigo" valueentity="codigo"/>
+                <fromto valueapi="descricao" valueentity ="descricao"/>
+                <fromto valueapi="decimais" valueentity ="decimais"/>
+                <fromto valueapi="updated_by" valueentity ="logged_user"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

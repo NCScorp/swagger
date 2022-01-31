@@ -1,0 +1,62 @@
+   
+
+ 
+
+
+
+<div ng-class="{'nsj-loading-page' : ns_frncdrssspnss_lst_cntrllr.busy }" class='ns_fornecedoressuspensos nsj-layout '> 
+    <div class="nsj-aside-list height-full col-md-4" ng-class="{ 'hidden-sm hidden-xs' : (('ns_fornecedoressuspensos_show'| isStateEq) || ('ns_fornecedoressuspensos_edit'| isStateEq) || ('ns_fornecedoressuspensos_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+<nsj-headline headline-title="Prestadoras de serviços suspensas" ng-class="{ 'hidden-sm hidden-xs' : (('ns_fornecedoressuspensos_show'| isStateEq) || ('ns_fornecedoressuspensos_edit'| isStateEq) || ('ns_fornecedoressuspensos_new'| isStateEq ))}">
+    </nsj-headline>
+
+<nsj-toolbar ng-on-change_toolbar="ns_frncdrssspnss_lst_cntrllr.search($event.detail)" search="false" refresh = "true" holder="Busca" model-search="{{ns_frncdrssspnss_lst_cntrllr.service.filter}}" select="{{ns_frncdrssspnss_lst_cntrllr.selectPage && ns_frncdrssspnss_lst_cntrllr.selected.length === ns_frncdrssspnss_lst_cntrllr.entities.length && !ns_frncdrssspnss_lst_cntrllr.selectAll && !ns_frncdrssspnss_lst_cntrllr.service.loadParams.finished}}" select-all="{{ns_frncdrssspnss_lst_cntrllr.selectAll}}" item-in-page="{{ns_frncdrssspnss_lst_cntrllr.entities.length}}" item-all="{{ns_frncdrssspnss_lst_cntrllr.entities[0].full_count}}">
+                    <nsj-filters slot="filters">
+                            <nsj-lookup 
+             name="fornecedoresfilter"
+             factory="NsFornecedores"  
+                          ng-if="false"                          max-label="1"
+             ng-model ='ns_frncdrssspnss_lst_cntrllr.fornecedoresfilterFilter'
+             constructor="{  }"
+             config='{ "nome":"Nome",  }'
+             >
+                     </nsj-lookup> 
+                            </nsj-filters>
+   
+                                        </nsj-toolbar>
+                <div class="panel-body body-list">
+                                        <div class="list-group" id="ns_fornecedoressuspensos_list" infinite-scroll='ns_frncdrssspnss_lst_cntrllr.nextPage()' infinite-scroll-disabled='ns_frncdrssspnss_lst_cntrllr.isBusy()' infinite-scroll-distance='1'>    <a href ui-sref='ns_fornecedoressuspensos_show({fornecedorsuspenso : entity.fornecedorsuspenso})'  class="list-group-item" ng-repeat="entity in ns_frncdrssspnss_lst_cntrllr.entities" ui-sref-active="active">
+                        
+                    <h4 class="list-group-item-heading">
+                                    
+                                                            {{ entity.fornecedores.razaosocial }}                         
+                                    </h4>
+                    </a>            <p class="list-group-item" ng-if="!ns_frncdrssspnss_lst_cntrllr.finished && (ns_frncdrssspnss_lst_cntrllr.service.to_load <= 0)">
+            <a href="" ng-click="ns_frncdrssspnss_lst_cntrllr.loadMore()">Ver mais...</a>
+        </p>
+        <p class="text-center article-loading height-full" ng-class="{'onloading' : ns_frncdrssspnss_lst_cntrllr.isBusy() }" ng-if="ns_frncdrssspnss_lst_cntrllr.isBusy()"></p>
+    <p class="text-center nfound" ng-if="ns_frncdrssspnss_lst_cntrllr.entities.length == 0 && !ns_frncdrssspnss_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+</div>
+            
+                                        </div><!--/panel-body-->
+            </div><!--/panel-->
+        </div>
+    </div>
+
+    <div class='empty-page col-md-8 article-area height-full padding-h-clear' ui-view>
+            <div class="bt-new-article new-article text-center height-full empty-page-nodisplay">
+                <span class="icon-page"><i class="fas fa-table fa-fw"></i></span>
+                <h3>Selecione uma Prestadora de Serviços Suspensa</h3>
+                <p>Selecione uma Prestadora de Serviço Suspensa no painel ao lado para ver suas informações. </p>
+               
+            </div>
+        </div>
+        <div class="content-loading"  ng-if="ns_frncdrssspnss_lst_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+            </div>
+</div>

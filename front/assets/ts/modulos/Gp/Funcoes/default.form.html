@@ -1,0 +1,116 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="codigo">Código</label><input type='text'
+                    class="form-control" id="codigo" name="codigo" maxlength="30" ng-model="$ctrl.entity.codigo"
+                    ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.codigo.$error" ng-if="$ctrl.form.codigo.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo código não pode ser vazio.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O tamanho máximo para o código é de 30 caracteres
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="descricao">Descrição</label><input type='text'
+                    class="form-control" id="descricao" name="descricao" maxlength="150"
+                    ng-model="$ctrl.entity.descricao" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.descricao.$error"
+                    ng-if="$ctrl.form.descricao.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo descrição não pode ser vazio.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O tamanho máximo para a descrição é de 150 caracteres
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}" style="margin-top: 0px;">
+                <label class="control-label" for="funcaocoringa">
+                    <input type='checkbox' class="" id="funcaocoringa" name="funcaocoringa" ng-model="$ctrl.entity.funcaocoringa" ng-disabled="$ctrl.entity.$$__submitting" />
+                    <span class="checkmark"></span>
+                    Permitir informar a descrição da função na inclusão do pedido/orçamento do Atendimento Comercial
+                </label>
+                <button class="btn btn-link btn-tooltip" type='button'
+                        uib-popover-html="$ctrl.tooltipFuncaoCoringa"
+                        popover-placement='auto bottom'
+                        popover-trigger="'mouseenter click outsideClick'">
+                        <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <object-list class="object-list" entities='$ctrl.entity.custos' service="GpFuncoescustos"
+                constructors="{ 'funcao' : $ctrl.entity.funcao,  }" autosaveEnabled=>
+                <div>
+                    <div class="pull-right bottom-buffer"><a class="btn btn-md btn-warning"
+                            ng-click="$ctrl.gpFuncoescustosForm(service.constructors)"><i class="fas fa-plus"></i>
+                            Adicionar
+                        </a></div>
+                    <div class="table-default">
+                        <table class="table table-striped table-hover table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Descrição
+                                    </th>
+                                    <th>
+                                        Valor
+                                    </th>
+                                    <th class='compact'></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="subentity in oblistctrl.entities"
+                                    ng-controller="ObjectListItemCtrl as itemctrl">
+                                    <td class="break-word">
+                                        {{ subentity.custo.descricao }}
+                                    </td>
+                                    <td>
+                                        {{ subentity.custo.valor | currency : 'R$' : 2 }}
+                                    </td>
+                                    <td class='text-right no-wrap'><a class="btn btn-primary btn-circle"
+                                            ng-click="$ctrl.gpFuncoescustosFormEdit(subentity)">
+                                            <i class="fas fa-edit"></i></a><a class="btn btn-danger btn-circle"
+                                            ng-click="oblistctrl.remove(subentity)" title="Remover"><i
+                                                class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot ng-if="oblistctrl.entities.length == 0">
+                                <tr>
+                                    <td colspan="4" class="state-empty">
+                                        <div class="empty-list">
+                                            <p class="text-center"> Não existem itens para mostrar nesta lista. </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </object-list>
+        </div>
+    </div>
+</form>

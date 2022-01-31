@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="followupsnegocios" label="followupsnegocios" project="ns">
+  <entity schema="ns" table="followups">
+    <fieldmodel name="followup" datatype="guid" isid="true" column="followup" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="proposta" datatype="guid" column="proposta" useCaseLink="crm\negocios" entityJoinType="left"/>
+    <fieldmodel name="participante" datatype="guid" column="participante" useCaseLink="ns\clientes" entityJoinType="left"/>
+    <fieldmodel name="historico" datatype="string" column="historico" />
+    <fieldmodel name="receptor" datatype="string" column="receptor" />
+
+    <fieldmodel name="data" datatype="datetime" column="data"/>
+    <fieldmodel name="realizadoemdata" datatype="date" notMapped="true"/>
+    <fieldmodel name="realizadoemhora" datatype="time" notMapped="true"/>
+
+    <fieldmodel name="data" datatype="string" column="data" />
+    <fieldmodel name="meiocomunicacao" datatype="integer" column="meiocomunicacao">
+      <options>{"1":"Telefone", "2": "Ligação não atendida", "3":"Email", "4":"Pessoalmente", "5":"Outro"}</options>
+    </fieldmodel>
+    <fieldmodel name="figuracontato" datatype="integer" column="figuracontato">
+      <options>{"1":"Cliente"}</options>
+    </fieldmodel>
+    <!-- <fieldmodel name="created_at" datatype="datetime" column="created_at" /> -->
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="ativo" datatype="boolean" column="ativo"/>
+    <fieldmodel name="negociocontato" datatype="guid" notMapped="true" useCaseLink="crm\negocioscontatos" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>proposta</constructoritem>
+  </constructors>
+  <viewbrowser label="Follow ups Negocios">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="followup" isid="true" visible="false" />
+      <fieldbrowser entitylink="tenant" visible="false" />
+      <fieldbrowser entitylink="proposta" visible="false" />
+      <fieldbrowser entitylink="participante" visible="false" />
+      <fieldbrowser entitylink="historico" visible="false" cansearch="true" />
+      <fieldbrowser entitylink="receptor" visible="false" cansearch="true" />
+      <fieldbrowser entitylink="meiocomunicacao" visible="false" />
+      <fieldbrowser entitylink="figuracontato" visible="false" />
+      <!-- <fieldbrowser entitylink="created_at" visible="false" /> -->
+      <fieldbrowser entitylink="created_by" visible="false" />
+      <fieldbrowser entitylink="ativo" visible="true"/>
+      <fieldbrowser entitylink="data" visible="true" cansearch="true" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Novo acompanhamento">
+      <layout>
+        <headerform>
+
+          <row>
+            <cell controltype="textedit" label="figura contato" colspan="12" entitylink="figuracontato">
+              <validates>
+                <validate type="vnull" displaytext="O campo figura contato não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+
+          <row>
+            <cell controltype="textedit" label="meio comunicacao" colspan="12" entitylink="meiocomunicacao">
+              <validates>
+                <validate type="vnull" displaytext="O campo meio comunicacao não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+          
+          <row>
+              <cell label="Ativo" entitylink="ativo" controltype="checkbox" colspan="12"></cell>
+          </row>
+
+          <row>
+            <cell entitylink="realizadoemdata" controltype="dateinput" colspan="6">
+            </cell>
+            <cell entitylink="realizadoemhora" controltype="timeedit" colspan="6">
+            </cell>
+          </row>
+
+          <row>
+            <cell controltype="lookup" label="negociocontato" colspan="12" entitylink="negociocontato" fielddetaillookup="{'nome':'nome', 'sobrenome':'sobrenome'}" amountfieldslookup="2">
+              <lookupconstructors>
+                <lookupconstructor valueapi='documento' valueentity='proposta' />
+              </lookupconstructors>
+            </cell>
+          </row>
+
+          <row>
+            <cell controltype="textedit" label="Contato" colspan="12" entitylink="receptor">
+              <validates>
+                <validate type="vnull" displaytext="O campo Contato não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+          
+          <row>
+            <cell controltype="textedit" label="historico" colspan="12" entitylink="historico">
+              <validates>
+                <validate type="vnull" displaytext="O campo historico não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default" successMsg="O Acompanhamento foi criado com sucesso!">
+      <name>Insert</name>
+      <api>
+        <name>followupnegocionovo_v2</name>
+        <fromto valueapi="proposta" valueentity="proposta" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="historico" valueentity="historico" />
+        <fromto valueapi="participante" valueentity="participante" />
+        <fromto valueapi="receptor" valueentity="receptor" />
+        <fromto valueapi="meiocomunicacao" valueentity="meiocomunicacao" />
+        <fromto valueapi="figuracontato" valueentity="figuracontato" />
+        <fromto valueapi="created_by" valueentity="logged_user" />
+        <fromto valueapi="ativo" valueentity="ativo" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

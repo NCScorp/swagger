@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="historicofornecedores" label="historicofornecedores" orphan="false" project="ns">
+    <entity schema="ns" table="historicofornecedores"> 
+        <fieldmodel name="historicofornecedor" datatype="guid" isid="true" column="historicofornecedor"/> 
+        <fieldmodel name="fornecedor" datatype="guid" column="fornecedor_id"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" /> 
+        <fieldmodel name="acao" datatype="string" column="acao"/> 
+        <fieldmodel name="observacao" datatype="string" column="observacao"/> 
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>     
+        <constructoritem required="true">fornecedor</constructoritem> 
+        <constructoritem required="true">id_grupoempresarial</constructoritem>    
+    </constructors>
+    <viewbrowser label="Histórico Fornecedor" layout="table" paginate="true" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="historicofornecedor" isid="true" visible="false" />
+            <fieldbrowser entitylink="fornecedor" visible="false" />
+            <fieldbrowser entitylink="created_at" alias="Data" visible="true" indefaultorder="true" direction="DESC"/>
+            <fieldbrowser entitylink="acao" alias="Ação" visible="true" />
+            <fieldbrowser alias="Autor" entitylink="created_by" fielddetaillookup='nome' visible="true" />
+            <fieldbrowser entitylink="observacao" alias="Observação" visible="true" />
+        </fieldsbrowser>
+     </viewbrowser>
+     <forms>
+         
+     </forms>
+</nsjusecase>

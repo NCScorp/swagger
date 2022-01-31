@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="crm_ctrt_ms_pgt_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Responsabilidade Financeira</h3>
+</div>
+
+
+
+<div class="modal-body mdl-bd-overflow-scroll" id="modal-body">
+    <div class="container-fluid" id="contratomaispagante-modal-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="aviso">
+                    <i class="fas fa-info-circle"></i>
+                    Selecionar o responsável financeiro (assinalados com * na tabela) para cada serviço.
+                </div>
+                <div class="content-loading loading-absolute"  ng-if="crm_ctrt_ms_pgt_cntrllr.isBusy()">
+                    <div class="center-loading text-center">
+                    <div class="onloading"></div>
+                    Carregando...
+                    </div>
+                </div>
+                <!-- expand-level="20" -->
+                <div ng-if="crm_ctrt_ms_pgt_cntrllr.lstPropostasItens">
+                    <tree-grid ng-if="crm_ctrt_ms_pgt_cntrllr.lstPropostasItens.length > 0 && !crm_ctrt_ms_pgt_cntrllr.isBusy()" 
+                        tree-data="crm_ctrt_ms_pgt_cntrllr.lstPropostasItens" 
+                        expand-on="crm_ctrt_ms_pgt_cntrllr.expanding_property" 
+                        col-defs="crm_ctrt_ms_pgt_cntrllr.col_defs" 
+                        sorted-asc="fas fa-sort-alpha-up-alt" 
+                        sorted-desc="fas fa-sort-alpha-down-alt" 
+                        icon-expand="fas fa-chevron-right"
+                        expand-level="20"
+                        footer-def="crm_ctrt_ms_pgt_cntrllr.responsaveisFinanceirosAssociados"
+                        template-url="template/treeGrid/treeGridModalPagante.html"
+                        icon-collapse="fas fa-chevron-down"></tree-grid>
+                    <div ng-if="crm_ctrt_ms_pgt_cntrllr.lstPropostasItens === 'undefined' || crm_ctrt_ms_pgt_cntrllr.lstPropostasItens.length === 0">
+                        <p>Nenhum dado a exibir.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer" id="contratomaispagante-modal-footer">
+
+    <div class="pull-right">
+        <a class="btn-cancelar" ng-click="crm_ctrt_ms_pgt_cntrllr.close()"><i class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
+
+        <button type="button" name="submit" class="btn btn-warning"
+            ng-click="crm_ctrt_ms_pgt_cntrllr.abrirAplicarEmMassaModalTotal({})"
+            ng-disabled="crm_ctrt_ms_pgt_cntrllr.isBusy()">
+            <i class="fa fa-divide" aria-hidden="true"></i> Aplicar Divisão em Massa
+        </button>
+
+        <button type="button" name="submit" class="btn btn-warning" ng-click="crm_ctrt_ms_pgt_cntrllr.salvaResponsabilidadeFinanceira()"
+            ng-disabled="crm_ctrt_ms_pgt_cntrllr.isBusy()">
+            <i class="fa fa-save" aria-hidden="true"></i> Salvar
+        </button>
+
+    </div>
+</div>

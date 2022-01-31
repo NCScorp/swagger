@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="camposcustomizados" label="camposcustomizados" project="ns">
+    <entity schema="ns" table="camposcustomizados">
+        <fieldmodel name="campocustomizado" datatype="guid" isid="true" column="campocustomizado"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="label" datatype="string" column="label"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="tipo" datatype="string" column="tipo">
+          <options type="json">{'TE':'Campo de texto', 'CB':'Combobox', 'CH':'Checkbox', 'OB' : 'Objeto'}</options>
+        </fieldmodel>
+        <fieldmodel name="opcoes" datatype="json" column="opcoes" />
+        <fieldmodel name="objeto" datatype="json" column="objeto" />
+        <fieldmodel name="visible" datatype="string" column="visible" />
+        <fieldmodel name="tamanho" datatype="integer" column="tamanho" />
+        <fieldmodel name="secao" datatype="string" column="secao" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="date" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="crmnegocio" datatype="boolean" column="crmnegocio" />
+        <fieldmodel name="crmnegocioobrigatorio" datatype="boolean" column="crmnegocioobrigatorio" />
+        <!--<fieldmodel name="crmnegocioordem" datatype="boolean" column="crmnegocioordem" />-->
+        <fieldmodel name="crmnegociohabilitatooltip" datatype="boolean" column="crmnegociohabilitatooltip" />
+        <fieldmodel name="crmnegocioexibenalistagem" datatype="boolean" column="crmnegocioexibenalistagem" />
+        <fieldmodel name="crmnegociosvisualizacao" datatype="boolean" column="crmnegociosvisualizacao" />
+        <!--<fieldmodel name="crmnegociohabilitabusca" datatype="boolean" column="crmnegociohabilitabusca" />-->
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <!--<constructoritem required="false">crmnegocio</constructoritem>-->
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Campos customizados">
+      <filters style="fixed">
+        <fieldsfilters>
+            <fieldfilter entitylink="crmnegocio" label="crmnegocio" maxoccurs="1" visible="false" >
+                 <conditions>
+                     <condition type="eq"/>
+                 </conditions>
+            </fieldfilter>
+            <fieldfilter entitylink="crmnegociosvisualizacao" label="crmnegociosvisualizacao" maxoccurs="1" visible="false" >
+                 <conditions>
+                     <condition type="eq"/>
+                 </conditions>
+            </fieldfilter>
+            <fieldfilter entitylink="crmnegocioexibenalistagem" label="crmnegocioexibenalistagem" maxoccurs="1" visible="false" >
+                 <conditions>
+                     <condition type="eq"/>
+                 </conditions>
+            </fieldfilter>
+            <fieldfilter entitylink="secao" label="secao" maxoccurs="1" visible="false" >
+                <conditions>
+                    <condition type="eq"/>
+                </conditions>
+           </fieldfilter>
+        </fieldsfilters>
+      </filters>
+        <fieldsbrowser>
+            <fieldbrowser alias="campocustomizado" entitylink="campocustomizado" isid="true" />
+            <fieldbrowser alias="nome" entitylink="nome" cansearch="true" visible="true" indefaultorder="true" direction="asc"/>
+            <fieldbrowser alias="label" entitylink="label" cansearch="true" visible="true"/>
+            <fieldbrowser entitylink="descricao" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="tipo" cansearch="false" visible="false" />
+            <fieldbrowser entitylink="opcoes" cansearch="false" visible="false"  />
+            <fieldbrowser entitylink="crmnegocio" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="objeto" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="visible" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="tamanho" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="secao" cansearch="false" visible="false"/> 
+            <fieldbrowser entitylink="crmnegocioexibenalistagem" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="crmnegocioobrigatorio" cansearch="false" visible="false" />
+            <fieldbrowser entitylink="crmnegociosvisualizacao" cansearch="false" visible="false" />
+<!--            <fieldbrowser entitylink="crmnegocioordem" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="crmnegociohabilitabusca" cansearch="false" visible="false"/>
+            <fieldbrowser entitylink="crmnegociohabilitatooltip"  cansearch="false" visible="false"/>-->
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default"  label="Campo customizado">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="nome" controltype="textedit" entitylink="nome" label="Nome (Apenasletras)">
+                          <validates>
+                              <validate type="vnull" displaytext="O nome do campo não pode ser vazio."/>
+                              <validate type="maxlength" displaytext="O nome do campo não pode conter mais do que 60 caracteres." value="60"/>
+                          </validates>
+                      </cell>
+                      <cell name="label" controltype="textedit" entitylink="label" label="Label exibido no formulário"/>
+                  </row>
+                  <row>
+                      <cell name="descricao" controltype="textedit" entitylink="descricao" label="Descrição"/>
+                      <cell name="opcoes" controltype="textedit" entitylink="opcoes" label="Opções"/>
+                  </row>
+                  <row>
+                      <cell name="tipo" controltype="combobox" entitylink="tipo" label="Tipo">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo tipo não pode ser vazio."/>
+                          </validates>
+                      </cell>
+                  </row>
+                  <row>
+<!--                     <cell name="objeto" visible="tipo == 'OB'" controltype="textedit" entitylink="objeto" label="Objeto"/>-->
+                  </row>
+              </headerform>
+              <bodyform>
+                <tabs>
+                  <tab caption="Negócio">
+                    <row>
+                        <cell name="crmnegocio" controltype="checkbox" entitylink="crmnegocio" label="Exibir no formulário e visualização do negócio"/>
+                    </row>
+                    <row>
+                        <cell name="crmnegocioexibenalistagem" controltype="checkbox" entitylink="crmnegocioexibenalistagem" label="Exibir na listagem"/>
+                    </row>
+<!--                    <row>
+                        <cell name="crmnegociohabilitabusca" controltype="checkbox" entitylink="crmnegociohabilitabusca" label="Considerar na busca da listagem"/>
+                    </row>-->
+                    <row>
+                        <cell name="crmnegocioobrigatorio" controltype="checkbox" entitylink="crmnegocioobrigatorio" label="Obrigatório" />
+                    </row>                    
+                    <row>
+                        <cell visible="descricao" name="crmnegociohabilitatooltip" controltype="checkbox" entitylink="crmnegociohabilitatooltip" label="Exibir descrição no tooltip" />
+                    </row>                    
+                  </tab>
+                </tabs>
+              </bodyform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action failMsg="Falha ao cadastrar campo customizavel">
+            <name>Insert</name>
+            <api>
+                <name>CampoCustomizadoNovo</name>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="label" valueentity="label"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="tipo" valueentity="tipo"/>
+                <fromto valueapi="opcoes" valueentity="opcoes"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="crmnegocio" valueentity="crmnegocio"/>
+                <fromto valueapi="crmnegocioobrigatorio" valueentity="crmnegocioobrigatorio"/>
+                <fromto valueapi="crmnegociohabilitatooltip" valueentity="crmnegociohabilitatooltip"/>
+                <fromto valueapi="crmnegocioexibenalistagem" valueentity="crmnegocioexibenalistagem"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+        <action failMsg="Falha ao alterar campo customizavel">
+            <name>Update</name>
+            <api>
+                <name>CampoCustomizadoAlterar</name>
+                <fromto valueapi="campocustomizado" valueentity="campocustomizado"/>
+                <fromto valueapi="nome" valueentity="nome"/>
+                <fromto valueapi="label" valueentity="label"/>
+                <fromto valueapi="descricao" valueentity="descricao"/>
+                <fromto valueapi="tipo" valueentity="tipo"/>
+                <fromto valueapi="opcoes" valueentity="opcoes"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="crmnegocio" valueentity="crmnegocio"/>
+                <fromto valueapi="crmnegocioobrigatorio" valueentity="crmnegocioobrigatorio"/>
+                <fromto valueapi="crmnegociohabilitatooltip" valueentity="crmnegociohabilitatooltip"/>
+                <fromto valueapi="crmnegocioexibenalistagem" valueentity="crmnegocioexibenalistagem"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+            </api>
+        </action>
+<!--        <action>
+            <name>Delete</name>
+            <api>
+                <name>AtendimentoCampoCustomizadoExcluir</name>
+                <fromto valueapi="atendimentocampocustomizado" valueentity="atendimentocampocustomizado"/>
+            </api>
+        </action>-->
+<!--        <action>
+            <name>Reordenar</name>
+            <api>
+                <name>AtendimentoCampoCustomizadoReordenar</name>
+                <fromto valueapi="atendimentocampocustomizado" valueentity="atendimentocampocustomizado"/>
+                <fromto valueapi="posicaonova" valueentity="ordem"/>
+            </api>
+        </action>-->
+    </actions>
+</nsjusecase>

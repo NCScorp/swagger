@@ -1,0 +1,22 @@
+body {
+    // Tela principal, com classe de menu escondido
+    #wrap.menu-escondido {
+        // Menu lateral
+        .nsj-menu {
+            display: none;
+        }
+    
+        // Container principal da tela
+        .container-fluid.main-container{
+            // Container da tela
+            .geral.clearfix {
+                margin-left: 0;
+                width: 100%;
+
+                .nsj-layout {
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

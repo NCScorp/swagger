@@ -1,0 +1,58 @@
+<div class="menus">
+    <!-- Menu vertical -->
+    <div class="xs-menu-index-cont menu-vertical">
+        <a id="menu-index-toggle">
+            <i class="fa fa-bars"></i>
+            <span>Índice</span>
+        </a>
+        <nav class="xs-menu-index">
+            <ul>
+                <li ng-repeat="item in $ctrl.config.arrItens"
+                    ng-if="$ctrl.estaNoMenuHorizontalPrincipal(item.id)"    
+                    class="menu-item" 
+                    id="{{ item.id }}" >
+    
+                    <a href="{{ item.url }}" class="menu-item-link">
+                        {{ item.nome }}
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Menu horizontal -->
+    <nav class="menu-horizontal">
+        <!-- Lista utilizada para calcular tamanhos dos itens -->
+        <ul>
+            <li ng-repeat="item in $ctrl.config.arrItens"
+                ng-if="$ctrl.estaNoMenuHorizontalPrincipal(item.id)"    
+                class="menu-item" 
+                id="{{ item.id }}" >
+
+                <a href="{{ item.url }}" class="menu-item-link">
+                    {{ item.nome }}
+                </a>
+            </li>
+            <li class="more-actions" ng-if="$ctrl.arrMenuItemHorizontalMaisItens.length > 0">
+                <span class="menu-item-link">
+                    <i class="{{$ctrl.config.iconeMaisAcoes}}"></i>
+                </span>
+                <div class="mais-acoes-container">
+                    <div class="mais-acoes-container-itens">
+                        <ul>
+                            <li ng-repeat="item in $ctrl.config.arrItens"
+                                ng-if="!$ctrl.estaNoMenuHorizontalPrincipal(item.id)"    
+                                class="menu-item-mais-acoes" 
+                                id="{{ item.id }}" >
+                
+                                <a href="{{ item.url }}" class="menu-item-link">
+                                    {{ item.nome }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+</div>

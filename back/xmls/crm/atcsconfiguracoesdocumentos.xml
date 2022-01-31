@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcsconfiguracoesdocumentos" label="atcsconfiguracoesdocumentos" project="crm">
+  <entity schema="crm" table="atcsconfiguracoesdocumentos">
+    <fieldmodel name="atcconfiguracaodocumento" datatype="guid" isid="true" column="atcconfiguracaodocumento" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial" />
+    <fieldmodel name="tipogeracaoprestadora" datatype="integer" column="tipo_geracao_prestadora" >
+      <options>{"1":"Não gerar documentos","2":"Gerar documentos para cada prestadora de serviços"}</options>
+    </fieldmodel>
+    <fieldmodel name="tipogeracaoseguradora" datatype="integer" column="tipo_geracao_seguradora" >
+      <options>{"1":"Não gerar documentos","2":"Gerar documentos para cada prestadora de serviços"}</options>
+    </fieldmodel>
+    <fieldmodel name="atcsconfiguracoesdocumentositens" datatype="objectlist" useCaseLink="crm\atcsconfiguracoesdocumentositens" entityJoinType="left" column="atcsconfiguracoesdocumentositens" />
+    <fieldmodel name="atcsconfiguracoestemplatesemails" datatype="objectlist" useCaseLink="crm\atcsconfiguracoestemplatesemails" entityJoinType="left" column="atcsconfiguracoestemplatesemails" />
+    <fieldmodel name="emailpadrao" datatype="string" column="emailpadrao" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser>
+    <fieldsbrowser>
+      <fieldbrowser entitylink="atcconfiguracaodocumento" isid="true" visible="false" />
+      <fieldbrowser entitylink="tipogeracaoprestadora" visible="false" />
+      <fieldbrowser entitylink="tipogeracaoseguradora" visible="false" />
+      <fieldbrowser entitylink="emailpadrao" visible="false" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Configuração de Documentos">
+      <layout>
+        <headerform>
+          <row>
+            <cell controltype="combobox" label="Tipo de Geração para Prestadora" colspan="6" entitylink="tipogeracaoprestadora" >
+              <validates>
+                <validate type="vnull" displaytext="O campo Tipo de Geração para Prestadora não pode ser vazio"></validate>
+              </validates>
+            </cell>
+            <cell controltype="combobox" label="Tipo de Geração para Seguradora" colspan="6" entitylink="tipogeracaoseguradora" >
+              <validates>
+                <validate type="vnull" displaytext="O campo Tipo de Geração para Seguradora não pode ser vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+
+          <row>
+            <cell controltype="objectlist" label="Configurações Documentos Itens" colspan="6" entitylink="atcsconfiguracoesdocumentositens"/>
+            <cell controltype="objectlist" label="Configurações Templates de Emails" colspan="6" entitylink="atcsconfiguracoestemplatesemails"/>
+          </row>
+
+          <row>
+            <cell controltype="textedit" label="Email Padrão" colspan="12" entitylink="emailpadrao">
+              <validates>
+                <validate type="maxlength" value="250" displaytext="O campo Email Padrão não pode ter mais do que 250 caracteres."/>
+              </validates> 
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>retrieve</name>
+    </action>
+    <action form="default" successMsg="A Configuração do Documento foi criada com sucesso!" failMsg="Ocorreu um erro ao criar a Configuração do Documento!">
+      <name>Insert</name>
+      <api>
+        <name>atcConfiguracaoDocumentoNovo</name>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="tipo_geracao_prestadora" valueentity="tipogeracaoprestadora"/>
+        <fromto valueapi="tipo_geracao_seguradora" valueentity="tipogeracaoseguradora"/>
+        <fromto valueapi="atcsconfiguracoesdocumentositens" valueentity="atcsconfiguracoesdocumentositens"/>
+        <fromto valueapi="atcsconfiguracoestemplatesemails" valueentity="atcsconfiguracoestemplatesemails"/>
+        <fromto valueapi="emailpadrao" valueentity="emailpadrao"/>
+      </api>
+    </action>
+    <action form="default" successMsg="A Configuração do Documento foi editada com sucesso!" failMsg="Ocorreu um erro ao editar a Configuração do Documento!">
+      <name>Update</name>
+      <api>
+        <name>atcConfiguracaoDocumentoAlterar</name>
+        <fromto valueapi="atcconfiguracaodocumento" valueentity="atcconfiguracaodocumento"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="tipo_geracao_prestadora" valueentity="tipogeracaoprestadora"/>
+        <fromto valueapi="tipo_geracao_seguradora" valueentity="tipogeracaoseguradora"/>
+        <fromto valueapi="atcsconfiguracoesdocumentositens" valueentity="atcsconfiguracoesdocumentositens"/>
+        <fromto valueapi="atcsconfiguracoestemplatesemails" valueentity="atcsconfiguracoestemplatesemails"/>
+        <fromto valueapi="emailpadrao" valueentity="emailpadrao"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

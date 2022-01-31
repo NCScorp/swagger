@@ -1,0 +1,64 @@
+.passotres-form-container {
+  padding: 40px 20px 25px 20px;
+  overflow-y: auto;
+  overflow-x: auto;
+
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.lookup-table-container {
+  .nsj-table.table th {
+    padding: 0 !important;
+  }
+}
+
+.formulario-lookup-container {
+  display: flex;
+  .control-label {
+    margin-top: 5px;
+  }
+  nsj-lookup {
+    width: 100%;
+    margin-left: 10px;
+    padding-bottom: 15px;
+  }
+}
+
+.passotres-nsjtable {
+  thead {
+    th {
+      background-color: #eaeaea !important;
+      border: 1px solid #ddd !important;
+      width: 100%;
+    }
+    th:nth-of-type(2) {
+      display: none;
+    }
+    span {
+      color: #5a5a5a;
+      margin-left: 25px;
+    }
+  }
+
+  .table > thead > tr > th {
+    border: 1px solid #ddd !important;
+  }
+  .table > tbody > tr > td {
+    border: 1px solid #ddd !important;
+    div {
+      margin-left: 8px;
+    }
+  }
+
+  tfoot {
+    td {
+      background-color: #fafafa;
+    }
+    p {
+      font-style: italic;
+      color: #999;
+    }
+  }
+}

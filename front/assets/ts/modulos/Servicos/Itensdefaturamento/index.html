@@ -1,0 +1,45 @@
+   
+
+ 
+
+
+
+<div ng-class="{'nsj-loading-page' : srvcs_tnsdftrmnt_lst_cntrllr.busy }" class='servicos_itensdefaturamento nsj-layout '> 
+    <div class="nsj-aside-list height-full col-md-12" ng-class="{ 'hidden-sm hidden-xs' : (('servicos_itensdefaturamento_show'| isStateEq) || ('servicos_itensdefaturamento_edit'| isStateEq) || ('servicos_itensdefaturamento_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+<nsj-headline headline-title="Item de Faturamento" ng-class="{ 'hidden-sm hidden-xs' : (('servicos_itensdefaturamento_show'| isStateEq) || ('servicos_itensdefaturamento_edit'| isStateEq) || ('servicos_itensdefaturamento_new'| isStateEq ))}">
+    </nsj-headline>
+
+<nsj-toolbar ng-on-change_toolbar="srvcs_tnsdftrmnt_lst_cntrllr.search($event.detail)" search="true" refresh = "true" holder="Busca" model-search="{{srvcs_tnsdftrmnt_lst_cntrllr.service.filter}}" select="{{srvcs_tnsdftrmnt_lst_cntrllr.selectPage && srvcs_tnsdftrmnt_lst_cntrllr.selected.length === srvcs_tnsdftrmnt_lst_cntrllr.entities.length && !srvcs_tnsdftrmnt_lst_cntrllr.selectAll && !srvcs_tnsdftrmnt_lst_cntrllr.service.loadParams.finished}}" select-all="{{srvcs_tnsdftrmnt_lst_cntrllr.selectAll}}" item-in-page="{{srvcs_tnsdftrmnt_lst_cntrllr.entities.length}}" item-all="{{srvcs_tnsdftrmnt_lst_cntrllr.entities[0].full_count}}">
+                    <nsj-filters slot="filters">
+                                                            <nsj-filter-seletor options="{{srvcs_tnsdftrmnt_lst_cntrllr.$rootScope.OPTIONS_ServicosItensdefaturamento}} "  type="seletor" max-occurs="{{srvcs_tnsdftrmnt_lst_cntrllr.$rootScope.MAXOCCURS_ServicosItensdefaturamento}} " input="{{srvcs_tnsdftrmnt_lst_cntrllr.$rootScope.SELECTS_ServicosItensdefaturamento}} " text-disabled="Selecionar..." model="{{srvcs_tnsdftrmnt_lst_cntrllr.filters}} "></nsj-filter-seletor>
+    </nsj-filters>
+   
+                                        </nsj-toolbar>
+                <div class="panel-body body-list">
+                                        <div class="list-group" id="servicos_itensdefaturamento_list" infinite-scroll='srvcs_tnsdftrmnt_lst_cntrllr.nextPage()' infinite-scroll-disabled='srvcs_tnsdftrmnt_lst_cntrllr.isBusy()' infinite-scroll-distance='1'>    <a href   class="list-group-item" ng-repeat="entity in srvcs_tnsdftrmnt_lst_cntrllr.entities" ui-sref-active="active">
+                        
+                    <h4 class="list-group-item-heading">
+                                        {{ entity.descricaoservico }} 
+                            </h4>
+                    </a>            <p class="list-group-item" ng-if="!srvcs_tnsdftrmnt_lst_cntrllr.finished && (srvcs_tnsdftrmnt_lst_cntrllr.service.to_load <= 0)">
+            <a href="" ng-click="srvcs_tnsdftrmnt_lst_cntrllr.loadMore()">Ver mais...</a>
+        </p>
+        <p class="text-center article-loading height-full" ng-class="{'onloading' : srvcs_tnsdftrmnt_lst_cntrllr.isBusy() }" ng-if="srvcs_tnsdftrmnt_lst_cntrllr.isBusy()"></p>
+    <p class="text-center nfound" ng-if="srvcs_tnsdftrmnt_lst_cntrllr.entities.length == 0 && !srvcs_tnsdftrmnt_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+</div>
+            
+                                        </div><!--/panel-body-->
+            </div><!--/panel-->
+        </div>
+    </div>
+
+    <div class="content-loading"  ng-if="srvcs_tnsdftrmnt_lst_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+            </div>
+</div>

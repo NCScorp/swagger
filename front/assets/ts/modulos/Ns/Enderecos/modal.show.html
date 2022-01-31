@@ -1,0 +1,28 @@
+
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="ns_ndrcs_frm_shw_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="modal-title">Endereço</h3>
+        <span ng-if='ns_ndrcs_frm_shw_cntrllr.action == "insert"'>
+        <div >
+
+        
+        
+        
+        
+                
+        
+     
+    </div>
+        </span>
+    </div>
+        <div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : ns_ndrcs_frm_shw_cntrllr.busy }">
+    <div class="nsj-form-view top-buffer bottom-buffer">
+                            <ns-enderecos-show-show entity="ns_ndrcs_frm_shw_cntrllr.entity" form="ns_ndrcs_frm_shw_cntrllr.form" action="ns_ndrcs_frm_shw_cntrllr.action" constructors="ns_ndrcs_frm_shw_cntrllr.constructors" busy="ns_ndrcs_frm_shw_cntrllr.busy"></ns-enderecos-show>
+                    </div>
+            </div>
+        <div class="content-loading"  ng-if="ns_ndrcs_frm_shw_cntrllr.busy">
+        <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+        </div>
+    </div>

@@ -1,0 +1,57 @@
+<div class="height-full layout-list">
+  <nsj-headline
+    headline-title="Template de e-mail ao advertir um prestador de serviços "
+    headline-sub="true"
+  >
+    <div class="pull-right">
+      <a
+        class="btn btn-sm btn-default hidden-lg hidden-md"
+        ui-sref="crm_templatesemailadvertirprestador({})"
+        title="Voltar"
+        ><i class="fas fa-reply"></i><span class="hidden-xs">Voltar</span></a
+      >
+
+      <button
+        type="button"
+        class="btn btn-sm btn-warning btn-edit"
+        ui-sref="crm_templatesemailadvertirprestador_edit({ 'templateemailadvertirprestador' : crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.entity.templateemailadvertirprestador})"
+      >
+        <i class="fas fa-edit"></i> <span class="hidden-xs">Editar</span>
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-sm btn-default btn-delete btn-geral"
+        ng-click="crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.delete()"
+        ng-if="crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.entity.templateemailadvertirprestador  "
+      >
+        <i class="fas fa-trash"></i> <span class="hidden-xs">Excluir</span>
+      </button>
+
+    </div>
+  </nsj-headline>
+  <div
+    class="nsj-form padding-content"
+    ng-class="{'nsj-loading-page' : crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.busy }"
+  >
+    <div class="nsj-form-view top-buffer bottom-buffer">
+      <crm-templatesemailadvertirprestador-default-show
+        entity="crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.entity"
+        action="crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.action"
+        busy="crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.busy"
+        constructors="crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.constructors"
+      ></crm-templatesemailadvertirprestador-default-show>
+    </div>
+
+    <div class="form-group pull-left"></div>
+    <div
+      class="content-loading"
+      ng-if="crm_tmpltsmldvrtrprstdr_frm_shw_cntrllr.busy"
+    >
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </div>
+</div>

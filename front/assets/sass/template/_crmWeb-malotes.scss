@@ -1,0 +1,177 @@
+
+// Modal de adicionar documentos
+.malotes-adicionar-documentos-modal{
+    .modal-body{
+        padding: 0;
+        height: 450px;
+
+        &.carregando {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tela-container{
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+
+            .lista-container, .documentos-atendimento-container {
+                flex: 1;
+                overflow-y: auto;
+            }
+
+            // Container do lado esquerdo da tela, que engloba os filtros e a lista de atendimentos
+            .lista-container {
+                max-width: 320px;
+                border-right: 1px solid #dddddd;
+
+                // Container de filtros
+                .filtros-container {}
+
+                // Listagem de atendimentos
+                .lista-atendimentos {
+                    .atendimento {
+                        display: flex;
+                        align-items: center;
+                        padding: 10px 5px;
+                        border-bottom: 1px solid #e5e5e5;
+                        cursor: pointer;
+
+                        &.selecionado {
+                            background: #e6e2db;
+                        }
+
+                        .checkbox-container {
+                            text-align: center;
+                            width: 35px;
+                        }
+
+                        .dados-atendimento-container {
+                            .codigo {
+                                font-size: 17px;
+                                color: #96784b;
+                                font-weight: 600;
+                            }
+                            .descricao {
+                                .titulo, .valor {
+                                    display: inline;
+                                }
+                                .titulo {
+                                    font-weight: 600;
+                                }
+                            }
+                        }
+                    }
+
+                    // Mensagem que aparece quando nenhum documento foi selecionado
+                    .msg-sem-dados{
+                        text-align: center;
+                        margin-top: 10px;
+                    }
+                }
+            }
+
+            // Dados de atendimentos e documentos do lado direito da tela
+            .documentos-atendimento-container {
+                padding: 15px;
+
+                // Mensagem que aparece quando nenhum documento foi selecionado
+                .msg-sem-doc-selecionado{
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .modal-footer{
+        .btn-salvar{
+            background: #75aa46;
+            border: none;
+            color: white;
+        }
+    }
+}
+
+// Engloba lista, edição e visualização
+.crm_malotes {
+    .headline-malote-form, .headline-malote-new, .headline-malote-show {
+        .title {
+            h2 {
+                font-size: 30px;
+                color: #595a5e;
+            }
+        }
+    }
+
+    .headline-malote-show {
+        .acoes-tela {
+            .btn {
+                color: white;
+
+                &.btn-enviar, &.btn-salvar-resposta-requisitante, &.btn-editar-envio, &.btn-cancelar-envio {
+                    background: #337ab7;
+                }
+            }
+        }
+    }
+    .btn-add-documento {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+    .documentos-accordion {
+        margin-bottom: 10px;
+    }
+
+    .filtros-container {
+        border-bottom: 1px solid #dddddd;
+        padding-bottom: 10px;
+
+        .filtro-status-container {
+            border: 1px solid #cacaca;
+            width: 350px;
+            display: flex;
+            align-items: center;
+            border-radius: 4px;
+            background: #d8d8d8;
+
+            .titulo {
+                display: inline-block;
+                padding: 0 10px;
+            }
+            .select {
+                display: inline-block;
+                flex: 1;
+                border-left: 1px solid #cacaca;
+
+                select {
+                    border: none;
+                }
+            }
+        }
+    }
+}
+
+.documentos-accordion-container{
+    .div-atcsdocumentos{
+        .row.div-documentos{
+            .table
+                tbody  
+                tr {
+                    &:nth-child(even){
+                        background-color: #f5f5f5;
+                    }
+                    td{
+                        border: none !important;
+                    }
+                }
+        }
+    }
+}
+
+.check-seleciona-todos{
+    display: inline-block;
+    margin: 10px 10px 10px 48px;
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+}

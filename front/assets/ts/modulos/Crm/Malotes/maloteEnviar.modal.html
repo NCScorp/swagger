@@ -1,0 +1,37 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+		ng-click="crm_mlts_frm_nvr_cntrllr.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h3 class="modal-title" id="modal-title">Enviar</h3>
+	<span ng-if='crm_mlts_frm_nvr_cntrllr.action == "insert"'>
+		<div>
+
+
+
+
+		</div>
+	</span>
+</div>
+<form nsg-focus name="crm_mlts_frm_nvr_cntrllr.form" novalidate="novalidate" role="form"
+	ng-submit="crm_mlts_frm_nvr_cntrllr.submit()">
+	<div class="modal-body" id="modal-body">
+		<crm-malotes-enviar entity="crm_mlts_frm_nvr_cntrllr.entity" form="crm_mlts_frm_nvr_cntrllr.form"
+			action="crm_mlts_frm_nvr_cntrllr.action" constructors="crm_mlts_frm_nvr_cntrllr.constructors"
+			busy="crm_mlts_frm_nvr_cntrllr.busy"></crm-malotes-enviar>
+	</div>
+	<div class="modal-footer">
+		<div class="pull-left">
+
+			<button type="submit" name="submit"
+				ng-disabled="crm_mlts_frm_nvr_cntrllr.form.$pristine || crm_mlts_frm_nvr_cntrllr.entity.$$__submitting"
+				class="btn btn-warning" ng-class="{loading:crm_mlts_frm_nvr_cntrllr.entity.$$__submitting}">
+				Salvar
+			</button>
+			<a class="btn btn-sm" ng-click="crm_mlts_frm_nvr_cntrllr.close()">
+				<i class="fa fa-times" aria-hidden="true"></i>
+				Fechar</a>
+
+		</div>
+	</div>
+</form>

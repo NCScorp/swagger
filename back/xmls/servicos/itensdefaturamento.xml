@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="itensdefaturamento" label="itensdefaturamento" project="servicos">
+    <entity schema="servicos" table="vwservicosgrupoempresarial_v2">
+        <fieldmodel name="servico" datatype="guid" isid="true" column="servico" />
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial" />
+        <fieldmodel name="codigoservico" datatype="string" column="codigoservico" />
+        <fieldmodel name="descricaoservico" datatype="string" column="descricaoservico" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="bloqueado" datatype="integer" column="servicobloqueado" />
+        <fieldmodel name="valorservico" datatype="moeda" column="valorservico" />
+        <fieldmodel name="cfopId" datatype="uuid" column="cfop_id" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" label="Item de Faturamento">
+        <fieldsbrowser>
+            <fieldbrowser alias="servico" entitylink="servico" isid="true" unique="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="descricaoservico" entitylink="descricaoservico" visible="true" cansearch="true" avaliable="true"/>
+            <fieldbrowser alias="bloqueado" entitylink="bloqueado" visible="false"/>
+        </fieldsbrowser>
+        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="bloqueado">
+                    <conditions>
+                        <condition type="eq" />
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+    </viewbrowser>
+</nsjusecase>

@@ -1,0 +1,26 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="atcconfiguracaodocumento">Configuração de
+                    Documento</label>
+                <nsj-lookup name="atcconfiguracaodocumento" id-name="atcconfiguracaodocumento"
+                    factory="CrmAtcsconfiguracoesdocumentos" ng-model="$ctrl.entity.atcconfiguracaodocumento"
+                    max-label="1" constructor="{  }" config='{ "atcconfiguracaodocumento":"Configuracao Documento",  }'
+                    disabled="$ctrl.entity.$$__submitting"
+                    filter=" {'atcconfiguracaodocumento':{'condition':'neq', 'value': $ctrl.constructors.atcconfiguracaodocumento }}">
+                </nsj-lookup>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="nome">Nome</label><input type='text'
+                    class="form-control" id="nome" name="nome" ng-model="$ctrl.entity.nome"
+                    ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="codigo">Código</label><input type='text'
+                    class="form-control" id="codigo" name="codigo" ng-model="$ctrl.entity.codigo"
+                    ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+    </div>
+</form>

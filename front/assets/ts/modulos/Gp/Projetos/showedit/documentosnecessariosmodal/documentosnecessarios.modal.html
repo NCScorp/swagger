@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h3 class="modal-title">Documentos necessários</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped table-hover table-condensed table-bordered">
+        <tbody ng-if="$ctrl.documentosNecessariosList">
+          <tr ng-repeat="documento in $ctrl.documentosNecessariosList track by $index">
+            <td>
+              <b>{{ $index + 1 }}</b> - {{ documento }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="pull-right">
+    <button
+        type="button" class="btn btn-default btn-delete btn-geral" ng-click="$ctrl.close()">
+        <i class="fa fa-times"></i>
+        Fechar
+    </button>
+  </div>
+</div>

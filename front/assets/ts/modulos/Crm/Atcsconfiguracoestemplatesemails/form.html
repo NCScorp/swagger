@@ -1,0 +1,57 @@
+<div class="height-full layout-">
+
+    <form nsj-focus name="crm_tcscnfgrcstmpltsmls_frm_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'' === 'table','nsj-loading-page' : crm_tcscnfgrcstmpltsmls_frm_cntrllr.busy }"
+        role="form" ng-submit="crm_tcscnfgrcstmpltsmls_frm_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="Configuração Templates Emails " headline-sub="true">
+            <div class="pull-right">
+
+
+
+
+                <a class="btn btn-sm btn-default"
+                    ui-sref="crm_atcsconfiguracoestemplatesemails({'atcconfiguracaodocumento' : crm_tcscnfgrcstmpltsmls_frm_cntrllr.constructors.atcconfiguracaodocumento,})"
+                    title="Voltar à lista">Voltar à lista</a>
+
+
+
+
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <crm-atcsconfiguracoestemplatesemails-default entity="crm_tcscnfgrcstmpltsmls_frm_cntrllr.entity"
+                form="crm_tcscnfgrcstmpltsmls_frm_cntrllr.form" busy="crm_tcscnfgrcstmpltsmls_frm_cntrllr.busy"
+                action="crm_tcscnfgrcstmpltsmls_frm_cntrllr.action"
+                constructors="crm_tcscnfgrcstmpltsmls_frm_cntrllr.constructors">
+            </crm-atcsconfiguracoestemplatesemails-default>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+
+                    <div class="form-group pull-left">
+
+                        <button type="button" ng-click="crm_tcscnfgrcstmpltsmls_frm_cntrllr.submit()"
+                            ng-class="{loading:crm_tcscnfgrcstmpltsmls_frm_cntrllr.entity.$$__submitting}"
+                            ng-disabled="crm_tcscnfgrcstmpltsmls_frm_cntrllr.entity.$$__submitting || crm_tcscnfgrcstmpltsmls_frm_cntrllr.form.$pristine"
+                            class="btn btn-sm btn-warning btn-save btn-geral">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-sm"
+                            ui-sref="crm_atcsconfiguracoestemplatesemails({'atcconfiguracaodocumento' : crm_tcscnfgrcstmpltsmls_frm_cntrllr.constructors.atcconfiguracaodocumento,})"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="crm_tcscnfgrcstmpltsmls_frm_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

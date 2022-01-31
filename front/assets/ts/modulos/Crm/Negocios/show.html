@@ -1,0 +1,23 @@
+<div class="height-full layout-table">
+    <div class='content-scroll height-full'>
+        <!-- Sobrescrito para não aparecer no formulário -->
+        <div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : crm_ngcs_frm_shw_cntrllr.busy }">
+            <div class="nsj-form-view top-buffer bottom-buffer">
+                <crm-negocios-default-show entity="crm_ngcs_frm_shw_cntrllr.entity"
+                    action="crm_ngcs_frm_shw_cntrllr.action" busy="crm_ngcs_frm_shw_cntrllr.busy"
+                    constructors="crm_ngcs_frm_shw_cntrllr.constructors"></crm-negocios-default-show>
+            </div>
+
+            <div class="form-group pull-left">
+
+
+            </div>
+            <div class="content-loading" ng-if="crm_ngcs_frm_shw_cntrllr.busy">
+                <div class="center-loading text-center">
+                    <div class="onloading"></div>
+                    Carregando...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="height-full layout-list">    
+            <nsj-headline headline-title="Municipio " headline-sub="true">
+<div class="pull-right">
+
+                    <a class="btn btn-sm btn-default hidden-lg hidden-md" ui-sref="ns_municipios({})" title="Voltar"><i class="fas fa-reply"></i><span class="hidden-xs">Voltar</span></a>
+        
+        
+        
+        
+                
+        
+     
+    </div>
+</nsj-headline>
+    <div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : ns_mncps_frm_shw_cntrllr.busy }">
+        <div class="nsj-form-view top-buffer bottom-buffer">
+            <ns-municipios-default-show entity="ns_mncps_frm_shw_cntrllr.entity" action="ns_mncps_frm_shw_cntrllr.action" busy="ns_mncps_frm_shw_cntrllr.busy" constructors="ns_mncps_frm_shw_cntrllr.constructors"></ns-municipios-default-show>
+                                </div>
+        
+<div class="form-group pull-left">
+        
+        
+            </div>        <div class="content-loading"  ng-if="ns_mncps_frm_shw_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+        </div>
+    </div>
+</div>

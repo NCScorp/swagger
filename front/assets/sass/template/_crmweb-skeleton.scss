@@ -1,0 +1,98 @@
+.skeleton-container {
+    &.skeleton-itens-9px {
+        .item-skeleton {
+            height: 9px;
+            border-radius: 2px;
+        }
+    }
+    &.skeleton-itens-10px {
+        .item-skeleton {
+            height: 10px;
+            border-radius: 2px;
+        }
+    }
+    &.skeleton-itens-15px {
+        .item-skeleton {
+            height: 15px;
+            border-radius: 4px;
+        }
+    }
+    &.skeleton-itens-18px {
+        .item-skeleton {
+            height: 18px;
+            border-radius: 4px;
+        }
+    }
+
+    %ext-efeito-skeleton{
+        background: #e3e3e3;
+        animation: fade-in-out 1200ms infinite alternate;
+        animation-delay: 13ms;
+        -webkit-animation: fade-in-out 1200ms infinite alternate;
+        -webkit-animation-delay: 13ms;
+
+        mix-blend-mode: multiply;
+    }
+
+    %ext-item-skeleton{
+        @extend %ext-efeito-skeleton;
+        width: 100px; // Largura padrão dos itens
+        height: 15px; // Tamanho padrão dos itens
+        border-radius: 4px; // Border radius padrão dos itens
+    }
+
+    // Item de skeleton
+    .item-skeleton {
+        @extend %ext-item-skeleton;
+    }
+
+    // Adiciono propriedades do efeito de skeleton
+    .efeito-skeleton {
+        @extend %ext-efeito-skeleton;
+    }
+
+    .item18px {
+        height: 18px;
+    }
+    .item15px {
+        height: 15px;
+    }
+    .item10px {
+        height: 10px;
+    }
+    .item9px {
+        height: 9px;
+    }
+
+    .item9px, .item10px {
+        border-radius: 2px;
+    }
+    .item15px, .item18px {
+        border-radius: 4px;
+    }
+
+    // Animação que muda a opacidade
+    @keyframes fade-in-out {
+        0% {
+            opacity: .35;
+        }
+        5% {
+            opacity: .4;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    @-webkit-keyframes fade-in-out {
+        0% {
+            opacity: .35;
+        }
+        5% {
+            opacity: .4;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}

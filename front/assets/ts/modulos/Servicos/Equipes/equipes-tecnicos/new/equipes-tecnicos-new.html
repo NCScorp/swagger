@@ -1,0 +1,57 @@
+<div class="height-full layout-table">
+
+    <form nsj-focus name="qps_qpstcncs_frm_nw_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'table' === 'table','nsj-loading-page' : qps_qpstcncs_frm_nw_cntrllr.busy }"
+        role="form" ng-submit="qps_qpstcncs_frm_nw_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="" headline-sub="true">
+            <div class="pull-right">
+
+
+
+                <button type="button" class="btn btn-sm btn-default btn-delete btn-geral"
+                    ng-click="qps_qpstcncs_frm_nw_cntrllr.delete()"
+                    ng-if="qps_qpstcncs_frm_nw_cntrllr.entity.equipetecnicotecnico  "><i class="fas fa-trash"></i> <span
+                        class="hidden-xs">Excluir</span></button>
+
+
+
+
+
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <equipes-tecnicos-form entity="qps_qpstcncs_frm_nw_cntrllr.entity"
+                form="qps_qpstcncs_frm_nw_cntrllr.form" busy="qps_qpstcncs_frm_nw_cntrllr.busy"
+                action="qps_qpstcncs_frm_nw_cntrllr.action" constructors="qps_qpstcncs_frm_nw_cntrllr.constructors">
+            </equipes-tecnicos-form>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+
+                    <div class="form-group pull-left">
+
+                        <button type="button" ng-click="qps_qpstcncs_frm_nw_cntrllr.submit()"
+                            ng-class="{loading:qps_qpstcncs_frm_nw_cntrllr.entity.$$__submitting}"
+                            ng-disabled="qps_qpstcncs_frm_nw_cntrllr.entity.$$__submitting || qps_qpstcncs_frm_nw_cntrllr.form.$pristine"
+                            class="btn btn-sm btn-warning btn-save btn-geral">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-sm"
+                            ui-sref="equipes_equipestecnicos({'equipetecnico' : qps_qpstcncs_frm_nw_cntrllr.constructors.equipetecnico,})"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="qps_qpstcncs_frm_nw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

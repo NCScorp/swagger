@@ -1,0 +1,47 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-8">
+            <div class="form-group"><label class="control-label" for="negocio">Negócio</label>
+                <nsj-lookup name="negocio" id-name="negocio" factory="CrmAtcs" ng-model="$ctrl.entity.negocio"
+                    max-label="1" constructor="{  }" config='{ "nome":"nome",  }' disabled="$ctrl.entity.$$__submitting"
+                    filter=" {'negocio':{'condition':'neq', 'value': $ctrl.constructors.negocio }}"></nsj-lookup>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group"><label class="control-label" for="tipodocumento">Documento</label>
+                <nsj-lookup name="tipodocumento" id-name="tipodocumento" factory="NsTiposdocumentos"
+                    ng-model="$ctrl.entity.tipodocumento" max-label="1" constructor="{  }" config='{ "nome":"nome",  }'
+                    disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-4">
+            <div class="form-group"><label class="control-label" for="url">Url</label><input type='text'
+                    class="form-control" id="url" name="url" ng-model="$ctrl.entity.url"
+                    ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-4">
+            <div class="form-group"><label class="control-label" for="status">Situação</label><select
+                    class="form-control" id="status" name="status" ng-model="$ctrl.entity.status"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" " convert-to-number>
+                    <option value="0">Pendente</option>
+                    <option value="1">Recebido</option>
+                    <option value="2">Pré-Aprovado</option>
+                    <option value="3">Enviado para Requisitante</option>
+                    <option value="4">Aprovado</option>
+                    <option value="5">Recusado</option>
+                </select></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-4">
+            <div class="form-group"><label class="control-label" for="descricao">Descrição</label><textarea
+                    class="form-control" id="descricao" name="descricao" ng-model="$ctrl.entity.descricao"
+                    ng-disabled="$ctrl.entity.$$__submitting"></textarea></div>
+        </div>
+    </div>
+</form>

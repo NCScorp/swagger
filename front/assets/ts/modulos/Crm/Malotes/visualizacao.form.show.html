@@ -1,0 +1,171 @@
+
+<!-- Accordion de Informações do Malote -->
+<nsj-accordion init-open headline="Informações" class="informacoes-accordion">
+    <div class="informacoes-accordion-container">
+        <div class="row " >
+            <div class="col-sm-12" >
+                <fieldset >
+                    <div class="row  row-form-view" >
+                        <div class="col-sm-6" >
+                                                    <div class="form-group clearfix">
+                                <label class="control-label">Lote </label>
+                                <p class="form-control-static" >
+                                    <span id="codigo" class="form-control-static" ng-bind="($ctrl.entity.codigo) || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                </div>
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Envio </label>
+                                <p class="form-control-static" >
+                                    <span id="dtenvio" class="form-control-static" ng-bind="($ctrl.entity.dtenvio| asDate | date: 'dd/MM/yyyy')|| 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Requisitante Cliente </label>
+                                <p class="form-control-static" >
+                                    <span id="requisitantecliente" class="form-control-static" ng-bind="$ctrl.entity.requisitantecliente.nomefantasia || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row " >
+            <div class="col-sm-12" ng-if="$ctrl.entity.status !== 0">
+                <fieldset >
+                    <legend>
+                        Envio                        
+                    </legend>
+                    <div class="row  row-form-view" >
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Modalidade </label>
+                                <p class="form-control-static" >
+                                    <span id="enviomodal" class="form-control-static" ng-bind="([&quot;Em m\u00e3os&quot;,&quot;Correio&quot;,&quot;E-mail&quot;][$ctrl.entity.enviomodal])|| 'Não informado'">                             
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" ng-if="$ctrl.entity.enviomodal === 1">
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Código de rastreio </label>
+                                <p class="form-control-static" >
+                                    <span id="enviocodigorastreio" class="form-control-static" ng-bind="($ctrl.entity.enviocodigorastreio) || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" ng-if="$ctrl.entity.enviomodal === 1 || $ctrl.entity.enviomodal === 2">
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Data de envio </label>
+                                <p class="form-control-static" >
+                                    <span id="enviodata" class="form-control-static" ng-bind="($ctrl.entity.enviodata| asDate | date: 'dd/MM/yyyy')|| 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" ng-if="$ctrl.entity.enviomodal === 0">
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Data de recebimento </label>
+                                <p class="form-control-static" >
+                                    <span id="enviorecebimentodata" class="form-control-static" ng-bind="($ctrl.entity.enviorecebimentodata| asDate | date: 'dd/MM/yyyy')|| 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row " >
+            <div class="col-sm-12" ng-if="$ctrl.entity.requisitantemidia">
+                <fieldset >
+                    <legend>
+                        Requisição                        
+                    </legend>
+                    <div class="row  row-form-view" >
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Situação </label>
+                                <p class="form-control-static" >
+                                    <span id="status" class="form-control-static" ng-bind="([&quot;Novo&quot;,&quot;Enviado&quot;,&quot;Aceito&quot;,&quot;Aceito parcialmente&quot;,&quot;Recusado&quot;,&quot;Fechado&quot;][$ctrl.entity.status])|| 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Nome </label>
+                                <p class="form-control-static" >
+                                    <span id="requisitantenome" class="form-control-static" ng-bind="($ctrl.entity.requisitantenome) || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Cargo </label>
+                                <p class="form-control-static" >
+                                    <span id="requisitantecargo" class="form-control-static" ng-bind="($ctrl.entity.requisitantecargo) || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Forma de contato </label>
+                                <p class="form-control-static" >
+                                    <span id="requisitantemidia" class="form-control-static" ng-bind="$ctrl.entity.requisitantemidia.nome || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-12" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Data de resposta </label>
+                                <p class="form-control-static" >
+                                    <span id="updated_at" class="form-control-static" ng-bind="($ctrl.entity.updated_at| asDate | date: 'dd/MM/yyyy')|| 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                        <div class="col-sm-6" >
+                                                        <div class="form-group clearfix">
+                                <label class="control-label">Observações </label>
+                                <p class="form-control-static" >
+                                    <span id="requisitanteobservacoes" class="form-control-static" ng-bind="($ctrl.entity.requisitanteobservacoes) || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                                                    </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</nsj-accordion>
+
+<!-- Accordion de Documentos do Malote -->
+<nsj-accordion init-open headline="Documentos" class="documentos-accordion">
+    <div class="documentos-accordion-container">
+        <div class="div-atcsdocumentos">
+    <div class="row div-documentos">
+        <nsj-objectlist 
+            ng-prop-list="$ctrl.documentosParaListar" 
+            ng-prop-columns="$ctrl.configObjectlist"
+            ng-prop-config="$ctrl.montaListaDocumentos"
+            view-mode="list"
+            ng-prop-acoesemmassamode="$ctrl.mostrarAcoesEmMassa"
+            ng-on-list_change="$ctrl.atualizarListaDocumentos($event.detail.data)"
+        >
+        </nsj-objectlist>
+    </div>
+</div>    </div>
+</nsj-accordion>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="projetos" label="projetos" project="financas" orphan="false">
+  <!-- <entity schema="financas" table="projetos"> -->
+  <entity schema="gp" table="vw_projetos_v5">
+    <!--
+      Atenção:
+      ao realizar alterações neste model, por favor conferir o arquivo 
+      AppBundle/Repository/Financas/ProjetosRepository.php
+      e fazer as devidas modificações (pois o repository foi sobrescrito)
+    -->
+    <fieldmodel name="projeto" datatype="guid" isid="true" column="projeto"/>
+    <fieldmodel name="nome" datatype="string" column="nome"/>
+    <fieldmodel name="datainicio" datatype="datetime" column="datainicio"/>
+    <fieldmodel name="datafim" datatype="datetime" column="datafim"/>
+    <fieldmodel name="situacao" datatype="integer" column="situacao"/>
+    <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+
+    <fieldmodel column="codigo" datatype="string" name="codigo" />
+    <fieldmodel column="cliente_id" datatype="guid" name="cliente" useCaseLink="ns\clientes" entityJoinType="left"/>
+    <fieldmodel column="estabelecimento_id" datatype="guid" name="estabelecimento" useCaseLink="ns\estabelecimentos" entityJoinType="left" />
+    <fieldmodel column="tipoprojeto" datatype="guid" name="tipoprojeto" notMapped="true"/><!-- useCaseLink="gp\tiposdeprojetos" entityJoinType="left" -->
+    <fieldmodel column="tempoadquirido" datatype="integer" name="tempoadquirido" />
+    <fieldmodel name="responsavel_conta_nasajon" datatype="json" column="responsavel_conta_nasajon"/>
+    <fieldmodel column="valor" datatype="float" name="valor"/>
+    <fieldmodel name="itens" datatype="objectlist" notMapped="true" />
+    <fieldmodel name="documentovinculado" datatype="guid" notMapped="true" />
+    <fieldmodel name="descontos" datatype="float" notMapped="true"/>
+    <fieldmodel name="origem" datatype="float" column="origem"/>
+    <fieldmodel name="tipodocumentovinculado" datatype="integer" column="tipodocumentovinculado" />
+    <fieldmodel name="sincronizaescopo" datatype="boolean" column="sincronizaescopo"/>
+    <fieldmodel name="sincronizasolicitacao" datatype="boolean" column="sincronizasolicitacao"/>
+    <fieldmodel name="modalidadefrete" datatype="integer" notMapped="true" />
+    <fieldmodel name="id_transportadora" datatype="guid" notMapped="true" />
+    <fieldmodel name="criteriofrete" datatype="integer" notMapped="true" />
+    <fieldmodel name="frete" datatype="float" notMapped="true" />
+    <fieldmodel name="seguro" datatype="float" notMapped="true" />
+    <fieldmodel name="outros" datatype="float" notMapped="true" />
+    <fieldmodel column="tempoprevisto" datatype="integer" name="tempoprevisto" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+  </constructors>
+  <viewbrowser label="Projeto" layout="list" paginate="true" target="builtin">
+    <filters >
+      <fieldsfilters>
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser entitylink="projeto" isid="true" visible="true"/>
+      <fieldbrowser entitylink="nome" isid="false" visible="true"/>
+      <fieldbrowser entitylink="datainicio" isid="false" visible="true"/>
+      <fieldbrowser entitylink="datafim" isid="false" visible="true"/>
+      <fieldbrowser entitylink="situacao" isid="false" visible="true"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Projetos">
+      <layout>
+        <headerform>
+          <row>
+            <cell controltype="textedit" label="projeto" colspan="4" entitylink="projeto">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textedit" label="Projeto" colspan="4" entitylink="nome">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="dateedit" label="Data de Início" colspan="4" entitylink="datainicio">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="dateedit" label="Data de Término" colspan="4" entitylink="datafim">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textedit" label="Situção" colspan="4" entitylink="situacao">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textedit" label="tenant" colspan="4" entitylink="tenant">
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>retrieve</name>
+    </action>
+    <action>
+      <name>Insert</name>
+      <api>
+        <name>projetosnovo_v3</name>
+        <fromto valueapi="projeto" valueentity="projeto" />
+        <fromto valueapi="codigo" valueentity="codigo" />
+        <fromto valueapi="nome" valueentity="nome" />
+        <fromto valueapi="cliente_id" valueentity="cliente" />
+        <fromto valueapi="estabelecimento_id" valueentity="estabelecimento" />
+        <fromto valueapi="situacao" valueentity="situacao" />
+        <fromto valueapi="valor" valueentity="valor" />
+        <fromto valueapi="created_by" valueentity="logged_user" />
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="itens" valueentity="itens"/>
+        <fromto valueapi="documentovinculado" valueentity="documentovinculado"/>
+        <fromto valueapi="descontos" valueentity="descontos"/>
+        <fromto valueapi="origem" valueentity="origem"/>
+        <fromto valueapi="tipodocumentovinculado" valueentity="tipodocumentovinculado"/>
+        <fromto valueapi="sincronizaescopo" valueentity="sincronizaescopo"/>
+        <fromto valueapi="sincronizasolicitacao" valueentity="sincronizasolicitacao"/>
+        <fromto valueapi="datainicio" valueentity="datainicio"/>
+        <fromto valueapi="datafim" valueentity="datafim"/>
+        <fromto valueapi="modalidadefrete" valueentity="modalidadefrete" />
+        <fromto valueapi="id_transportadora" valueentity="id_transportadora" />
+        <fromto valueapi="criteriofrete" valueentity="criteriofrete" />
+        <fromto valueapi="frete" valueentity="frete" />
+        <fromto valueapi="seguro" valueentity="seguro" />
+        <fromto valueapi="outros" valueentity="outros" />
+        <fromto valueapi="tipoprojeto" valueentity="tipoprojeto" />
+        <fromto valueapi="tempoadquirido" valueentity="tempoadquirido" />
+        <fromto valueapi="responsavel_conta_nasajon" valueentity="responsavel_conta_nasajon" />
+        <fromto valueapi="tempoprevisto" valueentity="tempoprevisto" />
+      </api>
+    </action>
+    <action>
+      <name>Update</name>
+      <api>
+        <name>projetosalterar_v2</name>
+        <fromto valueapi="projeto" valueentity="projeto" />
+        <fromto valueapi="codigo" valueentity="codigo" />
+        <fromto valueapi="nome" valueentity="nome" />
+        <fromto valueapi="cliente_id" valueentity="cliente" />
+        <fromto valueapi="estabelecimento_id" valueentity="estabelecimento" />
+        <fromto valueapi="situacao" valueentity="situacao" />
+        <fromto valueapi="valor" valueentity="valor" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="sincronizaescopo" valueentity="sincronizaescopo"/>
+        <fromto valueapi="sincronizasolicitacao" valueentity="sincronizasolicitacao"/>
+        <fromto valueapi="datainicio" valueentity="datainicio"/>
+        <fromto valueapi="datafim" valueentity="datafim"/>
+        <fromto valueapi="tipoprojeto" valueentity="tipoprojeto" />
+        <fromto valueapi="tempoadquirido" valueentity="tempoadquirido" />
+        <fromto valueapi="responsavel_conta_nasajon" valueentity="responsavel_conta_nasajon" />
+        <fromto valueapi="tempoprevisto" valueentity="tempoprevisto" />
+      </api>
+    </action>
+    <action>
+      <name>Iniciar</name>
+      <api>
+        <name>projetosIniciar_v2</name>
+        <fromto valueapi="projeto" valueentity="projeto" />
+        <fromto valueapi="usuario" valueentity="logged_user" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+      </api>
+  </action>
+  </actions>
+</nsjusecase>

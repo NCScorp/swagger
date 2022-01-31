@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="midias" label="midias" project="crm">
+  <entity schema="crm" table="midiasorigem">
+    <fieldmodel name="midia" datatype="guid" isid="true" column="midiaorigem"/>
+    <fieldmodel name="nome" datatype="string"  column="codigo"/>
+    <fieldmodel name="bloqueado" datatype="integer"  column="bloqueado"/>
+    <fieldmodel name="descricao" datatype="string"  column="descricao"/>
+    <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+    <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+    <fieldmodel name="id_grupoempresarial" datatype="integer"  column="id_grupoempresarial"/>
+    <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Mídias de Origem" layout="list" paginate="true" target="builtin">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="midia" isid="true" visible="false"/>
+      <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true" indefaultorder="true"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Mídia de Origem">
+      <layout>
+        <headerform>
+          <row>
+            <cell controltype="textedit" label="Nome" colspan="12" entitylink="nome">
+              <validates>
+                <validate type="vnull" displaytext="O campo Nome não pode estar vazio"></validate>
+                <validate type="maxlength" value="20" displaytext="O campo Nome aceita no máximo 20 caracteres"/>
+                <validate type="unique" displaytext="Já existe uma Mídia de Origem com este nome."/>
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textarea" label="Descrição" colspan="12" entitylink="descricao"/>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>retrieve</name>
+    </action>
+    <action form="default" successMsg="A Mídia de Origem foi criada com sucesso!" failMsg="Ocorreu um erro ao criar a Mídia de Origem!">
+      <name>Insert</name>
+      <api>
+        <name>midiaNovo_v2</name>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action> 
+    <action form="default" successMsg="A Mídia de Origem foi editada com sucesso!" failMsg="Ocorreu um erro ao editar a Mídia de Origem!">
+      <name>Update</name>
+      <api>
+        <name>midiaAlterar_v2</name>
+        <fromto valueapi="midia" valueentity="midia"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="bloqueado" valueentity="bloqueado"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

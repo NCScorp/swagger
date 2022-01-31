@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="estabelecimentos" label="estabelecimentos" project="ns">
+    <entity schema="ns" table="vw_estabelecimentos">
+        <fieldmodel name="estabelecimento" datatype="guid" isid="true" column="estabelecimento" />
+        <fieldmodel name="nomefantasia" datatype="string" column="nomefantasia" />
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="raizcnpj" datatype="string" column="raizcnpj" />
+        <fieldmodel name="ordemcnpj" datatype="string" column="ordemcnpj" />
+        <fieldmodel name="cnpj_completo" datatype="string" column="cnpj_completo" />
+        <fieldmodel name="inscricaoestadual" datatype="string" column="inscricaoestadual" />
+        <fieldmodel name="inscricaomunicipal" datatype="string" column="inscricaomunicipal" />
+        <fieldmodel name="email" datatype="string" column="email" />
+        <fieldmodel name="site" datatype="string" column="site" />
+        <fieldmodel name="tipologradouro" datatype="string" column="tipologradouro" />
+        <fieldmodel name="logradouro" datatype="string" column="logradouro" />
+        <fieldmodel name="numero" datatype="string" column="numero" />
+        <fieldmodel name="complemento" datatype="string" column="complemento" />
+        <fieldmodel name="bairro" datatype="string" column="bairro" />
+        <fieldmodel name="cidade" datatype="string" column="cidade" />
+        <fieldmodel name="cep" datatype="string" column="cep" />
+        <fieldmodel name="ibge" datatype="string" column="ibge" />
+        <fieldmodel name="dddtel" datatype="string" column="dddtel" />
+        <fieldmodel name="telefone" datatype="string" column="telefone" />
+        <fieldmodel name="telefonecomddd" datatype="string" column="telefonecomddd" />
+        <fieldmodel name="razaosocial" datatype="string" column="razaosocial" />
+        <fieldmodel name="contas" datatype="objectlist" column="estabelecimento" useCaseLink="financas\contas"  entityJoinType="left"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">id_grupoempresarial</constructoritem>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" label="Estabelecimento">    
+        <fieldsbrowser>
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" isid="true" unique="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Nome" entitylink="nomefantasia" visible="true" cansearch="true" avaliable="true"/>
+            <fieldbrowser  entitylink="id_grupoempresarial" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="raizcnpj" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="ordemcnpj" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="cnpj_completo" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="inscricaoestadual" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="inscricaomunicipal" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="email" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="site" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="tipologradouro" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="logradouro" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="numero" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="complemento" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="bairro" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="cidade" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="cep" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="ibge" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="dddtel" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="telefone" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="telefonecomddd" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="razaosocial" visible="false" cansearch="false"/>
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

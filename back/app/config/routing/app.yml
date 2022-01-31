@@ -1,0 +1,495 @@
+ns_municipios:
+   type: rest
+   resource: "Nasajon\\MDABundle\\Controller\\Ns\\MunicipiosController"
+   name_prefix:   "ns_municipios_"
+
+ns_camposcustomizados:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\CamposcustomizadosController"
+    name_prefix:   "ns_camposcustomizados_"
+
+ns_cidadesinformacoesfunerarias:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\CidadesinformacoesfunerariasController"
+    name_prefix:   "ns_cidadesinformacoesfunerarias_"
+
+ns_cidadesestrangeiras:
+   type: rest
+   resource: "Nasajon\\MDABundle\\Controller\\Ns\\CidadesestrangeirasController"
+   name_prefix:   "ns_cidadesestrangeiras_"
+
+ns_estados:
+   type: rest
+   resource: "Nasajon\\MDABundle\\Controller\\Ns\\EstadosController"
+   name_prefix:   "ns_estados_"
+
+ns_paises:
+   type: rest
+   resource: "Nasajon\\MDABundle\\Controller\\Ns\\PaisesController"
+   name_prefix:   "ns_paises_"
+
+ns_estabelecimentos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\EstabelecimentosController"
+    name_prefix:   "ns_estabelecimentos_"
+
+ns_enderecos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\EnderecosController"
+    name_prefix:   "ns_enderecos_"
+
+ns_prioridades:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\PrioridadesController"
+    name_prefix:   "ns_prioridades_"
+    
+ns_tiposdocumentos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\TiposdocumentosController"
+    name_prefix:   "ns_tiposdocumentos_"
+
+ns_documentosnecessarios:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\DocumentosnecessariosController"
+    name_prefix:   "ns_documentosnecessarios_"
+
+ns_clientes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\ClientesController"
+    name_prefix:   "ns_clientes_"
+
+ns_clientesdocumentos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\ClientesdocumentosController"
+    name_prefix:   "ns_clientesdocumentos_"
+
+
+ns_fornecedores:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\FornecedoresController"
+    name_prefix:   "ns_fornecedores_"
+
+ns_fornecedoreslogos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\Pessoas\\LogosController"
+    name_prefix:   "ns_fornecedoreslogos_"
+
+ns_fornecedoresdocumentos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\FornecedoresdocumentosController"
+    name_prefix:   "ns_fornecedoresdocumentos_"
+
+ns_formaspagamentos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\FormaspagamentosController"
+    name_prefix:   "ns_formaspagamentos_"
+    
+ns_cnaes:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\CnaesController"
+    name_prefix:   "ns_cnaes_"
+    
+
+ns_fornecedoressuspensos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\FornecedoressuspensosController"
+    name_prefix:   "ns_fornecedoressuspensos_"
+    
+ns_tiposatividades:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\TiposatividadesController"
+    name_prefix:   "ns_tiposatividades_"
+    
+ns_advertencias:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\AdvertenciasController"
+    name_prefix:   "ns_advertencias_"
+
+ns_tiposlogradouros:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\TiposlogradourosController"
+    name_prefix:   "ns_tiposlogradouros_"
+
+ns_documentosfop:
+   type: rest
+   resource: "Nasajon\\MDABundle\\Controller\\Ns\\DocumentosfopController"
+   name_prefix:   "ns_documentosfop_"
+   
+financas_bancos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Financas\\BancosController"
+    name_prefix:   "financas_bancos_"
+
+financas_contratos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Financas\\ContratosController"
+    name_prefix:   "financas_contratos_"
+
+financas_contasfornecedores:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Financas\\ContasfornecedoresController"
+    name_prefix:   "financas_contasfornecedores_"
+
+ns_telefones:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\TelefonesController"
+    name_prefix:   "ns_telefones_"
+
+ns_contatos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\ContatosController"
+    name_prefix:   "ns_contatos_"
+
+ns_datahoraservidor:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\DatahoraservidorController"
+    name_prefix:   "ns_datahoraservidor_"
+
+ns_layoutsdocumentosimpressos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\LayoutsdocumentosimpressosController"
+    name_prefix:   "ns_layoutsdocumentosimpressos_"
+    
+crm_buscarservicoseprodutos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\BuscarservicoseprodutosController"
+    name_prefix:   "crm_buscarservicoseprodutos_"
+
+crm_composicoes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\ComposicoesController"
+    name_prefix:   "crm_composicoes_"
+
+crm_composicoesfuncoes:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\ComposicoesfuncoesController"
+    name_prefix:   "crm_composicoesfuncoes_"
+
+crm_composicoesfamilias:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\ComposicoesfamiliasController"
+    name_prefix:   "crm_composicoesfamilias_"
+
+crm_templatesemailadvertirprestador:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\TemplatesemailadvertirprestadorController"
+    name_prefix:   "crm_templatesemailadvertirprestador_"
+
+crm_templatespropostas:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\TemplatespropostasController"
+    name_prefix:   "crm_templatespropostas_"
+
+crm_templatespropostasdocumentos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\TemplatespropostasdocumentosController"
+    name_prefix:   "crm_templatespropostasdocumentos_"
+    
+crm_templatespropostasgrupos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\TemplatespropostasgruposController"
+    name_prefix:   "crm_templatespropostasgrupos_"
+    
+crm_templatespropostascapitulos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\TemplatespropostascapitulosController"
+    name_prefix:   "crm_templatespropostascapitulos_"
+
+crm_templatespropostascapituloscomposicoes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\TemplatespropostascapituloscomposicoesController"
+    name_prefix:   "crm_templatespropostascapituloscomposicoes_"
+
+crm_templatescomposicoesfamilias:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\TemplatescomposicoesfamiliasController"
+    name_prefix:   "crm_templatescomposicoesfamilias_"
+
+crm_templatescomposicoesfuncoes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\TemplatescomposicoesfuncoesController"
+    name_prefix:   "crm_templatescomposicoesfuncoes_"
+
+crm_atcsconfiguracoesdocumentos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\AtcsconfiguracoesdocumentosController"
+    name_prefix:   "crm_atcsconfiguracoesdocumentos_"
+    
+crm_midias:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\MidiasController"
+    name_prefix:   "crm_midias_"
+    
+crm_atcsareas:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\AtcsareasController"
+    name_prefix:   "crm_atcsareas_"
+
+crm_atcspendenciaslistas:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\AtcspendenciaslistasController"
+    name_prefix:   "crm_atcspendenciaslistas_"
+
+crm_atcstiposdocumentosrequisitantes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\AtcstiposdocumentosrequisitantesController"
+    name_prefix: "crm_atcstiposdocumentosrequisitantes_"
+
+crm_atcspendencias:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\AtcspendenciasController"
+    name_prefix:   "crm_atcspendencias_"
+
+crm_fornecedoresenvolvidos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\FornecedoresenvolvidosController"
+    name_prefix:   "crm_fornecedoresenvolvidos_"
+
+crm_fornecedoresenvolvidosanexos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\FornecedoresenvolvidosanexosController"
+    name_prefix:   "crm_fornecedoresenvolvidosanexos_"
+
+crm_responsabilidadesfinanceiras:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\ResponsabilidadesfinanceirasController"
+    name_prefix:   "crm_responsabilidadesfinanceiras_"
+
+crm_atcsdadosseguradoras:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\AtcsdadosseguradorasController"
+    name_prefix:   "crm_atcsdadosseguradoras_"
+
+crm_atcs:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\AtcsController"
+    name_prefix:   "crm_atcs_"
+    
+crm_historicoatcs:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\HistoricoatcsController"
+    name_prefix:   "crm_historicoatcs_"
+    
+crm_propostas:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\PropostasController"
+    name_prefix:   "crm_propostas_"
+
+crm_propostascapitulos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\PropostascapitulosController"
+    name_prefix:   "crm_propostascapitulos_"
+
+crm_propostasitens:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\PropostasitensController"
+    name_prefix:   "crm_propostasitens_"
+
+crm_malotes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\MalotesController"
+    name_prefix:   "crm_malotes_"
+
+crm_vinculos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\VinculosController"
+    name_prefix:   "crm_vinculos_"
+
+crm_propostasitensfamilias:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\PropostasitensfamiliasController"
+    name_prefix:   "crm_propostasitensfamilias_"
+
+crm_propostasitensfuncoes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\PropostasitensfuncoesController"
+    name_prefix:   "crm_propostasitensfuncoes_"
+
+crm_orcamentos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\OrcamentosController"
+    name_prefix:   "crm_orcamentos_"
+
+crm_atcscontasapagar:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\AtcscontasapagarController"
+    name_prefix:   "crm_atcscontasapagar_"
+
+crm_atcsfollowups:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\AtcsfollowupsController"
+    name_prefix:   "crm_atcsfollowups_"
+
+crm_atcsfollowupsanexos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\AtcsfollowupsanexosController"
+    name_prefix:   "crm_atcsfollowupsanexos_"
+
+gp_funcoes:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Gp\\FuncoesController"
+    name_prefix:   "gp_funcoes_"
+    
+gp_custos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Gp\\CustosController"
+    name_prefix:   "gp_custos_"
+    
+gp_funcoescustos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Gp\\FuncoescustosController"
+    name_prefix:   "gp_funcoescustos_"
+    
+estoque_unidades:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Estoque\\UnidadesController"
+    name_prefix:   "estoque_unidades_"
+    
+estoque_familias:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Estoque\\FamiliasController"
+    name_prefix:   "estoque_familias_"
+
+atcs_documentos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\AtcsdocumentosController"
+    name_prefix: "crm_atcsdocumentos_"
+
+servicos_servicostecnicos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\ServicostecnicosController"
+    name_prefix: "servicos_servicostecnicos_"
+
+servicos_pessoasmunicipios:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\PessoasmunicipiosController"
+    name_prefix: "servicos_pessoasmunicipios_"
+
+web_configuracoes:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Web\\ConfiguracoesController"
+    name_prefix: "web_configuracoes_"
+
+crm_tiposacionamentos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\TiposacionamentosController"
+    name_prefix: "crm_tiposacionamentos_"
+
+crm_historicospadrao:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\HistoricospadraoController"
+    name_prefix: "crm_historicospadrao_"
+
+crm_negociosoperacoes:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\NegociosoperacoesController"
+    name_prefix: "crm_negociosoperacoes_"
+
+crm_promocoesleads:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\PromocoesleadsController"
+    name_prefix: "crm_promocoesleads_"
+
+crm_segmentosatuacao:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\SegmentosatuacaoController"
+    name_prefix: "crm_segmentosatuacao_"
+
+crm_situacoesprenegocios:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\SituacoesprenegociosController"
+    name_prefix: "crm_situacoesprenegocios_"
+
+ns_vendedores:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\VendedoresController"
+    name_prefix: "ns_vendedores_"
+
+crm_negocios:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\NegociosController"
+    name_prefix: "crm_negocios_"
+
+crm_negocioscontatos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\NegocioscontatosController"
+    name_prefix: "crm_negocioscontatos_"
+
+ns_followupsnegocios:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\FollowupsnegociosController"
+    name_prefix: "ns_followupsnegocios_"
+
+ns_cidadesinfofunerariasfornecedores:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\CidadesinfofunerariasfornecedoresController"
+    name_prefix:   "ns_cidadesinfofunerariasfornecedores_"    
+
+crm_fornecedorespedidoselecao:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\FornecedorespedidoselecaoController"
+    name_prefix:   "crm_fornecedorespedidoselecao_"
+ns_prospects:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\ProspectsController"
+    name_prefix: "ns_prospects_"
+
+crm_motivosdesqualificacoesprenegocios:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\MotivosdesqualificacoesprenegociosController"
+    name_prefix: "crm_motivosdesqualificacoesprenegocios_"
+
+crm_listadavezregras:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\ListadavezregrasController"
+    name_prefix: "crm_listadavezregras_"   
+
+crm_listadavezregrasvalores:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\ListadavezregrasvaloresController"
+    name_prefix: "crm_listadavezregrasvalores_"
+    
+crm_listadavezvendedores:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\ListadavezvendedoresController"
+    name_prefix: "crm_listadavezvendedores_"
+    
+crm_listadavezvendedoresitens:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\ListadavezvendedoresitensController"
+    name_prefix: "crm_listadavezvendedoresitens_"
+
+crm_atcclientefornecedorescontatos:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\AtcclientefornecedorescontatosController"
+    name_prefix: "crm_atcclientefornecedorescontatos_"
+
+crm_listadavezconfiguracoes:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Crm\\ListadavezconfiguracoesController"
+    name_prefix:   "crm_listadavezconfiguracoes_"
+
+relatorios_paineis_marketing:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Relatorios\\RelatorioPainelMarketingController"
+    name_prefix: "relatorios_paineis_marketing_"
+
+ns_clientesanexos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\ClientesanexosController"
+    name_prefix:   "ns_clientesanexos_"
+
+ns_fornecedoresanexos:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Ns\\FornecedoresanexosController"
+    name_prefix:   "ns_fornecedoresanexos_"
+
+crm_configuracoestaxasadministrativas:
+    type: rest
+    resource: "Nasajon\\AppBundle\\Controller\\Crm\\ConfiguracoestaxasadministrativasController"
+    name_prefix:   "crm_configuracoestaxasadministrativas_"
+
+servicos_itensdefaturamento:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Servicos\\ItensdefaturamentoController"
+    name_prefix:   "servicos_itensdefaturamento_"

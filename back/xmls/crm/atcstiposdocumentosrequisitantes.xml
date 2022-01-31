@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcstiposdocumentosrequisitantes" label="atcstiposdocumentosrequisitantes" project="crm" orphan="false">
+  <entity schema="crm" table="atcstiposdocumentosrequisitantes">
+    <!--
+      Atenção:
+      ao realizar alterações neste model, por favor conferir o arquivo 
+      AppBundle/Repository/Crm/AtcstiposdocumentosrequisitantesRepository.php
+      e fazer as devidas modificações (pois o repository foi sobrescrito)
+    -->
+    <fieldmodel name="negociotipodocumentorequisitante" datatype="guid" isid="true" column="negociotipodocumentorequisitante" />
+    <fieldmodel name="tipodocumento" datatype="guid" useCaseLink="ns\tiposdocumentos" entityJoinType="inner" column="tipodocumento" />
+    <fieldmodel name="negocio" datatype="guid" column="negocio" />
+    <fieldmodel name="requisitantecliente" datatype="object" useCaseLink="ns\clientes" entityJoinType="left" column="requisitantecliente"/>
+    <fieldmodel name="requisitantefornecedor" datatype="object" useCaseLink="ns\fornecedores" entityJoinType="left" column="requisitantefornecedor"/>
+    <fieldmodel name="requisitantenegocio" datatype="boolean" column="requisitantenegocio" />
+    <fieldmodel name="copiasimples" datatype="boolean" column="copiasimples" />
+    <fieldmodel name="copiaautenticada" datatype="boolean" column="copiaautenticada" />
+    <fieldmodel name="original" datatype="boolean" column="original" />
+    <fieldmodel name="permiteenvioemail" datatype="boolean" column="permiteenvioemail" />
+    <fieldmodel name="status" datatype="integer" column="status">
+      <options>{"0": "Pendente", "1":"Enviado", "2":"Aceito", "3":"Recusado"}</options>
+    </fieldmodel>
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+    <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+    <fieldmodel name="excluir_tipo_documento_requisitante_externo" datatype="boolean" notMapped="true" />
+    <fieldmodel name="requisitanteapolice" datatype="object" useCaseLink="crm\templatespropostas" entityJoinType="left" column="requisitanteapolice"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial" />
+    <fieldmodel name="requisitantecontaspagar" datatype="guid" column="requisitantecontaspagar" />
+    <fieldmodel name="pedirinformacoesadicionais" datatype="boolean" column="pedirinformacoesadicionais" />
+    <fieldmodel name="naoexibiremrelatorios" datatype="boolean" column="naoexibiremrelatorios" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>negocio</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Documentos necessários" layout="table" paginate="true" target="window">
+    <filters style="dynamic">
+      <fieldsfilters>
+        <fieldfilter entitylink="requisitantecliente.cliente" maxoccurs="unbounded" >
+          <conditions>
+            <condition type="eq"/>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="tipodocumento.tipodocumento" maxoccurs="unbounded">
+          <conditions>
+            <condition type="eq"/>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="tipodocumento.prestador" maxoccurs="unbounded">
+            <conditions>
+              <condition type="eq"/>
+            </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="permiteenvioemail" maxoccurs="unbounded">
+            <conditions>
+                <condition type="eq"/>
+            </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="requisitantefornecedor.fornecedor" maxoccurs="unbounded">
+          <conditions>
+            <condition type="eq"/>
+          </conditions>
+        </fieldfilter>
+         <fieldfilter entitylink="requisitanteapolice.templateproposta" maxoccurs="unbounded">
+          <conditions>
+            <condition type="eq"/>
+          </conditions>
+        </fieldfilter>
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser entitylink="negociotipodocumentorequisitante" isid="true" visible="false" />
+      <fieldbrowser alias="Tipo Documento" entitylink="tipodocumento" visible="false" cansearch="false" fielddetaillookup="{'tipodocumento':'Tipo de Documento', 'prestador': 'Prestador'}"/>
+      <fieldbrowser alias="Cliente" entitylink="requisitantecliente" visible="true" avaliable="true" cansearch="false" fielddetaillookup="{'cliente':'cliente'}"/>
+      <fieldbrowser alias="Fornecedor" entitylink="requisitantefornecedor" visible="true" avaliable="true" cansearch="false" fielddetaillookup="{'fornecedor':'fornecedor'}"/>
+      <fieldbrowser alias="Requisiante Negócio" entitylink="requisitantenegocio" visible="false" cansearch="false" />
+      <fieldbrowser alias="Permite envio de e-mail" entitylink="permiteenvioemail" visible="false" cansearch="false" />
+      <!-- <fieldbrowser alias="Fornecedor" entitylink="requisitantefornecedor" visible="false" cansearch="false" /> -->
+      <fieldbrowser alias="copiasimples" entitylink="copiasimples" visible="false" cansearch="false" />
+      <fieldbrowser alias="copiaautenticada" entitylink="copiaautenticada" visible="false" cansearch="false" />
+      <fieldbrowser alias="original" entitylink="original" visible="false" cansearch="false" />
+      <fieldbrowser alias="Negócio" entitylink="negocio" visible="false" cansearch="false" />
+      <fieldbrowser alias="Apolice" entitylink="requisitanteapolice" visible="true" avaliable="true" cansearch="false" fielddetaillookup="{'templateproposta':'templateproposta'}"/>
+      <fieldbrowser alias="requisitantecontaspagar" entitylink="requisitantecontaspagar" visible="false" cansearch="false" />
+      <fieldbrowser alias="pedirinformacoesadicionais" entitylink="pedirinformacoesadicionais" visible="false" cansearch="false" />
+      <fieldbrowser alias="naoexibiremrelatorios" entitylink="naoexibiremrelatorios" visible="false" cansearch="false" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Novo tipo de documento">
+      <layout>
+        <headerform>
+          <row>
+            <cell name="tipodocumento" controltype="lookup" label="Tipo de documento" colspan="12" entitylink="tipodocumento" fielddetaillookup="{'nome': 'Nome', 'nome':'Nome'}" amountfieldslookup="1">
+              <validates>
+                <validate type="vnull" displaytext="Um tipo de documento deve ser selecionado" />
+                <validate type="unique" displaytext="O grupo documentos não pode ter documentos repetidos."/>
+              </validates>
+            </cell>
+          </row>
+          <row>
+              <cell name="copiasimples" controltype="checkbox" label="Cópia simples" colspan="12" entitylink="copiasimples"/>
+          </row>
+          <row>
+              <cell name="copiaautenticada" controltype="checkbox" label="Cópia autenticada" colspan="12" entitylink="copiaautenticada"/>
+          </row>
+          <row>
+              <cell name="original" controltype="checkbox" label="Original" colspan="12" entitylink="original"/>
+          </row>
+          <row>
+              <cell name="requisitantenegocio" controltype="hidden" colspan="12" entitylink="requisitantenegocio"/>
+          </row>
+          <row>
+              <cell name="permiteenvioemail" controltype="checkbox" label="Permite envio por e-mail" colspan="3" entitylink="permiteenvioemail"/>
+          </row>
+          <row>
+              <cell name="requisitantecontaspagar" controltype="textedit" label="Requisitante contas a pagar" colspan="3" entitylink="requisitantecontaspagar"/>
+              <cell name="pedirinformacoesadicionais" controltype="checkbox" label="Pedir informações adicionais" colspan="3" entitylink="pedirinformacoesadicionais"/>
+          </row>
+          <row>
+              <cell name="naoexibiremrelatorios" controltype="checkbox" label="naoexibiremrelatorios" colspan="12" entitylink="naoexibiremrelatorios"/>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>Insert</name>
+      <api>
+        <name>atcTipoDocumentoRequisitanteNovo_v6</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="tipodocumento" valueentity="tipodocumento" />
+        <fromto valueapi="requisitantecliente" valueentity="requisitantecliente" />
+        <fromto valueapi="requisitantefornecedor" valueentity="requisitantefornecedor" />
+        <fromto valueapi="requisitantenegocio" valueentity="requisitantenegocio" />
+        <fromto valueapi="copiasimples" valueentity="copiasimples" />
+        <fromto valueapi="copiaautenticada" valueentity="copiaautenticada" />
+        <fromto valueapi="original" valueentity="original" />
+        <fromto valueapi="permiteenvioemail" valueentity="permiteenvioemail"/>
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="created_by" valueentity="logged_user" />
+        <fromto valueapi="requisitanteapolice" valueentity="requisitanteapolice" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="requisitantecontaspagar" valueentity="requisitantecontaspagar" />
+        <fromto valueapi="pedirinformacoesadicionais" valueentity="pedirinformacoesadicionais" />
+        <fromto valueapi="naoexibiremrelatorios" valueentity="naoexibiremrelatorios" />
+      </api>
+    </action>
+    <action>
+      <name>Update</name>
+      <api>
+        <name>Update</name>
+      </api>
+    </action>
+    <action>
+      <name>Delete</name>
+      <api>
+        <name>atcTipoDocumentoRequisitanteExcluir_v2</name>
+        <fromto valueapi="negociotipodocumentorequisitante" valueentity="negociotipodocumentorequisitante" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

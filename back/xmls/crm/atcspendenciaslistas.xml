@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcspendenciaslistas" label="atcspendenciaslistas" project="crm">
+  <entity schema="crm" table="atcspendenciaslistas">
+    <fieldmodel name="negociopendencialista" datatype="guid" isid="true" column="negociopendencialista"/>
+    <fieldmodel name="nome" datatype="string"  column="nome"/>
+    <fieldmodel name="possuiitens" datatype="boolean"  column="possuiitens"/>
+    <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+    <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+    <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial"/>
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+    <!-- <constructoritem>negocio</constructoritem> -->
+  </constructors>
+  <viewbrowser label="Lista de pendências" layout="list" paginate="true" target="window">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="negociopendencialista" isid="true" visible="false"/>
+      <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true"/>
+      <fieldbrowser entitylink="possuiitens" visible="false" cansearch="false"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Lista de pendências">
+      <layout>
+        <headerform>
+          <row>
+            <cell controltype="textedit" label="Nome" colspan="9" entitylink="nome">
+              <validates>
+                <validate type="vnull" displaytext="O campo nome não pode estar vazio"></validate>
+                <validate type="maxlength" value="60" displaytext="O tamanho máximo é de 60 caracteres"></validate>
+              </validates>
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>retrieve</name>
+    </action>
+    <action form="default">
+      <name>Insert</name>
+      <api>
+        <name>atcPendenciaListaNovo_v3</name>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action> 
+    <action form="default">
+      <name>Update</name>
+      <api>
+        <name>atcPendenciaListaAlterar_v3</name>
+        <fromto valueapi="negociopendencialista" valueentity="negociopendencialista"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action>
+    <action>
+      <name>Delete</name>
+      <api>
+        <name>atcPendenciaListaExcluir_v3</name>
+        <fromto valueapi="negociopendencialista" valueentity="negociopendencialista"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="deleted_by" valueentity="logged_user"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api> 
+    </action>
+  </actions>
+</nsjusecase>

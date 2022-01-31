@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="tiposprojetos" label="tiposprojetos" project="gp" >
+    <entity schema="servicos" table="tiposprojetos">
+        <fieldmodel column="tipoprojeto" datatype="guid" isid="true" name="tipoprojeto" />
+        <fieldmodel column="codigo" datatype="string" name="codigo" />
+        <fieldmodel column="descricao" datatype="string" name="descricao"/>
+        <fieldmodel column="tenant" datatype="integer" name="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser label="Tipos de Projetos" layout="list" paginate="false" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser alias="tipoprojeto" alloworder="false" avaliable="false" cansearch="false" isid="true" entitylink="tipoprojeto" />
+            <fieldbrowser alias="Código" alloworder="true" avaliable="true" cansearch="true" direction="ASC" indefaultorder="true" unique="true" visible="true" entitylink="codigo" />
+            <fieldbrowser alias="Descrição" alloworder="true" avaliable="true" cansearch="true" visible="true" entitylink="descricao" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <viewedit label="Tipo de Projeto" mode="edit" allowcopy="true">
+        <layout>
+            
+        </layout>
+    </viewedit>
+</nsjusecase>

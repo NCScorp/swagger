@@ -1,0 +1,53 @@
+<div class="height-full layout-list">
+  <nsj-headline headline-title="Função " headline-sub="true">
+    <div class="pull-right">
+      <a
+        class="btn btn-sm btn-default hidden-lg hidden-md"
+        ui-sref="gp_funcoes({})"
+        title="Voltar"
+        ><i class="fas fa-reply"></i><span class="hidden-xs">Voltar</span></a
+      >
+
+      <button
+        tem-permissao="gp_funcoes_put"
+        type="button"
+        class="btn btn-sm btn-warning btn-edit"
+        ui-sref="gp_funcoes_edit({ 'funcao' : gp_fncs_frm_shw_cntrllr.entity.funcao})"
+      >
+        <i class="fas fa-edit"></i> <span class="hidden-xs">Editar</span>
+      </button>
+
+      <button
+        tem-permissao="gp_funcoes_delete"
+        type="button"
+        class="btn btn-sm btn-default btn-delete btn-geral"
+        ng-click="gp_fncs_frm_shw_cntrllr.abrirModalExclusao()"
+        ng-if="gp_fncs_frm_shw_cntrllr.entity.funcao  "
+      >
+        <i class="fas fa-trash"></i> <span class="hidden-xs">Excluir</span>
+      </button>
+
+    </div>
+  </nsj-headline>
+  <div
+    class="nsj-form padding-content"
+    ng-class="{'nsj-loading-page' : gp_fncs_frm_shw_cntrllr.busy }"
+  >
+    <div class="nsj-form-view top-buffer bottom-buffer">
+      <gp-funcoes-default-show
+        entity="gp_fncs_frm_shw_cntrllr.entity"
+        action="gp_fncs_frm_shw_cntrllr.action"
+        busy="gp_fncs_frm_shw_cntrllr.busy"
+        constructors="gp_fncs_frm_shw_cntrllr.constructors"
+      ></gp-funcoes-default-show>
+    </div>
+
+    <div class="form-group pull-left"></div>
+    <div class="content-loading" ng-if="gp_fncs_frm_shw_cntrllr.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div ng-class="{'nsj-loading-page' : crm_tcsdcmnts_lst_cntrllr.busy }"
+    class='crm_atcsdocumentos nsj-layout  layout-table '>
+    <div class="nsj-aside-list height-full col-md-12"
+        ng-class="{ 'hidden-sm hidden-xs' : (('crm_atcsdocumentos_show'| isStateEq) || ('crm_atcsdocumentos_edit'| isStateEq) || ('crm_atcsdocumentos_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+                <nsj-headline headline-title="Documentos"
+                    ng-class="{ 'hidden-sm hidden-xs' : (('crm_atcsdocumentos_show'| isStateEq) || ('crm_atcsdocumentos_edit'| isStateEq) || ('crm_atcsdocumentos_new'| isStateEq ))}">
+                </nsj-headline>
+
+                <nsj-toolbar ng-on-change_toolbar="crm_tcsdcmnts_lst_cntrllr.search($event.detail)" search="true"
+                    refresh="true" holder="Busca" model-search="{{crm_tcsdcmnts_lst_cntrllr.service.filter}}"
+                    select="{{crm_tcsdcmnts_lst_cntrllr.selectPage && crm_tcsdcmnts_lst_cntrllr.selected.length === crm_tcsdcmnts_lst_cntrllr.entities.length && !crm_tcsdcmnts_lst_cntrllr.selectAll && !crm_tcsdcmnts_lst_cntrllr.service.loadParams.finished}}"
+                    select-all="{{crm_tcsdcmnts_lst_cntrllr.selectAll}}"
+                    item-in-page="{{crm_tcsdcmnts_lst_cntrllr.entities.length}}"
+                    item-all="{{crm_tcsdcmnts_lst_cntrllr.entities[0].full_count}}">
+                    <nsj-filters slot="filters">
+                        <nsj-lookup name="negocio" factory="CrmAtcs" ng-if="true" max-label="1"
+                            ng-model='crm_tcsdcmnts_lst_cntrllr.negocioFilter' constructor="{  }"
+                            config='{ "nome":"Negócio",  }'>
+                        </nsj-lookup>
+                        <nsj-filter-exclusive text-disabled="Situação"
+                            options="{{crm_tcsdcmnts_lst_cntrllr.$rootScope.SELECT_Status_CrmAtcsdocumentos }} "
+                            ng-if="true" key="status" type="exclusive" model="{{crm_tcsdcmnts_lst_cntrllr.filters}} ">
+                        </nsj-filter-exclusive>
+                        <nsj-filter-seletor
+                            options="{{crm_tcsdcmnts_lst_cntrllr.$rootScope.OPTIONS_CrmAtcsdocumentos}} " ng-if="false"
+                            type="seletor"
+                            max-occurs="{{crm_tcsdcmnts_lst_cntrllr.$rootScope.MAXOCCURS_CrmAtcsdocumentos}} "
+                            input="{{crm_tcsdcmnts_lst_cntrllr.$rootScope.SELECTS_CrmAtcsdocumentos}} "
+                            text-disabled="Selecionar..." model="{{crm_tcsdcmnts_lst_cntrllr.filters}} ">
+                        </nsj-filter-seletor>
+                    </nsj-filters>
+
+                </nsj-toolbar>
+                <div class="panel-body body-table">
+                    <nsj-table config-page='crm_tcsdcmnts_lst_cntrllr.service.loadParams'
+                        fields-config='crm_tcsdcmnts_lst_cntrllr.fields' fields="crm_tcsdcmnts_lst_cntrllr.entities"
+                        has-more-page='crm_tcsdcmnts_lst_cntrllr.loadMore()'>
+                        <nsj-actions ng-show="$parent.entity && $parent.entity.status != 0"
+                            action-model="{{$parent.entity}}">
+                            <nsj-action target="_self" icon="fas fa-download fa-fw" tooltip="Baixar" disabled="false"
+                                ng-href="{{$parent.entity.url}}"></nsj-action>
+                            <nsj-action disabled="false" icon="fas fa-eye"
+                                ng-click="crm_tcsdcmnts_lst_cntrllr.showDocumentModal($parent.entity)" target="_self"
+                                tooltip="Pré-Análise"></nsj-action>
+                            <nsj-action target="_self" icon="fas fa-print fa-fw"
+                                ng-click="crm_tcsdcmnts_lst_cntrllr.printImage($parent.entity)" tooltip="Imprimir"
+                                disabled="false"></nsj-action>
+                        </nsj-actions>
+
+                        <div class="empty-page" ng-if="crm_tcsdcmnts_lst_cntrllr.isFilterEmpty()">
+                            <div class="text-center">
+                                <span class="icon-page">
+                                    <i class="fas fa-table fa-fw"></i>
+                                </span>
+                                <h3>Documentos</h3>
+                                <p>Ainda não existem itens nesta lista.</p>
+
+                            </div>
+                        </div>
+
+                        <div class="empty-page" ng-if="!crm_tcsdcmnts_lst_cntrllr.isFilterEmpty()">
+                            <div class="text-center">
+                                <p>Não foram encontrados itens para esta pesquisa.</p>
+                            </div>
+                        </div>
+                    </nsj-table>
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+
+    <div class="content-loading" ng-if="crm_tcsdcmnts_lst_cntrllr.busy">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+    </div>
+</div>

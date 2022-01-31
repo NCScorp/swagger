@@ -1,0 +1,104 @@
+<div ng-if="(ctrl_accordionfornecedores.arrFornecedores.length == 0) && !ctrl_accordionfornecedores.isBusy()"
+    class="state-empty">
+    <div class="empty-list">
+        <p class="text-center">
+            Não existem prestadoras de serviços envolvidas para mostrar nesta lista.
+        </p>
+    </div>
+</div>
+<div class="content-loading" ng-if="ctrl_accordionfornecedores.isBusy()">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>
+<div class="lista-fornecedores" ng-if="!ctrl_accordionfornecedores.isBusy() && ctrl_accordionfornecedores.arrFornecedores.length > 0">
+    <div class="fornecedor" ng-repeat="fornecedor in ctrl_accordionfornecedores.arrFornecedores">
+        <div class="dados-principais">
+            <div class="logo">
+                <div class="imagem-fornecedor-container">
+                    <div class="icone-vazio-container" ng-if="!fornecedor.path_logo">
+                        <i class="fas fa-image icone-imagem-vazio" ></i>
+                    </div>
+                    <img class="img-fornecedor" ng-if="fornecedor.path_logo" 
+                        src="{{ fornecedor.path_logo }}">
+                </div>
+                <div class="fornecedor-status" 
+                    ng-if="fornecedor.fornecedor_status != ctrl_accordionfornecedores.EnumFornecedorStatus.fsAtivo"
+                    ng-class="{
+                        'fncd-suspenso': fornecedor.fornecedor_status == ctrl_accordionfornecedores.EnumFornecedorStatus.fsSuspenso, 
+                        'fncd-banido': fornecedor.fornecedor_status == ctrl_accordionfornecedores.EnumFornecedorStatus.fsBanido
+                    }">
+
+                    <!-- Ícone fornecedor Suspenso -->
+                    <i class="fas fa-ban icone" 
+                        ng-if="fornecedor.fornecedor_status == ctrl_accordionfornecedores.EnumFornecedorStatus.fsSuspenso"></i>
+                    <!-- Ícone fornecedor Banido 
+                    <i class="far fa-times-circle icone" 
+                        ng-if="fornecedor.fornecedor_status == ctrl_accordionfornecedores.EnumFornecedorStatus.fsBanido"></i>-->
+                    <img src="{{ctrl_accordionfornecedores.imgBanned}}" class="icone"
+                        ng-if="fornecedor.fornecedor_status == ctrl_accordionfornecedores.EnumFornecedorStatus.fsBanido">
+                    <!-- Descrição do status do fornecedor -->
+                    <span>{{ ctrl_accordionfornecedores.getFornecedorStatusDescricao(fornecedor.fornecedor_status) }}</span>
+                </div>
+            </div>
+            <div class="informacoes">
+                <div class="info razao-social">
+                    <div class="titulo">Razão Social:</div>
+                    <div class="valor">{{ fornecedor.fornecedor_razaosocial }}</div>
+                </div>
+                <div class="info nome-fantasia">
+                    <div class="titulo">Nome Fantasia:</div>
+                    <div class="valor">{{ fornecedor.fornecedor_nomefantasia }}</div>
+                </div>
+                <div class="info cpf-cnpj">
+                    <div class="titulo">CNPJ/CPF:</div>
+                    <div class="valor">{{ fornecedor.fornecedor_cnpj }}</div>
+                </div>
+                <div class="btn-ver-mais" ng-click="ctrl_accordionfornecedores.verMais(fornecedor)">
+                    {{ fornecedor.ver_mais_informacoes ? 'Veja menos' : 'Veja mais' }}
+                </div>
+            </div>
+        </div>
+        <div class="dados-ver-mais" ng-if="fornecedor.ver_mais_informacoes">
+            <div class="dados-container contato">
+                <div class="icone">
+                    <div class="icone-container">
+                        <i class="fas fa-address-book"></i>
+                    </div>
+                </div>
+                <div class="informacoes">
+                    <div class="info nome">
+                        <div class="titulo">Contato:</div>
+                        <div class="valor">{{ fornecedor.contato_nome }}</div>
+                    </div>
+                    <div class="info telefone">
+                        <div class="titulo">Telefone:</div>
+                        <div class="valor">{{ ctrl_accordionfornecedores.formatarTelFornecedor(fornecedor) }}</div>
+                    </div>
+                    <div class="info email">
+                        <div class="titulo">E-mail:</div>
+                        <div class="valor">{{ fornecedor.contato_email }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dados-container advertencia">
+                <div class="icone">
+                    <div class="icone-container">
+                        <i class="fas fa-bomb"></i>
+                    </div>
+                </div>
+                <div class="informacoes">
+                    <div class="info qtd-advertencia">
+                        <div class="titulo">Quantidade de advertências:</div>
+                        <div class="valor">{{ fornecedor.qtd_advertencia }}</div>
+                    </div>
+                    <div class="info ultima-advertencia">
+                        <div class="titulo">Última advertência:</div>
+                        <div class="valor">{{ ctrl_accordionfornecedores.getDataFormatada(fornecedor.data_ultima_advertencia) }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

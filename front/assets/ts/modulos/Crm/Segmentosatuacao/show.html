@@ -1,0 +1,40 @@
+<div class="height-full layout-list">    
+            <nsj-headline headline-title="Segmento de Atuação " headline-sub="true">
+	<div class="pull-right">
+
+		<a class="btn btn-sm btn-default hidden-lg hidden-md" ui-sref="crm_segmentosatuacao({})" title="Voltar">
+			<i class="fas fa-reply"></i>
+			<span class="hidden-xs">Voltar</span>
+		</a>
+
+		
+			<button tem-permissao="crm_segmentosatuacao_delete" type="button" class="btn btn-sm btn-default btn-delete btn-geral" ng-click="crm_sgmntstc_frm_shw_cntrllr.abrirModalExclusao()" ng-if="crm_sgmntstc_frm_shw_cntrllr.entity.segmentoatuacao  ">
+				<i class="fas fa-trash"></i>
+				<span class="hidden-xs">Excluir</span>
+			</button>
+
+
+		
+		<button tem-permissao="crm_segmentosatuacao_put" type="button" class="btn btn-sm btn-warning btn-edit" ui-sref="crm_segmentosatuacao_edit({ 'segmentoatuacao' : crm_sgmntstc_frm_shw_cntrllr.entity.segmentoatuacao})">
+			<i class="fas fa-edit"></i>
+			<span class="hidden-xs">Editar</span>
+		</button> 
+
+	</div>
+</nsj-headline>
+<div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : crm_sgmntstc_frm_shw_cntrllr.busy }">
+        <div class="nsj-form-view top-buffer bottom-buffer">
+            <crm-segmentosatuacao-default-show entity="crm_sgmntstc_frm_shw_cntrllr.entity" action="crm_sgmntstc_frm_shw_cntrllr.action" busy="crm_sgmntstc_frm_shw_cntrllr.busy" constructors="crm_sgmntstc_frm_shw_cntrllr.constructors"></crm-segmentosatuacao-default-show>
+                                </div>
+        
+<div class="form-group pull-left">
+        
+        
+            </div>        <div class="content-loading"  ng-if="crm_sgmntstc_frm_shw_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+        </div>
+    </div>
+</div>

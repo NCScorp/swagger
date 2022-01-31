@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcsresponsaveisfinanceiros" label="atcsresponsaveisfinanceiros" project="crm" orphan="false">
+    <entity schema="crm" table="atcsresponsaveisfinanceiros">
+        <!--
+            Atenção:
+            ao realizar alterações neste model, por favor conferir o arquivo 
+            AppBundle/Repository/Crm/AtcsresponsaveisfinanceirosRepository.php
+            e fazer as devidas modificações (pois o repository foi sobrescrito)
+        -->
+        <fieldmodel name="negocioresponsavelfinanceiro" datatype="guid" isid="true" column="negocioresponsavelfinanceiro"/>
+        <fieldmodel name="negocio" datatype="guid" column="negocio"/>
+        <fieldmodel name="responsavelfinanceiro" datatype="guid" column="responsavelfinanceiro" useCaseLink="ns\clientes" entityJoinType="left"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="principal" datatype="boolean" column="principal"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial"/>
+    </entity>
+    <constructors>
+        <constructoritem>tenant</constructoritem>
+        <constructoritem>negocio</constructoritem>
+        <constructoritem>id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="window" label="Responsavel Financeiro">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="negocioresponsavelfinanceiro" isid="true" visible="false"/>
+            <fieldbrowser alias="responsavelfinanceiro" entitylink="responsavelfinanceiro"  visible="true" fielddetaillookup="{'nomefantasia': 'Nome'}"/>
+            <fieldbrowser alias="principal" entitylink="principal" visible="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Vincular a negócio">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell name="responsavelfinanceiro" controltype="lookup" label="Responsável financeiro" colspan="6" entitylink="responsavelfinanceiro" fielddetaillookup="{'nomefantasia':'Nome'}" amountfieldslookup="1">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo responsavelfinanceiro não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                        <cell name="principal" controltype="checkbox" entitylink="principal" label="Principal"/>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>  
+        <action form="default">
+            <name>Insert</name>
+            <api>
+                <name>atcsresponsaveisfinanceirosNovo_v2</name>
+                <fromto valueapi="responsavelfinanceiro" valueentity="responsavelfinanceiro"/>
+                <fromto valueapi="negocio" valueentity="negocio"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="principal" valueentity="principal"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+        <action form="default">
+            <name>delete</name>
+            <api>
+                <name>atcsresponsaveisfinanceirosExcluir_v2</name>
+                <fromto valueapi="negocioresponsavelfinanceiro" valueentity="negocioresponsavelfinanceiro"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action> 
+    </actions>
+</nsjusecase>

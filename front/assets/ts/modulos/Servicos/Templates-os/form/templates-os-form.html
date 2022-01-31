@@ -1,0 +1,42 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+  <!-- Linha -->
+  <div class="row row-form-view">
+    <div class="col-sm-12">
+      <div class="form-group">
+        <label class="control-label" for="nome">Nome</label>
+        <input type='text' class="form-control" id="nome" name="nome" ng-model="$ctrl.entity.nome"
+          ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+        <div ng-messages="$ctrl.form.nome.$error" ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted">
+          <div class="alert alert-danger" role="alert" ng-message="required">
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            O campo Nome não pode ser vazio.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Linha -->
+  <div class="row row-form-view">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="control-label" for="estabelecimento">
+          Estabelecimento
+        </label>
+        <nsj-lookup name="estabelecimento" id-name="estabelecimento" factory="NsEstabelecimentos"
+          ng-model="$ctrl.entity.estabelecimento" max-label="1" constructor="{  }"
+          config='{ "nomefantasia":"nomefantasia",  }' disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label class="control-label" for="operacao">
+          Operação de Ordem de Serviço
+        </label>
+        <nsj-lookup name="operacao" id-name="operacao" factory="operacoesOrdensServicosService"
+          ng-model="$ctrl.entity.operacao" max-label="1" constructor="{  }" config='{ "descricao":"descricao",  }'
+          disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,92 @@
+<div class="atc-documento-informacoes-adicionais-modal form-loading-layout-wrapper-body">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Informações adicionais</h3>
+    </div>
+    <div class="modal-body">
+        <div class="tela-container">
+            <div class="linha-campos">
+                <!-- Tipo de NF -->
+                <div class="campo-container tipo-nf">
+                    <div class="campo-titulo">Tipo de NF</div>
+                    <div class="campo-valor">
+                        <select class="form-control"
+                            ng-model="ctrlModal.atcDocumento.tiponf">
+                            <option ng-value="ctrlModal.ECrmAtcDocumentoTipoNotaFiscal.cadtnfNFs">NF-S</option>
+                            <option ng-value="ctrlModal.ECrmAtcDocumentoTipoNotaFiscal.cadtnfNFe">NF-E</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- Série/Sub-série -->
+                <div class="campo-container serie">
+                    <div class="campo-titulo">Série/Sub-série</div>
+                    <div class="campo-valor">
+                        <input type="text" class="form-control"
+                            maxlength="5"
+                            ng-model="ctrlModal.atcDocumento.seriedocumento">
+                    </div>
+                </div>
+            </div>
+            <div class="linha-campos">
+                <!-- Número -->
+                <div class="campo-container numero">
+                    <div class="campo-titulo">Número</div>
+                    <div class="campo-valor">
+                        <input type="text" class="form-control"
+                            maxlength="30"
+                            ng-model="ctrlModal.atcDocumento.numerodocumento">
+                    </div>
+                </div>
+                <!-- Data de emissão -->
+                <div class="campo-container data-emissao">
+                    <div class="campo-titulo">Data de emissão</div>
+                    <div class="campo-valor">
+                        <nsj-date-picker editable='true' init-value='ctrlModal.atcDocumento.emissaodocumento' date-position="right"
+                            type-select="single"
+                            opts="{'class':'form-control', 'ng-model':'ctrlModal.atcDocumento.emissaodocumento', 'ng-disabled':'ctrlModal.isBusy()' }">
+                        </nsj-date-picker>
+                    </div>
+                </div>
+            </div>
+            <!-- Serviços para selecionar -->
+            <div class="linha-campos">
+                <div class="campo-container servicos">
+                    <div class="campo-titulo">Itens da conta a pagar</div>
+                    <div class="campo-valor">
+                        <ul class="lista-servicos">
+                            <li class="servico" ng-repeat="cpTela in ctrlModal.arrContasPagar">
+                                <label class="check-container">
+                                    <input type="checkbox" ng-model="cpTela.checked">
+                                    <span class="texto">
+                                        {{ cpTela.contapagar.descricao }}
+                                    </span>
+                                </label>
+                            </li>
+                        </ul>
+                        <div class="msg-sem-servicos" ng-if="ctrlModal.arrContasPagar.length == 0">
+                            <p>Não existem serviços para selecionar.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content-loading" ng-if="ctrlModal.isBusy()">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                {{ ctrlModal.busyMensagem }}
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="fechar btn btn-sm" ng-click="ctrlModal.close()"
+            ng-disabled="ctrlModal.isBusy()">
+            Fechar
+        </a>
+        <button type="button" class="btn btn-sm btn-warning btn-adicionar"
+            ng-disabled="ctrlModal.isBusy()"
+            ng-click="ctrlModal.adicionar()">
+
+            <i class="fas fa-check"></i>
+            <span class="texto">Adicionar</span>
+        </button>
+    </div>
+</div>

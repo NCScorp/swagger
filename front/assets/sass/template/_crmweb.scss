@@ -1,0 +1,906 @@
+// Padding do tamanho da header para o position fixed não cobrir parte da tela
+body {
+  padding-top: 66px;
+}
+
+/* Icone de load da aplicação*/
+.nsj-app-load {
+  > .load-area {
+    background-color: transparent !important;
+    > .app-load-icon {
+      background-image: url("https://s3.sa-east-1.amazonaws.com/imagens.nasajon/geral/sistemas/servicos/loader/loader_gestao-de-servicos.gif") !important;
+      width: 100%;
+    }
+  }
+}
+.nsj-app-load .load-area::before {
+  background: transparent !important;
+}
+
+/*header*/
+.fixedSidebar #nsj-header .navbar.navbar-default .navbar-header .navbar-brand {
+  padding-top: 9px !important;
+  padding-bottom: 9px !important;
+}
+
+.fixedSidebar #nsj-header .navbar.navbar-default .navbar-header img {
+  width: 190px !important;
+}
+
+.error-layout h2 {
+  color: #34727d;
+}
+
+.error-layout .btn-primary {
+  background-color: #34727d;
+  border-color: #2d626b;
+}
+
+.error-layout .nsj-jumbotron {
+  border: 1px solid #ddd;
+  background: #ffffff;
+  border-radius: 8px;
+}
+
+.error-layout .nsj-jumbotron p {
+  font-size: 16px;
+}
+
+.error-layout .jumbotron-crm-ini {
+  max-width: 800px;
+  margin: 30px auto;
+}
+
+.error-layout .jumbotron-crm-ini h2 {
+  margin-top: 15px;
+}
+
+@media screen and (min-width: 770px) {
+  .error-layout .jumbotron-crm-ini h2 {
+    margin-top: 0;
+  }
+}
+
+.error-layout .label-radio {
+  margin-right: 5px;
+  font-weight: normal;
+}
+
+.error-layout .label-radio input[type="radio"] {
+  margin: -2px 0 0;
+  vertical-align: middle;
+}
+
+.tab-content {
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  padding: 10px;
+}
+
+.table > thead > tr > th {
+  border: 2px solid #ddd !important;
+}
+
+.table > tbody > tr > td {
+  border: 2px solid #ddd !important;
+}
+
+.table.no-cell-border th,
+.table.no-cell-border td {
+  border: 0 !important;
+  border-bottom: 1px solid #ddd !important;
+}
+
+.table.no-cell-border tbody tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+.table.no-cell-border tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.nsj-form-view tr {
+  background: #ececec;
+}
+
+.nsj-table.table.btns-actions td.actions,
+.nsj-table.table.btns-actions th {
+  padding: 0 !important;
+  border-left: 0px solid transparent !important;
+}
+
+.nsj-table.table.btns-actions td:nth-last-child(2) {
+  border-right: 0px solid transparent !important;
+}
+
+/* spacing */
+.mt-20 {
+  margin-top: 20px;
+}
+.top-buffer.ng-isolate-scope {
+  margin-top: 0 !important;
+}
+
+/* Campos customizados */
+
+.linha {
+  align-items: center;
+  display: flex;
+}
+
+.fix-loading {
+  display: none;
+}
+
+.linha > :first-child {
+  padding-left: 0;
+}
+/* --- */
+
+/* tree */
+/* Precisei sobrescrever as classes porque aparentemente a tree usa essas classes em outro lugar */
+.glyphicon-minus:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f0d7";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-weight: 900;
+}
+
+.glyphicon-plus:before {
+  font-family: "Font Awesome 5 Free";
+  content: "\f0da";
+  display: inline-block;
+  padding-right: 3px;
+  vertical-align: middle;
+  font-weight: 900;
+}
+
+// retira bordas desnecessárias do formulário
+crm-atcs-visualizacao-show .tab-content div:nth-child(2) .row-form-view {
+  border-right-style: none !important;
+  border-right-width: 0 !important;
+  border-left-style: none !important;
+  border-left-width: 0 !important;
+}
+.color-default {
+  color: #ffffff;
+}
+.mostarda {
+  background-color: #ffa800;
+}
+
+/* ---- */
+/* ---- */
+
+div.div-atcsdocumentos {
+  width: 100%;
+
+  > label {
+    background-color: none !important;
+    float: none !important;
+  }
+
+  div.div-form {
+    padding: 15px;
+  }
+
+  label.lbl-form {
+    text-align: left;
+    padding-left: 0px;
+    background-color: transparent !important;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+.lbl-atcdocumento-geral {
+  background-color: transparent !important;
+  float: none !important;
+  margin-top: -5px !important;
+  width: auto !important;
+  text-align: left !important;
+}
+//Criado para o modal status ser mais acessivel do que apenas dentro de div-documentos-modal
+span.span-status-modal-geral {
+  padding: 1px 8px 1px 8px;
+  color: white;
+  border-radius: 2px;
+  font-size: 12px;
+  float: right;
+  margin-right: 15px;
+}
+
+div.div-documentos-modal {
+  span.span-status-modal {
+    padding: 1px 8px 1px 8px;
+    color: white;
+    border-radius: 2px;
+    font-size: 12px;
+    float: right;
+    margin-right: 15px;
+  }
+
+  div.div-modal-resultado {
+    height: 175px;
+  }
+
+  .apresentacao-slides {
+    margin-left: 15px;
+  }
+}
+
+div.div-documentos {
+  padding: 15px;
+
+  td.td-checkbox {
+    height: 80px;
+    div.div-checkbox {
+      height: 100%;
+
+      > input {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  td.td-img {
+    padding-top: 12px;
+    cursor: pointer;
+
+    div.div-filter {
+      width: 95px;
+      height: 60px;
+      position: absolute;
+      z-index: 1;
+      opacity: 0.6;
+      border-radius: 5px;
+    }
+
+    span.span-icone {
+      width: 95px;
+      position: absolute;
+      z-index: 2;
+      color: white;
+      font-size: 35px;
+      margin-top: 5px;
+      text-align: center;
+
+      > a {
+        color: white;
+      }
+    }
+
+    div.div-imagem {
+      width: 95px;
+      height: 60px;
+      border-radius: 5px;
+      background-position: center;
+    }
+
+    div.div-img-container {
+      width: 95px;
+      height: 60px;
+      position: relative;
+      margin: 0 auto;
+    }
+  }
+
+  p.p-dados {
+    font-size: 12px;
+    margin-bottom: -5px;
+  }
+
+  label.lbl-tipo-documento {
+    margin-bottom: -5px;
+  }
+
+  span.span-status {
+    padding: 1px 4px 1px 8px;
+    color: white;
+    border-radius: 2px;
+    font-size: 12px;
+  }
+
+  td.td-status {
+    height: 80px;
+    div.div-status-pai {
+      height: 100%;
+
+      div.div-status-filho {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        text-align: right;
+      }
+    }
+  }
+}
+
+div.div-documentos-modal {
+  h2.titulo-modal {
+    padding-left: 15px;
+  }
+
+  div.div-imagem {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 400px;
+    height: 400px;
+    border-radius: 20px;
+    margin-left: 15px;
+  }
+
+  fieldset.field-set {
+    border: 1px solid lightgray;
+    padding: 15px 0px 20px 25px;
+    width: 95%;
+    border-radius: 5px;
+
+    > legend {
+      border: none;
+      font-weight: bold;
+      margin-left: -26px;
+      margin-bottom: -5px;
+      width: 160px;
+      font-size: 15px;
+    }
+
+    > div {
+      display: inline-block;
+      width: 45%;
+    }
+  }
+
+  div.div-descricao {
+    height: 100px;
+    padding-top: 15px;
+
+    > div textarea {
+      max-width: 415px;
+      min-width: 415px;
+      border-radius: 5px;
+      margin: 0px;
+      max-height: 60px;
+      min-height: 60px;
+      border-color: lightgray;
+    }
+  }
+
+  div.div-bottom {
+    margin-bottom: 20px;
+    width: 95%;
+  }
+}
+
+// Pendencias
+
+nsj-accordion {
+  a.check {
+    color: #5a5a5a !important;
+    margin-right: 5px;
+    &:hover {
+      color: rgb(122, 122, 122) !important;
+    }
+  }
+
+  a.checked {
+    color: #5a5a5a !important;
+    margin-right: 5px;
+    &:hover {
+      color: rgb(122, 122, 122) !important;
+    }
+  }
+  .acoes {
+    button {
+      border: none;
+      float: right;
+    }
+  }
+  .body {
+    overflow: initial;
+  }
+}
+
+// GP-Funcoes
+
+.break-word {
+  word-break: break-word;
+}
+
+// Atendimento comercial - endereço switch
+.endereco-local-cadastrado {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  align-items: flex-end;
+}
+.endereco-local-cadastrado span {
+  font-weight: bold;
+  width: 100%;
+}
+.endereco-local-cadastrado .nsj-switch {
+  width: 50px !important;
+}
+.endereco-local-cadastrado .nsj-switch span {
+  width: 40px !important;
+}
+
+.descricao-telefone {
+  word-break: break-all;
+}
+
+.observacao-adv-fornecedor {
+  word-break: break-all;
+}
+
+//Ajustes de layout componente ns-dropzone
+ns-dropzone {
+  .btn-add-file {
+    float: right;
+    margin-bottom: 5px;
+  }
+
+  //Template de layout do arquivo dropzone, deixo invisível
+  .preview-template-dropzone {
+    display: none;
+  }
+
+  //Componente Dropzone
+  .dropzone {
+    float: left;
+    width: 100%;
+
+    //Caso possua algum anexo, ou esteja fazendo o upload de algum, deixo sem borda e removo mensagem padrão
+    &.possuianexos,
+    &.dz-started {
+      border: none;
+
+      .dz-default.dz-message {
+        display: none;
+      }
+    }
+
+    //Preview do anexo
+    .dz-preview {
+      //Tamanho do preview do anexo
+      height: 160px;
+      width: 200px;
+
+      //Apresentação inicial do anexo
+      .dz-image {
+        height: 100% !important;
+        width: 100% !important;
+        border-radius: 4px !important;
+        border: 1px solid #d0cece78;
+
+        .container-imagem {
+          height: 80%;
+          width: 100%;
+          border-bottom: 1px solid #dddddd;
+          text-align: center;
+          background-color: #dddddd;
+          display: flex;
+          justify-content: center;
+          overflow: hidden;
+
+          .icon-file {
+            display: none;
+            font-size: 80px;
+            color: #c9c8c8;
+          }
+
+          //Imagem preview do anexo enviado, caso seja foto
+          img {
+            //Imagem proporcional
+            object-fit: cover;
+
+            //Caso não tenha carregado direito, ou seja um arquivo, não apresento imagem
+            &.erro-carregamento,
+            &.file {
+              display: none;
+
+              & + .icon-file {
+                display: block;
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        //Informações sobre o anexo: Nome e ícone de status
+        .info-anexo {
+          height: 20%;
+          font-size: 12px;
+          display: inline-flex;
+
+          //Nome do anexo: Caso passe do tamanho, escondo o excedente
+          .nome-anexo {
+            display: inline-block;
+            padding-left: 2px;
+            text-align: left;
+
+            //Referente a limitar o texto, adicionando '...' no final
+            width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          //Os ícones não devem aparecer, até que aconteça o sucesso ou erro do envio
+          .icon-sucesso,
+          .icon-erro {
+            display: none;
+            padding: 0 4px;
+            font-size: 15px;
+          }
+
+          //Ícone de status sucesso
+          .icon-sucesso {
+            color: #5db75d;
+          }
+          //Ícone de status erro
+          .icon-erro {
+            color: #d8534f;
+          }
+        }
+      }
+
+      //Apresentação do anexo ao passar o mouse(hover)
+      .dz-details {
+        background-color: #dcdcdc !important;
+        height: 100%;
+        border-radius: 4px;
+        padding: 0 !important;
+
+        //Informações sobre o anexo apresentadas no detalhe
+        .info-anexo {
+          height: 50%;
+          padding: 2px 4px !important;
+          text-align: left;
+          font-size: 12px;
+          color: #565656 !important;
+
+          //Nome do anexo
+          .nome-anexo {
+            //Referente a limitar o nome do arquivo
+            max-width: 190px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          //Tamanho do anexo e mensagem de erro
+          .nome-anexo,
+          .msg-erro {
+            font-weight: 600;
+          }
+
+          //Removo o strong que vem por padrão no tamanho do anexo
+          .tamanho-anexo strong {
+            font-weight: 500;
+          }
+
+          //Nome e tamanho do anexo aparecem por default
+          .nome-anexo,
+          .tamanho-anexo {
+            display: block;
+          }
+
+          //Mensagem de erro fica invisível por default
+          .msg-erro {
+            display: none;
+          }
+        }
+
+        //Ações referentes ao anexo
+        .acoes-anexo {
+          height: 50%;
+          padding: 20px 6px 0 6px !important;
+
+          //Estilo de cada ação do anexo
+          .acao-anexo {
+            position: relative;
+            display: inline-block;
+            padding: 3px 7px;
+            border-radius: 2px;
+            background-color: #5f5f5f;
+            color: #fff;
+            font-size: 18px;
+            margin: 3px 4px;
+
+            //Caso possua link, removo estilização padrão
+            a {
+              color: inherit;
+              text-decoration: none;
+            }
+
+            .acao-label-container {
+              position: absolute;
+              display: none;
+              margin-top: 3px;
+              margin-left: calc(
+                50% - 50px
+              ); //50% do pai - metade do tamanho do container(100px), deixa centralizado
+              top: 100%;
+              left: 0;
+              justify-content: center;
+              width: 100px;
+              background: transparent;
+
+              .acao-label {
+                padding: 2px 4px;
+                border-radius: 2px;
+                background: #5f5f5f;
+                width: max-content;
+                font-size: 10px;
+                font-weight: 600;
+              }
+            }
+
+            //Ao passar o mouse por cima da ação, apresento o label descritivo
+            &:hover {
+              .acao-label-container {
+                display: flex;
+              }
+            }
+          }
+        }
+      }
+
+      //Botão de erro apresentando por padrão, deixo ele invisível
+      .dz-remove {
+        display: none !important;
+      }
+
+      //Na Apresentação inicial do anexo, mostrar ícone de sucesso
+      .dz-image .info-anexo .icon-sucesso {
+        display: inline-block;
+      }
+
+      //Ação de cancelar upload inicia invisível, só aparecendo caso seja um novo anexo sendo enviado
+      .dz-details .acoes-anexo .acao-anexo.acao-cancelar-upload {
+        display: none;
+      }
+
+      //Novos anexos sendo enviado, sem ser os que vem do banco
+      &.dz-processing {
+        //Ação de excluir arquivo inicia invisível, só aparecendo quando o upload terminar(com sucesso ou erro)
+        .dz-details .acoes-anexo .acao-anexo {
+          &.acao-excluir {
+            display: none;
+          }
+          &.acao-cancelar-upload {
+            display: inline-block;
+          }
+        }
+
+        /* Caso o upload tenha terminado, com sucesso ou erro, apresento botão de excluir e
+                 torno invisível botão de cancelar upload */
+        &.dz-error,
+        &.dz-success,
+        &.dz-complete {
+          .dz-details .acoes-anexo .acao-anexo.acao-excluir {
+            display: inline-block;
+          }
+          .dz-details .acoes-anexo .acao-anexo.acao-cancelar-upload {
+            display: none;
+          }
+        }
+
+        //Se for um anexo que está sendo enviado agora, iniciar sem o ícone de sucesso
+        .dz-image .info-anexo .icon-sucesso {
+          display: none;
+        }
+
+        //Estilos em caso de erro
+        &.dz-error {
+          //Na Apresentação inicial do anexo, mostrar ícone de erro
+          .dz-image .info-anexo .icon-erro {
+            display: inline-block;
+          }
+
+          //Nos detalhes, o nome e tamanho do anexo ficam invisíveis e a mensagem de erro aparece
+          .dz-details .info-anexo {
+            .nome-anexo,
+            .tamanho-anexo {
+              display: none;
+            }
+            .msg-erro {
+              display: block;
+            }
+          }
+        }
+
+        //Estilos em caso de sucesso
+        &.dz-success {
+          //Na Apresentação inicial do anexo, mostrar ícone de sucesso
+          .dz-image .info-anexo .icon-sucesso {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Classe para o texto do item de menu dos Acordos de terceirização de serviços ser exibido corretamente sem cortar
+.menu-acordos-terceirizacao {
+  &:hover {
+    width: 380px !important;
+  }
+}
+
+//Barra de rolagem no menu de configurações
+.config-menu {
+  ul {
+    max-height: 618px;
+    overflow-y: scroll;
+  }
+}
+
+@media (max-width: 991px) {
+  .config-menu {
+    ul {
+      max-height: 625px;
+    }
+  }
+}
+
+//Logo e menu
+.fixedSidebar #nsj-header .navbar.navbar-default .navbar-header img {
+  width: 100%;
+}
+.menu-item-config {
+  background-color: $custom-color-3;
+
+  &hover {
+    color: #c76815;
+  }
+}
+
+.nsj-table {
+  th {
+    color: $custom-color-4 !important;
+  }
+}
+
+a.list-group-item .list-group-item-heading {
+  color: $custom-color-1;
+  font-weight: bold;
+}
+
+//Cor dos títulos headlines
+.nsj-headline .title h2 {
+  color: #5a5a5a;
+}
+
+// Posicionamento do botão criar das headlines ao lado direito
+.nsj-headline {
+  nsj-button {
+    float: right;
+
+    a {
+      font-weight: bold;
+    }
+  }
+
+  button {
+    span {
+      font-weight: bold;
+    }
+  }
+}
+
+.templatesEmailAdvertirPrestador-headline {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+nsj-toolbar {
+  nsj-button {
+    margin-right: 12px;
+  }
+}
+
+.painel-header {
+  h2 {
+    color: $custom-color-1;
+  }
+}
+
+//Apresentação e responsividade das telas do menu de Configurações
+.nsj-layout .nsj-aside-list .panel.panel-default {
+  height: 100vh;
+
+  @media screen and (max-width: $max-sm) {
+    height: unset;
+  }
+}
+
+body .main-container {
+  height: 100% !important;
+
+  @media screen and (max-width: $max-sm) {
+    height: unset;
+  }
+}
+
+@media screen and (max-width: $max-xs) {
+  .empty-page {
+    padding-bottom: 80px;
+  }
+}
+
+@media screen and (max-width: $max-sm) {
+  body .main-container {
+    height: unset !important;
+    }
+
+  .empty-page-nodisplay {
+    display: none;
+  }
+}
+
+.localizacaomunicipiosepultamento {
+  display: flex;
+
+  p {
+    border-radius: 5px 0 0 5px;
+  }
+
+  a {
+    display: flex;
+    padding: 0 12px 0 12px;
+    border-radius: 0 5px 5px 0;
+    i {
+      color: white;
+      align-self: center;
+    }
+
+    nsj-tooltip {
+      width: 80px;
+      font-size: 13px;
+      left: 148%;
+      border-radius: 5px;
+      margin-top: 10px;
+    }
+  }
+
+}
+// Tooltip de documentos 
+.checkbox-container {
+  display: flex;
+
+  .checkbox-content {
+    width: fit-content;
+  }
+
+  .icone {
+    color: #17a2b8;
+}
+}
+
+.clientesdocumentos-tooltip,
+.fornecedoresdocumentos-tooltip {
+    align-self: center;
+    margin-left: 5px;
+
+    nsj-tooltip {
+        margin-bottom: 5px;
+    }
+}
+
+  .templatespropostasdocumentos-tooltip {
+    margin-left: -6px;
+  }
+
+
+

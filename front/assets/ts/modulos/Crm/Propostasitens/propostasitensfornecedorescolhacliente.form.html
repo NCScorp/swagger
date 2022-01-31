@@ -1,0 +1,39 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+        <div class="row ">
+                <div class="col-sm-12">
+                        <div class="form-group"><label class="control-label" for="escolhacliente"></label><input
+                                        type='hidden' class="form-control" id="escolhacliente" name="escolhacliente"
+                                        ng-model="$ctrl.entity.escolhacliente" ng-disabled="$ctrl.entity.$$__submitting"
+                                        ng-required="($ctrl.entity.$$__submitting) !== true" />
+                                <div ng-messages="$ctrl.form.escolhacliente.$error"
+                                        ng-if="$ctrl.form.escolhacliente.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                        class="sr-only">Erro:</span>
+                                                Obrigatório escolhacliente.
+
+
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+                <div class="col-sm-12">
+                        <div class="form-group"><label class="control-label" for="propostaitem"></label><input
+                                        type='hidden' class="form-control" id="propostaitem" name="propostaitem"
+                                        ng-model="$ctrl.entity.propostaitem" ng-disabled="$ctrl.entity.$$__submitting"
+                                        ng-required="($ctrl.entity.$$__submitting) !== true" />
+                                <div ng-messages="$ctrl.form.propostaitem.$error"
+                                        ng-if="$ctrl.form.propostaitem.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                                        class="sr-only">Erro:</span>
+                                                Obrigatório propostaitem.
+
+
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</form>

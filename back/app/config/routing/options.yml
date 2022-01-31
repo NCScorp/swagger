@@ -1,0 +1,59 @@
+options1:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/"
+    methods:  ["OPTIONS"]
+
+options1_sembarra:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}"
+    methods:  ["OPTIONS"]
+
+options2:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/"
+    methods:  ["OPTIONS"]
+
+options2_sembarra:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}"
+    methods:  ["OPTIONS"]
+
+options3:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}/"
+    methods:  ["OPTIONS"]
+
+options3_sembarra:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}"
+    methods:  ["OPTIONS"]
+
+options4:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}/{url4}/"
+    methods:  ["OPTIONS"]
+
+options4_sembarra:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}/{url4}"
+    methods:  ["OPTIONS"]
+
+options5:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}/{url4}/{url5}/"
+    methods:  ["OPTIONS"]
+
+options5_sembarra:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}/{url4}/{url5}"
+    methods:  ["OPTIONS"]
+
+options6:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}/{url4}/{url5}/{url6}/"
+    methods:  ["OPTIONS"]
+
+options6_sembarra:
+    controller: "Nasajon\\AppBundle\\Controller\\PingController::optionsNoBarAction"
+    path:     "/{url}/{url2}/{url3}/{url4}/{url5}/{url6}"
+    methods:  ["OPTIONS"]

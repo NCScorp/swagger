@@ -1,0 +1,27 @@
+<div class="height-full layout-list">    
+            <nsj-headline headline-title="Prestadora de serviço suspensa " headline-sub="true">
+<div class="pull-right">
+    <a class="btn btn-sm btn-default hidden-lg hidden-md" ui-sref="ns_fornecedoressuspensos({})" title="Voltar"><i class="fas fa-reply"></i><span class="hidden-xs">Voltar</span></a>
+        
+        <button type="button" class="btn btn-sm btn-success btn-geral" ng-click="ns_frncdrssspnss_frm_shw_cntrllr.fornecedorreativar(ns_frncdrssspnss_frm_shw_cntrllr.entity)">
+            <span>Remover Suspensão</span>
+        </button>
+
+    </div>
+</nsj-headline>
+<div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : ns_frncdrssspnss_frm_shw_cntrllr.busy }">
+        <div class="nsj-form-view top-buffer bottom-buffer">
+            <ns-fornecedoressuspensos-show-show entity="ns_frncdrssspnss_frm_shw_cntrllr.entity" action="ns_frncdrssspnss_frm_shw_cntrllr.action" busy="ns_frncdrssspnss_frm_shw_cntrllr.busy" constructors="ns_frncdrssspnss_frm_shw_cntrllr.constructors"></ns-fornecedoressuspensos-show-show>
+                                </div>
+        
+<div class="form-group pull-left">
+        
+        
+            </div>        <div class="content-loading"  ng-if="ns_frncdrssspnss_frm_shw_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+        </div>
+    </div>
+</div>

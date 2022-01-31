@@ -1,0 +1,61 @@
+   
+
+ 
+
+
+
+<div ng-class="{'nsj-loading-page' : ns_vnddrs_lst_cntrllr.busy }" class='ns_vendedores nsj-layout  layout-table '> 
+    <div class="nsj-aside-list height-full col-md-4" ng-class="{ 'hidden-sm hidden-xs' : (('ns_vendedores_show'| isStateEq) || ('ns_vendedores_edit'| isStateEq) || ('ns_vendedores_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+<nsj-headline headline-title="" ng-class="{ 'hidden-sm hidden-xs' : (('ns_vendedores_show'| isStateEq) || ('ns_vendedores_edit'| isStateEq) || ('ns_vendedores_new'| isStateEq ))}">
+    </nsj-headline>
+
+<nsj-toolbar ng-on-change_toolbar="ns_vnddrs_lst_cntrllr.search($event.detail)" search="true" refresh = "true" holder="Busca" model-search="{{ns_vnddrs_lst_cntrllr.service.filter}}" select="{{ns_vnddrs_lst_cntrllr.selectPage && ns_vnddrs_lst_cntrllr.selected.length === ns_vnddrs_lst_cntrllr.entities.length && !ns_vnddrs_lst_cntrllr.selectAll && !ns_vnddrs_lst_cntrllr.service.loadParams.finished}}" select-all="{{ns_vnddrs_lst_cntrllr.selectAll}}" item-in-page="{{ns_vnddrs_lst_cntrllr.entities.length}}" item-all="{{ns_vnddrs_lst_cntrllr.entities[0].full_count}}">
+                    <nsj-filters slot="filters">
+                                                                                                                                                                <nsj-filter-seletor options="{{ns_vnddrs_lst_cntrllr.$rootScope.OPTIONS_NsVendedores}} " ng-if="false" type="seletor" max-occurs="{{ns_vnddrs_lst_cntrllr.$rootScope.MAXOCCURS_NsVendedores}} " input="{{ns_vnddrs_lst_cntrllr.$rootScope.SELECTS_NsVendedores}} " text-disabled="Selecionar..." model="{{ns_vnddrs_lst_cntrllr.filters}} "></nsj-filter-seletor>
+    </nsj-filters>
+   
+                                        </nsj-toolbar>
+                <div class="panel-body body-">
+                                        <nsj-table fields="ns_vnddrs_lst_cntrllr.entities" fields-config='ns_vnddrs_lst_cntrllr.fields' config-page='ns_vnddrs_lst_cntrllr.service.loadParams' has-more-page='ns_vnddrs_lst_cntrllr.loadMore()' >
+    <nsj-actions action-model="{{$parent.entity}}">                                                            
+                                            <nsj-action target="_self" icon="fas fa-eye" tooltip="Retrieve" disabled="false" ui-sref="ns_vendedores_show({vendedor_id : $parent.entity.vendedor_id})" ></nsj-action>
+                
+
+                                </nsj-actions>
+        
+        <div class="empty-page" ng-if="ns_vnddrs_lst_cntrllr.isFilterEmpty()">
+            <div class="text-center">
+                <span class="icon-page"><i class="fas fa-table fa-fw"></i></span>
+                <h3></h3>
+                <p>Ainda não existem itens nesta lista.</p>
+                            </div>
+        </div>    
+        <div ng-if="!ns_vnddrs_lst_cntrllr.isFilterEmpty()" class="empty-page">
+            <div class="text-center">
+                <p>Não foram encontrados itens para esta pesquisa.</p>
+            </div>
+        </div>
+</nsj-table>            
+                                        </div><!--/panel-body-->
+            </div><!--/panel-->
+        </div>
+    </div>
+
+    <div class='empty-page col-md-8 article-area height-full padding-h-clear' ui-view>
+            <div class="bt-new-article new-article text-center height-full">
+                <span class="icon-page"><i class="fas fa-table fa-fw"></i></span>
+                <h3>Selecione </h3>
+                <p>Selecione  no painel ao lado para ver suas informações. </p>
+               
+            </div>
+        </div>
+        <div class="content-loading"  ng-if="ns_vnddrs_lst_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+            </div>
+</div>

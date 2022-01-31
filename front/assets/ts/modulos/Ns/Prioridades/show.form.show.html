@@ -1,0 +1,63 @@
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Nome </label>
+            <p class="form-control-static"><span id="nome" class="form-control-static"
+                    ng-bind="($ctrl.entity.nome) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Descrição </label>
+            <p class="form-control-static"><span id="descricao" class="form-control-static"
+                    ng-bind="($ctrl.entity.descricao) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Prazo para expiração </label>
+            <p class="form-control-static"><span id="prazoexpiracao" class="form-control-static"
+                    ng-bind="($ctrl.entity.prazoexpiracao) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Notificar expiração faltando </label>
+            <p class="form-control-static"><span id="notificarexpiracaofaltando" class="form-control-static"
+                    ng-bind="($ctrl.entity.notificarexpiracaofaltando) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<!-- <div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Cor </label>
+            <p class="form-control-static"><span id="cor" class="form-control-static"
+                    ng-bind="($ctrl.entity.cor) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div> -->
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix">
+            <label class="control-label">Ordem </label>
+            <p class="form-control-static">
+                <span id="ordem" class="form-control-static"
+                    ng-bind="$ctrl.entity.ordem|| 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix">
+            <label class="control-label">Definir como padrão </label>
+            <p class="form-control-static">
+                <span id="prioridadepadrao" class="form-control-static"
+                    ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.prioridadepadrao] || 'Não informado'">
+                </span>
+            </p>
+        </div>
+    </div>
+</div>

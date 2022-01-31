@@ -1,0 +1,57 @@
+.form-confirmar-criacao-projeto {
+  border: solid 1px #ddd;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.passocinco-table-container {
+  padding: 15px;
+
+  .nsj-table.table th {
+    padding: 0 !important;
+  }
+
+  .passocinco-nsjtable {
+    thead {
+      th {
+        background-color: #eaeaea !important;
+        border: 1px solid #ddd !important;
+        width: 100%;
+      }
+      th:nth-of-type(2) {
+        display: none;
+      }
+      span {
+        color: #5a5a5a;
+        margin-left: 25px;
+      }
+    }
+
+    tbody {
+      tr {
+        background: none;
+
+        td {
+          background: #fafafa;
+          &:hover {
+            background: #fafafa !important;
+          }
+        }
+
+        td:nth-of-type(2) {
+          display: none;
+        }
+      }
+    }
+
+    .table > thead > tr > th {
+      border: 1px solid #ddd !important;
+    }
+    .table > tbody > tr > td {
+      border: 1px solid #ddd !important;
+      div {
+        margin-left: 8px;
+      }
+    }
+  }
+}

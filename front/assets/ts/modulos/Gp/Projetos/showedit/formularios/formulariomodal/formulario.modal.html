@@ -1,0 +1,27 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{ $ctrl.formularioModulo.formulario.nome  }}</h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div class="row">
+    <div class="col-md-12">
+      <p ng-if="!$ctrl.formularioModulo.finalizado_at">
+        Por favor, preencha este formulário de forma clara e sucinta para que possamos iniciar os nossos serviços  de forma ágil e segura obedecendo os pedidos do responsável.
+      </p>
+      <nsj-form  ng-prop-entity="$ctrl.formEntity" ng-on-entity_change="$ctrl.entityChange($event)">
+      </nsj-form>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="pull-right">
+    <a class="btn" style="font-size: 12px;" ng-click="$ctrl.close()">
+      <i class="fa fa-times"></i>
+      Fechar
+    </a>
+    <button type="button" ng-click="$ctrl.submit()" ng-if="!$ctrl.formularioModulo.finalizado_at" ng-class="{loading:$ctrl.busySubmit}" ng-disabled="$ctrl.busySubmit"
+      class="btn btn-sm btn-warning btn-save btn-geral">
+      <i class="fa fa-paper-plane"></i>
+      Enviar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="municipios" label="municipios" project="ns">
+    <entity schema="ns" table="municipios">
+        <fieldmodel name="codigo" datatype="integer" isid="true" column="ibge"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="uf" datatype="string" column="uf" useCaseLink="ns\estados"/>
+        <!-- <fieldmodel name="camposcustomizados" datatype="json" column="camposcustomizados"/> -->
+    </entity>
+    <viewbrowser label="Municipios" layout="list" paginate="true" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="codigo" isid="true" visible="false"/>
+            <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true"/>
+            <fieldbrowser entitylink="uf" visible="false" />
+        </fieldsbrowser>
+        <filters>
+            <fieldsfilters>
+              <fieldfilter entitylink="nome" maxoccurs="unbounded" visible="false">
+                <conditions>
+                  <condition type="eq"></condition>
+                </conditions>
+              </fieldfilter>
+              <fieldfilter entitylink="uf" maxoccurs="unbounded" visible="false">
+                <conditions>
+                  <condition type="eq"></condition>
+                </conditions>
+              </fieldfilter>
+            </fieldsfilters>
+        </filters>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Municipio">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="nome" controltype="textedit" label="Nome" colspan="6" entitylink="nome">
+                      </cell>
+                      <cell name="uf" controltype="textedit" label="UF" colspan="6" entitylink="uf">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo nome não pode ser vazio."/>
+                          </validates>
+                      </cell>
+                  </row>
+                  <!-- <row>
+                      <cell name="camposcustomizados" controltype="textedit" colspan="6" entitylink="camposcustomizados"/>
+                  </row>                   -->
+              </headerform>            
+          </layout>
+      </form>
+    </forms>
+     <actions>
+       <action>
+         <name>retrieve</name>
+       </action>
+    </actions>
+</nsjusecase> 

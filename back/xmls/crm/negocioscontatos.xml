@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="negocioscontatos" label="negocioscontatos" project="crm">
+  <entity schema="crm" table="negocioscontatos">
+    <fieldmodel name="id" datatype="guid" isid="true" column="id" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    <!--
+      O id do Negócio está como "documento" para corrigir o problema no persistChildNegocioscontatos de NegociosService, onde era chamado o método getNegocio que não existe,
+      já que o caso de uso Negocios possui seu guid com nome de "documento". Modificando o nome para "documento", o MDA gera o método persistChildNegocioscontatos com o método correto
+      que é o getDocumento
+    -->
+    <fieldmodel name="documento" datatype="guid" column="id_negocio" useCaseLink="crm\negocios" entityJoinType="left"/>
+    <fieldmodel name="nome" datatype="string" column="nome" />
+    <fieldmodel name="sobrenome" datatype="string" column="sobrenome" />
+    <fieldmodel name="cpf" datatype="string" column="cpf" />
+    <fieldmodel name="cargo" datatype="string" column="cargo">
+        <options>{"Sócio/Proprietário/CEO":”Sócio/Proprietário/CEO", "Diretor":”Diretor", "Consultor/Controller":”Consultor/Controller", "Gerente/Coordenador Adm./Financ.":”Gerente/Coordenador Adm./Financ.", "Gerente/Coordenador de TI":”Gerente/Coordenador de TI", "Gerente/Coordenador de Outras Áreas":”Gerente/Coordenador de Outras Áreas", "Analista":”Analista", "Estagiário":”Estagiário"}</options>
+    </fieldmodel>
+    <fieldmodel name="sexo" datatype="string" column="sexo" />
+    <fieldmodel name="email" datatype="string" column="email" />
+    <fieldmodel name="nascimento" datatype="date" column="nascimento" />
+    <fieldmodel name="principal" datatype="boolean" column="principal" />
+    <fieldmodel name="responsavellegal" datatype="boolean" column="responsavellegal" />
+    <fieldmodel name="ddi" datatype="string" column="ddi" />
+    <fieldmodel name="ddd" datatype="string" column="ddd" />
+    <fieldmodel name="telefone" datatype="string" column="telefone" />
+    <fieldmodel name="ramal" datatype="string" column="ramal" />
+    <fieldmodel name="titulo" datatype="string" column="titulo" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+    <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+    <constructoritem>documento</constructoritem>
+  </constructors>
+  <viewbrowser label="Contatos do Negócio" layout="table">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="id" isid="true" visible="false" />
+      <fieldbrowser entitylink="documento" visible="false" />
+      <fieldbrowser entitylink="nome" visible="false" />
+      <fieldbrowser entitylink="sobrenome" visible="false" />
+      <fieldbrowser entitylink="cargo" visible="false" />
+      <fieldbrowser entitylink="email" visible="false" />
+      <fieldbrowser entitylink="ddi" visible="false" />
+      <fieldbrowser entitylink="ddd" visible="false" />
+      <fieldbrowser entitylink="telefone" visible="false" />
+      <fieldbrowser entitylink="ramal" visible="false" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Contato do Negócio">
+      <layout>
+        <headerform>
+          <!-- <row>
+            <cell label="negocio" entitylink="negocio" controltype="lookup" colspan="6" fielddetaillookup="{'documento': 'documento', 'numero':'numero'}" amountfieldslookup="4" allowinsertlookup="false">
+              <validates>
+                <validate type="vnull" displaytext="O campo negocio não pode ser vazio" />
+              </validates>
+            </cell>
+          </row> -->
+
+          <row>
+            <cell controltype="textedit" label="Nome" colspan="4" entitylink="nome">
+              <validates>
+                <validate type="vnull" displaytext="O campo nome não pode estar vazio"></validate>
+              </validates>
+            </cell>
+            <cell controltype="textedit" label="Sobrenome" colspan="4" entitylink="sobrenome">
+            </cell>
+            <cell controltype="textedit" label="Cargo" colspan="4" entitylink="cargo">
+                <validates>
+                  <validate type="vnull" displaytext="O campo cargo não pode estar vazio"></validate>
+                </validates>
+              </cell>
+          </row>
+
+          <row>
+            <cell controltype="textedit" label="Email" colspan="4" entitylink="email">
+              <validates>
+                <validate type="vnull" displaytext="O campo email não pode estar vazio"></validate>
+              </validates>
+            </cell>
+            <cell controltype="textedit" label="ddi" colspan="1" entitylink="ddi">
+            </cell>
+            <cell controltype="textedit" label="ddd" colspan="1" entitylink="ddd">
+            </cell>
+            <cell controltype="textedit" label="Telefone" colspan="4" entitylink="telefone"/>
+            <cell controltype="textedit" label="ramal" colspan="2" entitylink="ramal">
+            </cell>
+          </row>
+
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default" successMsg="O Contato do Negócio foi criado com sucesso!">
+      <name>Insert</name>
+      <api>
+        <name>negocioContatoNovo</name>
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="id_negocio" valueentity="documento" />
+        <fromto valueapi="nome" valueentity="nome" />
+        <fromto valueapi="sobrenome" valueentity="sobrenome" />
+        <fromto valueapi="cargo" valueentity="cargo" />
+        <fromto valueapi="email" valueentity="email" />
+        <fromto valueapi="ddi" valueentity="ddi" />
+        <fromto valueapi="ddd" valueentity="ddd" />
+        <fromto valueapi="telefone" valueentity="telefone" />
+        <fromto valueapi="ramal" valueentity="ramal" />
+        <fromto valueapi="created_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action form="default" successMsg="O Contato do Negócio foi editado com sucesso!">
+      <name>Update</name>
+      <api>
+        <name>negocioContatoAlterar</name>
+        <fromto valueapi="id" valueentity="id" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="id_negocio" valueentity="documento" />
+        <fromto valueapi="nome" valueentity="nome" />
+        <fromto valueapi="sobrenome" valueentity="sobrenome" />
+        <fromto valueapi="cargo" valueentity="cargo" />
+        <fromto valueapi="email" valueentity="email" />
+        <fromto valueapi="ddi" valueentity="ddi" />
+        <fromto valueapi="ddd" valueentity="ddd" />
+        <fromto valueapi="telefone" valueentity="telefone" />
+        <fromto valueapi="ramal" valueentity="ramal" />
+        <fromto valueapi="updated_by" valueentity="updated_by" />
+      </api>
+    </action>
+    <action form="default" successMsg="O Contato do Negócio foi Excluído com sucesso!">
+      <name>Delete</name>
+      <api>
+        <name>negocioContatoExcluir</name>
+        <fromto valueapi="id" valueentity="id" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="id_negocio" valueentity="documento" />
+        <fromto valueapi="deleted_by" valueentity="logged_user" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

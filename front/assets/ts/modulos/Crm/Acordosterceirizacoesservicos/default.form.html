@@ -1,0 +1,80 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+    <nsj-accordion init-open keep-open headline="Dados do Acordo">
+        <div class="row ">
+            <div class="col-sm-8">
+                <div class="form-group">
+                    <label class="control-label" for="servico">Serviço</label>
+                    <nsj-lookup name="servico" id-name="servico" factory="CrmComposicoes"
+                        ng-model="$ctrl.entity.servico" max-label="1" constructor="{  }"
+                        config='{ "nome":"nome", "codigo":"codigo"}' disabled="$ctrl.entity.$$__submitting"
+                        ns-required="true">
+                    </nsj-lookup>
+                    <div ng-messages="$ctrl.form.servico.$error" ng-if="$ctrl.form.servico.$dirty || $ctrl.form.$submitted">
+                        <div class="alert alert-danger" role="alert" ng-message="required">
+                            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O campo Serviço não pode ser vazio
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label class="control-label" for="valor">Valor</label>
+                    <input type='money'
+                        class="form-control" 
+                        id="valor" 
+                        name="valor" 
+                        ng-model="$ctrl.entity.valor"
+                        ng-disabled="$ctrl.entity.$$__submitting" 
+                        ng-required="($ctrl.entity.$$__submitting) !== true"
+                        maxlength="16"
+                        ui-money-mask 
+                    />
+                    <div ng-messages="$ctrl.form.valor.$error" ng-if="$ctrl.form.valor.$dirty || $ctrl.form.$submitted">
+                        <div class="alert alert-danger" role="alert" ng-message="required">
+                            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O campo Valor não pode ser vazio
+                        </div>
+                        <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O campo Valor aceita no máximo 10 dígitos
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-sm-12">
+                <div class="form-group">
+
+                    <label class="control-label" for="prestador">Prestadora de Serviços</label>
+                    <nsj-lookup 
+                        name="prestador" 
+                        id-name="prestador" 
+                        factory="NsFornecedores" 
+                        ng-model="$ctrl.entity.prestador"
+                        max-label="1" 
+                        constructor="{  }" 
+                        config='{ "nomefantasia":"nomefantasia",  }' 
+                        disabled="$ctrl.entity.$$__submitting"
+                        required="($ctrl.entity.$$__submitting) !== true"
+                        ns-required="true">
+                    </nsj-lookup>
+
+                    <div ng-messages="$ctrl.form.prestador.$error" ng-if="$ctrl.form.prestador.$dirty || $ctrl.form.$submitted">
+                        <div class="alert alert-danger" role="alert" ng-message="required"><span class="fa fa-exclamation-circle"
+                                aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                            O campo Prestadora de Serviços não pode ser vazio
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </nsj-accordion>
+</form>

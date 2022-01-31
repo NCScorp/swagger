@@ -1,0 +1,466 @@
+</div>
+    <div class="nsj-form-view bottom-buffer">
+        <div class="row  row-form-view">
+            <div class="col-sm-6">
+
+                <div class="form-group clearfix">
+                    <label ng-if="$ctrl.entity.nomeFalecido" class="control-label">Nome do Falecido</label>
+                    <label ng-if="!$ctrl.entity.nomeFalecido" class="control-label">Nome</label>
+                    <p class="form-control-static">
+                        <span id="nome" class="form-control-static"
+                            ng-bind="($ctrl.entity.nome) || 'Não informado'"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+
+                <div class="form-group clearfix">
+                    <label class="control-label">Código </label>
+                    <p class="form-control-static"><span id="codigo" class="form-control-static"
+                            ng-bind="($ctrl.entity.codigo) || 'Não informado'"></span></p>
+                </div>
+            </div>     
+
+        </div>
+        <div class="row  row-form-view">
+
+            <div class="col-sm-6">
+                <div class="form-group clearfix"><label class="control-label">Área de Atendimento </label>
+                    <p class="form-control-static"><span id="area" class="form-control-static"
+                            ng-bind="$ctrl.entity.area.nome || 'Não informado'"></span></p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group clearfix"><label class="control-label">Origem </label>
+                    <p class="form-control-static"><span id="origem" class="form-control-static"
+                            ng-bind="$ctrl.entity.origem.nome || 'Não informado'"></span></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="row  row-form-view">
+
+            <div class="col-sm-6">
+                <div class="form-group clearfix"><label class="control-label">Tipo de acionamento </label>
+                    <p class="form-control-static"><span id="tiposacionamento" class="form-control-static"
+                            ng-bind="$ctrl.entity.tiposacionamento.nome || 'Não informado'"></span></p>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group clearfix"><label class="control-label">Depende de </label>
+                    <p class="form-control-static"><span id="negociopai" class="form-control-static"
+                            ng-bind="$ctrl.entity.negociopai.nome || 'Não informado'"></span></p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row row-form-view">
+            <div class="col-sm-4">
+                <div class="form-group clearfix"><label class="control-label">Estabelecimento </label>
+                    <p class="form-control-static"><span id="estabelecimento" class="form-control-static"
+                            ng-bind="$ctrl.entity.estabelecimento.nomefantasia || 'Não informado'"></span></p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group clearfix">
+                    <label class="control-label">Possui seguro? </label>
+                    <p class="form-control-static">
+                        <span id="possuiseguradora" class="form-control-static"
+                            ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.possuiseguradora] || 'Não informado'">
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4" ng-if="(!$ctrl.entity.possuiseguradora)">
+                <div class="form-group clearfix">
+                    <label class="control-label" ng-if="!$ctrl.entity.possuiseguradora">Cliente </label>
+                    <label class="control-label" ng-if="$ctrl.entity.possuiseguradora">Seguradora </label>
+                    <p class="form-control-static">
+                        <span id="cliente" class="form-control-static"
+                            ng-bind="$ctrl.entity.cliente.nomefantasia || 'Não informado'"></span>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        
+        <div class="row  row-form-view" ng-if="$ctrl.entity.possuiseguradora">
+            <div class="col-sm-12">
+                <div class="form-group clearfix">
+                    <object-list class="object-list" entities='$ctrl.entity.negociosdadosseguradoras'
+                        service="CrmAtcsdadosseguradoras" constructors="{ 'negocio' : $ctrl.entity.negocio,  }"
+                        autosaveEnabled=>
+                        <div>
+                            <div>
+                                <table class="table table-striped table-hover table-condensed table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Seguradora
+                                            </th>
+                                            <th>
+                                              Telefone
+                                            </th>
+                                            <th>
+                                                Produto
+                                            </th>
+                                            <th>
+                                                Apólice
+                                            </th>
+                                            <th>
+                                                Titular da apólice
+                                            </th>
+                                            <th>
+                                                Nome do funcionário da seguradora
+                                            </th>
+                                            <th>
+                                                Sinistro
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="subentity in oblistctrl.entities"
+                                            ng-controller="ObjectListItemCtrl as itemctrl">
+                                            <td>
+                                                {{ subentity.seguradora.nomefantasia ? subentity.seguradora.nomefantasia : 'Não informado' }}
+                                            </td>
+                                            <td>
+                                              <!-- Tratando os possíveis inputs de DDI -->
+                                              {{ $ctrl.entity.respfinanceiroddi.length === 1 ? ($ctrl.entity.respfinanceiroddi | mask: '+9' ) : ''}}
+                                              {{ $ctrl.entity.respfinanceiroddi.length === 2 ? ($ctrl.entity.respfinanceiroddi | mask: '+99' ) : ''}}
+                                              {{ $ctrl.entity.respfinanceiroddi.length === 3 ? ($ctrl.entity.respfinanceiroddi | mask: '+999' ) : ''}}
+
+                                              <!-- Tratando os possíveis inputs de DDD -->
+                                              {{ $ctrl.entity.respfinanceiroddd.length === 1 ? ($ctrl.entity.respfinanceiroddd | mask: '(9)' ) : ''}}
+                                              {{ $ctrl.entity.respfinanceiroddd.length === 2 ? ($ctrl.entity.respfinanceiroddd | mask: '(99)') : ''}}
+                                              {{ $ctrl.entity.respfinanceiroddd.length === 3 ? ($ctrl.entity.respfinanceiroddd | mask: '(999)') : ''}}
+
+                                              <!-- Tratando os possíveis inputs de telefone -->
+                                              {{ $ctrl.entity.respfinanceirotelefone.length === 0 ? 'Não informado' : ''}}
+                                              {{ $ctrl.entity.respfinanceirotelefone.length === 8 ?  ($ctrl.entity.respfinanceirotelefone | mask: '9999-9999') : '' }}
+                                              {{ $ctrl.entity.respfinanceirotelefone.length === 9 ?  ($ctrl.entity.respfinanceirotelefone | mask: '99999-9999') : '' }}
+                                              {{ $ctrl.entity.respfinanceirotelefone.length !== 0 &&
+                                                 $ctrl.entity.respfinanceirotelefone.length !== 8 && 
+                                                 $ctrl.entity.respfinanceirotelefone.length !== 9 ? 
+                                                 ($ctrl.entity.respfinanceirotelefone) : '' 
+                                              }}
+                                            </td> 
+                                            <td>
+                                                {{ subentity.produtoseguradora.nome ? subentity.produtoseguradora.nome : 'Não informado'}}
+                                            </td>
+                                            <td>
+                                                {{ subentity.apolice.nome ? subentity.apolice.nome : 'Não informado'}}
+                                            </td>
+                                            <td> {{ subentity.titularnome ? subentity.titularnome : 'Não informado' }} </td>
+                                            <td> {{ subentity.nomefuncionarioseguradora ? subentity.nomefuncionarioseguradora : 'Não informado' }} </td>
+                                            <td> {{ subentity.sinistro ? subentity.sinistro : 'Não informado '}} </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-if="oblistctrl.entities.length == 0">
+                                        <tr>
+                                            <td colspan="17" class="state-empty">
+                                                <div class="empty-list">
+                                                    <p class="text-center"> Não existem itens para mostrar nesta
+                                                        lista. </p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </object-list>
+                </div>
+            </div>
+        </div>
+        <div class="row row-form-view">
+          <div class="col-sm-12 customizado">
+            <section style="width: 100%" ng-if="$ctrl.camposcustomizadosVelorioSepultamento.length > 0">
+              <nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosVelorioSepultamento"
+							  id-field="camposcustomizadosVelorioSepultamento" ng-prop-visible_config="$ctrl.campoCustomizadoVisibilidadeConfig"
+							  ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)" mode="view">
+						  </nsj-custom-field>
+            </section>
+          </div>
+        </div>
+        <div class="row row-form-view">
+          <div class="col-sm-12 customizado">
+            <section style="width: 100%" ng-if="$ctrl.camposcustomizadosTranslado.length > 0">
+              <nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosTranslado"
+                id-field="camposcustomizadosTranslado" ng-prop-visible_config="$ctrl.campoCustomizadoVisibilidadeConfig"
+                ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)" mode="view">
+              </nsj-custom-field>
+            </section>
+          </div>
+        </div>
+        <!-- Colocado "FALSE" no ng-if para nao aparecer, pois informações estavam duplicando na tela  -->
+        <div class="row  row-form-view">
+            <div class="col-sm-12 body">
+                <nsj-custom-field ng-if="false && $ctrl.camposcustomizadosview.length > 0"
+                    id-field="camposcustomizadosview"
+                    ng-prop-visible_config="$ctrl.campoCustomizadoVisibilidadeConfig"
+                    ng-prop-custom_fields="$ctrl.camposcustomizadosview"
+                    ng-prop-model="$ctrl.entity.camposcustomizados" mode="view">
+                </nsj-custom-field>
+                <!-- {# {% include '@src/Ns/Camposcustomizados/camposcustomizadosvisualizacao.html.twig' %} #} -->
+            </div>
+        </div>
+
+        <!-- {# sobre a passagem do dicionario do $ctrl para crm_tcs_frm_shw_cntrllr 
+            $ctrl.config 
+            não funciona, nada é acessivel pelo $ctrl, parece que não copia...
+            $ctrl.entity.config
+            não funciona pois não da pra passar o config para entity.config, da erro por causa de escopo...#} -->
+
+        <div class="row  row-form-view">
+            <div class="col-sm-12 customizado">
+                <nsj-custom-field style="width: 100%"
+                    ng-if="$ctrl.entity.camposcustomizadosResponsavelViewCompleto.length > 0"
+                    ng-prop-custom_fields="$ctrl.entity.camposcustomizadosResponsavelViewCompleto"
+                    id-field="camposcustomizadosResponsavelViewCompleto"
+                    ng-prop-visible_config="$ctrl.entity.config" ng-prop-model="$ctrl.entity.camposcustomizados"
+                    mode="view"></nsj-custom-field>
+            </div>
+        </div>
+
+        <div class="row  row-form-view">
+            <div class="col-sm-12 customizado">
+                <nsj-custom-field style="width: 100%"
+                    ng-if="$ctrl.entity.camposcustomizadosFalecidoViewCompleto.length > 0"
+                    ng-prop-custom_fields="$ctrl.entity.camposcustomizadosFalecidoViewCompleto"
+                    id-field="camposcustomizadosFalecidoViewCompleto"
+                    ng-prop-visible_config="$ctrl.campoCustomizadoVisibilidadeConfig"
+                    ng-prop-model="$ctrl.entity.camposcustomizados" mode="view"></nsj-custom-field>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-12" ng-if="$ctrl.entity.area.localizacao">
+                <fieldset>
+                    <legend>
+                        Localização {{ $ctrl.entity.complementoCaption }}
+                    </legend>
+                    <div class="row  row-form-view">
+                        <div class="col-sm-12">
+                            <div class="form-group clearfix">
+                                <label class="control-label">Descrição
+                                </label>
+                                <p class="form-control-static">
+                                    <span id="localizacaonome"
+                                        class="form-control-static"
+                                        ng-bind="$ctrl.entity.localizacaonome || 'Não informado'">
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-form-view">
+                        <div class="col-sm-4">
+                            <div class="form-group clearfix"><label class="control-label">País </label>
+                                <p class="form-control-static"><span id="localizacaopais"
+                                        class="form-control-static"
+                                        ng-bind="$ctrl.entity.localizacaopais.nome || 'Não informado'"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group clearfix"><label class="control-label">Estado </label>
+                                <p class="form-control-static"><span id="localizacaoestado"
+                                        class="form-control-static"
+                                        ng-bind="$ctrl.entity.localizacaoestado.nome || 'Não informado'"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" ng-if="$ctrl.entity.localizacaopais.pais === '1058'">
+                          <div class="form-group clearfix"><label class="control-label">Municipio 
+                            <button class="btn btn-link btn-tooltip" type='button'
+                            uib-popover-html="$ctrl.tooltipCidadesInformacoesFunerarias"
+                            popover-placement='auto bottom' popover-trigger="'mouseenter click outsideClick'">
+                            <i class="fas fa-question-circle"></i>
+                        </button>
+                          </label>
+                              <p class="form-control-static"><span id="localizacaomunicipio"
+                                      class="form-control-static"
+                                      ng-bind="$ctrl.entity.localizacaomunicipio.nome || 'Não informado'"></span>
+                              </p>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="row  row-form-view">
+                        <div class="col-sm-4">
+                          <div class="form-group clearfix"><label class="control-label">CEP </label>
+                              <p class="form-control-static"><span id="localizacaocep" class="form-control-static"
+                                      ng-bind="($ctrl.entity.localizacaocep) || 'Não informado'"></span></p>
+                          </div>
+                        </div>
+                        <div class="col-sm-4">
+                          <div class="form-group clearfix"><label class="control-label">Bairro </label>
+                              <p class="form-control-static"><span id="localizacaobairro"
+                                      class="form-control-static"
+                                      ng-bind="($ctrl.entity.localizacaobairro) || 'Não informado'"></span></p>
+                          </div>
+                        </div>
+                        <div class="col-sm-2">
+                          <div class="form-group clearfix"><label class="control-label">Logradouro </label>
+                              <p class="form-control-static"><span id="localizacaotipologradouro"
+                                      class="form-control-static"
+                                      ng-bind="$ctrl.entity.localizacaotipologradouro.descricao || 'Não informado'"></span>
+                              </p>
+                          </div>
+                        </div>
+                        <div class="col-sm-4" ng-if="$ctrl.entity.localizacaopais.pais !== '1058'">
+                            <div class="form-group clearfix"><label class="control-label">Cidades estrangeiras
+                                </label>
+                                <p class="form-control-static"><span id="localizacaocidadeestrangeira"
+                                        class="form-control-static"
+                                        ng-bind="$ctrl.entity.localizacaocidadeestrangeira.nome || 'Não informado'"></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row  row-form-view">
+                        <div class="col-sm-8">
+                            <div class="form-group clearfix"><label class="control-label">Rua </label>
+                                <p class="form-control-static"><span id="localizacaorua" class="form-control-static"
+                                        ng-bind="($ctrl.entity.localizacaorua) || 'Não informado'"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group clearfix"><label class="control-label">Número </label>
+                                <p class="form-control-static"><span id="localizacaonumero"
+                                        class="form-control-static"
+                                        ng-bind="($ctrl.entity.localizacaonumero) || 'Não informado'"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row  row-form-view">
+                        <div class="col-sm-8">
+                            <div class="form-group clearfix"><label class="control-label">Complemento </label>
+                                <p class="form-control-static"><span id="localizacaocomplemento"
+                                        class="form-control-static"
+                                        ng-bind="($ctrl.entity.localizacaocomplemento) || 'Não informado'"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group clearfix"><label class="control-label">Referência </label>
+                                <p class="form-control-static"><span id="localizacaoreferencia"
+                                        class="form-control-static"
+                                        ng-bind="$ctrl.entity.localizacaoreferencia|| 'Não informado'"></span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row  row-form-view" ng-if="$ctrl.entity.nomeFalecido && $ctrl.entity.localizacaopais.pais === '1058'">
+                      <div class="col-sm-6">
+                          <div class="form-group clearfix">
+                              <label class="control-label">
+                                  Estado de Sepultamento
+                              </label>
+                              <p class="form-control-static">
+                                  <span id="localizacaoestadosepultamento"
+                                      class="form-control-static"
+                                      ng-bind="$ctrl.entity.localizacaoestadosepultamento.nome || 'Não informado'">
+                                  </span>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="col-sm-6">
+                          <div class="form-group clearfix"><label class="control-label">Município de Sepultamento
+                            <button class="btn btn-link btn-tooltip" type='button'
+                                uib-popover-html="$ctrl.tooltipCidadesInformacoesFunerariasSepultamento"
+                                popover-placement='auto bottom'
+                                popover-trigger="'mouseenter click outsideClick'">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                              </label>
+                              <div class="localizacaomunicipiosepultamento">
+                              <p class="form-control-static"><span id="localizacaomunicipiosepultamento"
+                                      class="form-control-static"
+                                      ng-bind="$ctrl.entity.localizacaomunicipiosepultamento.nome || 'Não informado'"></span>
+                              </p>
+                              <a class="btn btn-xs btn-primary" ng-click="$ctrl.abrirModalRotasGoogle()"
+								    ng-if="$ctrl.entity.localizacaomunicipiosepultamento && $ctrl.entity.localizacaomunicipio.nome">
+                                   <i class="fas fa-map-marker-alt fa-lg"></i> 
+                                   <nsj-tooltip tooltip-position="bottom"><p>Ver rotas</p></nsj-tooltip>    
+						     </a> 
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row row-form-view">
+            <div class="col-sm-12">
+                <div class="form-group clearfix">
+                    <label class="control-label">Observações </label>
+                    <p class="form-control-static">
+                        <span id="observacoes" class="form-control-static"
+                            ng-bind="$ctrl.entity.observacoes|| 'Não informado'"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row row-form-view">
+          <div class="col-sm-12">
+              <div class="form-group clearfix">
+                  <object-list class="object-list" entities='$ctrl.entity.responsaveisfinanceiros'
+                      service="CrmAtcsresponsaveisfinanceiros"
+                      constructors="{ 'negocio' : $ctrl.entity.negocio,  }" autosaveEnabled=>
+                      <div>
+                          <div class="table-default">
+                              <table class="table table-striped table-hover table-condensed table-bordered">
+                                  <thead>
+                                      <tr>
+                                          <th>Nome do Responsável Financeiro</th>
+                                          <th>Telefone</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr ng-repeat="subentity in oblistctrl.entities"
+                                          ng-controller="ObjectListItemCtrl as itemctrl">
+                                          <td><a href
+                                                  ui-sref='ns_clientes_show({ cliente: subentity.responsavelfinanceiro.cliente })'>{{ subentity.responsavelfinanceiro.nomefantasia }}
+                                              </a></td>
+                                          <td>
+                                            <!-- Tratando os possíveis inputs de DDI -->
+                                            {{ $ctrl.entity.respfinanceiroddi.length === 1 ? ($ctrl.entity.respfinanceiroddi | mask: '+9' ) : ''}}
+                                            {{ $ctrl.entity.respfinanceiroddi.length === 2 ? ($ctrl.entity.respfinanceiroddi | mask: '+99' ) : ''}}
+                                            {{ $ctrl.entity.respfinanceiroddi.length === 3 ? ($ctrl.entity.respfinanceiroddi | mask: '+999' ) : ''}}
+
+                                            <!-- Tratando os possíveis inputs de DDD -->
+                                            {{ $ctrl.entity.respfinanceiroddd.length === 1 ? ($ctrl.entity.respfinanceiroddd | mask: '(9)' ) : ''}}
+                                            {{ $ctrl.entity.respfinanceiroddd.length === 2 ? ($ctrl.entity.respfinanceiroddd | mask: '(99)') : ''}}
+                                            {{ $ctrl.entity.respfinanceiroddd.length === 3 ? ($ctrl.entity.respfinanceiroddd | mask: '(999)') : ''}}
+
+                                            <!-- Tratando os possíveis inputs de telefone -->
+                                            {{ $ctrl.entity.respfinanceirotelefone.length === 0 ? 'Não informado' : ''}}
+                                            {{ $ctrl.entity.respfinanceirotelefone.length === 8 ?  ($ctrl.entity.respfinanceirotelefone | mask: '9999-9999') : '' }}
+                                            {{ $ctrl.entity.respfinanceirotelefone.length === 9 ?  ($ctrl.entity.respfinanceirotelefone | mask: '99999-9999') : '' }}
+                                            {{ $ctrl.entity.respfinanceirotelefone.length !== 0 &&
+                                                $ctrl.entity.respfinanceirotelefone.length !== 8 && 
+                                                $ctrl.entity.respfinanceirotelefone.length !== 9 ? 
+                                                ($ctrl.entity.respfinanceirotelefone) : '' 
+                                            }}
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                                  <tfoot ng-if="oblistctrl.entities.length == 0">
+                                      <tr>
+                                          <td colspan="2" class="state-empty">
+                                              <div class="empty-list">
+                                                  <p class="text-center"> Não existem itens para mostrar nesta
+                                                      lista. </p>
+                                              </div>
+                                          </td>
+                                      </tr>
+                                  </tfoot>
+                              </table>
+                          </div>
+                      </div>
+                  </object-list>
+              </div>
+          </div>
+      </div>
+    </div>
+<div>

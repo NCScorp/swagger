@@ -1,0 +1,53 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+	<!-- Linha -->
+	<div class="row ">
+		<!-- Item -->
+		<div class="col-sm-8">
+			<div class="form-group">
+				<label class="control-label" for="item">Item</label>
+				<nsj-lookup config='{ "especificacao":"especificacao",  }' constructor="{  }"
+					disabled="$ctrl.entity.$$__submitting" factory="estoqueItensService" id-name="item"
+					list-excluded="$ctrl.collection" max-label="1" name="item"
+					ng-model="$ctrl.entity.item"
+					required="($ctrl.entity.$$__submitting) !== true">
+				</nsj-lookup>
+				<div ng-if="$ctrl.form.item.$dirty || $ctrl.form.$submitted">
+					<div class="alert alert-danger" ng-if="!$ctrl.entity.item" role="alert">
+						<span aria-hidden="true" class="fa fa-exclamation-circle"></span>
+						<span class="sr-only">Erro:</span>
+						O campo Item não pode ser vazio.
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Quantidade -->
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label class="control-label" for="quantidade">Quantidade</label>
+				<input type='number' class="form-control" id="quantidade" name="quantidade" ng-min="1"
+					ng-model="$ctrl.entity.quantidade" ng-disabled="$ctrl.entity.$$__submitting"
+					ng-required="($ctrl.entity.$$__submitting) !== true" />
+
+				<div ng-messages="$ctrl.form.quantidade.$error"
+					ng-if="$ctrl.form.quantidade.$dirty || $ctrl.form.$submitted">
+					<div class="alert alert-danger" role="alert" ng-message="number">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						Valor informado não é um número.
+					</div>
+					<div class="alert alert-danger" role="alert" ng-message="required">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						O campo quantidade não pode ser vazio.
+					</div>
+					<div class="alert alert-danger" role="alert" ng-message="min">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						A quantidade deve ser maior que 0.
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</form>

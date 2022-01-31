@@ -1,0 +1,35 @@
+
+
+
+ <div ng-controller="CrmNegociosFormController as crm_ngcs_frm_cntrllr"
+ ng-inject="{entity: crm_ngc_full_cntrllr.entity}">
+    <div class="height-full layout-table form-loading-layout-wrapper">
+        <form nsj-focus="nsj-focus" name="crm_ngcs_frm_cntrllr.form" novalidate="novalidate" ng-class="{'nsj-loading-page' : crm_ngcs_frm_cntrllr.busy }" role="form" ng-submit="crm_ngcs_frm_cntrllr.submit()" class="height-full content-scroll">
+            <div class="nsj-form padding-content " >
+                <crm-negocios-default entity="crm_ngcs_frm_cntrllr.entity" form="crm_ngcs_frm_cntrllr.form" busy="crm_ngcs_frm_cntrllr.busy" action="crm_ngcs_frm_cntrllr.action" constructors="crm_ngcs_frm_cntrllr.constructors"></crm-negocios-default>
+                <ul class="list-unstyled list-inline pull-left">
+                    <li>
+                        <div class="form-group pull-left">
+
+                            <button type="button" ng-click="crm_ngcs_frm_cntrllr.submit()" ng-class="{loading: crm_ngcs_frm_cntrllr.entity.$$__submitting}" ng-disabled="crm_ngcs_frm_cntrllr.entity.$$__submitting || crm_ngcs_frm_cntrllr.form.$pristine" class="btn btn-sm btn-warning btn-save btn-geral">
+                                <i class="fa fa-check"></i>
+                                Salvar
+                            </button>
+
+                            <a class="btn btn-sm" ng-click="crm_ngc_full_cntrllr.cancelarCriacaoEdicao()">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                                Cancelar</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content-loading ajusta-flex" ng-if="crm_ngcs_frm_cntrllr.busy">
+                <div>
+                    <div ng-class="{'onloading' : crm_ngcs_frm_cntrllr.busy}"></div>
+                    <p>Carregando...</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div> 

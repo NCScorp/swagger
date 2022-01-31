@@ -1,0 +1,56 @@
+<div class="row  row-form-view">
+    <div class="col-sm-6">
+        <div class="form-group clearfix"><label class="control-label">Estabelecimento </label>
+            <p class="form-control-static"><span id="estabelecimento" class="form-control-static"
+                    ng-bind="$ctrl.entity.estabelecimento.nomefantasia || 'Não informado'"></span></p>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group clearfix"><label class="control-label">Situação </label>
+            <p class="form-control-static"><span id="situacao" class="form-control-static"
+                    ng-bind="([&quot;Aberto&quot;,&quot;Fechado&quot;][$ctrl.entity.situacao])|| 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group clearfix"><label class="control-label">Padrão </label>
+            <p class="form-control-static"><span id="padrao"
+                    ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.padrao] || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-3">
+        <div class="form-group clearfix"><label class="control-label">Número </label>
+            <p class="form-control-static"><span id="numero" class="form-control-static"
+                    ng-bind="($ctrl.entity.numero) || 'Não informado'"></span></p>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group clearfix"><label class="control-label">Início </label>
+            <p class="form-control-static"><span id="inicio" class="form-control-static"
+                    ng-bind="$ctrl.entity.inicio|| 'Não informado'"></span></p>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group clearfix"><label class="control-label">Fim </label>
+            <p class="form-control-static"><span id="fim" class="form-control-static"
+                    ng-bind="$ctrl.entity.fim|| 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-2">
+        <div class="form-group clearfix"><label class="control-label">Próximo </label>
+            <p class="form-control-static"><span id="proximo" class="form-control-static"
+                    ng-bind="$ctrl.entity.proximo|| 'Não informado'"></span></p>
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group clearfix"><label class="control-label">Tipo de Documento</label>
+            <p class="form-control-static"><span id="tipodocumento" class="form-control-static"
+                    ng-bind="$ctrl.entity.tipodocumento == 1500 ? 'Ordem de Serviço' : $ctrl.entity.tipodocumento == 1501 ? 'RPS de Atendimento Comercial' : 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+</div>

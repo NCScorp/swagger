@@ -1,0 +1,89 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-4">
+            <div class="form-group"><label class="control-label" for="requisitantenome">Requisitante</label><input
+                    type='text' class="form-control" id="requisitantenome" name="requisitantenome"
+                    ng-model="$ctrl.entity.requisitantenome" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.requisitantenome.$error"
+                    ng-if="$ctrl.form.requisitantenome.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo não pode estar vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group"><label class="control-label" for="requisitantecargo">Cargo</label><input type='text'
+                    class="form-control" id="requisitantecargo" name="requisitantecargo"
+                    ng-model="$ctrl.entity.requisitantecargo" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.requisitantecargo.$error"
+                    ng-if="$ctrl.form.requisitantecargo.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo não pode estar vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group"><label class="control-label" for="statusaprova">Situação</label><select
+                    class="form-control" id="statusaprova" name="statusaprova" ng-model="$ctrl.entity.statusaprova"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" "
+                    ng-required="($ctrl.entity.$$__submitting) !== true" convert-to-number>
+                    <option value="2">Aceito</option>
+                    <option value="3">Aceito parcialmente</option>
+                    <option value="4">Recusado</option>
+                </select>
+                <div ng-messages="$ctrl.form.statusaprova.$error"
+                    ng-if="$ctrl.form.statusaprova.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo não pode estar vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="requisitantemidia">Origem</label>
+                <nsj-lookup name="requisitantemidia" id-name="midia" factory="CrmMidias"
+                    ng-model="$ctrl.entity.requisitantemidia" max-label="1" constructor="{  }"
+                    config='{ "nome":"Nome",  }' disabled="$ctrl.entity.$$__submitting"
+                    required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+                <div ng-messages="$ctrl.form.requisitantemidia.$error"
+                    ng-if="$ctrl.form.requisitantemidia.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo não pode estar vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label"
+                    for="requisitanteobservacoes">Observações</label><textarea class="form-control"
+                    id="requisitanteobservacoes" name="requisitanteobservacoes"
+                    ng-model="$ctrl.entity.requisitanteobservacoes"
+                    ng-disabled="$ctrl.entity.$$__submitting"></textarea></div>
+        </div>
+    </div>
+</form>

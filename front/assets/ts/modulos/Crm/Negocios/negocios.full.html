@@ -1,0 +1,255 @@
+<!-- Header da tela -->
+<nsj-headline headline-sub="true" class="crm-negocio-header">
+    <!-- Lado esquerdo do header -->
+    <div class="headline-fixed-negocios">
+        <ul class="nsj-breadcrumb title pull-left hidden-sub-xs">
+            <li>
+                <a ui-sref="crm_negocios({prenegocio: '1'})" ng-if="crm_ngc_full_cntrllr.entity.prenegocio">Negócios
+                    para qualificacao</a>
+                <a ui-sref="crm_negocios({prenegocio: '0'})" ng-if="!crm_ngc_full_cntrllr.entity.prenegocio">Negócios
+                    qualificados</a>
+            </li>
+        </ul>
+
+        <div class="nsj-breadcrumb-back fixed-nsj-back">
+            <span ui-sref="crm_negocios({prenegocio: '1'})">
+                <i class="fas fa-angle-left"></i>
+            </span>
+            <label>
+                <span ng-if="!crm_ngc_full_cntrllr.entity.documento">Criação de Negócio</span>
+                <span ng-if="crm_ngc_full_cntrllr.entity.documento">#{{crm_ngc_full_cntrllr.entity.numero}}</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Ações: Lado direito do header -->
+    <div class="acoes pull-right" resizer>
+        <span ng-class="{ 'btn-fixed dropdown btn-group-vertical' : isLarge }">
+            <!-- Botão Dropdown de qualificação: Abre escolha para qualificar ou desqualificar negócio -->
+            <!-- {# Só exibe o dropdown de escolha se o usuário tiver permissão para qualificar OU desqualificar negócio #} -->
+            <nsj-button-dropdown
+                ng-show="crm_ngc_full_cntrllr.temPermissao('crm_negocios_pre_negocio_qualificar') || crm_ngc_full_cntrllr.temPermissao('crm_negocios_pre_negocio_desqualificar')"
+                ng-if="crm_ngc_full_cntrllr.mostrarAcao(crm_ngc_full_cntrllr.EnumAcoesTela.atQualificar) || crm_ngc_full_cntrllr.mostrarAcao(crm_ngc_full_cntrllr.EnumAcoesTela.atDesqualificar)"
+                color="default" dropdown-direction="right" class="acao acao-dropdown-qualificacao" label="Qualificação">
+
+                <!-- Ícone ao lado esquerdo -->
+                <span slot="start">
+                    <i class="fas fa-user-check"></i>
+                </span>
+
+                <!-- Ação Qualificar Negócio -->
+                <item-dropdown tem-permissao="crm_negocios_pre_negocio_qualificar" item-label="Qualificar"
+                    ng-if="crm_ngc_full_cntrllr.mostrarAcao(crm_ngc_full_cntrllr.EnumAcoesTela.atQualificar)"
+                    ng-click="crm_ngc_full_cntrllr.abrirModalQualificar()">
+                    <!-- Ícone ao lado esquerdo -->
+                    <span slot="start">
+                        <i class="fas fa-check"></i>
+                    </span>
+                </item-dropdown>
+
+                <!-- Ação Desqualificar Negócio-->
+                <item-dropdown tem-permissao="crm_negocios_pre_negocio_desqualificar" item-label="Desqualificar"
+                    ng-if="crm_ngc_full_cntrllr.mostrarAcao(crm_ngc_full_cntrllr.EnumAcoesTela.atDesqualificar)"
+                    ng-click="crm_ngc_full_cntrllr.abrirModalDesqualificar()">
+                    <!-- Ícone ao lado esquerdo -->
+                    <span slot="start">
+                        <i class="fas fa-times"></i>
+                    </span>
+                </item-dropdown>
+            </nsj-button-dropdown>
+        </span>
+    </div>
+</nsj-headline>
+<!-- Corpo da tela -->
+<div class="height-full" style="overflow-y:auto;">
+    <div id="crm-negocio-container" class="crm-negocio-container" style="padding:15px ;margin-bottom:72px;">
+        <div class="row">
+            <div class="col-md-8">
+                <nsj-accordion id="accordion-dados-negocio" init-open="true" headline="Dados do Negócio">
+                    <nsj-button tem-permissao="crm_negocios_put"
+                        ng-show="crm_ngc_full_cntrllr.mostrarAcao(crm_ngc_full_cntrllr.EnumAcoesTela.atEditar)"
+                        slot="right" icon="fas fa-edit" ng-click="crm_ngc_full_cntrllr.mostrarEditar()"
+                        ng-disabled="crm_ngc_full_cntrllr.busy">
+                    </nsj-button>
+
+                    <div class="accordion-negocios-container">
+                        <!-- Apresenta formulário de criação/edição do negócio -->
+                        <div ng-if="crm_ngc_full_cntrllr.ehCriacaoEditao()" class="form-negocios-container">
+
+
+
+                            <div ng-controller="CrmNegociosFormController as crm_ngcs_frm_cntrllr"
+                                ng-inject="{entity: crm_ngc_full_cntrllr.entity}">
+                                <div class="height-full layout-table form-loading-layout-wrapper">
+                                    <form nsj-focus="nsj-focus" name="crm_ngcs_frm_cntrllr.form" novalidate="novalidate"
+                                        ng-class="{'nsj-loading-page' : crm_ngcs_frm_cntrllr.busy }" role="form"
+                                        ng-submit="crm_ngcs_frm_cntrllr.submit()" class="height-full content-scroll">
+                                        <div class="nsj-form padding-content ">
+                                            <crm-negocios-default entity="crm_ngcs_frm_cntrllr.entity"
+                                                form="crm_ngcs_frm_cntrllr.form" busy="crm_ngcs_frm_cntrllr.busy"
+                                                action="crm_ngcs_frm_cntrllr.action"
+                                                constructors="crm_ngcs_frm_cntrllr.constructors"></crm-negocios-default>
+                                            <ul class="list-unstyled list-inline pull-left">
+                                                <li>
+                                                    <div class="form-group pull-left">
+
+                                                        <button type="button" ng-click="crm_ngcs_frm_cntrllr.submit()"
+                                                            ng-class="{loading: crm_ngcs_frm_cntrllr.entity.$$__submitting}"
+                                                            ng-disabled="crm_ngcs_frm_cntrllr.entity.$$__submitting || crm_ngcs_frm_cntrllr.form.$pristine"
+                                                            class="btn btn-sm btn-warning btn-save btn-geral">
+                                                            <i class="fa fa-check"></i>
+                                                            Salvar
+                                                        </button>
+
+                                                        <a class="btn btn-sm"
+                                                            ng-click="crm_ngc_full_cntrllr.cancelarCriacaoEdicao()">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                            Cancelar</a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <div class="content-loading ajusta-flex" ng-if="crm_ngcs_frm_cntrllr.busy">
+                                            <div>
+                                                <div ng-class="{'onloading' : crm_ngcs_frm_cntrllr.busy}"></div>
+                                                <p>Carregando...</p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Apresenta formulário de visualização do negócio -->
+                        <div ng-if="!crm_ngc_full_cntrllr.ehCriacaoEditao()"
+                            class="visualizacao-negocios-container custom-form-view">
+                            <div ng-controller="CrmNegociosFormShowController as crm_ngcs_frm_shw_cntrllr"
+                                ng-inject="{entity: crm_ngc_full_cntrllr.entity}">
+                                <div class="height-full layout-table">
+                                    <div class='content-scroll height-full'>
+                                        <!-- Sobrescrito para não aparecer no formulário -->
+                                        <div class="nsj-form padding-content"
+                                            ng-class="{'nsj-loading-page' : crm_ngcs_frm_shw_cntrllr.busy }">
+                                            <div class="nsj-form-view top-buffer bottom-buffer">
+                                                <crm-negocios-default-show entity="crm_ngcs_frm_shw_cntrllr.entity"
+                                                    action="crm_ngcs_frm_shw_cntrllr.action"
+                                                    busy="crm_ngcs_frm_shw_cntrllr.busy"
+                                                    constructors="crm_ngcs_frm_shw_cntrllr.constructors">
+                                                </crm-negocios-default-show>
+                                            </div>
+
+                                            <div class="form-group pull-left">
+
+
+                                            </div>
+                                            <div class="content-loading" ng-if="crm_ngcs_frm_shw_cntrllr.busy">
+                                                <div class="center-loading text-center">
+                                                    <div class="onloading"></div>
+                                                    Carregando...
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </nsj-accordion>
+            </div>
+            <div class="col-md-4">
+                <nsj-accordion-group>
+                    <!-- {# Acordeon que exibe lista e formulário para adicionar um acompanhamento (followup)
+                       Descomentar para ver seu comportamento em tela #} -->
+                    <nsj-accordion ng-on-on_open="ctrl_followupsnegocios.loadcontroller()" id="accordion-followups"
+                        headline="Acompanhamento"
+                        ng-controller="NsFollowupsnegociosController as ctrl_followupsnegocios"
+                        ng-inject="{entity:crm_ngc_full_cntrllr.entity}"
+                        ng-show="crm_ngc_full_cntrllr.temPermissao('ns_followupsnegocios_create') || crm_ngc_full_cntrllr.temPermissao('ns_followupsnegocios_index')">
+
+                        <nsj-button tem-permissao="ns_followupsnegocios_create" slot="right" icon="fas fa-plus"
+                            ng-click="ctrl_followupsnegocios.mudaVisualizacaoFollowup(crm_ngc_full_cntrllr.entity.documento)"
+                            ng-disabled="crm_ngc_full_cntrllr.bloqueiaBotaoAdicionarFollowup || ctrl_followupsnegocios.exibeForm">
+                        </nsj-button>
+
+                        <div
+                            ng-if="!ctrl_followupsnegocios.exibeForm && crm_ngc_full_cntrllr.temPermissao('ns_followupsnegocios_index')">
+                            <div class="list-group follow-up-negocios-lista" id="ns_followupsnegocios_list"
+                                infinite-scroll='ctrl_followupsnegocios.nextPage()'
+                                infinite-scroll-disabled='ctrl_followupsnegocios.isBusyFollowupsnegocios()'
+                                infinite-scroll-distance='1'>
+                                <div class="content-loading" ng-if="ctrl_followupsnegocios.isBusyFollowupsnegocios()">
+                                    <div class="center-loading text-center">
+                                        <div class="onloading"></div>
+                                        Carregando...
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="seach-toolbar">
+                                            <nsj-toolbar 
+                                                ng-on-change_toolbar="ctrl_followupsnegocios.filtrar($event.detail)"
+                                                search="true" refresh="true" holder="Buscar..">
+                                            </nsj-toolbar>
+                                        </div>
+                                        <nsj-timeline ng-if="ctrl_followupsnegocios.entities.length > 0">
+                                            <nsj-timeline-item ng-repeat="item in ctrl_followupsnegocios.arrayTimeline"
+                                                obj="{{item}}" mensagem="{{item.mensagem}}"
+                                                ng-prop-funcaoexterna="ctrl_followups.abrirModalAnexos"
+                                                btnlabel="{{item.numeroanexos}}"></nsj-timeline-item>
+                                        </nsj-timeline>
+                                    </div>
+                                </div>
+                                <p class="list-group-item"
+                                    ng-if="!ctrl_followupsnegocios.finished && (ctrl_followupsnegocios.service.to_load <= 0)">
+                                    <a href="" ng-click="ctrl_followupsnegocios.loadMore()">Ver mais...</a>
+                                </p>
+                                <p class="text-center article-loading height-full"
+                                    ng-class="{'onloading' : ctrl_followupsnegocios.isBusyFollowupsnegocios() }"
+                                    ng-if="!ctrl_followupsnegocios.isBusyFollowupsnegocios()"></p>
+                                <p class="text-center nfound"
+                                    ng-if="ctrl_followupsnegocios.entities.length == 0 && !ctrl_followupsnegocios.isBusyFollowupsnegocios()">
+                                    Nenhum dado encontrado</p>
+                            </div>
+                        </div>
+
+                        <div ng-if="ctrl_followupsnegocios.exibeForm">
+                            <div ng-controller="NsFollowupsnegociosFormNewController as ctrl_newfollowupsnegocios"
+                                ng-inject="{entity:crm_ngc_full_cntrllr.entity}">
+                                <form nsj-focus name="ctrl_newfollowupsnegocios.form" novalidate="novalidate"
+                                    ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : ctrl_newfollowupsnegocios.busy }"
+                                    role="form" class="height-full">
+
+                                    <div><span style="font-size: 16px; font-weight: bold;">Novo Acompanhamento</span>
+                                    </div>
+
+
+                                    <ns-followupsnegocios-default entity="ctrl_newfollowupsnegocios.entity"
+                                        form="ctrl_newfollowupsnegocios.form" busy="ctrl_newfollowupsnegocios.busy"
+                                        action="ctrl_newfollowupsnegocios.action"
+                                        constructors="ctrl_newfollowupsnegocios.constructors">
+
+                                    </ns-followupsnegocios-default>
+
+                                    <button type="button" ng-click="ctrl_newfollowupsnegocios.submit()"
+                                        ng-class="{loading:ctrl_newfollowupsnegocios.entity.$$__submitting}"
+                                        ng-disabled="ctrl_newfollowupsnegocios.entity.$$__submitting || ctrl_newfollowupsnegocios.form.$pristine"
+                                        class="btn btn-sm btn-warning btn-save btn-geral">
+
+                                        <i class="fa fa-check"></i> Salvar
+                                    </button>
+
+                                    <a class="btn btn-sm"
+                                        ng-click="ctrl_followupsnegocios.mudaVisualizacaoFollowup(crm_ngc_full_cntrllr.entity.documento)">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        Cancelar
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
+                    </nsj-accordion>
+                </nsj-accordion-group>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="list-group div-atcsdocumentos" ng-if="!ctrl_relacionados.isBusyNegRel()">
+    <div class="list-group-item border-0" ng-repeat="atc in ctrl_relacionados.atcsfilhos">
+        <h4 class="list-group-item-heading">
+            <strong>
+                #{{ atc.nome }} 
+            </strong>
+            <span ng-if="atc.status == '0'" class=" span-status-modal-geral"
+                style="background-color: rgb(91, 192, 222);">
+                Novo
+            </span>
+            <span ng-if="atc.status == '1'" class="span-status-modal-geral"
+                style="background-color: rgb(119, 119, 119);">
+                Em Atendimento
+            </span>
+            <span ng-if="atc.status == '2'" class="span-status-modal-geral"
+                style="background-color: rgb(240, 173, 78);">
+                Processando
+            </span>
+            <span ng-if="atc.status == '3'" class="span-status-modal-geral"
+                style="background-color: rgb(92, 184, 92);">
+                Finalizado
+            </span>
+            <span ng-if="atc.status == '4'" class="span-status-modal-geral"
+                style="background-color: rgb(217, 83, 79);">
+                Cancelado
+            </span>
+        </h4>
+        <p class="list-group-item-text"><strong>Início:</strong>
+            <span ng-bind="atc.datacriacao | asDate | date: 'dd/MM/yyyy' || 'Não informado.'"></span>
+        </p>
+        <p class="list-group-item-text"><strong>Ultima atualização:</strong>
+            <span ng-bind="atc.dataedicao | asDate | date: 'dd/MM/yyyy' || 'Não informado.'"></span>
+        </p>
+    </div>
+    <div ng-if="ctrl_relacionados.atcsfilhos.length == 0 && !ctrl_relacionados.isBusyNegRel()" class="state-empty">
+        <div class="empty-list">
+            <p class="text-center">
+                Não existem itens para mostrar nesta lista.
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="content-loading" ng-if="ctrl_relacionados.isBusyNegRel()">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Template de Projetos</h3>
+</div>
+
+<form nsg-focus name="mdl_tmplt_cntrllr.form" class="crm-atcspendencias-default-modal" novalidate="novalidate" role="form" ng-submit="mdl_tmplt_cntrllr.submit()">
+
+    <div class="modal-body" id="modal-body">
+
+        <div class="row ">
+            <div class="col-sm-12">
+    
+                <div class="form-group">
+                    <label class="control-label" for="templatenome">Nome</label>
+
+                    <div class="nome-container">
+                        <input type="text" class="form-control" id="templatenome" name="templatenome" ng-model="mdl_tmplt_cntrllr.entity.templatenome" ng-required="(mdl_tmplt_cntrllr.entity.$$__submitting) !== true" />
+                    </div>
+
+                    <div ng-messages="mdl_tmplt_cntrllr.form.templatenome.$error" ng-if="mdl_tmplt_cntrllr.form.templatenome.$dirty || mdl_tmplt_cntrllr.form.$submitted">
+                        <div class="alert alert-danger" role="alert" ng-message="required">
+                            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O campo Nome não pode estar vazio
+                        </div>
+                    </div>
+
+                </div>
+    
+                <div class="form-group">
+
+                    <label class="control-label" for="templatedescricao">Descrição</label>
+                    <textarea class="form-control" id="templatedescricao" name="templatedescricao" ng-model="mdl_tmplt_cntrllr.entity.templatedescricao"
+                        ng-disabled="mdl_tmplt_cntrllr.entity.$$__submitting"
+                        ng-required="(mdl_tmplt_cntrllr.entity.$$__submitting) !== true"
+                        rows="8">
+                    </textarea>
+
+                    <div ng-messages="mdl_tmplt_cntrllr.form.templatedescricao.$error" ng-if="mdl_tmplt_cntrllr.form.templatedescricao.$dirty || mdl_tmplt_cntrllr.form.$submitted">
+                        <div class="alert alert-danger" role="alert" ng-message="required">
+                            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                            <span class="sr-only">Erro:</span>
+                            O campo Descrição não pode estar vazio
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+    
+        </div>
+        
+    </div>
+</form>
+
+<div class="modal-footer">
+
+    <div class="pull-right">
+        <button
+            type="button" class="btn btn-default btn-delete btn-geral" ng-if="mdl_tmplt_cntrllr.entity.desfazerVinculo" ng-click="mdl_tmplt_cntrllr.desfazerVinculo(mdl_tmplt_cntrllr.entity)">
+            <i class="fas fa-undo"></i> Desfazer vínculo
+        </button>
+
+        <button
+            type="button" class="btn btn-default btn-delete btn-geral" ng-click="mdl_tmplt_cntrllr.close()">
+            <i class="fas fa-ban"></i> Cancelar
+        </button>
+
+        <button
+            type="button" name="submit" class="btn btn-warning btn-save btn-geral"
+            ng-click="mdl_tmplt_cntrllr.submit()">
+            <i class="fas fa-check"></i> Salvar
+        </button>
+        
+    </div>
+</div>

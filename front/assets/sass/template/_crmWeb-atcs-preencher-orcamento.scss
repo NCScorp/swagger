@@ -1,0 +1,245 @@
+// Container da tela de Preenchimento do orçamento do atendimento comercial pelo prestador externo
+.tela-preencher-orcamento-fornecedor {
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    
+    .preenchimento-orcamento-container {
+        margin-bottom: 20px;
+        
+        // Container de ficha financeira no atendimento
+        .dados-container {
+            width: 100%;
+    
+            .ficha-fornecedor-container {
+                .tabela-fornecedor {
+                    tr.dados-fornecedor, tr.produtos-servicos.linha-valores, tr.totais {
+                        td {
+                            animation: fade-in 800ms;
+                            -webkit-animation: fade-in 800ms;
+                        }
+                    }
+                }
+            }
+        }
+        // Conteiner de ficha de cada fornecedor
+        .ficha-fornecedor-container{
+            // Tabela de dados
+            table.tabela-fornecedor.nsj-table {
+                border: 1px solid #d6d6d6;
+                border-radius: 4px;
+                margin-bottom: 0;
+    
+                &.tabela-produtos {
+                    margin-top: 20px;
+                }
+
+                tbody {
+                    // Linhas
+                    tr {
+                        &:hover {
+                            td {
+                                background: #eae7e2;
+    
+                                // Ações
+                                .table-btns-actions{
+                                    nsj-actions {
+                                        .actions {
+                                            .actions-buttons {
+                                                background: #eae7e2;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+    
+                        // Linhas de títulos
+                        &.titulos {
+                            background: #ddd;
+                            color: #5a5a5a;
+                            font-weight: 600;
+                            height: 35px;
+        
+                            &:hover {
+                                td {
+                                    background: #ddd;
+                                }
+                            }
+                        }
+    
+                        // Linha de dados do fornecedor
+                        &.dados-fornecedor {
+                            height: 40px;
+    
+                            td {
+                                &.data-acionamento{
+                                    min-width: 170px;
+    
+                                    .dados-tooltip {
+                                        display: inline-block;
+    
+                                        .icone {
+                                            color: #17a2b8;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+    
+                        // Linha de produtos e serviços
+                        &.produtos-servicos{
+                            &.linha-valores {
+                                height: 40px;
+                            }
+    
+                            td {
+                                .valor {
+                                    // Edição não é apresentada
+                                    .edicao {
+                                        display: none;
+                                    }
+            
+                                    // Se pode editar
+                                    &.pode-editar {
+                                        // Apresento edição
+                                        .edicao {
+                                            display: block;
+            
+                                            input {
+                                                width: 100%;
+                                            }
+    
+                                            .form-control {
+                                                height: 32px;
+                                            }
+                                        }
+                                        // Escondo visualização
+                                        .visualizacao {
+                                            display: none;
+                                        }
+                                        
+                                    }
+                                }
+    
+                                // Coluna descrição
+                                &.descricao {
+                                    .dados-tooltip-prestador-terceirizado {
+                                        display: inline-block;
+                                        
+                                        .icone {
+                                            color: #17a2b8;
+                                        }
+                                    }
+                                }
+    
+                                // Coluna quantidade
+                                &.quantidade {
+                                    width: 100px;
+                                }
+                                &.custo, &.valorunitario, &.desconto, &.valorreceber {
+                                    width: 150px !important;
+                                }
+                                &.orcamentofinal {
+                                    width: 170px !important;
+                                }
+                            }
+                        }
+    
+                        td {
+                            border: 1px solid #d6d6d6 !important;
+                            padding: 3px 20px;
+    
+                            &:first-child {
+                                border-left: none !important;
+                            }
+    
+                            &:last-child {
+                                border: none !important;
+                                border-left: none !important;
+                                padding: 0;
+                            }
+    
+                            // Penultima coluna: Coluna antes das ações
+                            &:nth-last-child(2){
+                                border-right: none !important;
+                            }
+    
+                            &.situacao {
+                                width: 150px !important;
+                            }
+                        }
+                    }
+                }
+            }
+    
+            // Container de descontos
+            .container-descontos {
+                display: flex;
+                align-items: flex-end;
+                padding: 20px;
+    
+                .descontos-item {
+                    flex: 1;
+    
+                    .superior-container {
+                        margin-bottom: 20px;
+                        display: flex;
+                        align-items: center;
+    
+                        .checkbox-container {
+                            .nsj-switch {
+                                margin-bottom: 0;
+                            }
+                        }
+                        .titulo-desconto {
+                            margin-left: 5px;
+                        }
+                        .dados-tooltip {
+                            margin-left: 5px;
+                        }
+                    }
+    
+                    &.desconto-global {
+                        .container-descontos-item {
+                            margin: 0 20px;
+    
+                            .inferior-container {
+                                display: flex;
+    
+                                .descontoglobaltipo {
+                                    border-top-right-radius: 0;
+                                    border-bottom-right-radius: 0;
+                                }
+                                .descontoglobalvalor {
+                                    border-top-left-radius: 0;
+                                    border-bottom-left-radius: 0;
+                                    border-left: none;
+                                }
+                            }
+                        }
+                    }
+                    
+                    .container-descontos-item {
+                        .superior-container {
+                            .checkbox-container, .titulo-desconto, .dados-tooltip {
+                                display: inline-flex;
+                            }
+    
+                            .dados-tooltip {
+                                .icone {
+                                    color: #17a2b8;
+                                }
+                            }
+    
+                            .titulo-desconto {
+                                font-size: 14px;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

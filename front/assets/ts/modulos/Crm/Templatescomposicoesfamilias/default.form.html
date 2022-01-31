@@ -1,0 +1,26 @@
+ <form name="$ctrl.form" novalidate="novalidate" role="form"  class="height-full">
+               
+                    <div class="row " ><div class="col-sm-6" >
+                                                    <div class="form-group"><label class="control-label" for="familia">Família de produto</label><nsj-lookup
+            name="familia"
+            id-name="familia"
+            factory="EstoqueFamilias"  
+            ng-model="$ctrl.entity.familia" 
+                                                max-label="3"
+            constructor="{  }"
+            config='{ "codigo":"Código", "descricao":"Descrição", "valor":"Valor Base",  }'
+            disabled = "$ctrl.entity.templatecomposicaofamilia||$ctrl.entity.$$__submitting"
+                        required = "($ctrl.entity.templatecomposicaofamilia||$ctrl.entity.$$__submitting) !== true"
+                                                ></nsj-lookup><div ng-messages="$ctrl.form.familia.$error"  ng-if="$ctrl.form.familia.$dirty || $ctrl.form.$submitted"><div class="alert alert-danger" role="alert" ng-message="required" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    O campo família de produtos não pode ser vazio.
+                    
+                    
+                </div></div></div>
+                        </div></div><div class="row " ><div class="col-sm-12" >
+                                                    <div class="form-group"><label class="control-label" for="quantidade">Quantidade</label><input type='text' class="form-control"     id="quantidade" name="quantidade"           ng-model="$ctrl.entity.quantidade" ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" " /><div ng-messages="$ctrl.form.quantidade.$error"  ng-if="$ctrl.form.quantidade.$dirty || $ctrl.form.$submitted"><div class="alert alert-danger" role="alert" ng-message="greaterthan" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    A quantidade deve ser maior que 0.
+                    
+                    
+                </div></div></div>
+                        </div></div>
+</form>

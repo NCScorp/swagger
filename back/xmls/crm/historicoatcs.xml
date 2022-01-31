@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="historicoatcs" label="historicoatcs" project="crm">
+    <entity schema="crm" table="historicoatcs"> 
+        <fieldmodel name="historiconegocio" datatype="guid" isid="true" column="historiconegocio"/> 
+        <fieldmodel name="negocio" datatype="guid" column="negocio"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" /> 
+        <fieldmodel name="acao" datatype="string" column="acao"/> 
+        <fieldmodel name="observacao" datatype="string" column="observacao"/> 
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="secao" datatype="string" column="secao"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>     
+        <constructoritem required="true">negocio</constructoritem>     
+    </constructors>
+    <viewbrowser label="Histórico Negócio" layout="table" paginate="true" target="builtin">
+        <filters>
+            <fieldsfilters>
+            <fieldfilter entitylink="secao" maxoccurs="unbounded" visible="false">
+                <conditions>
+                <condition type="eq"></condition>
+                </conditions>
+            </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="historiconegocio" isid="true" visible="false" />
+            <fieldbrowser entitylink="negocio" visible="false" />
+            <fieldbrowser entitylink="created_at" alias="Data" visible="true" indefaultorder="true" direction="DESC"/>
+            <fieldbrowser entitylink="acao" alias="Ação" visible="true" />
+            <fieldbrowser alias="Autor" entitylink="created_by" fielddetaillookup='nome' visible="true" />
+            <fieldbrowser entitylink="observacao" alias="Observação" visible="true" />
+            <fieldbrowser entitylink="secao" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <!-- Formulários -->
+    <forms>
+        <form name="default">
+            <layout>
+                <headerform>
+                        <row>
+                            <cell controltype="textedit" colspan="6" entitylink="acao"/>
+                            <cell controltype="textedit" colspan="6" entitylink="observacao"/>
+                            <cell controltype="textedit" colspan="6" entitylink="secao"/>
+                        </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <!-- Ações -->
+    <actions>
+        <action layer="back">
+            <name>Insert</name>
+            <api>
+                <name>historicoatcnovo</name>
+                <fromto valueapi="atc" valueentity="negocio"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity ="logged_user"/>
+                <fromto valueapi="acao" valueentity="acao"/>
+                <fromto valueapi="observacao" valueentity="observacao"/>
+                <fromto valueapi="secao" valueentity="secao"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

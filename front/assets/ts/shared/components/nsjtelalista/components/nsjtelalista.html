@@ -1,0 +1,178 @@
+<div class="{{ $ctrl.config.nomeEntidade }} nsj-layout" 
+    ng-class="{
+        'nsj-loading-page' : $ctrl.config.callbacks.isBusy(),
+        'layout-table': $ctrl.config.tipoTela == $ctrl.ETipoTela.ttTabela
+    }"
+>
+    <div class="nsj-aside-list height-full"
+        ng-class="{
+            'hidden-sm hidden-xs' : (($ctrl.config.rotaVisualizacao| isStateEq) || ($ctrl.config.rotaEdicao | isStateEq) || ($ctrl.config.rotaCriacao | isStateEq )),
+            'col-md-4': $ctrl.config.tipoTela == $ctrl.ETipoTela.ttBuiltIn
+        }"
+    >
+        <div class="height-full" ng-class="{
+            'row': $ctrl.config.tipoTela == $ctrl.ETipoTela.ttBuiltIn
+        }">
+
+            <div class="panel panel-default height-full">
+                <!-- Barra de titulo da tela-->
+                <nsj-headline headline-title="{{ $ctrl.config.tituloTela.plural }}"
+                    ng-class="{ 'hidden-sm hidden-xs' : (($ctrl.config.rotaVisualizacao | isStateEq) || ($ctrl.config.rotaEdicao | isStateEq) || ($ctrl.config.rotaCriacao | isStateEq ))}">
+
+                    <!-- Ações da tela -->
+                    <nsj-button 
+                        ng-repeat="acao in $ctrl.config.acoesHeader"
+                        icon="{{acao.icone}}" 
+                        ng-if="acao.isVisible()"
+                        ng-click="acao.onClick()"
+                        class="hidden-xs acao-header {{acao.nome}}" 
+                        color="warning" 
+                        size="xs"
+                    >
+                        {{ acao.nome }}
+                    </nsj-button>
+
+                    <nsj-button
+                        ng-repeat="acao in $ctrl.config.acoesHeader" 
+                        ng-if="acao.isVisible()"
+                        icon="{{acao.icone}}"
+                        ng-click="acao.onClick()" 
+                        class="hidden-sm hidden-md hidden-lg" 
+                        color="warning" 
+                        format="fixed circle" 
+                        size="lg"
+                    >
+                        <span class="hidden-xs">{{ acao.nome }}</span>
+                    </nsj-button>
+                </nsj-headline>
+
+                <!-- Toolbar da tela -->
+                <nsj-toolbar holder="Busca" 
+                    item-in-page="{{$ctrl.entities.length}}"
+                    model-search="{{$ctrl.service.filter}}" 
+                    ng-on-change_toolbar="$ctrl.config.callbacks.search($event.detail)"
+                    refresh="true"
+                    search="true"
+                >
+                    <!-- Filtros do toolbar -->
+                    <nsj-filters slot="filters">
+                        <!-- Substituido pelos filtros -->
+                        <div ng-transclude="filtros"></div>
+                    </nsj-filters>
+                </nsj-toolbar>
+
+                <!-- Painel visão em tabela -->
+                <div class="body-table" ng-if="$ctrl.config.tipoTela == $ctrl.ETipoTela.ttTabela">
+                    <nsj-table config-page='$ctrl.service.loadParams' 
+                        fields="$ctrl.entities"
+                        fields-config='$ctrl.config.configCamposListagemTabela'
+                        has-more-page='$ctrl.config.callbacks.loadMore()'
+                    >
+                        <nsj-actions enable-action-model="entity = $parent.entity">
+                            <!-- Ações da tabela -->
+                            <nsj-action 
+                                ng-repeat="acao in $ctrl.config.acoesTabela"
+                                tooltip="{{acao.nome}}"
+                                icon="{{acao.icone}}" 
+                                target="{{acao.target}}"
+                                ng-if="acao.isVisible($parent.$parent.entity)"
+                                ng-click="acao.onClick($parent.$parent.$parent.entity)"
+                            >
+                            </nsj-action>
+                        </nsj-actions>
+                        <!-- ui-sref="{{acao.getRota($parent.$parent.entity, $ctrl.config)}}( {{ acao.getRotaParams($parent.$parent.entity, $ctrl.config) }} )" -->
+
+                        <div class="empty-page" ng-if="$ctrl.config.callbacks.isFilterEmpty()">
+                            <div class="text-center">
+                            <span class="icon-page">
+                                <i class="fas fa-table fa-fw"></i>
+                            </span>
+                                <h3>{{ $ctrl.config.tituloTela.plural }}</h3>
+                                <p>Ainda não existem itens nesta lista.</p>
+
+                                <a class="btn btn-warning btn-sm" ui-sref="{{$ctrl.config.rotaCriacao}}($ctrl.config.callbacks.getParamsRotaCriacao())"
+                                    ng-if="$ctrl.config.callbacks.exibirBtnCriacao()">
+                                    <i class="fas fa-plus"></i>
+                                    Criar
+                                </a>
+                            </div>
+                        </div>
+                        <div class="empty-page" ng-if="!$ctrl.config.callbacks.isFilterEmpty()">
+                            <div class="text-center">
+                                <p>Não foram encontrados itens para esta pesquisa.</p>
+                            </div>
+                        </div>
+                    </nsj-table>
+                </div>
+                <!--/Painel visão em tabela-->
+
+                <!-- Painel de visão em Built-in -->
+                <div class="panel-body body-list" ng-if="$ctrl.config.tipoTela == $ctrl.ETipoTela.ttBuiltIn">
+                    <div class="list-group" 
+                        id="{{ $ctrl.config.nomeEntidade }}_list"
+                        infinite-scroll='$ctrl.config.callbacks.nextPage()'
+                        infinite-scroll-disabled='$ctrl.config.callbacks.isBusy()' 
+                        infinite-scroll-distance='1'
+                    > 
+                        <a  ng-repeat="entity in $ctrl.entities"
+                            ng-click="$ctrl.config.callbacks.onListaItemBuiltInClick(entity)"
+                            class="list-group-item"
+                            ui-sref-active="active"
+                        >
+                            <!-- Campo Principal -->
+                            <h4 class="list-group-item-heading {{ $ctrl.config.getCampoListaBuiltInPrincipal().nome }}">
+                                {{ $ctrl.config.getCampoListaBuiltInPrincipal().getValor(entity) }}
+                            </h4>
+                            <!-- Campos secundários -->
+                            <p class="list-group-item-text {{ campo.nome }}" ng-repeat="campo in $ctrl.config.configCamposListagemBuiltIn">
+                                <strong>{{ campo.titulo }}:</strong>
+                                {{ campo.getValor(entity) }}
+                            </p>
+                        </a>
+                        <!-- Mensagem ver mais-->
+                        <p class="list-group-item"
+                            ng-if="!$ctrl.service.loadParams.finished && ($ctrl.service.to_load <= 0)">
+                            <a href="" ng-click="$ctrl.config.callbacks.loadMore()">Ver mais...</a>
+                        </p>
+                        <!-- Loading -->
+                        <p class="text-center article-loading height-full onloading"
+                            ng-if="$ctrl.config.callbacks.isBusy()">
+                        </p>
+                        <!-- Mensagem sem dados -->
+                        <p class="text-center nfound"
+                            ng-if="$ctrl.entities.length == 0 && !$ctrl.config.callbacks.isBusy()">
+                            Nenhum dado encontrado
+                        </p>
+                    </div>
+                </div>
+                <!-- /Painel de visão em Built-in -->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+
+    <!-- Página vazia: Só aparece no built-in -->
+    <div class='empty-page col-md-8 article-area height-full padding-h-clear' ui-view ng-if="$ctrl.config.tipoTela == $ctrl.ETipoTela.ttBuiltIn">
+
+        <div class="bt-new-article new-article text-center height-full empty-page-nodisplay">
+            <span class="icon-page">
+                <i class="fas fa-table fa-fw"></i>
+            </span>
+            <h3>Visualize ou Crie {{ $ctrl.config.tituloTela.artigoIndefinidoSingular }} {{ $ctrl.config.tituloTela.singular }}</h3>
+            <p>Selecione {{ $ctrl.config.tituloTela.artigoIndefinidoSingular }} {{ $ctrl.config.tituloTela.singular }} no painel ao lado para ver as suas informações. </p>
+            <a class="btn btn-sm btn-warning" ui-sref="{{$ctrl.config.rotaCriacao}}($ctrl.config.callbacks.getParamsRotaCriacao())"
+                ng-if="$ctrl.config.callbacks.exibirBtnCriacao()">
+                <i class="fas fa-plus"></i> Criar
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Loading da aplicação -->
+    <div class="content-loading" ng-if="$ctrl.config.callbacks.isBusy()">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+    </div>
+</div>

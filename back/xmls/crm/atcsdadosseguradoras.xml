@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcsdadosseguradoras" label="atcsdadosseguradoras" project="crm">
+  <entity schema="crm" table="atcsdadosseguradoras">
+    <!--
+      Atenção:
+      ao realizar alterações neste model, por favor conferir o arquivo 
+      AppBundle/Repository/Crm/AtcsdadosseguradorasRepository.php
+      e fazer as devidas modificações (pois o repository foi sobrescrito)
+      
+      Conferir também o arquivo assets/view/Crm/Atcsdadosseguradoras/default.form.html.twig, pois ele não está estendendo
+      o arquivo gerado pelo MDA
+    -->
+    <fieldmodel name="negociodadosseguradora" datatype="guid" isid="true" column="negociodadosseguradora" />
+    <fieldmodel name="negocio" datatype="guid" column="negocio" />
+    <fieldmodel name="seguradora" datatype="guid" column="seguradora" useCaseLink="ns\clientes" entityJoinType="left" />
+    <fieldmodel name="sinistro" datatype="string" column="sinistro" />
+    <fieldmodel name="produtoseguradora" datatype="guid" column="produtoseguradora" useCaseLink="crm\templatespropostasgrupos" entityJoinType="left"/>
+    <fieldmodel name="apolice" datatype="guid" column="apolice" useCaseLink="crm\templatespropostas" entityJoinType="left"/>
+    <fieldmodel name="apoliceconfirmada" datatype="boolean" column="apoliceconfirmada" />
+    <fieldmodel name="apolicetipo" datatype="integer" column="apolicetipo">
+      <options>{"0":"Física","1":"Jurídica"}</options>
+    </fieldmodel>
+    <fieldmodel name="titularcontatos" datatype="json" column="titularcontatos" />
+    <fieldmodel name="titularcnpj" datatype="string" column="titularcnpj" />
+    <fieldmodel name="titularcpf" datatype="string" column="titularcpf" />
+    <fieldmodel name="titulartipodocumento" datatype="integer" column="titulartipodocumento" >
+        <options>{"1":"CPF","2":"CNPJ"}</options>
+      </fieldmodel>
+    <fieldmodel name="titularnome" datatype="string" column="titularnome" />
+    <fieldmodel name="titularvinculo" datatype="guid" column="titularvinculo" useCaseLink="crm\vinculos" entityJoinType="left"/>
+    <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+    <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+    <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid"  column="id_grupoempresarial"/>
+    <fieldmodel name="nomefuncionarioseguradora" datatype="string"  column="nomefuncionarioseguradora"/>
+    <fieldmodel name="titularmatricula" datatype="string" column="titularmatricula" />
+    <fieldmodel name="valorautorizado" datatype="moeda" column="valorautorizado" />
+    <fieldmodel name="valorapolice" datatype="moeda" column="valorapolice" />
+    <fieldmodel name="beneficiario" datatype="string" column="beneficiario" />
+  </entity>
+  <constructors>
+    <constructoritem>negocio</constructoritem>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Dados Seguradoras" layout="list" paginate="true" target="builtin">
+    <fieldsbrowser>
+      <filters>
+        <fieldsfilters>
+          <fieldfilter entitylink="negocio" maxoccurs="unbounded" visible="false">
+            <conditions>
+              <condition type="eq"></condition>
+            </conditions>
+          </fieldfilter>
+        </fieldsfilters>
+      </filters>
+      <fieldbrowser entitylink="negociodadosseguradora" isid="true" visible="false"/>
+      <fieldbrowser alias="Seguradora" entitylink="seguradora"  visible="true" fielddetaillookup="{'nomefantasia': 'Seguradora'}"/>
+      <fieldbrowser alias="Produto" entitylink="produtoseguradora"  visible="true" fielddetaillookup="{'nome': 'Produto'}"/>
+      <fieldbrowser alias="Apólice" entitylink="apolice"  visible="true" fielddetaillookup="{'nome': 'Apólice'}"/>
+      <fieldbrowser alias="Valor Autorizado" entitylink="valorautorizado"  visible="true"/>
+      <fieldbrowser alias="Valor da Apólice" entitylink="valorapolice"  visible="true"/>
+      <fieldbrowser alias="Titular da Apólice" entitylink="titularnome"  visible="true" />
+      <fieldbrowser alias="Nome do Funcionário da Seguradora" entitylink="nomefuncionarioseguradora"  visible="true" />
+      <fieldbrowser alias="Vínculo com o falecido" entitylink="titularvinculo" visible="false" />
+      <fieldbrowser visible="false" entitylink="negocio" />
+      <fieldbrowser visible="false" entitylink="sinistro" />
+      <fieldbrowser visible="false" entitylink="apoliceconfirmada" />
+      <fieldbrowser visible="false" entitylink="apolicetipo" />
+      <fieldbrowser visible="false" entitylink="titulartipodocumento" />
+      <fieldbrowser visible="false" entitylink="titularcnpj" />
+      <fieldbrowser visible="false" entitylink="titularcpf" />
+      <fieldbrowser visible="false" entitylink="titularcontatos" />
+      <fieldbrowser visible="false" entitylink="titularmatricula" />
+      <fieldbrowser visible="false" entitylink="beneficiario" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Dados Seguradoras">
+      <layout>
+        <headerform>
+            <row>
+              <cell controltype="textedit" entitylink="negocio" visible="false"/>
+            </row>
+            <row>
+                <cell label="Seguradora" entitylink="seguradora" controltype="lookup" colspan="4" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="1">
+                  <!-- <validates>
+                    <validate type="vnull" displaytext="O campo seguradora não pode ser vazio" />
+                  </validates> -->
+                </cell>
+            </row>
+            <row>
+                <cell label="Produto" readonly="!seguradora" entitylink="produtoseguradora" controltype="lookup" colspan="4" fielddetaillookup="{'nome':'Produto'}" amountfieldslookup="1">
+                  <lookupconstructors>
+                      <lookupconstructor valueapi='cliente' valueentity='seguradora' />
+                  </lookupconstructors>
+                  <validates>
+                      <validate type="vnull" displaytext="O campo produto não pode ser vazio" />
+                  </validates>
+                </cell>
+                <cell label="Apólice" readonly="!produtoseguradora" entitylink="apolice" controltype="lookup" colspan="5" fielddetaillookup="{'nome':'Apólice'}" amountfieldslookup="1">
+                    <lookupconstructors>
+                        <lookupconstructor valueapi='templatepropostagrupo' valueentity='produtoseguradora' />
+                    </lookupconstructors>
+                    <validates>
+                        <validate type="vnull" displaytext="O campo apólice não pode ser vazio" />
+                    </validates>
+                </cell>
+                <cell label="Tipo de Apólice" readonly="!apolice" entitylink="apolicetipo" controltype="combobox" colspan="3"/>
+            </row>
+            <row>
+                <cell label="Sinistro" readonly="!apolice" entitylink="sinistro" controltype="textedit" colspan="4"/>
+                <cell label="Titular da Apólice" readonly="!apolice" entitylink="titularnome" controltype="textedit" colspan="4">
+                  <validates>
+                      <validate type="maxlength" value="100" displaytext="O campo Titular da Apólice deve possuir no máximo 100 caracteres." />
+                  </validates>
+                </cell>
+                <cell label="CPF do Titular" readonly="!apolice" entitylink="titularcpf" controltype="cpf" colspan="4">
+                </cell>
+                <cell label="Matrícula do Titular" readonly="!apolice" entitylink="titularmatricula" controltype="textedit" colspan="4">
+                  <validates>
+                    <validate type="maxlength" value="30" displaytext="O campo Matrícula do Titular deve possuir no máximo 30 caracteres." />
+                  </validates>
+                </cell>
+            </row>
+              <row>
+                <cell label="Vínculo com o falecido" readonly="!produtoseguradora" entitylink="titularvinculo" controltype="lookup" colspan="4" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" />
+                <cell label="Nome do Funcionário da Seguradora" readonly="!apolice" entitylink="nomefuncionarioseguradora" controltype="textedit" colspan="5">
+                    <validates>
+                        <validate type="maxlength" value="100" displaytext="O campo Nome do Funcionário da Seguradora deve possuir no máximo 100 caracteres." />
+                    </validates>
+                </cell>
+                <cell label="Valor Autorizado" readonly="!apolice" entitylink="valorautorizado" controltype="money" colspan="3">
+                  <validates>
+                      <validate type="vnull" displaytext="O campo valor autorizado não pode ser vazio" />
+                  </validates>
+                </cell>
+                <cell label="Valor da Apólice" readonly="!apolice" entitylink="valorapolice" controltype="money" colspan="3">
+                  <validates>
+                      <validate type="vnull" displaytext="O campo valor da apólice não pode ser vazio" />
+                  </validates>
+                </cell>
+                <cell label="Apólice confirmada" readonly="!apolice" entitylink="apoliceconfirmada" controltype="checkbox" colspan="4"/>
+                <cell label="Beneficiário" entitylink="beneficiario" controltype="textedit" colspan="4">
+                  <validates>
+                      <validate type="maxlength" value="100" displaytext="O campo Beneficiário deve possuir no máximo 100 caracteres." />
+                  </validates>
+                </cell>
+             </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>Insert</name>
+      <api>
+        <name>atcDadosSeguradoraNovo_v7</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="sinistro" valueentity="sinistro" />
+        <fromto valueapi="titularvinculo" valueentity="titularvinculo" />
+        <fromto valueapi="seguradora" valueentity="seguradora" />
+        <fromto valueapi="produtoseguradora" valueentity="produtoseguradora" />
+        <fromto valueapi="apolice" valueentity="apolice" />
+        <fromto valueapi="apoliceconfirmada" valueentity="apoliceconfirmada" />
+        <fromto valueapi="apolicetipo" valueentity="apolicetipo" />
+        <fromto valueapi="titularnome" valueentity="titularnome" />
+        <fromto valueapi="titulartipodocumento" valueentity="titulartipodocumento" />
+        <fromto valueapi="titularcnpj" valueentity="titularcnpj" />
+        <fromto valueapi="titularcpf" valueentity="titularcpf" />
+        <fromto valueapi="titularcontatos" valueentity="titularcontatos" />
+        <fromto valueapi="created_at" valueentity="logged_user" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="nomefuncionarioseguradora" valueentity="nomefuncionarioseguradora" />
+        <fromto valueapi="titularmatricula" valueentity="titularmatricula" />
+        <fromto valueapi="valorautorizado" valueentity="valorautorizado" />
+        <fromto valueapi="valorapolice" valueentity="valorapolice" />
+        <fromto valueapi="beneficiario" valueentity="beneficiario" />
+      </api>
+    </action> 
+    <action form="default">
+      <name>Update</name>
+      <api>
+          <name>atcDadosSeguradoraAlterar_v7</name>
+          <fromto valueapi="negociodadosseguradora" valueentity="negociodadosseguradora" />
+          <fromto valueapi="sinistro" valueentity="sinistro" />
+          <fromto valueapi="titularvinculo" valueentity="titularvinculo" />
+          <fromto valueapi="seguradora" valueentity="seguradora" />
+          <fromto valueapi="produtoseguradora" valueentity="produtoseguradora" />
+          <fromto valueapi="apolice" valueentity="apolice" />
+          <fromto valueapi="apoliceconfirmada" valueentity="apoliceconfirmada" />
+          <fromto valueapi="apolicetipo" valueentity="apolicetipo" />
+          <fromto valueapi="titularnome" valueentity="titularnome" />
+          <fromto valueapi="titulartipodocumento" valueentity="titulartipodocumento" />
+          <fromto valueapi="titularcnpj" valueentity="titularcnpj" />
+          <fromto valueapi="titularcpf" valueentity="titularcpf" />
+          <fromto valueapi="titularcontatos" valueentity="titularcontatos" />
+          <fromto valueapi="updated_by" valueentity="logged_user" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+          <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+          <fromto valueapi="nomefuncionarioseguradora" valueentity="nomefuncionarioseguradora" />
+          <fromto valueapi="titularmatricula" valueentity="titularmatricula" />
+          <fromto valueapi="valorautorizado" valueentity="valorautorizado" />
+          <fromto valueapi="valorapolice" valueentity="valorapolice" />
+          <fromto valueapi="beneficiario" valueentity="beneficiario" />
+      </api>
+    </action>
+    <action>
+      <name>Delete</name>
+      <api>
+          <name>atcDadosSeguradoraExcluir_v2</name>
+          <fromto valueapi="negociodadosseguradora" valueentity="negociodadosseguradora" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+          <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

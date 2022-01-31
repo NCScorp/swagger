@@ -1,0 +1,93 @@
+<div class="malotes-adicionar-documentos-modal">
+    <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Adicionar Documentos ao Malote</h3>
+    </div>
+    <div class="modal-body" ng-class="{ carregando: crm_mlts_doc_add_cntrllr.isBusy()}">
+        <div class="tela-container" ng-if="!crm_mlts_doc_add_cntrllr.isBusy()">
+            <!-- Lado esquerdo da tela: Lista de atendimentos -->
+            <div class="lista-container">
+                <div class="filtros-container">
+                    <nsj-toolbar ng-on-change_toolbar="crm_mlts_doc_add_cntrllr.filtrar($event.detail)" search="true"
+                        refresh="true" holder="Buscar..">
+                    </nsj-toolbar>
+                </div>
+                <div class="lista-atendimentos">
+                    <div ng-repeat="atendimento in crm_mlts_doc_add_cntrllr.arrAtendimentosApresentadosNaTela"
+                        ng-click="crm_mlts_doc_add_cntrllr.onAtendimentoClick(atendimento)" class="atendimento"
+                        ng-class="{ selecionado: atendimento.checked() }">
+                        <div class="checkbox-container">
+                            <input type="checkbox" ng-checked="atendimento.checked()">
+                        </div>
+                        <div class="dados-atendimento-container">
+                            <div class="codigo">#{{atendimento.codigo}}</div>
+                            <div class="descricao">
+                                <div class="titulo">Descrição:</div>
+                                <div class="valor">{{atendimento.descricao}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="msg-sem-dados"
+                        ng-if="crm_mlts_doc_add_cntrllr.arrAtendimentosApresentadosNaTela.length == 0">Não foram
+                        encontrados itens para esta pesquisa.</div>
+                </div>
+            </div>
+            <!-- Lado direito da tela: Accordions de atendimentos para seleção de documentos -->
+            <div class="documentos-atendimento-container">
+                <nsj-accordion ng-repeat="atendimento in crm_mlts_doc_add_cntrllr.arrAtendimentos"
+                    ng-if="atendimento.checked()" init-open headline="Atendimento #{{atendimento.codigo}}"
+                    class="atendimento-accordion">
+
+                    <div class="lista-documentos">
+                        <table class="nsj-table table">
+                            <thead class="header">
+                                <tr>
+                                    <th></th>
+                                    <th><span>Documento</span></th>
+                                    <th><span>Data de recebimento</span></th>
+                                    <th><span>Tipo de Cópia</span></th>
+                                    <th><span>Status</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="corpo">
+                                <tr ng-repeat="documento in atendimento.arrAtcsDocumentos" class="documento"
+                                    ng-click="documento.checked = !documento.checked">
+                                    <td class="checked">
+                                        <span class="texto"><input type="checkbox"
+                                                ng-checked="documento.checked"></span>
+                                    </td>
+                                    <td class="descricao"><span class="texto">{{ documento.descricao }}</span></td>
+                                    <td class="data-recebimento"><span
+                                            class="texto">{{ crm_mlts_doc_add_cntrllr.getDataFormatada(documento.dataRecebimento) }}</span>
+                                    </td>
+                                    <td class="tipo-copia"><span
+                                            class="texto">{{ documento.getTiposCopiasDescricao() }}</span></td>
+                                    <td class="status"><span class="texto">{{ documento.getStatusDescricao() }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </nsj-accordion>
+                <div class="msg-sem-doc-selecionado" ng-if="!crm_mlts_doc_add_cntrllr.possuiDocumentosSelecionados()">
+                    Nenhum documento foi selecionado</div>
+            </div>
+        </div>
+        <div class="content-loading" ng-if="crm_mlts_doc_add_cntrllr.isBusy()">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="fechar btn btn-sm" ng-click="crm_mlts_doc_add_cntrllr.close()"
+            ng-disabled="crm_mlts_doc_add_cntrllr.isBusy()">
+            Cancelar
+        </a>
+        <button type="button" class="btn btn-sm btn-default btn-salvar" ng-disabled="crm_mlts_doc_add_cntrllr.isBusy()"
+            ng-click="crm_mlts_doc_add_cntrllr.salvar()">
+            <i class="fas fa-check"></i>
+            <span>Adicionar</span>
+        </button>
+    </div>
+</div>

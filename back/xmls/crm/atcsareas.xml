@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcsareas" label="atcsareas" project="crm">
+  <entity schema="crm" table="atcsareas">
+    <fieldmodel name="negocioarea" datatype="guid" isid="true" column="negocioarea"/>
+    <fieldmodel name="nome" datatype="string"  column="nome"/>
+    <fieldmodel name="descricao" datatype="string"  column="descricao"/>
+    <fieldmodel name="localizacao" datatype="boolean"  column="localizacao"/>
+    <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+    <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+    <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    <fieldmodel name="pendencias" datatype="string" notMapped="true"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    <fieldmodel name="possuiseguradora" datatype="boolean" column="possuiseguradora"/>
+    <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" useCaseLink="ns\estabelecimentos" entityJoinType="left"/>
+    <fieldmodel name="permiteorcamentozerado" datatype="boolean" column="permiteorcamentozerado"/>
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Áreas de Atendimento Comercial" layout="list" paginate="true" target="builtin"  itemsPerPage="500">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="negocioarea" isid="true" visible="false"/>
+      <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true" indefaultorder="true"/>
+      <fieldbrowser entitylink="localizacao" visible="false" cansearch="false"/>
+      <fieldbrowser entitylink="possuiseguradora" visible="false" cansearch="false"/>
+      <fieldbrowser entitylink="estabelecimento" visible="false" cansearch="false"/>
+      <fieldbrowser entitylink="permiteorcamentozerado" visible="false" cansearch="false"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Área de Atendimento Comercial">
+      <layout>
+        <headerform>
+          <row>
+            <cell  controltype="textedit" label="Nome" colspan="6" entitylink="nome">
+              <validates>
+                <validate type="vnull" displaytext="O campo nome não pode estar vazio"></validate>
+                <validate type="maxlength" value="30" displaytext="O campo aceita no máximo 30 caracteres"/>
+                <validate type="unique" displaytext="Nome em uso! Escolha um nome válido!"/>
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textarea" label="Descrição" colspan="6" entitylink="descricao"/>
+          </row>
+          <row>
+            <cell controltype="lookup" label="Estabelecimento" colspan="6" entitylink="estabelecimento" fielddetaillookup="nomefantasia" />
+          </row>
+          <row>
+            <cell controltype="checkbox" label="Possui seguro" colspan="6" entitylink="possuiseguradora" />
+          </row>
+          <row>
+            <cell controltype="checkbox" label="Exibir campos sobre a localização do objeto do negócio" colspan="6" entitylink="localizacao"/>
+          </row>
+          <row>
+            <cell controltype="checkbox" label="Permitir valor zerado no orçamento" colspan="6" entitylink="permiteorcamentozerado" />
+          </row>
+          <!-- <row>
+            <cell colspan="12"  controltype="textarea" entitylink="pendencias" />
+          </row> -->
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>retrieve</name>
+    </action>
+    <action form="default" successMsg="A Área de Atendimento Comercial foi criada com sucesso!" failMsg="Ocorreu um erro ao criar a Área de Atendimento Comercial!">
+      <name>Insert</name>
+      <api>
+        <name>atcAreaNovo_v5</name>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="localizacao" valueentity="localizacao"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="possuiseguradora" valueentity="possuiseguradora" />
+        <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+        <fromto valueapi="permiteorcamentozerado" valueentity="permiteorcamentozerado" />
+      </api>
+    </action> 
+    <action form="default" successMsg="A Área de Atendimento Comercial foi editada com sucesso!" failMsg="Ocorreu um erro ao editar a Área de Atendimento Comercial!">
+      <name>Update</name>
+      <api>
+        <name>atcAreaAlterar_v5</name>
+        <fromto valueapi="negocioarea" valueentity="negocioarea"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="localizacao" valueentity="localizacao"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="possuiseguradora" valueentity="possuiseguradora" />
+        <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+        <fromto valueapi="permiteorcamentozerado" valueentity="permiteorcamentozerado" />
+      </api>
+    </action>
+    <action successMsg="A Área de Atendimento comercial foi excluída com sucesso!" failMsg="Ocorreu um erro ao excluir a Área de Atendimento comercial!">
+      <name>Delete</name>
+      <api>
+        <name>atcAreaExcluir_v2</name>
+        <fromto valueapi="negocioarea" valueentity="negocioarea"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+         <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

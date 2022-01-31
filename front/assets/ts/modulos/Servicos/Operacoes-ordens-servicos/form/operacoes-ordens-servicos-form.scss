@@ -1,0 +1,20 @@
+.div-tipomanutencao {
+  display: inline-flex;
+  width: 100%;
+
+  label {
+    padding: 5px;
+  }
+
+  nsj-lookup {
+    width: 100%;
+  }
+}
+
+.div-templates-pai {
+  margin-left: -15px;
+
+  .div-templates {
+    padding-bottom: 15px;
+  }
+}

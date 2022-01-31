@@ -1,0 +1,297 @@
+.tree-grid.table > thead > tr > th {
+    border: 1px solid #d6d6d6 !important;
+    border-right: 0px solid transparent !important;
+    border-left: 0px solid transparent !important;
+}
+.tree-grid.table > tbody > tr > td {
+    border: 1px solid #d6d6d6 !important;
+    border-right: 0px solid transparent !important;
+    border-left: 0px solid transparent !important;
+}
+
+.nsj-table.table {
+    th {
+        color: #5a5a5a;
+        background-color: #dddddd;
+    }
+    th {
+        padding: 0 8px !important;
+    }
+    tr:nth-of-type(odd) {
+        background-color: transparent;
+    }
+    tr.level-1,
+    tr.level-1.active {
+        background-color: #eaeaea;
+    }
+    tr.level-2,
+    tr.level-2.active {
+        background-color: #f5f5f5;
+    }
+    tr.level-3,
+    tr.level-3.active {
+        background-color: #fafafa;
+    }
+
+    tr.level-2.table-danger{
+        background-color: #f5c6cb;
+    }
+    
+    tr.level-2.table-success{
+        background-color: #c3e6cb;
+    }
+    
+    .tree-grid-row {
+        .btn {
+            // padding:0;
+            color: #5a5a5a;
+        }
+        .btn.ui-select-toggle,
+        .btn.ui-select-toggle .ui-select-match-text {
+            display: flex;
+            align-items: center;
+            padding: 4px;
+            .btn {
+                line-height: 21px;
+            }
+        }
+        .green {
+            color: #54a845;
+        }
+        .yellow {
+            color: #f8a822;
+        }
+        .red {
+            color: #dd3d45;
+        }
+        .blue {
+            color: #3ea3b8;
+        }
+        .label {
+            font-size: 70%;
+        }
+        .label-info {
+            background-color: #5bc0de;
+        }
+        .label-yellow {
+            background-color: #f8a822;
+        }
+        .label-green {
+            background-color: #54a845;
+        }
+        .label-grey {
+            background-color: #999999;
+        }
+        .label-primary {
+            background-color: #49330a;
+        }
+        .label-red {
+            background-color: #dd3d45;
+        }
+        .crossed-red {
+            color: #dd3d45;
+            text-decoration: line-through;
+        }
+        .tree-slct-fs {
+            position: relative;
+            width: auto;
+            display: inline-block;
+        }
+        .tree-slct {
+            border-radius: 3px;
+            line-height: 17px;
+            flex: auto;
+            background: transparent;
+            font-size: 80%;
+            margin-left: 0;
+            width: 100%;
+            padding: 0 16px 0 5px !important;
+            background-image: none !important;
+            border: 1px solid transparent;
+        }
+        .tree-slct-caret {
+            visibility: hidden;
+            position: absolute;
+            right: 3px;
+            top: 5px;
+        }
+        td:hover .tree-slct {
+            border: 1px solid #cccccc;
+            background: #f3f2f2;
+        }
+        td:hover .tree-slct-caret {
+            visibility: visible;
+        }
+    }
+}
+
+.container-flex {
+    display: flex;
+    align-items: center;
+}
+
+.btn-action-orange {
+    background-color: #ea7c1c;
+    color: #fff !important;
+    padding: 1px 5px;
+    border: 1px solid #d57d1b;
+}
+
+.treefontbold {
+    font-weight: bold;
+}
+.treefontcrossed {
+    color: #c93534;
+    text-decoration: line-through;
+}
+
+.tree-input {
+    border-radius: 3px;
+    line-height: 20px;
+    flex: auto;
+    padding: 0 5px;
+    background: white;
+    width: auto;
+    max-width: 100px;
+    border: 1px solid #cecece;
+}
+
+.form-control.tree-input {
+    display: inline-block;
+}
+
+.tree-input-disabled {
+    background: #eaeaea;
+}
+
+.tree-input-select-button-wrapper {
+    .tree-input-select-button {
+        float: left;
+        .btn {
+            padding: 5px;
+            line-height: 0.9;
+            margin-right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+    }
+    .tree-input {
+        display: inline-block;
+        border-radius: 0 3px 3px 0;
+        line-height: 1.6;
+        flex: none;
+        float: left;
+        border-left: 0;
+        border-color: #cecece;
+    }
+    .tree-input.treecampoobrigatorio {
+        background: #eccfcf;
+    }
+}
+
+.tree-grid-footer-appendix {
+    margin-top: -20px;
+    background: #dddddd;
+    padding: 25px 45px 50px;
+    .tree-grid-footer-appendix-inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+    }
+    .input-wrapper {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+    }
+    .tree-input {
+        max-width: 150px;
+    }
+}
+
+.naopossuiacoes .actions-buttons {
+    padding: 0 !important;
+    border-width: 0 !important;
+}
+
+tfoot {
+    background-color: #dddddd;
+}
+
+.no-actions-tree .nsj-table.table.btns-actions tbody tr td:last-child {
+    vertical-align: middle;
+}
+.tree-icon-mod-status {
+    color: #337ab7;
+}
+
+.treeitemexcluido {
+    text-decoration: line-through;
+    color: #ddd;
+}
+
+.treeitemexcluidoinput {
+    color: #ddd;
+}
+
+.treeitemexcluidoinput input {
+    color: #ddd;
+    border-color: #ddd;
+}
+
+tr.linhaalterada,
+tr.linhaalterada.active {
+    background-color: #ebfeff !important;
+    background: #ebfeff !important;
+}
+
+.table > tbody > tr.linhaalterada.active > td,
+.table > tbody > tr.linhaalterada > td {
+    background: transparent;
+}
+
+.fix-cell-align{
+    margin-left: 30px;
+}
+
+.container-icon {
+    display: inline-block;
+    margin-right: 11px;
+
+    nsj-tooltip {
+        width: auto;
+        left: -60px;
+    }
+}
+
+.coluna-accordion-principal  {
+    .card-header .container-icon  {
+        margin-right: 0;
+    }
+}
+
+.fix-tooltip {
+    white-space: nowrap;
+    padding: 0 7px;
+    align-items: center;
+
+    i {
+        margin-right: 6px;
+    }
+}
+
+.tooltip-info {
+    padding-left: 4px;
+}
+
+#formAplicarEmMassa .table > tbody > tr > td {
+    border: none !important;
+}
+
+text.success {
+    color: rgb(47, 204, 19);
+}
+
+.text-bold{
+    font-weight: bold;
+}
+

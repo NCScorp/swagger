@@ -1,0 +1,53 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="numero">Número</label><input type='text'
+                    class="form-control" id="numero" name="numero" ng-model="$ctrl.entity.numero"
+                    ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.numero.$error" ng-if="$ctrl.form.numero.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo número não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="nome">Nome</label><input type='text'
+                    class="form-control" id="nome" name="nome" ng-model="$ctrl.entity.nome"
+                    ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.nome.$error" ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo nome não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Campo Pai e Ordem não estavam sendo usados, por isso foram removidos do form
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="pai">Pai</label><input type='text'
+                    class="form-control" id="pai" name="pai" ng-model="$ctrl.entity.pai"
+                    ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="ordem">Ordem</label><input type='text'
+                    class="form-control" id="ordem" name="ordem" ng-model="$ctrl.entity.ordem"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" " /></div>
+        </div>
+    </div>
+ -->
+</form>

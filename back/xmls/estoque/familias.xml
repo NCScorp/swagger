@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="familias" label="familias" project="estoque">
+    <entity schema="estoque" table="familias">
+        <fieldmodel name="familia" datatype="string" isid="true" column="familia"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="valor" datatype="string" column="valor"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="familiacoringa" datatype="boolean" column="familiacoringa"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Unidades">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="familia" visible="false" isid="true"/>
+            <fieldbrowser alias="Descricao" entitylink="descricao" visible="true" cansearch="true"/>
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="true" />
+            <fieldbrowser alias="Valor Base" entitylink="valor" visible="true" cansearch="true" />
+            <fieldbrowser alias="Família Coringa" entitylink="familiacoringa" visible="true" cansearch="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

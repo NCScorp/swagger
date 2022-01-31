@@ -1,0 +1,59 @@
+<div class="height-full layout-list">
+  <form nsj-focus name="tpt_os_frm_nw_cntrllr.form" novalidate="novalidate"
+    ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : tpt_os_frm_nw_cntrllr.busy }" role="form"
+    ng-submit="tpt_os_frm_nw_cntrllr.submit()" class="height-full">
+    <nsj-headline headline-title="" headline-sub="true">
+      <div class="pull-right">
+      </div>
+    </nsj-headline>
+    <div class="nsj-form padding-content">
+      <!-- Informações Gerais -->
+      <nsj-accordion init-open keep-open headline="Informações Gerais" class="accordion-informacoes-gerais">
+        <ul class="list-unstyled list-inline pull-right">
+          <li>
+            <div class="form-group pull-right">
+              <button type="button" ng-click="tpt_os_frm_nw_cntrllr.submit()"
+                ng-class="{loading:tpt_os_frm_nw_cntrllr.entity.$$__submitting}"
+                ng-disabled="tpt_os_frm_nw_cntrllr.entity.$$__submitting || tpt_os_frm_nw_cntrllr.form.$pristine"
+                class="btn btn-sm btn-warning btn-save btn-geral">
+                <i class="fa fa-check"></i> Salvar
+              </button>
+              <a class="btn btn-sm btn-default" ui-sref="ordensservicos_templates({})"><i class="fa fa-times"
+                  aria-hidden="true"></i>
+                Descartar</a>
+            </div>
+          </li>
+        </ul>
+        <templates-os-form entity="tpt_os_frm_nw_cntrllr.entity" form="tpt_os_frm_nw_cntrllr.form"
+          busy="tpt_os_frm_nw_cntrllr.busy" action="tpt_os_frm_nw_cntrllr.action"
+          constructors="tpt_os_frm_nw_cntrllr.constructors">
+        </templates-os-form>
+      </nsj-accordion>
+
+      <!-- Serviços -->
+      <nsj-accordion init-open keep-open headline="Serviços" class="acordion-servicos">
+        <listagem-servicos-form entity="tpt_os_frm_nw_cntrllr.entity" form="tpt_os_frm_nw_cntrllr.form"
+          busy="tpt_os_frm_nw_cntrllr.busy" action="tpt_os_frm_nw_cntrllr.action"
+          constructors="tpt_os_frm_nw_cntrllr.constructors"
+          disable-action="true">
+        </listagem-servicos-form>
+      </nsj-accordion>
+
+      <!-- Materiais -->
+      <nsj-accordion init-open keep-open headline="Materiais" class="acordion-materiais">
+        <listagem-materiais-form entity="tpt_os_frm_nw_cntrllr.entity" form="tpt_os_frm_nw_cntrllr.form"
+          busy="tpt_os_frm_nw_cntrllr.busy" action="tpt_os_frm_nw_cntrllr.action"
+          constructors="tpt_os_frm_nw_cntrllr.constructors"
+          disable-action="true">
+        </listagem-materiais-form>
+      </nsj-accordion>
+
+    </div>
+    <div class="content-loading" ng-if="tpt_os_frm_nw_cntrllr.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </form>
+</div>

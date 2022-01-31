@@ -1,0 +1,49 @@
+<div class="height-full layout-list">
+  <form
+    nsj-focus
+    name="ns_frncdrs_frm_nw_cntrllr.form"
+    novalidate="novalidate"
+    ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : ns_frncdrs_frm_nw_cntrllr.busy }"
+    role="form"
+    ng-submit="ns_frncdrs_frm_nw_cntrllr.submit()"
+    class="height-full"
+  >
+    <nsj-headline headline-title="Prestadora de serviços " headline-sub="true">
+        <ul class="list-unstyled list-inline pull-right">
+            <li>
+              <div class="form-group pull-right">
+                <button
+                  type="button"
+                  ng-click="ns_frncdrs_frm_nw_cntrllr.submit()"
+                  ng-class="{loading:ns_frncdrs_frm_nw_cntrllr.entity.$$__submitting}"
+                  ng-disabled="ns_frncdrs_frm_nw_cntrllr.entity.$$__submitting || ns_frncdrs_frm_nw_cntrllr.form.$pristine"
+                  class="btn btn-sm btn-warning btn-save btn-geral"
+                >
+                  <i class="fa fa-check"></i> Salvar
+                </button>
+    
+                <a class="btn btn-sm btn-default" ui-sref="ns_fornecedores({})"
+                  ><i class="fa fa-times" aria-hidden="true"></i> Descartar</a
+                >
+              </div>
+            </li>
+          </ul>
+    </nsj-headline>
+    <div class="nsj-form padding-content">
+      <ns-fornecedores-default
+        entity="ns_frncdrs_frm_nw_cntrllr.entity"
+        form="ns_frncdrs_frm_nw_cntrllr.form"
+        busy="ns_frncdrs_frm_nw_cntrllr.busy"
+        action="ns_frncdrs_frm_nw_cntrllr.action"
+        constructors="ns_frncdrs_frm_nw_cntrllr.constructors"
+      ></ns-fornecedores-default>
+      
+    </div>
+    <div class="content-loading" ng-if="ns_frncdrs_frm_nw_cntrllr.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </form>
+</div>

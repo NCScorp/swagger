@@ -1,0 +1,20 @@
+ <form name="$ctrl.form" novalidate="novalidate" role="form"  class="height-full">
+               
+                    <div class="row " ><div class="col-sm-6" >
+                                                    <div class="form-group"><label class="control-label" for="cnae">CNAE</label><nsj-lookup
+            name="cnae"
+            id-name="cnae"
+            factory="NsCnaes"  
+            ng-model="$ctrl.entity.cnae" 
+                            list-excluded = "$ctrl.collection"    
+                                                max-label="2"
+            constructor="{  }"
+            config='{ "cnae":"CNAE", "descricao":"Descrição",  }'
+            disabled = "$ctrl.entity.$$__submitting"
+                                                ></nsj-lookup><div ng-messages="$ctrl.form.cnae.$error"  ng-if="$ctrl.form.cnae.$dirty || $ctrl.form.$submitted"><div class="alert alert-danger" role="alert" ng-message="unique" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    O campo documentos necessários não pode ter documentos repetidos.
+                    
+                    
+                </div></div></div>
+                        </div></div>
+</form>

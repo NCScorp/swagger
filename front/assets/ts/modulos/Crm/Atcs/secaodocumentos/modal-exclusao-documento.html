@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Exclusão de Tipo de Documento</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+    
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12">
+                
+                <div class="alert-modal nsj-alert alert-danger">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <strong>Atenção!</strong> <br> Após a exclusão não será possível reverter a ação.
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+                <p>
+                    Você tem certeza que deseja excluir o Tipo de Documento {{mdl_xcls_dcmnt_cntrllr.entity.nome}} do atendimento?
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+
+    <div class="pull-right">
+        <button
+            type="button" class="btn btn-default btn-delete btn-geral" ng-click="mdl_xcls_dcmnt_cntrllr.close()">
+            Manter Tipo de Documento
+        </button>
+
+        <button
+            type="button" name="submit" class="btn btn-warning btn-save btn-geral"
+            ng-click="mdl_xcls_dcmnt_cntrllr.submit()">
+            Sim, excluir o Tipo de Documento
+        </button>
+        
+    </div>
+</div>

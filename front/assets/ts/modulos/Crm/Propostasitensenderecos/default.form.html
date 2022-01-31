@@ -1,0 +1,198 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <fieldset>
+                <legend>
+                    Ponto A
+                </legend>
+                <div class="row ">
+                    <div class="col-sm-2">
+                        <div class="form-group"><label class="control-label" for="ordem"></label><input type='text'
+                                class="form-control" id="ordem" name="ordem" ng-model="$ctrl.entity.ordem"
+                                ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" " /></div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-10" ng-if="(!$ctrl.entity.enderecomanual)">
+                        <div class="form-group"><label class="control-label" for="enderecoid">Endereço</label>
+                            <nsj-lookup name="enderecoid" id-name="endereco" factory="NsEnderecos"
+                                ng-model="$ctrl.entity.enderecoid" max-label="2" constructor="{  }"
+                                config='{ "enderecocompleto":"", "tipoendereco":"Tipo",  }'
+                                disabled="$ctrl.entity.$$__submitting"
+                                required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+                            <div ng-messages="$ctrl.form.enderecoid.$error"
+                                ng-if="$ctrl.form.enderecoid.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    O campo Endereço não pode ser vazio.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                                class="control-label" for="enderecomanual"><input type='checkbox' class=""
+                                    id="enderecomanual" name="enderecomanual" ng-model="$ctrl.entity.enderecomanual"
+                                    ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                Endereço Manual
+                            </label></div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-12">
+                        <div class="form-group"><label class="control-label" for="tipologradouro">Tipo</label>
+                            <nsj-lookup name="tipologradouro" id-name="tipologradouro" factory="NsTiposlogradouros"
+                                ng-model="$ctrl.entity.tipologradouro" max-label="2" constructor="{  }"
+                                config='{ "tipologradouro":"Tipo", "descricao":"Descricao",  }'
+                                disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting"
+                                required="((!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting) !== true">
+                            </nsj-lookup>
+                            <div ng-messages="$ctrl.form.tipologradouro.$error"
+                                ng-if="$ctrl.form.tipologradouro.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    Esse campo não pode ser vazio.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-12">
+                        <div class="form-group"><label class="control-label" for="logradouro">Logradouro</label><input
+                                type='text' class="form-control" id="logradouro" name="logradouro"
+                                ng-model="$ctrl.entity.logradouro"
+                                ng-disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting"
+                                ng-required="((!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting) !== true" />
+                            <div ng-messages="$ctrl.form.logradouro.$error"
+                                ng-if="$ctrl.form.logradouro.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    Esse campo não pode ser vazio.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group"><label class="control-label" for="numeroendereco">Número</label><input
+                                type='text' class="form-control" id="numeroendereco" name="numeroendereco"
+                                ng-model="$ctrl.entity.numeroendereco"
+                                ng-disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting" /></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group"><label class="control-label" for="complemento">Complemento</label><input
+                                type='text' class="form-control" id="complemento" name="complemento"
+                                ng-model="$ctrl.entity.complemento"
+                                ng-disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting" /></div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group"><label class="control-label" for="bairro">Bairro</label><input
+                                type='text' class="form-control" id="bairro" name="bairro"
+                                ng-model="$ctrl.entity.bairro"
+                                ng-disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting"
+                                ng-required="((!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting) !== true" />
+                            <div ng-messages="$ctrl.form.bairro.$error"
+                                ng-if="$ctrl.form.bairro.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    Esse campo não pode ser vazio.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group"><label class="control-label" for="pais">País</label>
+                            <nsj-lookup name="pais" id-name="pais" factory="NsPaises" ng-model="$ctrl.entity.pais"
+                                max-label="1" constructor="{  }" config='{ "nome":"País",  }'
+                                disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting"
+                                required="((!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting) !== true">
+                            </nsj-lookup>
+                            <div ng-messages="$ctrl.form.pais.$error"
+                                ng-if="$ctrl.form.pais.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    Esse campo não pode ser vazio.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" ng-if="$ctrl.entity.pais.pais === '1058'">
+                        <div class="form-group"><label class="control-label" for="ibge">Cidade</label>
+                            <nsj-lookup name="ibge" id-name="codigo" factory="NsMunicipios" ng-model="$ctrl.entity.ibge"
+                                max-label="2" constructor="{  }" config='{ "nome":"Nome", "uf":"UF",  }'
+                                disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting"
+                                required="((!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting) !== true">
+                            </nsj-lookup>
+                            <div ng-messages="$ctrl.form.ibge.$error"
+                                ng-if="$ctrl.form.ibge.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    Esse campo não pode ser vazio.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" ng-if="$ctrl.entity.pais.pais !== '1058'">
+                        <div class="form-group"><label class="control-label" for="cidade">Cidade</label>
+                            <nsj-lookup name="cidade" id-name="cidadeestrangeira" factory="NsCidadesestrangeiras"
+                                ng-model="$ctrl.entity.cidade" max-label="1" constructor="{  }"
+                                config='{ "nome":"Nome",  }'
+                                disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting"
+                                required="((!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting) !== true">
+                            </nsj-lookup>
+                            <div ng-messages="$ctrl.form.cidade.$error"
+                                ng-if="$ctrl.form.cidade.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    Esse campo não pode ser vazio.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group"><label class="control-label" for="cep">CEP</label><input type='text'
+                                class="form-control" id="cep" name="cep" ng-model="$ctrl.entity.cep"
+                                ng-disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting" /></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group"><label class="control-label" for="uf"></label><input type='hidden'
+                                class="form-control" id="uf" name="uf" ng-model="$ctrl.entity.uf"
+                                ng-disabled="(!$ctrl.entity.enderecomanual)||$ctrl.entity.$$__submitting" /></div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</form>

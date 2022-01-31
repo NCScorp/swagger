@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd"
+    project="ns" name="clientesanexos" label="clientesanexos">
+    <entity schema="ns" table="vw_clientesanexos">
+        <fieldmodel name="clienteanexo" datatype="guid" isid="true" column="documentoged" />
+        <fieldmodel name="cliente" datatype="guid" column="id_modulodoanexo" />
+        <fieldmodel name="nomearquivo" datatype="string" column="arquivo" />
+        <fieldmodel name="uploadid" datatype="guid" column="uploadid" />  
+        <fieldmodel name="data" datatype="date" column="data" />
+        <fieldmodel name="url" datatype="string" column="nome" />
+        <fieldmodel name="tipo" datatype="string" column="mimetype" />
+        <fieldmodel name="tamanho" datatype="integer" column="tamanho" />
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <!-- Nesse campo será enviado a imagem da logo -->
+        <fieldmodel name="anexo" datatype="string" notMapped="true" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">cliente</constructoritem>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="table" target="builtin" label="Clientes - Anexos">
+        <fieldsbrowser>
+            <fieldbrowser alias="clienteanexo" entitylink="clienteanexo" visible="false" />
+            <fieldbrowser alias="cliente" entitylink="cliente" visible="false" />
+            <fieldbrowser alias="nomearquivo" entitylink="nomearquivo" visible="false" />
+            <fieldbrowser alias="data" entitylink="data" visible="false" />
+            <fieldbrowser alias="url" entitylink="url" visible="false" />
+            <fieldbrowser alias="tipo" entitylink="tipo" visible="false" />
+            <fieldbrowser alias="tamanho" entitylink="tamanho" visible="false" />
+            <fieldbrowser alias="tenant" entitylink="tenant" visible="false" />
+            <fieldbrowser alias="created_at" entitylink="created_at" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell name="cliente" controltype="hidden" label="cliente" colspan="2" entitylink="cliente">
+                        </cell>
+                        <cell name="nomearquivo" controltype="hidden" label="Nome" colspan="2" entitylink="nomearquivo">
+                        </cell>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>clienteanexonovo</name>
+                <fromto valueapi="cliente" valueentity="cliente" />
+                <fromto valueapi="nomearquivo" valueentity="nomearquivo" />
+                <fromto valueapi="url" valueentity="url" />
+                <fromto valueapi="tipo" valueentity="tipo" />
+                <fromto valueapi="tamanho" valueentity="tamanho" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>clienteanexoexcluir</name>
+                <fromto valueapi="clienteanexo" valueentity="clienteanexo" />
+                <fromto valueapi="tenant" valueentity ="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

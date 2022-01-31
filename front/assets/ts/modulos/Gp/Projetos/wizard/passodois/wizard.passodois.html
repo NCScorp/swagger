@@ -1,0 +1,247 @@
+<div class="height-full layout-list form-detalhes-projeto">
+  <div class="content-loading" ng-if="$ctrl.busy">
+    <div class="center-loading text-center">
+      <div class="onloading"></div>
+      Carregando...
+    </div>
+  </div>
+
+  <form
+    name="$ctrl.form"
+    novalidate="novalidate"
+    role="form"
+    class="height-full"
+    ng-if="!$ctrl.busy"
+  >
+    <!--Linha 1-->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label class="control-label" for="nome">
+            Nome<span class="indica-campo-obrigatorio">*</span>
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            name="nome"
+            ng-model="$ctrl.entity.nome"
+            ng-required="true"
+            ng-disabled="$ctrl.entity.projeto"
+          />
+          <div
+            ng-messages="$ctrl.form.nome.$error"
+            ng-if="$ctrl.form.nome.$dirty || $ctrl.opcoes.nextstep"
+          >
+            <div class="alert alert-danger" role="alert" ng-message="required">
+              <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+              <span class="sr-only">Erro:</span>
+              O campo nome não pode ser vazio
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Linha 2-->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="estabelecimento"
+            >Estabelecimento<span class="indica-campo-obrigatorio"
+              >*</span
+            ></label
+          >
+
+          <nsj-lookup
+            name="estabelecimento"
+            id-name="estabelecimento"
+            factory="NsEstabelecimentos"
+            ng-model="$ctrl.entity.estabelecimento"
+            max-label="1"
+            constructor="{  }"
+            config='{ "nomefantasia":"nomefantasia",  }'
+            ns-required="true"
+            disabled="$ctrl.entity.projeto"
+          >
+          </nsj-lookup>
+          <div
+            ng-messages="$ctrl.form.estabelecimento.$error"
+            ng-if="$ctrl.form.estabelecimento.$dirty || $ctrl.opcoes.nextstep"
+          >
+            <div class="alert alert-danger" role="alert" ng-message="required">
+              <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+              <span class="sr-only">Erro:</span>
+              O campo estabelecimento não pode ser vazio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="cliente"
+            >Cliente<span class="indica-campo-obrigatorio">*</span></label
+          >
+
+          <nsj-lookup
+            name="cliente"
+            id-name="cliente"
+            factory="NsClientes"
+            ng-model="$ctrl.entity.cliente"
+            constructor="{  }"
+            config=' { "nomefantasia":"Nome Fantasia", "cnpj": "CPF/CNPJ"}'
+            ns-required="true"
+            disabled="$ctrl.entity.projeto"
+          >
+          </nsj-lookup>
+          <div
+            ng-messages="$ctrl.form.cliente.$error"
+            ng-if="$ctrl.form.cliente.$dirty || $ctrl.opcoes.nextstep"
+          >
+            <div class="alert alert-danger" role="alert" ng-message="required">
+              <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+              <span class="sr-only">Erro:</span>
+              O campo cliente não pode ser vazio
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Linha 3-->
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="tipoprojeto"
+            >Tipo de Projeto<span class="indica-campo-obrigatorio"
+              >*</span
+            ></label
+          >
+
+          <nsj-lookup
+            name="tipoprojeto"
+            id-name="tipoprojeto"
+            factory="GpTiposprojetos"
+            ng-model="$ctrl.entity.tipoprojeto"
+            constructor="{  }"
+            config=' { "descricao":"Nome", "codigo": "Código"}'
+            ns-required="true"
+          >
+          </nsj-lookup>
+          <div
+            ng-messages="$ctrl.form.tipoprojeto.$error"
+            ng-if="$ctrl.form.tipoprojeto.$dirty || $ctrl.opcoes.nextstep"
+          >
+            <div class="alert alert-danger" role="alert" ng-message="required">
+              <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+              <span class="sr-only">Erro:</span>
+              O campo tipo de projeto não pode ser vazio
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label class="control-label" for="responsavel"
+            >Responsável<span class="indica-campo-obrigatorio">*</span></label
+          >
+          <nsj-lookup
+            name="responsavel"
+            id-name="responsavel"
+            factory="DiretorioContas"
+            ng-model="$ctrl.entity.responsavel_conta_nasajon"
+            max-label="1"
+            constructor="{  }"
+            config='{ "nome":"nome"}'
+            ns-required="true"
+          >
+          </nsj-lookup>
+          <div
+            ng-messages="$ctrl.form.responsavel.$error"
+            ng-if="$ctrl.form.responsavel.$dirty || $ctrl.opcoes.nextstep"
+          >
+            <div class="alert alert-danger" role="alert" ng-message="required">
+              <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+              <span class="sr-only">Erro:</span>
+              O campo responsável não pode ser vazio
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Linha 4-->
+    <div class="row">
+      <!--Datas-->
+      <div class="col-sm-6">
+        <!-- Data de início -->
+        <div class="col-sm-5 pull-left-custom cell-data-inicio">
+          <div class="form-group">
+            <label class="control-label" for="datainicio">
+              Início<span class="indica-campo-obrigatorio">*</span>
+            </label>
+
+            <div class="col-sm-12 cels-datas-input">
+              <nsj-date-picker
+                datepickeropts="{'disable-days-after': '$ctrl.entity.datafim'}"
+                class="filter-date-pickers"
+                editable="true"
+                init-value="$ctrl.entity.datainicio"
+                date-position="right"
+                type-select="single"
+                opts="{'class':'form-control input-filtros-data', 'id':'datainicio', 'name':'datainicio' , 'ng-model':'$ctrl.entity.datainicio', 'placeholder': 'Digite ou selecione a data inicial', 'ng-required':'true' }"
+              >
+              </nsj-date-picker>
+              <span class="input-group-addon label-filtros-paineis">
+                <i class="fas fa-calendar-alt"></i>
+              </span>
+            </div>
+            <div
+              ng-messages="$ctrl.form.datainicio.$error"
+              ng-if="$ctrl.form.datainicio.$dirty || $ctrl.opcoes.nextstep"
+            >
+              <div
+                class="alert alert-danger"
+                role="alert"
+                ng-message="required"
+              >
+                <span
+                  class="fa fa-exclamation-circle"
+                  aria-hidden="true"
+                ></span>
+                <span class="sr-only">Erro:</span>
+                O campo início não pode ser vazio
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data de fim -->
+        <div class="col-sm-5 pull-right cell-data-fim">
+          <div class="form-group">
+            <label class="control-label" for="datafim"> Fim </label>
+
+            <div class="col-sm-12 cels-datas-input">
+              <nsj-date-picker
+                datepickeropts="{'disable-days-before': '$ctrl.entity.datainicio'}"
+                editable="true"
+                init-value="$ctrl.entity.datafim"
+                date-position="right"
+                type-select="single"
+                opts="{'class':'form-control input-filtros-data', 'id':'datafim', 'name':'datafim' , 'ng-model':'$ctrl.entity.datafim', 'placeholder': 'Digite ou selecione a data final' }"
+              >
+              </nsj-date-picker>
+
+              <span class="input-group-addon label-filtros-paineis">
+                <i class="fas fa-calendar-alt"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

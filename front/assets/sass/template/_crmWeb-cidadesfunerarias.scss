@@ -1,0 +1,190 @@
+// Edição / Criação de cidades funerárias. Parte de fornecedores
+.cidades-funerarias-cadastro-fornecedores {
+    // Botão de adicionar
+    .btn-add-prestador {
+        display: flex;
+        justify-content: end;
+        margin-bottom: 10px;
+
+        button {
+            padding: 6px 8px;
+            margin-right: 0;
+        }
+    }
+
+    .accordion-fornecedores {
+        margin-bottom: 10px;
+    }
+
+    .table-container {
+        border-bottom: 1px solid #ccc; 
+
+        .info {
+            display: flex;
+            justify-content: space-between;
+            background: #31b0d5;
+            color: white;
+            border-radius: 4px;
+            padding: 15px 10px;
+            border: 1px solid #2097b9;
+            margin-bottom: 20px;
+
+            .icone-left {}
+            .dados {
+                flex: 1;
+                padding-left: 10px;
+
+                .titulo {
+                    font-weight: 600;
+                    font-size: 18px;
+                }
+                .informacao {
+                    font-size: 16px;
+                }
+            }
+            .icone-fechar {
+                cursor: pointer;
+            }
+        }
+    }
+
+    // Tabela
+    table.table.lst-prestadoras {
+        margin-bottom: 0;
+        border: 1px solid #ccc; 
+        border-bottom: none;
+
+        thead {
+            background: #eaeaea;
+
+            tr {
+                font-size: 14px;
+                
+                th {
+                    border: none !important;
+                }
+            }
+        }
+        tbody {
+            tr {
+                // border-bottom: 1px solid #ddd;
+                &:nth-child(even){
+                    background-color: #f5f5f5;
+                }
+
+                td {
+                    border: none !important;
+                    padding: 30px 8px;
+
+                    &.icon-drag {
+                        text-align: center;
+                        color: #ddd;
+                        max-width: 10px;
+                        font-size: 22px;
+                        text-align: right;
+                    }
+
+                    &.nome {
+                        .icon, .ordem {
+                            font-size: 22px;
+                            color: #866432;
+                        }
+                        .valor {
+                            font-weight: 600;
+                        }
+                    }
+
+                    &.status {
+                        width: 200px;
+
+                        .status-container {
+                            .status-label {
+                                display: inline-block;
+                                padding: 1px 12px;
+                                border-radius: 2px;
+                                font-size: 13px;
+                                color: white;
+
+                                &.suspensa {
+                                    background: rgba(214, 44, 40, 0.7);
+                                }
+                    
+                                &.banida {
+                                    background: rgba(0, 0, 0, 0.67);
+                                }
+                            }
+                        }
+                    }
+
+                    &.acoes {
+                        width: 50px;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Modal de adicionar prestador
+.body-modal-cid-fun-add-prestador {
+    .select-all-container {
+        padding-left: 15px;
+    }
+    
+    // Tabela
+    table.table.lst-prestadoras {
+
+        thead {
+            background: #eaeaea;
+
+            tr {
+                font-size: 14px;
+                
+                th {
+                    border: none !important;
+                }
+            }
+        }
+        tbody {
+            tr {
+                cursor: pointer;
+
+                &:nth-child(even){
+                    background-color: #f5f5f5;
+                }
+
+                td {
+                    border: none !important;
+                    padding: 30px 8px;
+
+                    &.selecao {
+                        padding-left: 15px;
+                    }
+
+                    &.status {
+                        width: 150px;
+
+                        .status-container {
+                            .status-label {
+                                display: inline-block;
+                                padding: 1px 12px;
+                                border-radius: 2px;
+                                font-size: 13px;
+                                color: white;
+
+                                &.suspensa {
+                                    background: rgba(214, 44, 40, 0.7);
+                                }
+                    
+                                &.banida {
+                                    background: rgba(0, 0, 0, 0.67);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

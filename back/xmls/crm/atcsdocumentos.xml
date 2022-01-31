@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcsdocumentos" label="atcsdocumentos" project="crm">
+  <entity schema="crm" table="atcsdocumentos">
+    <fieldmodel name="negociodocumento" datatype="guid" isid="true" column="negociodocumento"/>
+    <fieldmodel name="negocio" datatype="guid" column="negocio" useCaseLink="crm\atcs" entityJoinType="left"/>
+    <fieldmodel name="tipodocumento" datatype="guid" column="tipodocumento" useCaseLink="ns\tiposdocumentos" entityJoinType="left"/>
+    <fieldmodel name="url" datatype="string" column="url"/>
+    <fieldmodel name="status" datatype="integer" column="status">
+      <options>{"0": "Pendente", "1":"Recebido", "2":"Pré-Aprovado", "3":"Enviado para Requisitante", "4":"Aprovado", "5":"Recusado" }</options>
+    </fieldmodel>
+    <fieldmodel name="descricao" datatype="string" column="descricao"/>
+    <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+    <fieldmodel name="created_by" datatype="json" column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    <fieldmodel name="tipomime" datatype="string" column="tipomime"/>
+    <fieldmodel name="ext" datatype="string" notMapped="true"/>
+    <fieldmodel name="tiponf" datatype="integer" column="tiponf">
+        <options>{"1": "NF-S", "2": "NF-E" }</options>
+      </fieldmodel>
+    <fieldmodel name="numerodocumento" datatype="string" column="numerodocumento"/>
+    <fieldmodel name="seriedocumento" datatype="string" column="seriedocumento"/>
+    <fieldmodel name="emissaodocumento" datatype="date" column="emissaodocumento"/>
+    <fieldmodel name="orcamentos" datatype="objectlist" useCaseLink="crm\orcamentos" entityJoinType="left" notMapped="true" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Documentos" layout="table" paginate="true" target="inline">
+    <filters>
+      <fieldsfilters>
+        <fieldfilter entitylink="negocio" maxoccurs="unbounded" visible="true">
+          <lookup fielddetail="{'nome':'Negócio'}" allowinsert="false" />
+          <conditions>
+            <condition type="eq"></condition>
+          </conditions>
+        </fieldfilter>
+
+        <fieldfilter entitylink="status" maxoccurs='1' label="Situação" visible="true">
+          <conditions>
+            <condition type="eq"/>
+          </conditions>
+        </fieldfilter>
+
+        <fieldfilter entitylink="tipodocumento.tipodocumento" maxoccurs="unbounded" visible="false">
+          <conditions>
+            <condition type="eq"></condition>
+          </conditions>
+        </fieldfilter>
+
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser entitylink="negociodocumento" isid="true" visible="false"/>
+      <fieldbrowser alias="Atendimento" entitylink="negocio" isid="false" visible="true" fielddetaillookup="{'nome': 'Atendimento'}"/>
+      <fieldbrowser alias="Situação" style="label" labelcolors="{ 'gray':'status == 0', 'red':'status == 5', 'blue':'status == 3', 'yellow':'status == 1', 'green':'status == 2 || status == 4' }" entitylink="status" isid="false" visible="true" cansearch="true"/>
+      <fieldbrowser alias="Documento" entitylink="tipodocumento" isid="false" visible="true" fielddetaillookup="{'nome':'Documento', 'tipodocumento':'Tipo Documento'}"/>
+      <fieldbrowser alias="Data do Recebimento" entitylink="created_at" visible="true" cansearch="true"/>
+      <fieldbrowser alias="Data do Atendimento" entitylink="updated_at" visible="true" cansearch="true"/>
+      <fieldbrowser entitylink="url" isid="false" visible="false"/>
+      <fieldbrowser entitylink="descricao" isid="false" visible="false"/>
+      <fieldbrowser entitylink="tipomime" isid="false" visible="false"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Documentos">
+      <layout>
+        <headerform>
+          <row>
+            <cell label="Negócio" entitylink="negocio" controltype="lookup" colspan="8" fielddetaillookup="{'nome':'nome'}">
+            </cell>
+
+            <cell label="Documento" entitylink="tipodocumento" controltype="lookup" colspan="2" fielddetaillookup="{'nome':'nome'}">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textedit" label="Url" colspan="4" entitylink="url">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="combobox" label="Situação" colspan="4" entitylink="status">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textarea" label="Descrição" colspan="4" entitylink="descricao">
+            </cell>
+          </row>
+           <row>
+            <cell controltype="textedit" label="tipomime" colspan="4" entitylink="tipomime">
+            </cell>
+          </row>
+          <row>
+            <cell controltype="textedit" entitylink="seriedocumento">
+            </cell>
+            <cell controltype="textedit" entitylink="numerodocumento">
+            </cell>
+            <cell controltype="dateedit" entitylink="emissaodocumento">
+            </cell>
+            <cell controltype="combobox" entitylink="tiponf">
+            </cell>
+            <cell entitylink="orcamentos" controltype="objectlist"/>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action>
+      <name>retrieve</name>
+    </action>
+
+    <action successMsg="O Documento foi criado com sucesso!">
+      <name>Insert</name>
+      <api>
+        <name>atcDocumentoNovo_v4</name>
+        <fromto valueapi="negocio" valueentity="negocio"/>
+        <fromto valueapi="tipodocumento" valueentity="tipodocumento"/>
+        <fromto valueapi="url" valueentity="url"/>
+        <fromto valueapi="status" valueentity="status"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="tipomime" valueentity="tipomime"/>
+        <fromto valueapi="seriedocumento" valueentity="seriedocumento"/>
+        <fromto valueapi="numerodocumento" valueentity="numerodocumento"/>
+        <fromto valueapi="emissaodocumento" valueentity="emissaodocumento"/>
+        <fromto valueapi="tiponf" valueentity="tiponf"/>
+      </api>
+    </action>
+
+    <action successMsg="O Documento foi editado com sucesso!">
+      <name>Update</name>
+      <api>
+        <name>update</name>
+        <fromto valueapi="negocio" valueentity="negocio"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+      </api>
+    </action>
+
+    <action>
+      <name>RecebeDocumento</name>
+      <api>
+        <name>atcDocumentoRecebedocumento</name>
+        <fromto valueapi="negociodocumento" valueentity="negociodocumento"/>
+        <fromto valueapi="url" valueentity="url"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+      </api>
+    </action>
+
+    <action>
+      <name>PreAnalise</name>
+      <api>
+        <name>atcDocumentoPreanalise_v2</name>
+        <fromto valueapi="negociodocumento" valueentity="negociodocumento"/>
+        <fromto valueapi="status" valueentity="status"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action>
+
+    <action successMsg="O Documento foi excluído com sucesso!">
+      <name>Delete</name>
+      <api>
+        <name>atcdocumentoExcluir_v2</name>
+        <fromto valueapi="negociodocumento" valueentity="negociodocumento"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="deleted_by" valueentity="logged_user"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

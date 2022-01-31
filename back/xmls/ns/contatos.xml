@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="contatos" label="contatos" project="ns" orphan="false">
+    <entity schema="ns" table="contatos">
+        <fieldmodel name="contato" datatype="guid" isid="true" column="id"/>
+        <fieldmodel name="nome" datatype="string"  column="nome"/>
+        <fieldmodel name="nascimento" datatype="string"  column="nascimento"/>
+        <fieldmodel name="sexomasculino" datatype="boolean"  column="sexomasculino"/>
+        <fieldmodel name="primeironome" datatype="string"  column="primeironome"/>
+        <fieldmodel name="sobrenome" datatype="string"  column="sobrenome"/>
+        <fieldmodel name="cargo" datatype="string"  column="cargo"/>
+        <fieldmodel name="principal" datatype="boolean"  column="principal"/>
+        <fieldmodel name="email" datatype="string"  column="email"/>
+        <fieldmodel name="observacao" datatype="string"  column="observacao"/>
+        <fieldmodel name="setor" datatype="string"  column="setor"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+        <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+        <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+        <fieldmodel name="pessoa" datatype="guid"  column="id_pessoa"/>
+        <fieldmodel name="telefones" datatype="objectlist" column="contato" useCaseLink="ns\telefones" entityJoinType="left"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">pessoa</constructoritem>
+    </constructors>
+    <viewbrowser label="Contatos" layout="list" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="contato" isid="true" visible="false"/>
+            <fieldbrowser entitylink="pessoa" visible="false"/>
+            <fieldbrowser alias="Nome" entitylink="nome" visible="true"/>
+            <fieldbrowser alias="Primeiro nome" entitylink="primeironome" visible="true"/>
+            <fieldbrowser alias="Sobrenome" entitylink="sobrenome" visible="true"/>
+            <fieldbrowser alias="Cargo" entitylink="cargo" visible="true"/>
+            <fieldbrowser alias="Email" entitylink="email" visible="true"/>
+            <fieldbrowser alias="Principal" entitylink="principal" visible="true"/>
+            <fieldbrowser alias="Setor" entitylink="setor" visible="false"/>
+            <fieldbrowser alias="Observação" entitylink="observacao" visible="false"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Contato">
+          <layout>
+            <headerform>
+              <row>
+                <cell name="nome" controltype="textedit" label="Nome" colspan="6" entitylink="nome">
+                  <validates>
+                    <validate type="maxlength" value="150" displaytext="O campo Nome do Contato aceita no máximo 150 caracteres"/>
+                    <validate type="vnull" displaytext="O campo Nome do Contato não pode ser vazio"/>
+                  </validates>
+                </cell>
+                <cell name="primeironome" controltype="textedit" label="Primeiro nome" colspan="6" entitylink="primeironome">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo Primeiro nome do Contato não pode ser vazio"/>
+                    <validate type="maxlength" value="50" displaytext="O campo Primeiro nome do Contato aceita no máximo 50 caracteres"/>
+                  </validates>
+                </cell>
+              </row>
+              <row>
+                <cell name="sobrenome" controltype="textedit" label="Sobrenome" colspan="6" entitylink="sobrenome">
+                  <validates>
+                    <validate type="maxlength" value="100" displaytext="O campo Sobrenome do Contato aceita no máximo 100 caracteres"/>
+                  </validates>
+                </cell>
+                <cell name="cargo" controltype="textedit" label="Cargo" colspan="6" entitylink="cargo">
+                  <validates>
+                    <validate type="maxlength" value="100" displaytext="O campo Cargo do Contato aceita no máximo 100 caracteres"/>
+                  </validates>
+                </cell>
+              </row>
+              <row>
+                <cell name="setor" controltype="textedit" label="Setor" colspan="6" entitylink="setor">
+                  <validates>
+                    <validate type="maxlength" value="60" displaytext="O campo Setor do Contato aceita no máximo 60 caracteres"/>
+                  </validates>
+                </cell>
+                <cell name="principal" controltype="checkbox" label="Principal?" colspan="6" entitylink="principal"/>
+              </row>
+              <row>
+                <cell name="email" controltype="email" label="Email" colspan="12" entitylink="email">
+                  <validates>
+                    <validate type="maxlength" value="100" displaytext="O campo Email do Contato aceita no máximo 100 caracteres"/>
+                  </validates>
+                </cell>
+              </row>
+              <row>
+                <cell name="observacao" controltype="textarea" label="Observação" colspan="12" entitylink="observacao"/>
+              </row>
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Telefones"/>
+                    <row>
+                      <cell colspan="12" name="telefones" controltype="objectlist" entitylink="telefones" label="Telefones"/>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row>
+            </headerform>
+          </layout>
+      </form>
+      <form name="show" label="Contato">
+          <layout>
+            <headerform>
+              <row>
+                <cell name="nome" controltype="textedit" label="Nome" colspan="6" entitylink="nome"/>
+              </row>
+              <row>
+                <cell name="primeironome" controltype="textedit" label="Primeiro nome" colspan="6" entitylink="primeironome"/>
+              </row>
+              <row>
+                <cell name="sobrenome" controltype="textedit" label="Sobrenome" colspan="6" entitylink="sobrenome"/>
+              </row>
+              <row>
+                <cell name="cargo" controltype="textedit" label="Cargo" colspan="6" entitylink="cargo"/>
+              </row>
+              <row>
+                <cell name="setor" controltype="textedit" label="Setor" colspan="6" entitylink="setor"/>
+              </row>
+              <row>
+                <cell name="email" controltype="textedit" label="Email" colspan="6" entitylink="email"/>
+              </row>
+              <row>
+                <cell name="observacao" controltype="textarea" label="Observação" colspan="12" entitylink="observacao"/>
+              </row>
+              <row>
+                <cell name="principal" controltype="checkbox" label="Principal" colspan="12" entitylink="principal" />
+              </row>
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Telefones"/>
+                    <row>
+                      <cell colspan="12" name="telefones" controltype="objectlist" entitylink="telefones" label="Telefones"/>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row>
+            </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action form="show">
+          <name>retrieve</name>
+        </action>
+        <action>
+          <name>insert</name>
+          <api>
+            <name>contatoNovo_v2</name>
+            <fromto valueapi="id_pessoa" valueentity="pessoa"/>
+            <fromto valueapi="nome" valueentity="nome"/>
+            <fromto valueapi="nascimento" valueentity="nascimento"/>
+            <fromto valueapi="cargo" valueentity="cargo"/>
+            <fromto valueapi="sexomasculino" valueentity="sexomasculino"/>
+            <fromto valueapi="observacao" valueentity="observacao"/>
+            <fromto valueapi="email" valueentity="email"/>
+            <fromto valueapi="primeironome" valueentity="primeironome"/>
+            <fromto valueapi="sobrenome" valueentity="sobrenome"/>
+            <fromto valueapi="setor" valueentity="setor"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="telefones" valueentity="telefones"/>
+            <fromto valueapi="principal" valueentity="principal"/>
+          </api>
+        </action>
+        <action>
+          <name>update</name>
+          <api>
+            <name>contatoAlterar_v3</name>
+            <fromto valueapi="id" valueentity="contato"/>
+            <fromto valueapi="id_pessoa" valueentity="pessoa"/>
+            <fromto valueapi="nome" valueentity="nome"/>
+            <fromto valueapi="nascimento" valueentity="nascimento"/>
+            <fromto valueapi="cargo" valueentity="cargo"/>
+            <fromto valueapi="sexomasculino" valueentity="sexomasculino"/>
+            <fromto valueapi="observacao" valueentity="observacao"/>
+            <fromto valueapi="email" valueentity="email"/>
+            <fromto valueapi="primeironome" valueentity="primeironome"/>
+            <fromto valueapi="sobrenome" valueentity="sobrenome"/>
+            <fromto valueapi="updated_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="telefones" valueentity="telefones"/>
+            <fromto valueapi="principal" valueentity="principal"/>
+            <fromto valueapi="setor" valueentity="setor"/>
+          </api>
+        </action>
+        <action>
+          <name>delete</name>
+          <api>
+            <name>contatoExcluir</name>
+            <fromto valueapi="id" valueentity="contato"/>
+          </api>
+        </action>
+    </actions>
+</nsjusecase>

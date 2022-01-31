@@ -1,0 +1,47 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+	<!-- Quando a proposta item função permitir a edição da descrição -->
+	<div class="row" ng-if="$ctrl.entity.nomefuncaoalterado">
+		<div class="col-sm-12">
+			<div class="form-group">
+				<label class="control-label" for="nome">Descrição</label>
+				<input 
+					class="form-control" 
+					id="nome" 
+					name="nome" 
+					ng-model="$ctrl.entity.nome" 
+					type='text'
+					ng-required="($ctrl.entity.$$__submitting) !== true"
+					maxlength="150"
+				/>
+				<div ng-messages="$ctrl.form.nome.$error" ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted">
+					<div class="alert alert-danger" role="alert" ng-message="required">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						O campo Descrição não pode ser vazio
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row ">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="quantidade">Quantidade</label>
+				<input type='number' class="form-control" id="quantidade" name="quantidade"
+					ng-model="$ctrl.entity.quantidade" ng-disabled="$ctrl.entity.$$__submitting"
+					ng-required="($ctrl.entity.$$__submitting) !== true"
+					onkeypress="return event.charCode >= 48 && event.charCode <= 57" onpaste="return false;" min="1" />
+				<div ng-messages="$ctrl.form.quantidade.$error"
+					ng-if="$ctrl.form.quantidade.$dirty || $ctrl.form.$submitted">
+					<div class="alert alert-danger" role="alert" ng-message="number">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						Valor informado não é um número.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

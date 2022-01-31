@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../schemas/nsjusecase.xsd" name="tarefas" label="tarefas" project="gp" >
+    <entity schema="gp" table="vw_tarefasordensservicos">
+        <fieldmodel column="tarefa" datatype="guid" isid="true" name="tarefa" />
+        <fieldmodel column="previsaoinicio" datatype="datetime" name="previsaoinicio" />
+        <fieldmodel column="previsaotermino" datatype="datetime" name="previsaotermino" />
+        <fieldmodel column="numerotarefa" datatype="integer" name="numerotarefa" />
+        <fieldmodel column="inicio" datatype="datetime" name="inicio" />
+        <fieldmodel column="termino" datatype="datetime" name="termino" />
+        <fieldmodel column="situacao" datatype="integer" name="situacao" />
+        <fieldmodel column="situacaostr" datatype="string" name="situacaostr" />
+        <fieldmodel column="tenant" datatype="integer" name="tenant" />
+        <fieldmodel column="possui_ordemservico" datatype="boolean" name="possui_ordemservico" />
+
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="false">situacao</constructoritem>
+    </constructors>
+    <viewbrowser label="Tarefas" layout="table" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser alias="Tarefa" alloworder="false" avaliable="false" cansearch="false" isid="true" entitylink="tarefa" />
+            <fieldbrowser alias="Previsão Início" alloworder="true" avaliable="true" cansearch="true" entitylink="previsaoinicio" visible="true" />
+            <fieldbrowser alias="Previsão Término" alloworder="true" avaliable="true" cansearch="true" entitylink="previsaotermino" visible="true" />
+            <fieldbrowser alias="Situação" alloworder="true" avaliable="true" cansearch="true" entitylink="situacaostr" visible="true" />
+            <fieldbrowser alias="Sit" alloworder="false" avaliable="false" cansearch="false" entitylink="situacao" visible="false" />
+            <fieldbrowser alias="Numero Tarefa" alloworder="false" avaliable="true" cansearch="true" entitylink="numerotarefa" visible="true" />
+            <fieldbrowser alias="possui_ordemservico" alloworder="true" avaliable="true" entitylink="possui_ordemservico" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

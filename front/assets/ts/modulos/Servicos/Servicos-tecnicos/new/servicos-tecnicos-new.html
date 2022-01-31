@@ -1,0 +1,45 @@
+<div class="height-full layout-list">
+
+    <form nsj-focus name="srvcstcncs_frm_nw_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : srvcstcncs_frm_nw_cntrllr.busy }"
+        role="form" ng-submit="srvcstcncs_frm_nw_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="" headline-sub="true">
+            <div class="pull-right">
+                <ul class="list-unstyled list-inline">
+                    <li>
+    
+                        <div class="form-group pull-left">
+    
+                            <button type="button" ng-click="srvcstcncs_frm_nw_cntrllr.submit()"
+                                ng-class="{loading:srvcstcncs_frm_nw_cntrllr.entity.$$__submitting}"
+                                ng-disabled="srvcstcncs_frm_nw_cntrllr.entity.$$__submitting || srvcstcncs_frm_nw_cntrllr.form.$pristine"
+                                class="btn btn-sm btn-warning btn-save btn-geral">
+                                <i class="fa fa-check"></i> Salvar
+                            </button>
+    
+                            <a class="btn btn-sm btn-default" ui-sref="servicostecnicos({})"><i class="fa fa-times"
+                                    aria-hidden="true"></i> Descartar</a>
+    
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <servicos-tecnicos-form entity="srvcstcncs_frm_nw_cntrllr.entity"
+                form="srvcstcncs_frm_nw_cntrllr.form" busy="srvcstcncs_frm_nw_cntrllr.busy"
+                action="srvcstcncs_frm_nw_cntrllr.action" constructors="srvcstcncs_frm_nw_cntrllr.constructors">
+            </servicos-tecnicos-form>
+            
+        </div>
+        <div class="content-loading" ng-if="srvcstcncs_frm_nw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

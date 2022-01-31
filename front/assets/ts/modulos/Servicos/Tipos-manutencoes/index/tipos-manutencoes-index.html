@@ -1,0 +1,78 @@
+<div ng-class="{'nsj-loading-page' : tpsmntncs_lst_cntrllr.busy }" class='tiposmanutencoes nsj-layout '>
+    <div class="nsj-aside-list height-full col-md-4"
+        ng-class="{ 'hidden-sm hidden-xs' : (('tiposmanutencoes_show'| isStateEq) || ('tiposmanutencoes_edit'| isStateEq) || ('tiposmanutencoes_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+                <nsj-headline headline-title="Tipos de manutenção"
+                    ng-class="{ 'hidden-sm hidden-xs' : (('tiposmanutencoes_show'| isStateEq) || ('tiposmanutencoes_edit'| isStateEq) || ('tiposmanutencoes_new'| isStateEq ))}">
+
+                    <nsj-button tem-permissao="servicos_tiposmanutencoes_index" color="warning" icon="fa fa-plus" size="xs" class="hidden-xs"
+                        ui-sref="tiposmanutencoes_new({})">
+                        Criar
+                    </nsj-button>
+                    <nsj-button tem-permissao="servicos_tiposmanutencoes_index" color="warning" format="fixed circle" icon="fa fa-plus" size="lg"
+                        class="hidden-sm hidden-md hidden-lg" ui-sref="tiposmanutencoes_new({})">
+                        <span class="hidden-xs">Criar</span>
+                    </nsj-button>
+                </nsj-headline>
+
+                <nsj-toolbar ng-on-change_toolbar="tpsmntncs_lst_cntrllr.search($event.detail)" search="true"
+                    refresh="true" holder="Busca" model-search="{{tpsmntncs_lst_cntrllr.service.filter}}"
+                    select="{{tpsmntncs_lst_cntrllr.selectPage && tpsmntncs_lst_cntrllr.selected.length === tpsmntncs_lst_cntrllr.entities.length && !tpsmntncs_lst_cntrllr.selectAll && !tpsmntncs_lst_cntrllr.service.loadParams.finished}}"
+                    select-all="{{tpsmntncs_lst_cntrllr.selectAll}}"
+                    item-in-page="{{tpsmntncs_lst_cntrllr.entities.length}}"
+                    item-all="{{tpsmntncs_lst_cntrllr.entities[0].full_count}}">
+                </nsj-toolbar>
+                <div class="panel-body body-list">
+                    <div class="list-group" id="tiposmanutencoes_list"
+                        infinite-scroll='tpsmntncs_lst_cntrllr.nextPage()'
+                        infinite-scroll-disabled='tpsmntncs_lst_cntrllr.isBusy()' infinite-scroll-distance='1'> <a href
+                            ui-sref='tiposmanutencoes_show({tipomanutencao : entity.tipomanutencao})'
+                            class="list-group-item" ng-repeat="entity in tpsmntncs_lst_cntrllr.entities"
+                            ui-sref-active="active">
+
+                            <h4 class="list-group-item-heading">
+                                {{ entity.codigo }}
+                            </h4>
+                            <p class="list-group-item-text"><strong>Nome:</strong>
+                                {{ entity.descricao }}
+                            </p>
+                        </a>
+                        <p class="list-group-item"
+                            ng-if="!tpsmntncs_lst_cntrllr.finished && (tpsmntncs_lst_cntrllr.service.to_load <= 0)">
+                            <a href="" ng-click="tpsmntncs_lst_cntrllr.loadMore()">Ver mais...</a>
+                        </p>
+                        <p class="text-center article-loading height-full"
+                            ng-class="{'onloading' : tpsmntncs_lst_cntrllr.isBusy() }"
+                            ng-if="tpsmntncs_lst_cntrllr.isBusy()"></p>
+                        <p class="text-center nfound"
+                            ng-if="tpsmntncs_lst_cntrllr.entities.length == 0 && !tpsmntncs_lst_cntrllr.isBusy()">Nenhum
+                            dado encontrado</p>
+                    </div>
+
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+
+    <div class='empty-page col-md-8 article-area height-full padding-h-clear' ui-view>
+        <div class="bt-new-article new-article text-center height-full empty-page-nodisplay">
+            <span class="icon-page"><i class="fas fa-table fa-fw"></i></span>
+            <h3>Visualize ou Crie um Tipo de Manutenção</h3>
+            <p>Selecione um Tipo de Manutenção no painel ao lado para ver as suas informações. </p>
+            <a tem-permissao="servicos_tiposmanutencoes_index" class="btn btn-sm btn-warning" ui-sref="tiposmanutencoes_new({})">
+                <i class="fas fa-plus"></i> Criar
+            </a>
+
+        </div>
+    </div>
+    <div class="content-loading" ng-if="tpsmntncs_lst_cntrllr.busy">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+    </div>
+</div>

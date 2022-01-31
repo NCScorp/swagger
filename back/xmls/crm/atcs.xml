@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="atcs" label="atcs" project="crm">
+  <entity schema="crm" table="vwatcssimplesecomseguradora_v12">
+    <!--
+      Atenção:
+      ao realizar alterações neste model, por favor conferir o arquivo 
+      AppBundle/Repository/Crm/AtcsRepository.php
+      e fazer as devidas modificações (pois o repository foi sobrescrito)
+    -->
+    <fieldmodel name="negocio" datatype="guid" isid="true" column="negocio" />
+    <fieldmodel name="nome" datatype="string" column="nome" />
+    <fieldmodel name="localizacaocidadeestrangeira" datatype="guid"  column="localizacaocidadeestrangeira" useCaseLink="ns\cidadesestrangeiras" entityJoinType="left"/>
+    <fieldmodel name="localizacaoestado" datatype="string" column="localizacaoestado" useCaseLink="ns\estados"  entityJoinType="left"/>
+    <fieldmodel name="localizacaopais" datatype="string" column="localizacaopais" useCaseLink="ns\paises"  entityJoinType="left"/>
+    <fieldmodel name="localizacaomunicipio" datatype="string" column="localizacaomunicipio" useCaseLink="ns\municipios"  entityJoinType="left"/>
+    <fieldmodel name="localizacaocep" datatype="string" column="localizacaocep" />
+    <fieldmodel name="localizacaobairro" datatype="string" column="localizacaobairro" />
+    <fieldmodel name="localizacaorua" datatype="string" column="localizacaorua" />
+    <fieldmodel name="localizacaotipologradouro" datatype="string" column="localizacaotipologradouro"  useCaseLink="ns\tiposlogradouros"  entityJoinType="left"/>
+    <fieldmodel name="localizacaonumero" datatype="string" column="localizacaonumero" />
+    <fieldmodel name="localizacaocomplemento" datatype="string" column="localizacaocomplemento" />
+    <fieldmodel name="localizacaoreferencia" datatype="string" column="localizacaoreferencia" />
+    <fieldmodel name="localizacaonome" datatype="string" column="localizacaonome" />
+    <fieldmodel name="id_pessoa" datatype="guid" column="id_pessoa"/>
+    <fieldmodel name="localizacaosalvar" datatype="boolean" notMapped="true" />
+    <fieldmodel name="localizacaonaosalvar" datatype="boolean" notMapped="true" />
+    <fieldmodel name="localizacaosalvarcomo" datatype="boolean" notMapped="true" />
+    <fieldmodel name="localizacaonovasalvar" datatype="integer" notMapped="true">
+      <options>{"1":"Não salvar","2":"Salvar"}</options>
+    </fieldmodel>
+    <fieldmodel name="localizacaoexistentesalvar" datatype="integer" notMapped="true">
+      <options>{"1":"Não salvar","2":"Salvar", "3":"Salvar como"}</options>
+    </fieldmodel>
+    <fieldmodel name="localizacaosalvar" datatype="integer" notMapped="true">
+      <options>{"1":"Não salvar","2":"Salvar", "3":"Salvar como"}</options>
+    </fieldmodel>
+    <fieldmodel name="localizacaocarregar" datatype="guid" notMapped="true" useCaseLink="ns\enderecos" entityJoinType="left" />
+    <fieldmodel name="localizacao" datatype="guid" column="localizacao" useCaseLink="ns\enderecos" entityJoinType="left" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+    <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="area" datatype="guid" column="area" useCaseLink="crm\atcsareas" entityJoinType="left" />
+    <fieldmodel name="origem" datatype="guid" column="origem" useCaseLink="crm\midias" entityJoinType="left" />
+    <fieldmodel name="cliente" datatype="guid" column="cliente" useCaseLink="ns\clientes" entityJoinType="left" />
+    <fieldmodel name="camposcustomizados" datatype="json" column="camposcustomizados" />
+    <fieldmodel name="responsaveisfinanceiros" datatype="objectlist" useCaseLink="crm\atcsresponsaveisfinanceiros" entityJoinType="left" />
+    <fieldmodel name="negociopai" datatype="guid" column="negociopai" useCaseLink="crm\atcs" entityJoinType="left" />
+    <fieldmodel name="possuinegociofilho" datatype="boolean" column="possuinegociofilho" />
+    <fieldmodel name="negociosfilhos" datatype="string" notMapped="true" />
+    <fieldmodel name="clienteresponsavelfinanceiro" datatype="boolean" notMapped="true" />
+    <fieldmodel name="referenciaexterna" datatype="string" column="referenciaexterna" />
+    <fieldmodel name="observacoes" datatype="string" column="observacoes" />
+    <fieldmodel name="historiconegocios" datatype="objectlist" column="negocio" useCaseLink="crm\historicoatcs" entityJoinType="left" />
+    <fieldmodel name="status" datatype="integer" column="status">
+      <options> {"0":"Novo","1":"Em Atendimento","2":"Processando","3":"Finalizado","4":"Cancelado"} </options>
+    </fieldmodel>
+    <fieldmodel column="negocio" name="documentos" datatype="objectlist" useCaseLink="crm\atcsdocumentos" entityJoinType="left" />
+    <fieldmodel column="projeto" name="projeto" datatype="guid" useCaseLink="financas\projetos" entityJoinType="left" />
+    <fieldmodel name="projeto_href" datatype="string" notMapped="true" />
+    <fieldmodel column="configuracao" name="configuracao" datatype="guid" useCaseLink="web\configuracoes" entityJoinType="left" notMapped="true" />
+    <fieldmodel name="possuiseguradora" datatype="boolean" column="possuiseguradora">
+        <options> {"0":"Não","1":"Sim"} </options>
+    </fieldmodel>
+    <fieldmodel name="contratante" datatype="guid" notMapped="true" />
+    <fieldmodel name="negociosdadosseguradoras" datatype="objectlist" useCaseLink="crm\atcsdadosseguradoras" entityJoinType="left" />
+
+
+    <!-- <fieldmodel name="seguradoranegociodadosseguradora" datatype="guid" column="negociodadosseguradora_negociodadosseguradora" /> -->
+    <!-- <fieldmodel name="seguradorasinistro" datatype="string" column="negociodadosseguradora_sinistro" />
+    <fieldmodel name="seguradoraprodutoseguradora" datatype="guid" column="negociodadosseguradora_produtoseguradora" useCaseLink="crm\templatespropostasgrupos" entityJoinType="left"/>
+    <fieldmodel name="seguradoraapolice" datatype="guid" column="negociodadosseguradora_apolice" useCaseLink="crm\templatespropostas" entityJoinType="left"/>
+    <fieldmodel name="seguradoraapoliceconfirmada" datatype="boolean" column="negociodadosseguradora_apoliceconfirmada" />
+    <fieldmodel name="seguradoraapolicetipo" datatype="integer" column="negociodadosseguradora_apolicetipo">
+      <options>{"0":"Física","1":"Jurídica"}</options>
+    </fieldmodel>
+    <fieldmodel name="seguradoratitularcontatos" datatype="json" column="negociodadosseguradora_titularcontatos" />
+    <fieldmodel name="seguradoratitularcnpj" datatype="string" column="negociodadosseguradora_titularcnpj" />
+    <fieldmodel name="seguradoratitularcpf" datatype="string" column="negociodadosseguradora_titularcpf" />
+    <fieldmodel name="seguradoratitulartipodocumento" datatype="integer" column="negociodadosseguradora_titulartipodocumento" >
+        <options>{"1":"CPF","2":"CNPJ"}</options>
+      </fieldmodel>
+    <fieldmodel name="seguradoratitularnome" datatype="string" column="negociodadosseguradora_titularnome" />
+    <fieldmodel name="seguradoratitularvinculo" datatype="guid" column="negociodadosseguradora_titularvinculo" useCaseLink="crm\vinculos" entityJoinType="left"/>
+    <fieldmodel name="seguradoracreated_at" datatype="datetime" column="negociodadosseguradora_created_at" />
+    <fieldmodel name="seguradoracreated_by" datatype="json" column="negociodadosseguradora_created_by" />
+    <fieldmodel name="seguradoraupdated_at" datatype="datetime" column="negociodadosseguradora_updated_at" />
+    <fieldmodel name="seguradoraupdated_by" datatype="json" column="negociodadosseguradora_updated_by" /> -->
+
+
+    <fieldmodel name="pendencias" datatype="string" notMapped="true" />
+    <!-- Dados do pedido -->
+    <fieldmodel name="propostas" datatype="string" notMapped="true" />
+    <fieldmodel name="negociostiposdocumentosrequisitantes" datatype="objectlist" useCaseLink="crm\atcstiposdocumentosrequisitantes" entityJoinType="left" />
+    <fieldmodel name="respfinanceiroprincipal" datatype="string" notMapped="true" />
+    <fieldmodel name="respfinanceiroprincipaltelefone" datatype="string" notMapped="true" />
+    <fieldmodel name="respfinanceiroprincipaltelefoneramal" datatype="string" notMapped="true" />
+    <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" useCaseLink="ns\estabelecimentos" entityJoinType="left"/>
+    <fieldmodel name="formapagamento" datatype="guid" notMapped="true" useCaseLink="ns\formaspagamentos" entityJoinType="left"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    <fieldmodel name="municipioprestacao" datatype="guid" notMapped="true" useCaseLink="servicos\pessoasmunicipios" entityJoinType="left"/>
+    <fieldmodel name="contrato" datatype="guid" column="contrato" useCaseLink="financas\contratos" entityJoinType="left"/>
+    <fieldmodel name="codigo" datatype="string" column="codigo" />
+    <fieldmodel name="datahorainicio" datatype="datetime" column="datainicio" />
+    <!-- <fieldmodel name="datahorafim" datatype="datetime" column="datafim" /> -->
+    <fieldmodel name="datacriacao" datatype="datetime" column="datacriacao" />
+    <fieldmodel name="flaghistorico" datatype="boolean" notMapped="true"/>
+    <fieldmodel name="tiposacionamento" datatype="guid" column="tiposacionamento" useCaseLink="crm\tiposacionamentos" entityJoinType="left" />
+    <fieldmodel name="dataedicao" datatype="datetime" column="dataedicao" />
+    <fieldmodel name="localizacaomunicipiosepultamento" datatype="string" column="localizacaomunicipiosepultamento" useCaseLink="ns\municipios"  entityJoinType="left"/>
+    <fieldmodel name="localizacaoestadosepultamento" datatype="string" column="localizacaoestadosepultamento" useCaseLink="ns\estados"  entityJoinType="left"/>
+    <fieldmodel name="localizacaopaisnome" datatype="string" column="localizacaopaisnome" />
+    <fieldmodel name="localizacaoestadonome" datatype="string" column="localizacaoestadonome" />
+    <fieldmodel name="localizacaomunicipionome" datatype="string" column="localizacaomunicipionome" />
+    <fieldmodel name="fornecedor" datatype="guid" notMapped="true"/>
+    <!-- Campos utilizados para geração de documentos e envio de email do atendimento -->
+    <fieldmodel name="fornecedorobj" datatype="guid" notMapped="true" useCaseLink="ns\fornecedores"/>
+    <fieldmodel name="documentofop" datatype="guid" notMapped="true" useCaseLink="ns\documentosfop" />
+    <fieldmodel name="atcconfiguracaotemplateemail" datatype="guid" notMapped="true" useCaseLink="crm\atcsconfiguracoestemplatesemails"/>
+    <fieldmodel name="atcconfiguracaodocumento" datatype="guid" notMapped="true"/>
+    <fieldmodel name="mensagememail" datatype="string" notMapped="true"/>
+    <fieldmodel name="listaemails" datatype="objectlist" notMapped="true"/>
+    <fieldmodel name="documentosemail" datatype="objectlist" notMapped="true"/>
+    <fieldmodel name="enderecoorigem" datatype="string" notMapped="true"/>
+    <fieldmodel name="enderecodestino" datatype="string" notMapped="true"/>
+
+    <fieldmodel name="contratotaxaadm" column="contratotaxaadm" datatype="guid" useCaseLink="financas\contratos" entityJoinType="left" />
+    <fieldmodel name="createdcontratotaxa_at" column="createdcontratotaxa_at" datatype="datetime" />
+    <fieldmodel name="createdcontratotaxa_by" column="createdcontratotaxa_by" datatype="json" />
+    <fieldmodel name="formapagamentotaxaadm" column="formapagamentotaxaadm" datatype="guid" useCaseLink="ns\formaspagamentos" entityJoinType="left" />
+    <fieldmodel name="municipioprestacaotaxaadm" column="municipioprestacaotaxaadm" datatype="guid" useCaseLink="servicos\pessoasmunicipios" entityJoinType="left" />
+    <fieldmodel name="valortaxaadm" column="valortaxaadm" datatype="moeda" />
+    <fieldmodel name="pessoa" column="guid" notMapped="true" />
+    <fieldmodel name="contratoGeracaoRps" datatype="string" notMapped="true" />
+    <fieldmodel name="identificacaoEnvioEmailNome" datatype="string" notMapped="true" />    
+    <fieldmodel name="identificacaoEnvioEmailTipo" datatype="integer" notMapped="true" >
+      <options> {"0":"Cliente","1":"Seguradora","2":"Prestadora"} </options>
+    </fieldmodel>    
+    <fieldmodel name="tiporelatorioemissao" datatype="integer" notMapped="true" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <!--Items Per Page necessário para trazer 50 atcs em cada consulta. Foi alterado no repository, pois está sobrescrito-->
+  <viewbrowser label="Atendimentos Comerciais" layout="table" paginate="true" target="window" itemsPerPage="50">
+    <filters>
+      <fieldsfilters>
+        <fieldfilter entitylink="negocio" maxoccurs="unbounded" visible="false">
+          <conditions>
+            <condition type="neq"></condition>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="negociopai" maxoccurs="unbounded" label="Atendimento Comercial principal" visible="false">
+          <conditions>
+            <condition type="eq"></condition>
+            <condition type="neq"></condition>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="cliente" maxoccurs="unbounded" visible="false">
+            <lookup fielddetail="{'nome':'Nome', 'cnpj':'CNPJ'}" allowinsert="false" />
+            <conditions>
+              <condition type="eq" />
+            </conditions>
+          </fieldfilter>
+        <fieldfilter entitylink="localizacaopaisnome" label="Localização do País" maxoccurs="unbounded" visible="false">
+            <conditions>
+              <condition type="eq"></condition>
+            </conditions>
+          </fieldfilter>
+        <fieldfilter entitylink="localizacaoestadonome" label="Localização do Estado" maxoccurs="unbounded" visible="false">
+          <conditions>
+            <condition type="eq"></condition>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="localizacaomunicipionome" label="Localização do Município"   maxoccurs="unbounded" visible="false">
+          <conditions>
+            <condition type="eq"></condition>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="status" label="Situação" maxoccurs="unbounded" visible="false">
+          <conditions>
+            <condition type="eq"></condition>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="possuiseguradora" label="Possui Seguradora" maxoccurs="unbounded" visible="true">
+          <conditions>
+            <condition type="eq"></condition>
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="area" maxoccurs="unbounded" visible="false">
+          <lookup fielddetail="{'nome':'Nome'}" allowinsert="false" />
+          <conditions>
+            <condition type="eq" />
+          </conditions>
+        </fieldfilter>
+        <!-- <fieldfilter visible="false" entitylink="estabelecimento" disable="false">
+            <conditions>
+                <condition type="eq"/>
+            </conditions>
+        </fieldfilter> -->
+       <fieldfilter entitylink="datacriacao" label="datacriacao" range="true" maxoccurs="unbounded" visible="false"/>
+       <fieldfilter entitylink="dataedicao" label="dataedicao" range="true" maxoccurs="unbounded" visible="false"/>
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser alias="Data de criação" entitylink="datacriacao" visible="true" cansearch="true" indefaultorder="true" direction="DESC"/>
+      <fieldbrowser entitylink="negocio" isid="true" visible="false" />
+      <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="true" indefaultorder="true" />
+      <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true" />
+      <fieldbrowser entitylink="area" visible="false" cansearch="false" fielddetaillookup="{'nome': 'Nome'}" />
+      <fieldbrowser alias="Negócio Principal" entitylink="negociopai" visible="false" />
+      <fieldbrowser entitylink="cliente" visible="false" />
+      <fieldbrowser entitylink="camposcustomizados" visible="false" cansearch="false" />
+      <fieldbrowser visible="false" entitylink="localizacaopais"/>
+      <fieldbrowser visible="false" entitylink="localizacaoestado"/>
+      <fieldbrowser visible="false" entitylink="localizacaomunicipio"/>
+      <fieldbrowser visible="false" entitylink="localizacaopaisnome"/>
+      <fieldbrowser visible="false" entitylink="localizacaoestadonome"/>
+      <fieldbrowser visible="false" entitylink="localizacaomunicipionome"/>
+      <fieldbrowser visible="false" entitylink="localizacaomunicipiosepultamento"/>
+      <fieldbrowser visible="false" entitylink="localizacaoestadosepultamento"/>
+      <fieldbrowser alias="NomeNegocioArea" visible="false" entitylink="area"/>
+      <fieldbrowser alias="Situação" style="label" entitylink="status" visible="true" labelcolors="{ 'light blue':'status == 0','yellow':'status == 2','green':'status == 3','red':'status == 4','grey':'status == 1' }"/>
+      <fieldbrowser alias="Com Seguradora" entitylink="possuiseguradora" visible="true"/>
+      <fieldbrowser entitylink="contrato" visible="false"/>
+      <fieldbrowser entitylink="projeto" visible="false"/>
+      <fieldbrowser entitylink="contratante" visible="false" cansearch="false" />
+      <fieldbrowser alias="Data de atualização" entitylink="dataedicao" visible="true" cansearch="false" />
+      <fieldbrowser entitylink="created_by" visible="false"/>
+      <!-- <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" visible="false"/> -->
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Atendimento Comercial">
+      <layout>
+        <bodyform>
+          <tabs>
+            <tab caption="Dados">
+              <row>
+                <cell controltype="textedit" label="Nome" colspan="6" entitylink="nome">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo nome não pode estar vazio"></validate>
+                    <validate type="maxlength" value="50" displaytext="O campo aceita no máximo 50 caracteres" />
+                  </validates>
+                </cell>
+                <cell controltype="textedit" label="Código" colspan="6" entitylink="codigo" readonly="true">
+                  <!-- <validates>
+                    <validate type="vnull" displaytext="O campo código não pode estar vazio"></validate>
+                    <validate type="maxlength" value="30" displaytext="O campo aceita no máximo 30 caracteres" />
+                    <validate type="unique" displaytext="Código já em uso."/>
+                  </validates> --> 
+                  <!-- O codigo agora é automatico, seguindo uma numeração -->
+                </cell>
+              </row>
+              <row>
+                <cell label="Área de Atendimento Comercial" entitylink="area" controltype="lookup" colspan="6" fielddetaillookup="{'codigo': 'Código', 'nome':'Nome'}" amountfieldslookup="4" allowinsertlookup="true">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo área de atendimento comercial não pode ser vazio" />
+                  </validates>
+                </cell>
+                <cell label="Origem" entitylink="origem" controltype="lookup" colspan="6" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" allowinsertlookup="true">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo origem não pode ser vazio" />
+                  </validates>
+                </cell>
+              </row>
+              <row>
+                <cell label="Tipo de acionamento" entitylink="tiposacionamento" controltype="lookup" colspan="6" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                </cell>
+                <cell label="Depende de" entitylink="negociopai" controltype="lookup" colspan="6" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                  <filter field="negocio" condition="neq" value="negocio" />
+                  <help placement="bottom" html="html">
+                            Define o atendimento principal no qual esse atendimento será dependente, utilizando o projeto do atendimento principal como referência.
+                        </help>
+                </cell>
+                <!-- <cell label="Referência Externa" entitylink="referenciaexterna" controltype="textedit" colspan="4">
+                  <validates>
+                    <validate type="maxlength" value="30" displaytext="Esse campo aceita no máximo 30 caracteres" />
+                  </validates>
+                </cell> -->
+              </row>
+              <row>
+                <!-- <cell label="Data de início" name="datahorainicio" controltype="dateinput" colspan="4" entitylink="datahorainicio" readonly="true"/> -->
+                <!-- <cell label="Data de fim" name="datahorafim"  controltype="dateinput" colspan="4" entitylink="datahorafim"/> -->
+              </row>
+              <row>
+                <cell controltype="lookup" label="Estabelecimento" readonly="negocio" colspan="4" entitylink="estabelecimento" fielddetaillookup="nomefantasia">
+                  <validates>
+                      <validate type="vnull" displaytext="O campo Estabelecimento não pode ser vazio."/>
+                  </validates>
+                </cell>
+                  <cell controltype="radiobutton" colspan="2" entitylink="possuiseguradora" label="Possui seguro?" />
+                  <cell label="Cliente" entitylink="cliente" controltype="lookup" colspan="6" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="2">
+                    <validates>
+                      <validate type="vnull" displaytext="O campo cliente não pode ser vazio" />
+                    </validates>
+                    <filter field="tipo" condition="eq" entitylink="possuiseguradora" />
+                  </cell>
+                  <cell controltype="checkbox" colspan="4" entitylink="clienteresponsavelfinanceiro" visible="!possuiseguradora" label="Cliente é responsavel financeiro?" />
+              </row>
+              <!-- <row>
+                <cell visible="configuracao &amp;&amp; configuracao.chave == 'INTEGRACAO_GP' &amp;&amp; configuracao.sistema == 'CRMWEB' &amp;&amp; configuracao.valor == '1' &amp;&amp; projeto" label="Projeto" entitylink="projeto" controltype="lookup" colspan="4" fielddetaillookup="{'nome': 'Projeto', 'datainicio':'Data de Início', 'datafim':'Data de Término', 'situacao':'Situação'}" amountfieldslookup="1"></cell>
+              </row> -->
+              <!-- <row visible="possuiseguradora">
+                <cell>
+                  <groupbox>
+                    <caption text="Dados sobre o seguro"></caption>
+                    <row>
+                        <cell label="Produto" readonly="!cliente" entitylink="seguradoraprodutoseguradora" controltype="lookup" colspan="4" fielddetaillookup="{'nome':'Produto'}" amountfieldslookup="1">
+                          <lookupconstructors>
+                              <lookupconstructor valueapi='cliente' valueentity='cliente' />
+                          </lookupconstructors>
+                          <validates>
+                              <validate type="vnull" displaytext="O campo produto não pode ser vazio" />
+                          </validates>
+                        </cell>
+                        <cell label="Apólice" readonly="!seguradoraprodutoseguradora" entitylink="seguradoraapolice" controltype="lookup" colspan="4" fielddetaillookup="{'nome':'Apólice'}" amountfieldslookup="1">
+                            <lookupconstructors>
+                                <lookupconstructor valueapi='templatepropostagrupo' valueentity='seguradoraprodutoseguradora' />
+                            </lookupconstructors>
+                            <validates>
+                                <validate type="vnull" displaytext="O campo apólice não pode ser vazio" />
+                            </validates>
+                        </cell>
+                        <cell label="Tipo de Apolice" readonly="!seguradoraapolice" entitylink="seguradoraapolicetipo" controltype="combobox" colspan="4"/>
+                    </row>
+                    <row>
+                        <cell label="Sinistro" readonly="!seguradoraapolice" entitylink="seguradorasinistro" controltype="textedit" colspan="4"/>
+                        <cell label="Apólice confirmada" readonly="!seguradoraapolice" entitylink="seguradoraapoliceconfirmada" controltype="checkbox" colspan="4"/>
+                    </row>
+                    <row>
+                        <cell label="Nome" readonly="!seguradoraapolice" entitylink="seguradoratitularnome" controltype="textedit" colspan="4">
+                            <validates>
+                                <validate type="maxlength" value="100" displaytext="O campo Nome deve possuir no máximo 100 caracteres." />
+                            </validates>
+                        </cell>
+                        <cell label="Tipo Documentação" readonly="!seguradoraapolice" entitylink="seguradoratitulartipodocumento" controltype="combobox" colspan="4"/>
+                        <cell label="CPF" visible="seguradoratitulartipodocumento == 1" readonly="!seguradoraapolice" entitylink="seguradoratitularcpf" controltype="textedit" colspan="4">
+                            <validates>
+                                <validate type="minlength" value="11" displaytext="O campo CPF deve possuir um CPF válido" />
+                                <validate type="maxlength" value="11" displaytext="O campo CPF deve possuir um CPF válido" />
+                            </validates>
+                        </cell>
+                        <cell label="CNPJ" visible="seguradoratitulartipodocumento == 2" readonly="!seguradoraapolice" entitylink="seguradoratitularcnpj" controltype="textedit" colspan="4">
+                            <validates>
+                                <validate type="minlength" value="14" displaytext="O campo CNPJ deve possuir um CNPJ válido" />
+                                <validate type="maxlength" value="14" displaytext="O campo CNPJ deve possuir um CNPJ válido" />
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell label="Vínculo com o atendido" readonly="!seguradoraprodutoseguradora" entitylink="seguradoratitularvinculo" controltype="lookup" colspan="12" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"  allowinsertlookup="true"/>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row> -->
+              <row visible="possuiseguradora">
+                <cell entitylink="negociosdadosseguradoras" label="Dados Seguradora Atendimento Comercial" controltype="objectlist" colspan="12"/>
+              </row>
+              <row  name="camposcustomizados">
+                <cell label="camposcustomizados" controltype="textedit" colspan="12" entitylink="camposcustomizados" />
+              </row>
+            
+              <row>
+                <cell visible="area.localizacao">
+                  <groupbox>
+                    <caption text="Localização {{'{{ $ctrl.entity.complementoCaption }}'}}" />
+                    <row>
+                      <cell label="Procurar local" entitylink="localizacaocarregar" controltype="lookup" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" colspan="4">
+                        <filter field="nome" condition="isNotNull" value="" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell name="localizacaopais" controltype="lookup" label="Pais" colspan="4" entitylink="localizacaopais" fielddetaillookup="{'nome':'País'}" amountfieldslookup="1">
+                  </cell>
+                  <cell name="localizacaoestado" controltype="lookup" visible="localizacaopais.pais == '1058'" label="Estado" colspan="4" entitylink="localizacaoestado" fielddetaillookup="{'nome':'Estado'}" amountfieldslookup="1">
+                  </cell>
+                  <cell name="localizacaomunicipio" controltype="lookup" visible="localizacaopais.pais == '1058'" label="Municipio" colspan="4" entitylink="localizacaomunicipio" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                    <help placement="bottom" html="html">
+                      Vazio.
+                    </help>
+                  </cell>
+                  <cell name="localizacaocidadesestrangeiras" label="Cidades estrangeiras" entitylink="localizacaocidadeestrangeira" visible="localizacaopais.pais != '1058'" controltype="lookup" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" colspan="4">
+                  </cell> 
+                    </row>
+                    <row>
+                      <cell label="CEP" controltype="textedit" colspan="4" entitylink="localizacaocep">
+                        <validates>
+                          <validate type="maxlength" value="15" displaytext="Esse campo aceita no máximo 15 caracteres" />
+                        </validates>
+                      </cell>
+                      <cell label="Bairro" controltype="textedit" colspan="4" entitylink="localizacaobairro">
+                        <validates>
+                          <validate type="maxlength" value="60" displaytext="Esse campo aceita no máximo 60 caracteres" />
+                        </validates>
+                      </cell>
+                      <cell name="localizacaotipologradouro" controltype="lookup" label="Tipo" colspan="2" entitylink="localizacaotipologradouro" fielddetaillookup="{'tipologradouro':'Tipo', 'descricao':'Descrição'}" amountfieldslookup="2">
+                        <!-- <validates>
+                          <validate type="vnull" displaytext="O tipo de logradouro não pode estar vazio" />
+                        </validates> -->
+                      </cell>
+                    </row>
+                    <row>
+                      <cell label="Rua" controltype="textedit" colspan="4" entitylink="localizacaorua">
+                        <validates>
+                          <!-- <validate type="vnull" displaytext="A rua não pode estar vazia" /> -->
+                          <validate type="maxlength" value="150" displaytext="Esse campo aceita no máximo 150 caracteres" />
+                        </validates>
+                      </cell>
+                      <cell label="Número" controltype="textedit" colspan="4" entitylink="localizacaonumero">
+                        <validates>
+                          <!-- <validate type="vnull" displaytext="O número não pode estar vazio" /> -->
+                          <validate type="maxlength" value="10" displaytext="Esse campo aceita no máximo 10 caracteres" />
+                        </validates>
+                      </cell>
+                      <cell label="Complemento" controltype="textedit" colspan="8" entitylink="localizacaocomplemento">
+                        <validates>
+                          <validate type="maxlength" value="60" displaytext="Esse campo aceita no máximo 60 caracteres" />
+                        </validates>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell label="Referência" controltype="textarea" colspan="12" entitylink="localizacaoreferencia" />
+                    </row>
+                    <row>
+                      <!-- visible="exibeMunicipioSepultamento &amp;&amp; localizacaopais.pais == '1058'"  -->
+                      <cell name="localizacaoestadosepultamento" controltype="lookup" visible="localizacaopais.pais == '1058'" label="Estado de Sepultamento" colspan="4" entitylink="localizacaoestadosepultamento" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" />
+                      <cell name="localizacaomunicipiosepultamento" controltype="lookup" visible="localizacaopais.pais == '1058'" label="Município de Sepultamento" colspan="4" entitylink="localizacaomunicipiosepultamento" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                        <help placement="bottom" html="html">
+                          Vazio.
+                        </help>
+                        <!-- <validates>
+                          <validate type="vnull" displaytext="O campo não pode ser vazio"/>
+                        </validates> -->
+                      </cell>
+                    </row>
+                    <row>
+                      <cell entitylink="localizacaoexistentesalvar" visible="localizacao" controltype="combobox" label="Salvar endereço como um local" colspan="4">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio" />
+                        </validates>
+                      </cell>
+                      <cell entitylink="localizacaonovasalvar" visible="!localizacao" controltype="combobox" label="Salvar endereço como um local" colspan="4">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio" />
+                        </validates>
+                      </cell>
+                      <cell label="Identificação do local" controltype="textedit" colspan="4" entitylink="localizacaonome">
+                        <validates>
+                          <validate type="maxlength" value="150" displaytext="Esse campo aceita no máximo 150 caracteres" />
+                        </validates>
+                      </cell>
+                      <cell controltype="hidden" colspan="4" entitylink="localizacaosalvar" />
+                    </row>
+                  </groupbox>
+                </cell>
+              </row>
+              <row>
+                <cell entitylink="responsaveisfinanceiros" label="Responsável Financeiro" controltype="objectlist" colspan="12"/>
+              </row>
+              <row>
+                <cell label="Observações" entitylink="observacoes" controltype="textarea" colspan="12" />
+              </row>
+          </tab>
+          </tabs>
+        </bodyform>
+      </layout>
+    </form>
+    <form name="visualizacao" label="Dados do Atendimento Comercial">
+      <layout>
+        <headerform>
+            <row>
+                <cell>
+                  <groupbox>
+                    <row name="camposcustomizados">
+                        <cell label="camposcustomizados" controltype="textedit" colspan="12" entitylink="camposcustomizados" />
+                    </row>
+                  </groupbox>
+                </cell>
+              </row>
+              <row>
+                <cell>
+                  <groupbox>
+                      <row>
+                        <cell label="País" colspan="4" name="localizacaopais" controltype="lookup" entitylink="localizacaopais" fielddetaillookup="{'nome':'Nome'}"/>
+                        <cell label="Estado" visible="localizacaopais.nome == 'Brasil'" colspan="4" name="localizacaoestado" controltype="lookup"  entitylink="localizacaoestado" fielddetaillookup="{'nome':'Nome'}"/>
+                        <cell label="Município" visible="localizacaopais.nome == 'Brasil'" colspan="4"  name="localizacaomunicipio" controltype="lookup"   entitylink="localizacaomunicipio" fielddetaillookup="{'nome': 'Municipio'}"/>
+                        <cell label="Cidade Estrangeira" visible="localizacaopais.nome != 'Brasil'" colspan="4" name="localizacaocidadeestrangeira" controltype="lookup" entitylink="localizacaocidadeestrangeira" fielddetaillookup="{'nome':'Nome'}"/>
+                      </row>
+                  </groupbox>
+                </cell>
+              </row>
+              <!-- <row visible="seguradoranegociodadosseguradora" >
+                <cell>
+                    <groupbox>
+                        <row>
+                          <cell label="Seguradora" entitylink="cliente" controltype="lookup" colspan="4" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="1" />
+                          <cell label="Produto" entitylink="seguradoraprodutoseguradora" controltype="lookup" colspan="4" fielddetaillookup="{'nome':'Produto'}" amountfieldslookup="1">
+                            <lookupconstructors>
+                                <lookupconstructor valueapi='cliente' valueentity='cliente.cliente' />
+                            </lookupconstructors>
+                          </cell>
+                          <cell label="Apólice" entitylink="seguradoraapolice" controltype="lookup" colspan="4" fielddetaillookup="{'nome':'Apólice'}" amountfieldslookup="1">
+                              <lookupconstructors>
+                                  <lookupconstructor valueapi='templatepropostagrupo' valueentity='seguradoraprodutoseguradora.templatepropostagrupo' />
+                              </lookupconstructors>
+                          </cell>
+                        </row>
+                        <row>
+                            <cell label="Titular" entitylink="seguradoratitularnome" controltype="textedit" colspan="12" />
+                        </row>
+                    </groupbox>
+                </cell>
+              </row> -->
+              <row visible="negociosdadosseguradoras">
+                <cell entitylink="negociosdadosseguradoras" label="Dados Seguradora Atendimento Comercial" controltype="objectlist" colspan="12" />
+              </row>
+              <row>
+                <cell>
+                    <groupbox>
+                        <row>
+                            <cell controltype="textedit" label="Resp. Financeiro" colspan="4" entitylink="respfinanceiroprincipal" /> <!-- Notmapped, a partir do objectlist obtem o principal-->
+                            <cell controltype="textedit" label="Telefone" colspan="4" entitylink="respfinanceiroprincipaltelefone" /> 
+                            <cell controltype="textedit" label="Ramal" colspan="4" entitylink="respfinanceiroprincipaltelefoneramal" /> 
+                        </row>
+                      </groupbox>
+                </cell>
+              </row>
+              <row visible='false'>
+                <cell label="Depende de" entitylink="negociopai" controltype="lookup" colspan="6" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                  <filter field="negocio" condition="neq" value="negocio" />
+                </cell>
+              </row>
+              <row>
+                <cell label="Código" visible="true" colspan="4" controltype="textedit" entitylink="codigo"  readonly="true" />
+              </row>
+              <!-- Quando tiver o box de execução -->
+              <row>
+                <cell visible="configuracao &amp;&amp; configuracao.chave == 'INTEGRACAO_GP' &amp;&amp; configuracao.valor == '1' &amp;&amp; configuracao.sistema == 'CRMWEB' " label="Projeto" entitylink="projeto" controltype="lookup" colspan="4" fielddetaillookup="{'nome': 'Projeto', 'datainicio':'Data de Início', 'situacao':'Situação'}" amountfieldslookup="1"></cell>
+              </row>
+              <row visible="false">
+                <cell entitylink="responsaveisfinanceiros" label="Responsáveis Financeiros" controltype="objectlist" colspan="12" />
+              </row>
+              <row>
+                <cell label="Observações" entitylink="observacoes" controltype="textarea" colspan="12" />
+              </row>
+        </headerform>
+      </layout>
+    </form>
+    <form name="contrato" label="Gerar Contrato">
+      <layout>
+        <headerform>
+          <row>
+            <cell label="Forma de pagamento" colspan="12" controltype="lookup" entitylink="formapagamento" fielddetaillookup="{'descricao':'Descrição'}" amountfieldslookup="1" />
+          </row>
+          <row>
+            <cell controltype="textedit" colspan="6" entitylink="contratante"/>
+          </row>
+          <row>
+            <cell label="Município de prestação" colspan="12" controltype="lookup" entitylink="municipioprestacao" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" >
+              <lookupconstructors>
+                <lookupconstructor valueapi='pessoa' valueentity='cliente' />
+              </lookupconstructors>
+            </cell>
+          </row>
+        </headerform>
+        </layout>
+    </form>
+    <form name="geracontratotaxaadm" label="Gerar Contrato Taxa Administrativa">
+      <layout>
+        <headerform>
+            <row>
+                <cell controltype="textedit" colspan="6" entitylink="contratante"/>
+            </row>
+            <row>
+                <cell controltype="lookup" label="formapagamentotaxaadm" colspan="6" entitylink="formapagamentotaxaadm" fielddetaillookup="{'descricao':'Descrição'}" amountfieldslookup="1">
+                    <validates>
+                        <validate type="vnull" displaytext="O campo formapagamentotaxaadm não pode ser vazio."/>
+                    </validates>
+                </cell>
+                <cell controltype="lookup" label="municipioprestacaotaxaadm" colspan="6" entitylink="municipioprestacaotaxaadm" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                    <validates>
+                        <validate type="vnull" displaytext="O campo municipioprestacaotaxaadm não pode ser vazio."/>
+                    </validates>
+                </cell>
+                <cell controltype="money" label="valortaxaadm" colspan="6" entitylink="valortaxaadm" amountfieldslookup="3">
+                    <validates>
+                        <validate type="vnull" displaytext="O campo valortaxaadm não pode ser vazio."/>
+                        <validate type="maxlength" value="11" displaytext="O campo Valor aceita no máximo 10 dígitos" />
+                    </validates>
+                </cell>
+                <cell controltype="textedit" label="pessoa" colspan="6" entitylink="pessoa">
+                    <validates>
+                        <validate type="vnull" displaytext="O campo pessoa não pode ser vazio."/>
+                    </validates>
+                </cell>
+            </row>
+        </headerform>
+        </layout>
+    </form>
+    <form name="contratoexcluir" label="Excluir Contrato">
+        <layout>
+            <headerform>
+                <row>
+                    <cell controltype="textedit" colspan="6" entitylink="contratante">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Contratante não pode estar vazio"></validate>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </form>
+    <form name="visualizacaocompleta" label="Atendimento Comercial">
+        <layout>
+            <bodyform>
+                <tabs>
+                    <tab caption="Dados">
+                        <row>
+                            <cell controltype="textedit" label="Nome" colspan="12" entitylink="nome"/>
+                        </row>
+                        <row>
+                            <cell controltype="textedit" label="Código" colspan="6" entitylink="codigo"/>
+                            <cell label="Área de Atendimento" entitylink="area" controltype="lookup" colspan="6" 
+                                fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="4" allowinsertlookup="true"/>
+                        </row>
+                        <row>
+                            <cell label="Origem" entitylink="origem" controltype="lookup" colspan="6" 
+                                fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" allowinsertlookup="true"/>
+                            <cell label="Tipo de acionamento" entitylink="tiposacionamento" controltype="lookup" colspan="6" 
+                                fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                        </row>
+                        <row>
+                            <cell label="Depende de" entitylink="negociopai" controltype="lookup" colspan="12" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                                <filter field="negocio" condition="neq" value="negocio" />
+                                <help placement="bottom" html="html">
+                                    Define o atendimento principal no qual esse atendimento será dependente, utilizando o projeto do atendimento principal como referência.
+                                </help>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell controltype="lookup" label="Estabelecimento" readonly="negocio" colspan="12" 
+                                entitylink="estabelecimento" fielddetaillookup="nomefantasia"/>
+                        </row>
+                        <row>
+                            <cell controltype="radiobutton" colspan="6" entitylink="possuiseguradora" label="Possui seguro?" />
+                            <cell label="Cliente" visible="!possuiseguradora" entitylink="cliente" controltype="lookup" colspan="6" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="2">
+                                <filter field="tipo" condition="eq" entitylink="possuiseguradora" />
+                            </cell>
+                        </row>
+                        <row visible="possuiseguradora">
+                            <cell entitylink="negociosdadosseguradoras" label="Dados do Seguro" controltype="objectlist" colspan="12"/>
+                        </row>
+                        <row name="camposcustomizados">
+                            <cell label="camposcustomizados" controltype="textedit" colspan="12" entitylink="camposcustomizados" />
+                        </row>
+                        <row>
+                            <cell visible="area.localizacao">
+                                <groupbox>
+                                    <caption text="Localização {{'{{ $ctrl.entity.complementoCaption }}'}}" />
+                                    <row>
+                                        <cell label="CEP" controltype="textedit" colspan="4" entitylink="localizacaocep"/>
+                                        <cell name="localizacaopais" controltype="lookup" label="Pais" colspan="4" 
+                                            entitylink="localizacaopais" fielddetaillookup="{'nome':'País'}" amountfieldslookup="1"/>
+                                        
+                                        <cell name="localizacaoestado" controltype="lookup" label="Estado" colspan="4" 
+                                            entitylink="localizacaoestado" fielddetaillookup="{'nome':'Estado'}" amountfieldslookup="1"/>
+                                    </row>
+                                    <row visible="localizacaopais.pais == '1058'">
+                                        <cell name="localizacaoestadosepultamento" controltype="lookup" label="Estado de Sepultamento" colspan="12" entitylink="localizacaoestadosepultamento" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                                        <cell name="localizacaomunicipiosepultamento" controltype="lookup" 
+                                            label="Município de Sepultamento" colspan="12" entitylink="localizacaomunicipiosepultamento" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                                    </row>
+                                    <row>
+                                        <!-- Cidade do Brasil -->
+                                        <cell name="localizacaomunicipio" controltype="lookup" visible="localizacaopais.pais == '1058'" 
+                                            label="Municipio" colspan="4" entitylink="localizacaomunicipio" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                                        <!-- Cidade estrangeira -->
+                                        <cell name="localizacaocidadesestrangeiras" label="Cidades estrangeiras" visible="localizacaopais.pais != '1058'" 
+                                            entitylink="localizacaocidadeestrangeira" controltype="lookup" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" colspan="4"/> 
+                                        
+                                        <cell label="Bairro" controltype="textedit" colspan="4" entitylink="localizacaobairro"/>
+                                        <cell name="localizacaotipologradouro" controltype="lookup" label="Logradouro" colspan="2" 
+                                            entitylink="localizacaotipologradouro" fielddetaillookup="{'descricao':'Descrição'}" amountfieldslookup="2"/>
+                                    </row>
+                                    <row>
+                                        <cell label="Rua" controltype="textedit" colspan="8" entitylink="localizacaorua"/>
+                                        <cell label="Número" controltype="textedit" colspan="4" entitylink="localizacaonumero"/>
+                                    </row>
+                                    <row>
+                                        <cell label="Complemento" controltype="textedit" colspan="8" entitylink="localizacaocomplemento"/>
+                                        <cell label="Referência" controltype="textarea" colspan="4" entitylink="localizacaoreferencia" />
+                                    </row>
+                                </groupbox>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell entitylink="responsaveisfinanceiros" label="Responsável Financeiro" controltype="objectlist" colspan="12"/>
+                        </row>
+                        <row>
+                            <cell label="Observações" entitylink="observacoes" controltype="textarea" colspan="12" />
+                        </row>
+                    </tab>
+                </tabs>
+            </bodyform>
+        </layout>
+    </form>
+    <form name="baixardocumento" label="Baixar Documento">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="fornecedorobj" controltype="lookup" label="Fornecedor" 
+                        colspan="12" entitylink="fornecedorobj" fielddetaillookup="{'codigo':'Código'}">
+                    </cell>
+                    <cell name="documentofop" controltype="lookup" label="Template de documento" 
+                        colspan="12" entitylink="documentofop" fielddetaillookup="{'codigodocumento':'Código'}">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Template de documento não pode estar vazio"></validate>
+                        </validates>
+                    </cell>
+                    <cell colspan="12" entitylink="contratoGeracaoRps" controltype="textedit">
+                    </cell>
+                    <cell colspan="12" entitylink="tiporelatorioemissao" controltype="hidden" />
+                </row>
+            </headerform>
+        </layout>
+    </form>
+    <form name="enviaratendimentoemail" label="Enviar documentos de relatórios por e-mails">
+        <layout>
+            <headerform>
+                <row>
+                    <cell controltype="textedit" label="Mensagem" colspan="12" entitylink="mensagememail"/>
+                    <cell controltype="hidden" label="Configuração documento" colspan="12" entitylink="atcconfiguracaodocumento"/>
+                    <cell name="atcconfiguracaotemplateemail" controltype="lookup" label="Template de e-mail" 
+                        colspan="12" entitylink="atcconfiguracaotemplateemail" fielddetaillookup="{'codigo':'Código'}">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Template de e-mail não pode estar vazio"></validate>
+                        </validates>
+                        <lookupconstructors>
+                            <lookupconstructor valueapi='atcconfiguracaodocumento' valueentity='atcconfiguracaodocumento' />
+                        </lookupconstructors>
+                    </cell>
+                    <cell controltype="hidden" label="Identificação do nome da prestadora ou seguradora" colspan="12" entitylink="identificacaoEnvioEmailNome"/>
+                    <cell controltype="hidden" label="Identificação do tipo de envio prestadora, seguradora ou cliente" colspan="12" entitylink="identificacaoEnvioEmailTipo"/>
+                    <cell colspan="12" entitylink="tiporelatorioemissao" controltype="hidden">
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </form>
+    <form name="enviardocumentosporemail" label="Enviar documentos por e-mails">
+        <layout>
+            <headerform>
+                <row>
+                    <cell controltype="textedit" label="Mensagem" colspan="12" entitylink="mensagememail"/>
+                    <cell controltype="hidden" label="Identificação do nome da prestadora ou seguradora" colspan="12" entitylink="identificacaoEnvioEmailNome"/>
+                    <cell controltype="hidden" label="Identificação do tipo de envio prestadora, seguradora ou cliente" colspan="12" entitylink="identificacaoEnvioEmailTipo"/>
+                </row>
+            </headerform>
+        </layout>
+    </form>
+    <form name="rotasGoogleDirections" label="Buscar Rotas via Google Directions">
+        <layout>
+            <headerform>
+                <row>
+                    <cell controltype="textedit" label="Endereco Origem" colspan="12" entitylink="enderecoorigem">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Endereco Origem não pode estar vazio"></validate>
+                        </validates>
+                    </cell>
+                        
+                    <cell controltype="textedit" label="Endereco Destino" colspan="12" entitylink="enderecodestino">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Endereco Destino não pode estar vazio"></validate>
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="visualizacaocompleta">
+      <name>retrieve</name>
+    </action>
+    <action form="default" successMsg="O Atendimento Comercial foi criado com sucesso!">
+      <name>Insert</name>
+      <api>
+        <name>atcNovo_v9</name>
+        <fromto valueapi="nome" valueentity="nome" />
+        <fromto valueapi="codigo" valueentity="codigo" />
+        <fromto valueapi="area" valueentity="area" />
+        <fromto valueapi="origem" valueentity="origem" />
+        <fromto valueapi="created_by" valueentity="logged_user" />
+        <fromto valueapi="localizacaocidadeestrangeira" valueentity="localizacaocidadeestrangeira"/>
+        <fromto valueapi="localizacaoestado" valueentity="localizacaoestado"/>
+        <fromto valueapi="localizacaomunicipio" valueentity="localizacaomunicipio"/>
+        <fromto valueapi="localizacaopais" valueentity="localizacaopais"/>
+        <fromto valueapi="localizacaocep" valueentity="localizacaocep" />
+        <fromto valueapi="localizacaobairro" valueentity="localizacaobairro" />
+        <fromto valueapi="localizacaorua" valueentity="localizacaorua" />
+        <fromto valueapi="localizacaotipologradouro" valueentity="localizacaotipologradouro"/>
+        <fromto valueapi="localizacaonumero" valueentity="localizacaonumero" />
+        <fromto valueapi="localizacaocomplemento" valueentity="localizacaocomplemento" />
+        <fromto valueapi="localizacaoreferencia" valueentity="localizacaoreferencia" />
+        <fromto valueapi="localizacaosalvar" valueentity="localizacaosalvar" />
+        <fromto valueapi="localizacaonome" valueentity="localizacaonome" />
+        <fromto valueapi="id_pessoa" valueentity="cliente" />
+        <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+        <fromto valueapi="cliente" valueentity="cliente" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="negociopai" valueentity="negociopai" />
+        <fromto valueapi="responsaveisfinanceiros" valueentity="responsaveisfinanceiros" />
+        <fromto valueapi="referenciaexterna" valueentity="referenciaexterna" />
+        <fromto valueapi="observacoes" valueentity="observacoes" />
+        <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+        <fromto valueapi="datainicio" valueentity="datahorainicio" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="tiposacionamento" valueentity="tiposacionamento" />
+        <!-- <fromto valueapi="negociosdadosseguradoras" valueentity="negociosdadosseguradoras" /> -->
+        <!-- <fromto valueapi="datafim" valueentity="datahorafim" /> -->
+        <fromto valueapi="localizacaomunicipiosepultamento" valueentity="localizacaomunicipiosepultamento" />
+        <fromto valueapi="localizacaoestadosepultamento" valueentity="localizacaoestadosepultamento" />
+      </api>
+      <api>
+        <name>propostaNovo_v2</name>
+        <fromto valueapi="negocio" valueentity="negocio"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+      <!-- <api>
+          <name>negocioDadosSeguradoraNovo</name>
+          <fromto valueapi="negocio" valueentity="negocio" />
+          <fromto valueapi="sinistro" valueentity="seguradorasinistro" />
+          <fromto valueapi="titularvinculo" valueentity="seguradoratitularvinculo" />
+          <fromto valueapi="seguradora" valueentity="cliente" />
+          <fromto valueapi="produtoseguradora" valueentity="seguradoraprodutoseguradora" />
+          <fromto valueapi="apolice" valueentity="seguradoraapolice" />
+          <fromto valueapi="apoliceconfirmada" valueentity="seguradoraapoliceconfirmada" />
+          <fromto valueapi="apolicetipo" valueentity="seguradoraapolicetipo" />
+          <fromto valueapi="titularnome" valueentity="seguradoratitularnome" />
+          <fromto valueapi="titulartipodocumento" valueentity="seguradoratitulartipodocumento" />
+          <fromto valueapi="titularcnpj" valueentity="seguradoratitularcnpj" />
+          <fromto valueapi="titularcpf" valueentity="seguradoratitularcpf" />
+          <fromto valueapi="titularcontatos" valueentity="seguradoratitularcontatos" />
+          <fromto valueapi="created_at" valueentity="logged_user" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+      </api> -->
+    </action>
+    <action form="default" successMsg="O Atendimento Comercial foi editado com sucesso!">
+      <name>Update</name>
+      <api>
+        <name>atcAlterar_v9</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="nome" valueentity="nome" />
+        <fromto valueapi="codigo" valueentity="codigo" />
+        <fromto valueapi="area" valueentity="area" />
+        <fromto valueapi="origem" valueentity="origem" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+        <fromto valueapi="localizacaocidadeestrangeira" valueentity="localizacaocidadeestrangeira"/>
+        <fromto valueapi="localizacaoestado" valueentity="localizacaoestado"/>
+        <fromto valueapi="localizacaomunicipio" valueentity="localizacaomunicipio"/>
+        <fromto valueapi="localizacaopais" valueentity="localizacaopais"/>
+        <fromto valueapi="localizacaocep" valueentity="localizacaocep" />
+        <fromto valueapi="localizacaobairro" valueentity="localizacaobairro" />
+        <fromto valueapi="localizacaotipologradouro" valueentity="localizacaotipologradouro"/>
+        <fromto valueapi="localizacaorua" valueentity="localizacaorua" />
+        <fromto valueapi="localizacaonumero" valueentity="localizacaonumero" />
+        <fromto valueapi="localizacaocomplemento" valueentity="localizacaocomplemento" />
+        <fromto valueapi="localizacaoreferencia" valueentity="localizacaoreferencia" />
+        <fromto valueapi="localizacaosalvar" valueentity="localizacaosalvar" />
+        <fromto valueapi="localizacaonome" valueentity="localizacaonome" />
+        <fromto valueapi="id_pessoa" valueentity="cliente" />
+        <fromto valueapi="localizacao" valueentity="localizacao" />
+        <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+        <fromto valueapi="cliente" valueentity="cliente" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="negociopai" valueentity="negociopai" />
+        <fromto valueapi="responsaveisfinanceiros" valueentity="responsaveisfinanceiros" />
+        <fromto valueapi="referenciaexterna" valueentity="referenciaexterna" />
+        <fromto valueapi="observacoes" valueentity="observacoes" />
+        <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+        <fromto valueapi="projeto" valueentity="projeto" />
+        <fromto valueapi="datainicio" valueentity="datahorainicio" />
+        <fromto valueapi="flaghistorico" valueentity="flaghistorico" />
+        <fromto valueapi="tiposacionamento" valueentity="tiposacionamento" />
+        <!-- <fromto valueapi="datafim" valueentity="datahorafim" /> -->
+        <fromto valueapi="localizacaomunicipiosepultamento" valueentity="localizacaomunicipiosepultamento" />
+        <fromto valueapi="localizacaoestadosepultamento" valueentity="localizacaoestadosepultamento" />
+      </api>
+      <!-- <api>
+          <name>negocioDadosSeguradoraAlterar</name>
+          <fromto valueapi="negociodadosseguradora" valueentity="seguradoranegociodadosseguradora" />
+          <fromto valueapi="negocio" valueentity="negocio" />
+          <fromto valueapi="sinistro" valueentity="seguradorasinistro" />
+          <fromto valueapi="titularvinculo" valueentity="seguradoratitularvinculo" />
+          <fromto valueapi="seguradora" valueentity="cliente" />
+          <fromto valueapi="produtoseguradora" valueentity="seguradoraprodutoseguradora" />
+          <fromto valueapi="apolice" valueentity="seguradoraapolice" />
+          <fromto valueapi="apoliceconfirmada" valueentity="seguradoraapoliceconfirmada" />
+          <fromto valueapi="apolicetipo" valueentity="seguradoraapolicetipo" />
+          <fromto valueapi="titularnome" valueentity="seguradoratitularnome" />
+          <fromto valueapi="titulartipodocumento" valueentity="seguradoratitulartipodocumento" />
+          <fromto valueapi="titularcnpj" valueentity="seguradoratitularcnpj" />
+          <fromto valueapi="titularcpf" valueentity="seguradoratitularcpf" />
+          <fromto valueapi="titularcontatos" valueentity="seguradoratitularcontatos" />
+          <fromto valueapi="created_at" valueentity="logged_user" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+      </api> -->
+    </action>
+    <action form="contrato" label="Gerar Contrato" layer="front" successMsg="O Contrato foi gerado com sucesso!" failMsg="Ocorreu um erro ao gerar o contrato!">
+      <name>GeraContrato</name>
+      <api>
+        <name>geraContrato</name>
+        <fromto valueapi="cliente" valueentity="cliente" />
+        <fromto valueapi="formapagamento" valueentity="formapagamento" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+      </api>
+    </action>
+    <action form="contratoexcluir" label="Exclui Contrato" layer="front" successMsg="O Contrato foi excluído!" failMsg="Ocorreu um erro ao excluir o contrato!">
+        <name>ExcluiContrato</name>
+        <api>
+            <name>excluiContrato</name>
+            <fromto valueapi="negocio" valueentity="negocio" />
+            <fromto valueapi="contratante" valueentity="contratante" />
+            <fromto valueapi="tenant" valueentity="tenant" />
+            <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+            <fromto valueapi="updated_by" valueentity="logged_user"/>
+        </api>
+    </action>
+    <action form="geracontratotaxaadm" label="salvadadotaxaadm" successMsg="Os dados de Taxa Administrativa foram salvos com sucesso!" failMsg="Ocorreu um erro ao salvar os dados de taxa administrativa!">
+        <name>salvadadotaxaadm</name>
+        <api>
+            <name>atcsdadostaxaadministrativa</name>
+            <fromto valueapi="atc" valueentity="negocio" />
+            <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial" />
+            <fromto valueapi="tenant" valueentity="tenant" />
+            <fromto valueapi="municipioprestacao" valueentity="municipioprestacaotaxaadm" />
+            <fromto valueapi="formapagamento" valueentity="formapagamentotaxaadm" />
+            <fromto valueapi="valor" valueentity="valortaxaadm" />
+        </api>
+    </action>
+    <action form="geracontratotaxaadm" label="geracontratotaxaadm" layer="front" successMsg="O Contrato de Taxa Administrativa foi gerado com sucesso!" failMsg="Ocorreu um erro ao gerar o contrato de taxa administrativa!">
+        <name>geracontratotaxaadm</name>
+    </action>
+    <action form="geracontratotaxaadm" label="excluicontratotaxaadm" layer="front" successMsg="O Contrato de Taxa Administrativa foi excluido!" failMsg="Ocorreu um erro ao excluir o contrato de taxa administrativa!">
+        <name>excluicontratotaxaadm</name>
+    </action>
+    <action layer="back">
+      <name>EditaContratoNoAtc</name>
+      <api>
+        <name>EditaContratoNoAtc</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="contrato" valueentity="contrato" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action>
+      <name>atcStatusNovo</name>
+      <api>
+        <name>atcStatusNovo</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action>
+      <name>atcStatusEmAtendimento</name>
+      <api>
+        <name>atcStatusEmAtendimento</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action>
+      <name>atcStatusFechado</name>
+      <api>
+        <name>atcStatusFechado</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action layer="front">
+      <name>atcStatusReaberto</name>
+      <api>
+        <name>atcStatusReaberto</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action>
+      <name>atcStatusFinalizado</name>
+      <api>
+        <name>atcStatusFinalizado</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action>
+      <name>atcStatusCancelado</name>
+      <api>
+        <name>atcStatusCancelado_v3</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="negocioPai" valueentity="negociopai" />
+        <fromto valueapi="projeto" valueentity="projeto" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action layer="front">
+      <name>atcStatusDescancelado</name>
+      <api>
+        <name>atcStatusDescancelado</name>
+        <fromto valueapi="negocio" valueentity="negocio" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action form="baixardocumento">
+        <name>baixardocumento</name>
+        <api>
+            <name>baixardocumento</name>
+            <fromto valueapi="negocio" valueentity="negocio"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        </api>
+    </action>
+    <action form="enviaratendimentoemail">
+        <name>enviaratendimentoemail</name>
+        <api>
+            <name>enviaratendimentoemail</name>
+            <fromto valueapi="negocio" valueentity="negocio"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+            <fromto valueapi="identificacaoEnvioEmailNome" valueentity="identificacaoEnvioEmailNome"/>
+            <fromto valueapi="identificacaoEnvioEmailTipo" valueentity="identificacaoEnvioEmailTipo"/>
+        </api>
+    </action>
+    <action form="enviardocumentosporemail">
+        <name>enviardocumentosporemail</name>
+        <api>
+            <name>enviardocumentosporemail</name>
+            <fromto valueapi="negocio" valueentity="negocio"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+            <fromto valueapi="identificacaoEnvioEmailNome" valueentity="identificacaoEnvioEmailNome"/>
+            <fromto valueapi="identificacaoEnvioEmailTipo" valueentity="identificacaoEnvioEmailTipo"/>
+        </api>
+    </action>
+    <action form="rotasGoogleDirections">
+      <name>indexRotasGoogleDirections</name>
+      <api>
+          <name>indexRotasGoogleDirections</name>
+          <fromto valueapi="enderecoorigem" valueentity="enderecoorigem"/>
+          <fromto valueapi="enderecodestino" valueentity="enderecodestino"/>
+          <fromto valueapi="negocio" valueentity="negocio"/>
+          <fromto valueapi="tenant" valueentity="tenant"/>
+          <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

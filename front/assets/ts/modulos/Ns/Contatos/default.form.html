@@ -1,0 +1,226 @@
+ <form name="$ctrl.form" novalidate="novalidate" role="form"  class="height-full">
+               
+                    <div class="row " ><div class="col-sm-6" >
+                        <div class="form-group">
+	<label class="control-label" for="nome">Nome</label>
+	<input 
+		type='text' 
+		class="form-control" 
+		id="nome" name="nome" 
+		maxlength="150" 
+		ng-model="$ctrl.entity.nome" 
+		ng-disabled="$ctrl.entity.$$__submitting" 
+		ng-required="($ctrl.entity.$$__submitting) !== true"
+		ng-pattern=/^[a-zA-Z0-9\s:À-ú-]+$/ 	/>
+		
+	<div ng-messages="$ctrl.form.nome.$error" ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted">
+
+		<div class="alert alert-danger" role="alert" ng-message="maxlength">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Nome aceita no máximo 150 caracteres
+		</div>
+
+		<div class="alert alert-danger" role="alert" ng-message="required">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Nome não pode ser vazio
+		</div>
+
+		<div class="alert alert-danger" role="alert" ng-message="pattern">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O Nome só pode conter letras, números, espaço, dois pontos e hífen.
+		</div>
+
+	</div>
+</div>
+        </div><div class="col-sm-6" >
+                        <div class="form-group">
+	<label class="control-label" for="primeironome">Primeiro nome</label>
+	<input 
+		type='text' 
+		class="form-control" 
+		id="primeironome" 
+		name="primeironome" 
+		maxlength="50" 
+		ng-model="$ctrl.entity.primeironome" 
+		ng-disabled="$ctrl.entity.$$__submitting" 
+		ng-required="($ctrl.entity.$$__submitting) !== true"
+		ng-pattern=/^[a-zA-Z0-9\s:À-ú-]+$/ 	/>
+		
+		<div ng-messages="$ctrl.form.primeironome.$error" ng-if="$ctrl.form.primeironome.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="required">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Primeiro nome não pode ser vazio
+		</div>
+		<div class="alert alert-danger" role="alert" ng-message="maxlength">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Primeiro nome aceita no máximo 50 caracteres
+		</div>
+
+		<div class="alert alert-danger" role="alert" ng-message="pattern">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O Primeiro Nome só pode conter letras, números, espaço, dois pontos e hífen.
+		</div>
+
+	</div>
+</div>
+        </div></div><div class="row " ><div class="col-sm-6" >
+                        <div class="form-group">
+	<label class="control-label" for="sobrenome">Sobrenome</label>
+	<input
+		type='text' 
+		class="form-control" 
+		id="sobrenome" 
+		name="sobrenome" 
+		maxlength="100" 
+		ng-model="$ctrl.entity.sobrenome" 
+		ng-disabled="$ctrl.entity.$$__submitting"
+		ng-pattern=/^[a-zA-Z0-9\s:À-ú-]+$/ 	/>
+		
+	<div ng-messages="$ctrl.form.sobrenome.$error" ng-if="$ctrl.form.sobrenome.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="maxlength">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Sobrenome aceita no máximo 100 caracteres
+		</div>
+
+		<div class="alert alert-danger" role="alert" ng-message="pattern">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O Sobrenome só pode conter letras, números, espaço, dois pontos e hífen.
+		</div>
+
+	</div>
+</div>
+        </div><div class="col-sm-6" >
+                        <div class="form-group">
+	<label class="control-label" for="cargo">Cargo</label>
+	<input 
+		type='text' 
+		class="form-control" 
+		id="cargo" 
+		name="cargo" 
+		maxlength="100" 
+		ng-model="$ctrl.entity.cargo" 
+		ng-disabled="$ctrl.entity.$$__submitting"
+		ng-pattern=/^[a-zA-Z0-9\s:À-ú-]+$/ 	/>
+		
+	<div ng-messages="$ctrl.form.cargo.$error" ng-if="$ctrl.form.cargo.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="maxlength">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Cargo aceita no máximo 100 caracteres
+		</div>
+
+		<div class="alert alert-danger" role="alert" ng-message="pattern">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O Cargo só pode conter letras, números, espaço, dois pontos e hífen.
+		</div>
+
+	</div>
+</div>
+        </div></div><div class="row " ><div class="col-sm-6" >
+                        <div class="form-group">
+	<label class="control-label" for="setor">Setor</label>
+	<input 
+		type='text' 
+		class="form-control" 
+		id="setor" 
+		name="setor" 
+		maxlength="60" 
+		ng-model="$ctrl.entity.setor" 
+		ng-disabled="$ctrl.entity.$$__submitting"
+		ng-pattern=/^[a-zA-Z0-9\s:À-ú-]+$/ 	/>
+		
+	<div ng-messages="$ctrl.form.setor.$error" ng-if="$ctrl.form.setor.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="maxlength">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Setor aceita no máximo 60 caracteres
+		</div>
+
+		<div class="alert alert-danger" role="alert" ng-message="pattern">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O Setor só pode conter letras, números, espaço, dois pontos e hífen.
+		</div>
+
+	</div>
+</div>
+        </div><div class="col-sm-6" >
+			<div class="custom-checkbox checkbox checkbox-margin-top" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+				<label class="control-label"
+					for="principal"><input type='checkbox' class="" id="principal" name="principal"
+						ng-model="$ctrl.entity.principal" ng-disabled="$ctrl.entity.$$__submitting" /><span
+						class="checkmark"></span>
+					Principal
+				</label>
+			</div>
+                        </div></div><div class="row " ><div class="col-sm-12" >
+                                                    <div class="form-group"><label class="control-label" for="email">Email</label><input type='email' class="form-control"     id="email" name="email"          pattern=".+@.+(\..+)+"
+                                                                                    maxlength="100" ng-model="$ctrl.entity.email" ng-disabled="$ctrl.entity.$$__submitting" /><div ng-messages="$ctrl.form.email.$error"  ng-if="$ctrl.form.email.$dirty || $ctrl.form.$submitted"><div class="alert alert-danger" role="alert" ng-message="email" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    Email em formato inválido.
+                    
+                    
+                </div><div class="alert alert-danger" role="alert" ng-message="pattern" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    Email em formato inválido.
+                </div><div class="alert alert-danger" role="alert" ng-message="maxlength" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    
+                    
+                    O campo Email aceita no máximo 100 caracteres
+                </div></div></div>
+                        </div></div><div class="row " ><div class="col-sm-12" >
+                        <div class="form-group">
+	<label class="control-label" for="observacao">Observação</label>
+	<textarea 
+		class="form-control" 
+		id="observacao" 
+		name="observacao" 
+		ng-model="$ctrl.entity.observacao" 
+		ng-disabled="$ctrl.entity.$$__submitting"
+		ng-pattern=/^[a-zA-Z0-9\s:À-ú-]+$/ 	>	
+	</textarea>
+
+	<div ng-messages="$ctrl.form.observacao.$error" ng-if="$ctrl.form.observacao.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="pattern">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			A Observação só pode conter letras, números, espaço, dois pontos e hífen.
+		</div>
+
+	</div>
+
+</div>
+		</div>
+		</div>
+		<div class="row ">
+			<div class="col-sm-12">
+				<fieldset>
+					<legend class="subtitulo-modal">
+						Telefones
+					</legend>
+					<div class="row ">
+						<div class="col-sm-12">
+							<div class="pull-right bottom-buffer">
+								<a class="btn btn-md btn-warning botao-add-table"
+									ng-click="$ctrl.nsTelefonesForm(service.constructors)">
+									<i class="fas fa-plus"></i>
+									Adicionar
+								</a>
+							</div>
+							<nsj-objectlist 
+								key="nome" 
+								ng-prop-columns="$ctrl.telefonesConfig"
+								ng-prop-config="$ctrl.montaListaTelefones" 
+								ng-prop-list="$ctrl.entity.telefones"
+								ng-on-list_change="$ctrl.atualizaTelefones($event.detail.data)"
+							>
+							</nsj-objectlist>
+        </div></div></fieldset></div></div>
+</form>

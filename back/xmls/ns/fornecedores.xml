@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="fornecedores" label="fornecedores" project="ns">
+    <entity schema="ns" table="vw_fornecedores_v5">
+        <fieldmodel name="fornecedor" datatype="guid" isid="true" column="fornecedor"/>
+        <fieldmodel name="codigofornecedores" datatype="string"  column="pessoa"/>
+        <fieldmodel name="razaosocial" datatype="string"  column="nome"/>
+        <fieldmodel name="nomefantasia" datatype="string"  column="nomefantasia"/>
+        <fieldmodel name="identidade" notMapped="true" />
+        <fieldmodel name="documento" notMapped="true"/>
+        <fieldmodel name="cnpj" datatype="string"  column="cnpj"/>
+        <fieldmodel name="inscricaomunicipal" datatype="string"  column="inscricaomunicipal"/>
+        <fieldmodel name="endereco" datatype="objectlist"  column="id_pessoa" useCaseLink="ns\enderecos" entityJoinType="left"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+        <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+        <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+        <fieldmodel name="funcionarioativado" datatype="boolean"  column="funcionarioativado"/>
+        <fieldmodel name="contribuinteindividualativado" datatype="boolean"  column="contribuinteindividualativado"/>
+        <fieldmodel name="contatos" datatype="objectlist" column="pessoa" useCaseLink="ns\contatos" entityJoinType="left"/>
+        <fieldmodel name="dadosbancarios" datatype="objectlist" column="fornecedor" useCaseLink="financas\contasfornecedores" entityJoinType="left"/>
+        <fieldmodel name="tipoasatividades" datatype="objectlist"  column="pessoa" useCaseLink="ns\pessoastiposatividades" entityJoinType="left"/>
+        <fieldmodel name="tiposatividadesfilter" datatype="guid" notMapped="true"  useCaseLink="ns\tiposatividades" entityJoinType="left"/>
+        <fieldmodel name="faturanamatriz" datatype="boolean" notMapped="true"/>
+        <fieldmodel name="esperapagamentoseguradora" datatype="boolean" column="esperapagamentoseguradora">
+          <options> {"0":"Não","1":"Sim"} </options>
+      </fieldmodel>
+        <fieldmodel name="diasparavencimento" datatype="integer" column="diasparavencimento" />
+        <fieldmodel name="motivosuspensao" datatype="string" column="suspensao_motivo"/>
+        <fieldmodel name="tiposuspensao" datatype="integer" notMapped="true">
+            <options>{"1":"Suspender", "2":"Banir"}</options>
+        </fieldmodel>
+        <fieldmodel name="datafimsuspensao" datatype="date" column="suspensao_datafim"/>
+        <fieldmodel name="motivoremocaosuspensao" datatype="string" notMapped="true" />
+        <fieldmodel name="status" datatype="integer" column="status">
+            <options> {"0":"Ativa","1":"Suspensa","2":"Banida"} </options>
+        </fieldmodel>
+        <!-- Histórico -->
+        <fieldmodel name="historicofornecedores" datatype="objectlist" column="fornecedor" useCaseLink="ns\historicofornecedores" entityJoinType="left"/>
+        <fieldmodel name="paisnome" datatype="string" notMapped="true" />
+        <fieldmodel name="advertencia" datatype="objectlist" column="fornecedor" useCaseLink="ns\advertencias" entityJoinType="left"/>
+        <fieldmodel name="motivoadvertencia" datatype="string" notMapped="true"/>
+        <fieldmodel name="nomeadvertencia" datatype="string" notMapped="true"/>
+        <fieldmodel name="fornecedoresdocumentos" datatype="objectlist" column="fornecedor" useCaseLink="ns\fornecedoresdocumentos" entityJoinType="left"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+        <fieldmodel name="cadastro" datatype="integer" notMapped="true">
+            <options> {"1":"CNPJ","2":"CPF"} </options>
+        </fieldmodel>
+        <fieldmodel name="cpf" datatype="textedit" notMapped="true"/>
+        <fieldmodel name="estabelecimentoid" datatype="guid" column="estabelecimentoid" useCaseLink="ns\estabelecimentos" entityJoinType="left"/>
+        <fieldmodel name="anotacao" datatype="string" column="anotacao"/>
+        <fieldmodel name="pathlogo" datatype="string" column="path_logo"/>
+        <fieldmodel name="enviaremail" datatype="boolean" notMapped="true"/>
+        <fieldmodel name="municipionome" datatype="string" column="municipio_nome"/>
+        <fieldmodel name="fornecedoresanexos" datatype="objectlist" column="fornecedoresanexos" useCaseLink="ns\fornecedoresanexos" entityJoinType="left" />
+        <fieldmodel name="formapagamento" datatype="guid" column="id_formapagamento_fornecedor" useCaseLink="ns\formaspagamentos" entityJoinType="left"/>
+    </entity>
+    <constructors>
+      <constructoritem>tenant</constructoritem>
+      <constructoritem>id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser label="Prestadoras de Serviços" layout="list" paginate="true" target="builtin">
+      <filters style="fixed">
+          <fieldsfilters>
+              <fieldfilter entitylink="tiposatividadesfilter"  maxoccurs='unbounded' >
+                <lookup fielddetail="{'nome':'Nome'}" allowinsert="false" />
+                   <conditions>
+                       <condition type="eq"/>
+                   </conditions>
+              </fieldfilter>
+              <fieldfilter label="Situação" entitylink="status" maxoccurs='1' visible="true">
+                  <conditions>
+                      <condition type="eq"/>
+                  </conditions>
+              </fieldfilter>
+              <fieldfilter entitylink="municipionome" label="Município" maxoccurs="unbounded" visible="false">
+                <conditions>
+                  <condition type="eq"></condition>
+                </conditions>
+              </fieldfilter>
+              <fieldfilter entitylink="funcionarioativado" label="Funcionário ativado" maxoccurs="unbounded" visible="false">
+                <conditions>
+                  <condition type="eq"></condition>
+                </conditions>
+              </fieldfilter>
+              <fieldfilter entitylink="contribuinteindividualativado" label="Contribuinte Individual ativado" maxoccurs="unbounded" visible="false">
+                <conditions>
+                  <condition type="eq"></condition>
+                </conditions>
+              </fieldfilter>
+          </fieldsfilters>
+      </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="fornecedor" isid="true" visible="false"/>
+            <fieldbrowser alias="Nome Fantasia" entitylink="nomefantasia" visible="true" cansearch="true" indefaultorder="true"/>
+            <fieldbrowser entitylink="tiposatividadesfilter" visible="false" cansearch="false" fielddetaillookup="{'nome': 'Nome'}" />
+            <fieldbrowser entitylink="razaosocial" alias="Razão Social" cansearch="true" visible="false"/>
+            <fieldbrowser entitylink="cnpj" alias="CNPJ" cansearch="true" visible="false"/>
+            <fieldbrowser alias="Documento" entitylink="cnpj" visible="true"/>
+            <fieldbrowser alias="Município" entitylink="municipionome" visible="true" cansearch="true"/>
+            <fieldbrowser entitylink="codigofornecedores" visible="false"/>
+            <fieldbrowser alias="Status" style="label" entitylink="status" visible="true" labelcolors="{'green':'status == \'0\'','red':'status != \'0\''}" />
+            <fieldbrowser entitylink="esperapagamentoseguradora" visible="false" />
+            <fieldbrowser entitylink="diasparavencimento" visible="false" />
+            <fieldbrowser entitylink="estabelecimentoid" visible="false" />
+            <fieldbrowser entitylink="funcionarioativado" visible="false" />
+            <fieldbrowser entitylink="contribuinteindividualativado" visible="false" />
+            <fieldbrowser alias="Anotação" entitylink="anotacao" visible="false"/>
+            <fieldbrowser entitylink="formapagamento" visible="false" cansearch="false" fielddetaillookup="{'descricao': 'Nome'}"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Prestadora de Serviços">
+          <layout>
+              <bodyform>
+                <tabs>
+                  <tab caption="Dados Gerais">
+                    <row>
+                      <cell>
+                        <groupbox>
+                          <caption text="Dados básicos"></caption>
+                          <row>
+                            <cell name="nomefantasia" controltype="textedit" label="Nome Fantasia" colspan="6" entitylink="nomefantasia">
+                              <validates>
+                                <validate type="maxlength" value="150" displaytext="O Nome Fantasia aceita no máximo 150 caracteres"/>
+                                <validate type="vnull" displaytext="O campo Nome Fantasia não pode ser vazio"/>
+                              </validates>
+                            </cell>
+                            <cell name="razaosocial" controltype="textedit" label="Razão Social" colspan="6" entitylink="razaosocial" >
+                              <validates>
+                                <validate type="maxlength" value="150" displaytext="O campo Razão Social aceita no máximo 150 caracteres"/>
+                                <validate type="vnull" displaytext="O campo Razão Social não pode ser vazia"/>
+                              </validates>
+                            </cell>
+                          </row>
+                          <row>
+                            <cell name="codigofornecedores" controltype="textedit" label="Código" colspan="6" entitylink="codigofornecedores" >
+                              <validates>
+                                <validate type="unique"  displaytext="Esse código já foi cadastrado"/>
+                                <validate type="maxlength" value="30" displaytext="O Codigo aceita no máximo 30 caracteres"/>
+                                <validate type="vnull" displaytext="O campo Codigo não pode ser vazio"/>
+                              </validates>
+                            </cell>
+                            <cell name="cadastro" controltype="combobox" label="Cadastro" colspan="6" entitylink="cadastro" visible="!fornecedor &amp;&amp; cadastro != 3" readonly="fornecedor">
+                              <validates>
+                                <validate type="vnull" displaytext="O campo cadastro não pode ser vazio"/>
+                              </validates>
+                            </cell>                             
+                            <cell controltype="cpf" colspan="6" entitylink="cpf" label="CPF" readonly="cadastro == 1 || cadastro == null" >
+                             <validates>
+                                <validate type="maxlength" value="11" displaytext="O CPF aceita no máximo 11 caracteres"/>
+                                <validate type="vnull" displaytext="O campo CPF não pode ser vazio"/>
+                              </validates>
+                            </cell>
+                            <cell name="cnpj" controltype="cnpj" label="CNPJ" colspan="6" entitylink="cnpj" readonly="cadastro == 2 || cadastro == null"> 
+                              <validates>
+                                <validate type="maxlength" value="14" displaytext="O campo aceita no máximo 14 caracteres"/>
+                                <validate type="unique"  displaytext="Esse cnpj já foi cadastrado"/>
+                                <validate type="vnull" displaytext="O campo CNPJ não pode ser vazio"/>
+                              </validates>
+                            </cell>
+                            <cell name="inscricaomunicipal" controltype="textedit" label="Inscrição Municipal" colspan="6" entitylink="inscricaomunicipal">
+                              <validates>
+                                <validate type="maxlength" value="20" displaytext="O campo Inscrição Municipal aceita no máximo 20 caracteres"/>
+                              </validates>
+                            </cell>
+                            <cell label="Estabelecimento" entitylink="estabelecimentoid" controltype="lookup" colspan="6" fielddetaillookup="{'nomefantasia':'Nome'}" amountfieldslookup="1"/>
+                            <cell name="esperapagamentoseguradora" controltype="combobox" label="Espera Pagamento da Seguradora?" colspan="6" entitylink="esperapagamentoseguradora" />
+                          </row>
+                           <!--Adicionando linha de status-->
+                          <row>
+                              <cell name="status" controltype="combobox" label="Status" colspan="6" entitylink="status" readonly="true" visible="fornecedor">
+                              </cell>
+                              <!-- Data para reativação, caso a fornecedora esteja suspensa -->
+                              <cell name="datafimsuspensao" controltype="dateinput" label="Data para Reativação" colspan="6" entitylink="datafimsuspensao" readonly="true" visible="datafimsuspensao!=null&amp;&amp;fornecedor" />
+                          </row>
+                          <row>
+                              <cell name="motivosuspensao" controltype="textedit" label="Motivo" colspan="12" entitylink="motivosuspensao" readonly="true" visible="motivosuspensao!=null&amp;&amp;fornecedor" />
+                              <cell name="formapagamento" controltype="lookup" label="Forma de Pagamento" colspan="6" entitylink="formapagamento" fielddetaillookup="{'descricao':'Descrição'}" amountfieldslookup="1"/>
+                          </row>
+                        </groupbox>
+                      </cell>
+                    </row>
+                  </tab>
+                  <tab caption="Contatos">
+                    <row>
+                      <cell colspan="12" name="contatos" controltype="objectlist" entitylink="contatos" label="Contato"/>
+                    </row>
+                  </tab>
+                  <tab caption="Endereços">
+                    <row>
+                      <cell colspan="12" name="endereco" controltype="objectlist" entitylink="endereco" label="Endereço"/>
+                    </row>
+                  </tab>
+                  <tab caption="Dados Bancários">
+<!--                    <row>
+                      <cell colspan="12" name="faturanamatriz" controltype="checkbox" entitylink="faturanamatriz" label="Fatura na Matriz"/>
+                    </row> -->
+                    <row>
+                      <cell>
+                       <groupbox>
+                         <row>
+                          <cell colspan="12" name="dadosbancarios" controltype="objectlist" entitylink="dadosbancarios" label="Contato"/>
+                         </row>
+                       </groupbox>
+                      </cell>
+                    </row>
+                  </tab>
+                  <tab caption="Tipos de Atividade">
+                    <row>
+                      <cell colspan="12" name="tipoasatividades" controltype="objectlist" entitylink="tipoasatividades" />
+                    </row>
+                  </tab>
+                  <tab caption="Documentos">
+                      <row>
+                          <cell colspan="12" name="fornecedoresdocumentos" controltype="objectlist" entitylink="fornecedoresdocumentos" />
+                      </row>
+                  </tab>
+                  <tab caption="Anotações">
+                    <row>
+                      <cell name="anotacao" controltype="textarea" colspan="12" entitylink="anotacao" />
+                    </row>
+                  </tab>
+                </tabs>
+              </bodyform>
+          </layout>
+      </form>
+      <form name="show" label="Prestadora de Serviços">
+          <layout>
+              <bodyform>
+                <tabs>
+                  <tab caption="Dados Gerais">
+                    <row>
+                      <cell>
+                        <groupbox>
+                          <caption text="Dados básicos"></caption>
+                          <row>
+                            <cell name="nomefantasia" controltype="textedit" label="Nome Fantasia" colspan="6" entitylink="nomefantasia">
+                              <validates>
+                                <validate type="maxlength" value="150" displaytext="O campo aceita no máximo 150 caracteres"/>
+                                <validate type="vnull" displaytext="O campo Nome Fantasia não pode ser vazio"/>
+                              </validates>
+                            </cell>
+                            <cell name="razaosocial" controltype="textedit" label="Razão Social" colspan="6" entitylink="razaosocial" readonly="fornecedor">
+                              <validates>
+                                <validate type="maxlength" value="150" displaytext="O campo aceita no máximo 150 caracteres"/>
+                                <validate type="vnull" displaytext="O campo Razão Social não pode ser vazia"/>
+                              </validates>
+                            </cell>
+                          </row>
+                          <row>
+                            <cell name="codigofornecedores" controltype="textedit" label="Código" colspan="6" entitylink="codigofornecedores" readonly="fornecedor">
+                              <validates>
+                                <validate type="maxlength" value="30" displaytext="O Codigo aceita no máximo 30 caracteres"/>
+                                <validate type="vnull" displaytext="O campo Codigo não pode ser vazio"/>
+                              </validates>
+                            </cell>
+                            <cell name="cnpj" controltype="cnpj" label="CNPJ" colspan="6" entitylink="cnpj" readonly="fornecedor">
+                              <validates>
+                                <validate type="maxlength" value="18" displaytext="O CNPJ no máximo 18 caracteres"/>
+                                <!--<validate type="unique"  displaytext="Esse cnpj já foi cadastrado"/>-->
+                                <validate type="vnull" displaytext="O campo CNPJ não pode ser vazio"/>
+                              </validates>
+                            </cell>
+                            <cell name="inscricaomunicipal" controltype="textedit" label="Inscrição Municipal" colspan="6" entitylink="inscricaomunicipal">
+                              <validates>
+                                <validate type="maxlength" value="20" displaytext="O campo Inscrição Municipal aceita no máximo 20 caracteres"/>
+                              </validates>
+                            </cell>
+                            <cell label="Estabelecimento" entitylink="estabelecimentoid" controltype="lookup" colspan="6" fielddetaillookup="{'nomefantasia':'Nome'}" amountfieldslookup="1"/>
+                          </row>
+                          <row>
+                              <cell name="status" controltype="combobox" label="Status" colspan="6" entitylink="status" readonly="true" visible="fornecedor">
+                              </cell>
+                              <cell name="datafimsuspensao" controltype="dateinput" label="Data para Reativação" colspan="6" entitylink="datafimsuspensao" readonly="true" visible="datafimsuspensao!=null&amp;&amp;fornecedor" />
+                          </row>
+                          <row>
+                              <cell name="motivosuspensao" controltype="textedit" label="Motivo" colspan="12" entitylink="motivosuspensao" readonly="true" visible="motivosuspensao!=null&amp;&amp;fornecedor" />
+                              <cell name="formapagamento" controltype="lookup" label="Forma de Pagamento" colspan="6" entitylink="formapagamento" fielddetaillookup="{'descricao':'Descrição'}" amountfieldslookup="1"/>
+                          </row>
+                        </groupbox>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell>
+                         <groupbox>
+                           <caption text="Histórico" />
+                             <row>
+                               <cell name="historicofornecedores" controltype="objectlist" entitylink="historicofornecedores" label="Histórico" />
+                             </row>
+                         </groupbox>
+                      </cell>
+                    </row>
+                  </tab>
+                  <tab caption="Contatos">
+                    <row>
+                      <cell colspan="12" name="contatos" controltype="objectlist" entitylink="contatos" label="Contato"/>
+                    </row>
+                  </tab>
+                  <tab caption="Endereços">
+                    <row>
+                      <cell colspan="12" name="endereco" controltype="objectlist" entitylink="endereco" label="Endereço"/>
+                    </row>
+                  </tab>
+                  <tab caption="Dados Bancários">
+<!--                    <row>
+                      <cell colspan="12" name="faturanamatriz" controltype="checkbox" entitylink="faturanamatriz" label="Fatura na Matriz"/>
+                    </row> -->
+                    <row>
+                      <cell>
+                       <groupbox>
+                         <row>
+                          <cell colspan="12" name="dadosbancarios" controltype="objectlist" entitylink="dadosbancarios" label="Contato"/>
+                         </row>
+                       </groupbox>
+                      </cell>
+                    </row>
+                  </tab>
+                  <tab caption="Tipos de Atividade">
+                    <row>
+                      <cell colspan="12" name="tipoasatividades" controltype="objectlist" entitylink="tipoasatividades" />
+                    </row>
+                  </tab>
+                  <tab caption="Advertências">
+                    <row>
+                      <cell colspan="12" controltype="objectlist" entitylink="advertencia" />
+                    </row>
+                  </tab>
+                  <tab caption="Documentos">
+                      <row>
+                          <cell colspan="12" name="fornecedoresdocumentos" controltype="objectlist" entitylink="fornecedoresdocumentos" />
+                      </row>
+                  </tab>
+                  <tab caption="Anotações">
+                    <row>
+                      <cell name="anotacao" controltype="textarea" colspan="12" entitylink="anotacao" />
+                    </row>
+                  </tab>
+                </tabs>
+              </bodyform>
+          </layout>
+      </form>
+      <form name="suspender" label="Suspender prestadora de serviço">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="tiposuspensao" entitylink="tiposuspensao" colspan="4" label="Tipo" controltype="combobox" >
+                        <validates>
+                          <validate type="vnull" displaytext="O campo Tipo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                      <cell name="datafimsuspensao" visible="tiposuspensao==1" entitylink="datafimsuspensao" colspan="8" label="Suspender até o dia" controltype="dateinput" />
+                  </row>
+                  <row>
+                      <cell name="motivosuspensao" entitylink="motivosuspensao" colspan="12" label="Motivo" controltype="textarea">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo Motivo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                  </row>
+              </headerform>
+          </layout>
+      </form>
+      <form name="fornecedorreativar" label="Remover Suspensão">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="motivoremocaosuspensao" defaultvalue="" entitylink="motivoremocaosuspensao" colspan="12" label="Motivo" controltype="textarea">
+                      </cell>
+                  </row>
+              </headerform>
+          </layout>
+      </form>
+      <form name="fornecedoradvertir" label="Advertir Prestadora de Serviços">
+          <layout>
+             <headerform>
+                <row>
+                    <cell label="Estabelecimento" entitylink="estabelecimentoid" controltype="lookup" colspan="6" fielddetaillookup="{'nomefantasia':'Nome'}" amountfieldslookup="1">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Estabelecimento não pode estar vazio" />
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="nomeadvertencia" entitylink="nomeadvertencia" colspan="12" label="Nome" controltype="textedit">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Nome não pode estar vazio" />
+                            <validate type="maxlength" value="60" displaytext="O campo Nome aceita no máximo 60 caracteres"/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="motivoadvertencia" entitylink="motivoadvertencia" colspan="12" label="Motivo" controltype="textarea">
+                        <validates>
+                            <validate type="vnull" displaytext="O campo Motivo não pode estar vazio."/>
+                        </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell name="enviaremail" entitylink="enviaremail" colspan="12" label="Enviar e-mail?" controltype="checkbox">
+                    </cell>
+                </row>
+             </headerform>
+          </layout>
+        </form>
+    </forms>
+    <actions>
+        <action form="show">
+          <name>retrieve</name>
+        </action>
+        <action form="default" successMsg="A Prestadora de Serviços foi criada com sucesso!" failMsg="Ocorreu um erro ao criar a Prestadora de Serviços!">
+            <name>Insert</name>
+            <api>
+                <name>fornecedorNovo_v6</name>
+                <fromto valueapi="codigo" valueentity="codigofornecedores"/>
+                <fromto valueapi="nome" valueentity="razaosocial"/>
+                <fromto valueapi="nomefantasia" valueentity="nomefantasia"/>
+                <fromto valueapi="identidade" valueentity="identidade"/>
+                <fromto valueapi="documento" valueentity="documento"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+                <fromto valueapi="cnpj" valueentity="cnpj"/>
+                <fromto valueapi="inscricaomunicipal" valueentity="inscricaomunicipal"/>
+                <fromto valueapi="esperapagamentoseguradora" valueentity="esperapagamentoseguradora"/>
+                <fromto valueapi="diasparavencimento" valueentity="diasparavencimento"/>
+                <fromto valueapi="faturanamatriz" valueentity="faturanamatriz"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="estabelecimentoid" valueentity="estabelecimentoid"/> 
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="contatos" valueentity="contatos"/>
+                <fromto valueapi="dadosbancarios" valueentity="dadosbancarios"/>
+                <fromto valueapi="tipoasatividades" valueentity="tipoasatividades"/>
+				        <fromto valueapi="fornecedoresdocumentos" valueentity="fornecedoresdocumentos"/>
+                <fromto valueapi="endereco" valueentity="endereco"/> 
+                <fromto valueapi="anotacao" valueentity="anotacao"/> 
+                <fromto valueapi="formapagamento" valueentity="formapagamento"/> 
+            </api>
+        </action>
+        <action form="default" successMsg="A Prestadora de Serviços foi editada com sucesso!" failMsg="Ocorreu um erro ao editar a Prestadora de Serviços!">
+            <name>Update</name>
+            <api>
+                <name>fornecedorAlterar_v7</name>
+                <fromto valueapi="fornecedor" valueentity="fornecedor"/>
+                <fromto valueapi="codigo" valueentity="codigofornecedores"/>
+                <fromto valueapi="nome" valueentity="razaosocial"/>
+                <fromto valueapi="nomefantasia" valueentity="nomefantasia"/>
+                <fromto valueapi="identidade" valueentity="identidade"/>
+                <fromto valueapi="documento" valueentity="documento"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+                <fromto valueapi="cnpj" valueentity="cnpj"/>
+                <fromto valueapi="inscricaomunicipal" valueentity="inscricaomunicipal"/>
+                <fromto valueapi="esperapagamentoseguradora" valueentity="esperapagamentoseguradora"/>
+                <fromto valueapi="diasparavencimento" valueentity="diasparavencimento"/>
+                <fromto valueapi="faturanamatriz" valueentity="faturanamatriz"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="estabelecimentoid" valueentity="estabelecimentoid"/> 
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="contatos" valueentity="contatos"/>
+                <fromto valueapi="dadosbancarios" valueentity="dadosbancarios"/>
+                <fromto valueapi="tipoasatividades" valueentity="tipoasatividades"/>
+				        <fromto valueapi="fornecedoresdocumentos" valueentity="fornecedoresdocumentos"/>
+                <fromto valueapi="endereco" valueentity="endereco"/> 
+                <fromto valueapi="anotacao" valueentity="anotacao"/> 
+                <fromto valueapi="formapagamento" valueentity="formapagamento"/> 
+            </api>
+        </action>                                                              <!-- Se a funerária já estiver suspensa, o botão de suspender não é mostrado Ao inves de tiposuspensao usar status-->
+        <!-- Label dos botões definidas no show.html.twig sobrescrito -->
+        <action form="suspender" appendto="view" label="" color="red" icon="fas fa-ban" method="post" disable="status!='0'" successMsg="A Prestadora de Serviços foi suspensa com sucesso!" failMsg="Ocorreu um erro ao suspender a Prestadora de Serviços!" >
+            <name>Suspender</name>
+            <api>
+                <name>fornecedorSuspender_v2</name>
+                <fromto valueapi="fornecedor_id" valueentity="fornecedor" />
+                <fromto valueapi="tipo" valueentity="tiposuspensao" />
+                <fromto valueapi="data_fim" valueentity="datafimsuspensao" />
+                <fromto valueapi="motivo_suspensao" valueentity="motivosuspensao" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+            </api>
+        </action>
+        <!-- Adicionando action do botão de remover suspensão -->                <!-- Se não estiver suspensa, o botão de remover suspensao não é mostrado. Ao inves de tiposuspensao usar status-->
+         <action form="fornecedorreativar" emptyform="true" appendto="view" label="" color="green" icon="none" method="post" disable="status=='0'" successMsg="A suspensão da Prestadora de Serviços foi removida com sucesso!" failMsg="Ocorreu um erro ao remover a suspensão da Prestadora de Serviços!" >
+            <name>fornecedorreativar</name>
+            <api>
+                <name>fornecedorreativar_v3</name>
+                <fromto valueapi="fornecedor_id" valueentity="fornecedor" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="motivo_reativacao" valueentity="motivoremocaosuspensao"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+            </api>
+        </action>
+        <action form="fornecedoradvertir" appendto="view" label="" color="yellow" icon="fas fa-exclamation-triangle" method="post" successMsg="A Prestadora de Serviços foi advertida com sucesso!" failMsg="Ocorreu um erro ao advertir a Prestadora de Serviços!">
+            <name>fornecedoradvertir</name>
+            <api>
+                <name>fornecedoradvertir_v3</name>
+                <fromto valueapi="fornecedor_id" valueentity="fornecedor" />
+                <fromto valueapi="nome" valueentity="nomeadvertencia" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="motivo" valueentity="motivoadvertencia" />
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+                <fromto valueapi="estabelecimento" valueentity="estabelecimentoid" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

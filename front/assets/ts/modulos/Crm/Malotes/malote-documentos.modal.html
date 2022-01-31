@@ -1,0 +1,72 @@
+<div class="div-documentos-modal">
+
+    <h2 class="titulo-modal">Documento {{ctrlModal.documento.nome}}</h2>
+
+	<hr>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="div-imagem" style="background-image: url({{ctrlModal.documento.url}});"></div>
+		</div>
+
+		<div class="col-sm-6">
+
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Documento: </label>
+				{{ctrlModal.documento.tipodocumento_nome}}
+
+				<span ng-if="ctrlModal.documento.status == 1" class="span-status-modal" style="background-color: rgb(240, 173, 78);">
+					RECEBIDO
+				</span>
+
+				<span ng-if="ctrlModal.documento.status == 2" class="span-status-modal" style="background-color: rgb(92, 182, 92);">
+					PRÉ-APROVADO
+				</span>
+
+				<span ng-if="ctrlModal.documento.status == 3" class="span-status-modal" style="background-color: rgb(51, 121, 183);">
+					ENVIADO PARA O REQUISITANTE
+				</span>
+
+				<span ng-if="ctrlModal.documento.status == 4" class="span-status-modal" style="background-color: rgb(92, 182, 92);">
+					APROVADO
+				</span>
+
+				<span ng-if="ctrlModal.documento.status == 5 " class="span-status-modal" style="background-color: rgb(188, 70, 70);">
+					RECUSADO
+				</span>
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Atendimento Comercial: </label>
+				{{ctrlModal.documento.negocio_nome}}
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Recebido em:</label>
+				{{ctrlModal.documento.created_at | amDateFormat:"DD/MM/YYYY" }}
+			</p>
+			<!-- <p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Exige cópia simples:</label>
+				{{ctrlModal.copiasexigidas.copiasimples.exige ? 'Sim ' + '('+ctrlModal.copiasexigidas.copiasimples.requisitantes+')' : 'Não'}} 
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Exige cópia autenticada:</label>
+				{{ctrlModal.copiasexigidas.copiaautenticada.exige ? 'Sim ' + '('+ctrlModal.copiasexigidas.copiaautenticada.requisitantes+')': 'Não'}}
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Exige original:</label>
+				{{ctrlModal.copiasexigidas.original.exige ? 'Sim ' + '('+ctrlModal.copiasexigidas.original.requisitantes+')' : 'Não'}}
+			</p>
+			<p class="p-dados">
+				<label class="lbl-atcdocumento-geral">Aguardado por:</label>
+				{{ctrlModal.getRequisitante()}}
+			</p> -->
+
+			<!-- <div class="div-bottom">
+				<hr>
+    			<button class="btn btn-default" ng-click="ctrlModal.close()">Fechar</button>
+			</div> -->
+		</div>
+	</div>
+	<div class="row modal-footer" style="border-top: none">
+		<button class="btn btn-default" ng-click="ctrlModal.close()">Fechar</button>
+	</div>
+</div>

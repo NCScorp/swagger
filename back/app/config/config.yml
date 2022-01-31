@@ -1,0 +1,218 @@
+imports:
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: 'en' }
+    secret:          '%env(secret)%'
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: '%kernel.debug%'
+    form:            ~
+    csrf_protection: true
+    validation:      { enable_annotations: true }
+        #assets_version: SomeVersionScheme
+    templating:		
+        engines: ['twig']
+    default_locale:  "en"
+    session:         
+        handler_id: ~
+    fragments:       ~    
+    cache:
+        pools:
+            cache.profile:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 300
+            cache.keycloak:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 300
+            cache.configuracao:
+                adapter: cache.adapter.filesystem
+                default_lifetime: 14400
+    
+# Twig Configuration		
+twig:		
+    debug:            '%kernel.debug%'		
+    strict_variables: '%kernel.debug%'
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+    
+# Doctrine Configuration
+doctrine:
+    dbal:
+        default_connection: default
+        connections:
+            default:
+                driver:   'pdo_pgsql'
+                host:     '%env(database_host)%'
+                port:     '%env(database_port)%'
+                dbname:   '%env(database_name)%'
+                user:     '%env(database_user)%'
+                password: '%env(database_password)%'
+                charset:  UTF8
+                mapping_types:
+                    json: string
+                    enum: string
+                # if using pdo_sqlite as your database driver, add the path in parameters.yml
+                # e.g. database_path: %kernel.root_dir%/data/data.db3
+                # path:     %database_path%
+
+    orm:
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                auto_mapping: true
+
+sensio_framework_extra:
+    view: { annotations: true }
+
+fos_rest:
+    
+    disable_csrf_role: ROLE_API
+    param_fetcher_listener: true
+    routing_loader:
+        default_format: ~
+        include_format: false
+    view:
+        mime_types:
+            json: ['application/json', 'application/json;version=1.0', 'application/json;version=1.1']
+        view_response_listener: 
+            force: true
+        formats:            
+            json: true
+            xml:  true
+            html: true
+        templating_formats:
+            html: true
+    format_listener:
+        rules:
+            - { path: ^/api, priorities: [ json ], fallback_format: json, prefer_extension: true }
+            - { path: ^/private, priorities: [ json ], fallback_format: json, prefer_extension: true }
+            - { path: ^/, priorities: [ html ], fallback_format: html, prefer_extension: true }
+    body_converter:
+        enabled: true
+        validate: true
+    exception:
+        enabled: true        
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException': 405
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+    allowed_methods_listener: true    
+
+
+nasajon_login:
+    pg_semprovisao: redirect_nasajon
+    permission_format: tenant
+    permission_type: grupo
+    diretorio_sistema_id: '%env(diretorio_sistema_id)%'
+    cache: 
+        keycloak: 'cache.keycloak'
+        profile: 'cache.profile'
+    keycloak:
+        realm: '%env(keycloak_realm)%'
+        client_id: '%env(keycloak_client_id)%'
+        server_url: '%env(keycloak_url)%'
+    
+light_saml_symfony_bridge:
+    own:
+        entity_id: "%env(entity_id)%"
+        credentials:
+            -
+                certificate: "%env(sp_certificate_crt)%"
+                key:         "%env(sp_certificate_pem)%"
+                password:    ~
+    party:
+        idp:
+            files:
+                - "%env(sp_metadata)%"
+    store:
+        id_state: id_store  # name of id store service created in step 6
+
+doctrine_migrations:
+    dir_name: "%kernel.project_dir%/vendor/nasajon/bancosweb/database"
+    namespace: DoctrineMigrations
+    table_name: migration_versions
+    name: Application Migrations
+    organize_migrations: false
+
+aws:
+    version: 2.0
+    region: '%env(amazon_region)%'
+    credentials:
+        key: '%env(amazon_key)%'
+        secret: '%env(amazon_secret)%'
+    S3:
+        version: '2006-03-01'
+    CloudWatchLogs:
+        version: '2014-03-28'
+
+knp_gaufrette:
+    adapters:
+        logos:
+            aws_s3:
+                service_id: 'aws.s3'
+                bucket_name: '%env(amazon_s3_bucket_name)%'
+                detect_content_type: false
+                options:
+                    directory: '%logos_adapter_path%'
+        documentos:
+            aws_s3:
+                service_id: 'aws.s3'
+                bucket_name: '%env(amazon_s3_bucket_name)%'
+                detect_content_type: false
+                options:
+                    directory: '%documentos_adapter_path%'
+                    # acl: 'public-read'
+        imagens:
+            aws_s3:
+                service_id: 'aws.s3'
+                bucket_name: '%env(amazon_s3_bucket_name)%'
+                detect_content_type: false
+                options:
+                    directory: '%imagens_adapter_path%'
+                    acl: 'public-read'  
+
+    filesystems:
+        documentos:
+            adapter: documentos
+        logos:
+            adapter: logos
+
+ekreative_health_check:
+    doctrine:
+        - 'default'
+oneup_uploader:
+    twig: true
+    mappings:
+        documentos:
+            namer: app.upload_listener_renamer # sobrescrita do 'namer' padrão do oneup_upload
+            frontend: dropzone
+            storage:
+                type: gaufrette
+                filesystem: gaufrette.documentos_filesystem
+            enable_progress:      true
+        logos:
+            namer: app.upload_listener_renamer # sobrescrita do 'namer' padrão do oneup_upload
+            frontend: dropzone
+            storage:
+                type: gaufrette
+                filesystem: gaufrette.logos_filesystem
+            enable_progress:      true
+
+jms_serializer:
+    metadata:
+        auto_detection: false
+        directories:
+            appbundle:
+                namespace_prefix: "AppBundle\\Entity"
+                path: "@AppBundle/Resources/config/serializer/AppBundle"
+            nasajonmdabundle:
+                namespace_prefix: "Nasajon\\MDABundle\\Entity"
+                path: "@AppBundle/Resources/config/serializer/MDABundle"
+            dtoappbundle:
+                namespace_prefix: "AppBundle\\DTO"
+                path: "@AppBundle/Resources/config/serializer/AppBundle"

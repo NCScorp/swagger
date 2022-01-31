@@ -1,0 +1,67 @@
+@import '~nasajon-ui/nasajon-ui-old/variables/_variables.scss';
+
+/* Componentes */
+@import 'template/components';
+/*
+* Para seu próprio css descomente a linha de import abaixo e crie o arquivo referente com o nome do seu projeto
+*/
+@import 'template/_crmTree.scss';
+@import 'template/_crmWeb-animacoes.scss';
+@import 'template/_crmWeb-atcs-acompanhamentos.scss';
+@import 'template/_crmWeb-atcs-atendimentosrelacionados';
+@import 'template/_crmWeb-atcs-contaspagar';
+@import 'template/_crmWeb-atcs-contasreceber';
+@import 'template/_crmWeb-atcs-contratomaispagante-modal.scss';
+@import 'template/_crmWeb-atcs-documentos-modal-info-adicional';
+@import 'template/_crmWeb-atcs-documentos';
+@import 'template/_crmWeb-atcs-ficha-financeira.scss';
+@import 'template/_crmWeb-atcs-fornecedoresenvolvidos.scss';
+@import 'template/_crmWeb-atcs-modal-solicitar-orcamento-email';
+@import 'template/_crmWeb-atcs-pedidos.scss';
+@import 'template/_crmWeb-atcs-pendencias.scss';
+@import 'template/_crmWeb-atcs-preencher-orcamento';
+@import 'template/_crmWeb-atcs-contrato-mais-pagante-acoes-modal.scss';
+@import 'template/_crmweb-atcs.scss';
+@import 'template/_crmweb-atcsconfiguracoesdocumentos.scss';
+@import 'template/_crmWeb-atcsdadosseguradoras.scss';
+@import 'template/_crmWeb-cidadesfunerarias.scss';
+@import 'template/_crmWeb-clientes.scss';
+@import 'template/_crmWeb-composicoes.scss';
+@import 'template/_crmWeb-configuracoes-taxas-administrativas.scss';
+@import 'template/_crmWeb-custom-form-view.scss';
+@import 'template/_crmWeb-default-show-modal.scss';
+@import 'template/_crmWeb-default.form.scss';
+@import 'template/_crmWeb-documentosautomaticos.scss';
+@import 'template/_crmWeb-fornecedores.scss';
+@import 'template/_crmWeb-fullscreen.scss';
+@import 'template/_crmWeb-listadavez.scss';
+@import 'template/_crmWeb-listadavezconfiguracoes.scss';
+@import 'template/_crmWeb-malotes.scss';
+@import 'template/_crmWeb-menu-escondido.scss';
+@import 'template/_crmWeb-modal-historico-pendencias.scss';
+@import 'template/_crmWeb-negocios.scss';
+@import 'template/_crmWeb-paineis-marketing.scss';
+@import 'template/_crmWeb-paineis.scss';
+@import 'template/_crmWeb-prioridades.scss';
+@import 'template/_crmWeb-situacoesprenegocios.scss';
+@import 'template/_crmweb-skeleton.scss';
+@import 'template/_crmWeb-templateproposta.scss';
+@import 'template/_crmWeb-tree-grid.scss';
+@import 'template/_crmWeb-menu-aberto.scss';
+@import 'template/crmWeb-projetos';
+@import 'template/_crmweb.scss';
+@import 'template/components.scss';
+@import '../ts/modulos/Gp/Etapas/form/etapas-form.scss';
+@import '../ts/modulos/Gp/Projetos/wizard/passoum/wizard.passoum.scss';
+@import '../ts/modulos/Gp/Projetos/wizard/passodois/wizard.passodois.scss';
+@import '../ts/modulos/Gp/Projetos/wizard/passotres/wizard.passotres.scss';
+@import '../ts/modulos/Gp/Projetos/wizard/passoquatro/wizard.passoquatro.scss';
+@import '../ts/modulos/Gp/Projetos/wizard/passocinco/wizard.passocinco.scss';
+@import '../ts/modulos/Gp/Projetos/wizard/projetos-new.scss';
+@import '../ts/modulos//Gp//Projetos/showedit/escopo/escopo.scss';
+@import '../ts/modulos/Gp/Projetos/showedit/projetos-showedit.scss';
+@import '../ts/modulos/Gp/Projetos/showedit/formularios/formularios.scss';
+@import 'template/_crmWeb-tecnicos.scss';
+@import 'template/crmWeb-series';
+@import '../ts/modulos/Servicos/Templates-os/templates-os.scss';
+@import '../ts/modulos/Servicos/Templates-os/itens/form/templates-os-item-form.scss';

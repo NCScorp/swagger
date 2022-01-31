@@ -1,0 +1,62 @@
+<div class="height-full layout-list">
+  <form
+    nsj-focus
+    name="crm_mlts_frm_cntrllr.form"
+    novalidate="novalidate"
+    ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : crm_mlts_frm_cntrllr.busy }"
+    role="form"
+    ng-submit="crm_mlts_frm_cntrllr.submit()"
+    class="height-full"
+  >
+    <nsj-headline class="nsj-headline headline-malote-form">
+      <div class="title">
+        <h2>#{{ crm_mlts_frm_cntrllr.entity.codigo }}</h2>
+      </div>
+      <div
+        class="malote-status label"
+        ng-class="{ 'label-primary' : crm_mlts_frm_cntrllr.entity.status == 0,
+                    'label-default' : crm_mlts_frm_cntrllr.entity.status == 1,
+                    'label-success' : crm_mlts_frm_cntrllr.entity.status == 2,
+                    'label-success' : crm_mlts_frm_cntrllr.entity.status == 3,
+                    'label-danger' :  crm_mlts_frm_cntrllr.entity.status == 4,
+                    'label-danger' :  crm_mlts_frm_cntrllr.entity.status == 5 }"
+      >
+        {{ crm_mlts_frm_cntrllr.entity.statusLabel }}
+      </div>
+      <ul class="list-unstyled list-inline pull-right">
+        <li>
+          <div class="form-group pull-right">
+            <button
+              type="button"
+              ng-click="crm_mlts_frm_cntrllr.submit()"
+              ng-class="{loading:crm_mlts_frm_cntrllr.entity.$$__submitting}"
+              ng-disabled="crm_mlts_frm_cntrllr.entity.$$__submitting || crm_mlts_frm_cntrllr.form.$pristine"
+              class="btn btn-sm btn-warning btn-save btn-geral"
+            >
+              <i class="fa fa-check"></i> Salvar
+            </button>
+
+            <a class="btn btn-sm btn-default" ui-sref="crm_malotes({})"
+              ><i class="fa fa-times" aria-hidden="true"></i> Descartar</a
+            >
+          </div>
+        </li>
+      </ul>
+    </nsj-headline>
+    <div class="nsj-form padding-content">
+      <crm-malotes-default
+        entity="crm_mlts_frm_cntrllr.entity"
+        form="crm_mlts_frm_cntrllr.form"
+        busy="crm_mlts_frm_cntrllr.busy"
+        action="crm_mlts_frm_cntrllr.action"
+        constructors="crm_mlts_frm_cntrllr.constructors"
+      ></crm-malotes-default>
+    </div>
+    <div class="content-loading" ng-if="crm_mlts_frm_cntrllr.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </form>
+</div>

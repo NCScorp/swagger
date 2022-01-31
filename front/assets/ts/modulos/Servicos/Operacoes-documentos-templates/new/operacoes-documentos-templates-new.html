@@ -1,0 +1,53 @@
+<div class="height-full layout-list">
+
+    <form class="height-full" name="prcsdcmntstmplts_frm_nw_cntrllr.form" ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : prcsdcmntstmplts_frm_nw_cntrllr.busy }"
+          ng-submit="prcsdcmntstmplts_frm_nw_cntrllr.submit()"
+          novalidate="novalidate" nsj-focus role="form">
+
+
+        <nsj-headline headline-sub="true" headline-title="">
+            <div class="pull-right">
+
+
+                <a class="btn btn-sm btn-default"
+                   title="Voltar à lista"
+                   ui-sref="operacoesdocumentostemplates({'operacaoordemservico' : prcsdcmntstmplts_frm_nw_cntrllr.constructors.operacaoordemservico,})">Voltar à lista</a>
+
+
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <operacoes-documentos-templates-form action="prcsdcmntstmplts_frm_nw_cntrllr.action"
+                                                  busy="prcsdcmntstmplts_frm_nw_cntrllr.busy"
+                                                  constructors="prcsdcmntstmplts_frm_nw_cntrllr.constructors"
+                                                  entity="prcsdcmntstmplts_frm_nw_cntrllr.entity"
+                                                  form="prcsdcmntstmplts_frm_nw_cntrllr.form"></operacoes-documentos-templates-form>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+
+                    <div class="form-group pull-left">
+
+                        <button class="btn btn-sm btn-warning btn-save btn-geral" ng-class="{loading:prcsdcmntstmplts_frm_nw_cntrllr.entity.$$__submitting}"
+                                ng-click="prcsdcmntstmplts_frm_nw_cntrllr.submit()"
+                                ng-disabled="prcsdcmntstmplts_frm_nw_cntrllr.entity.$$__submitting || prcsdcmntstmplts_frm_nw_cntrllr.form.$pristine"
+                                type="button">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-sm"
+                           ui-sref="operacoesdocumentostemplates({'operacaoordemservico' : prcsdcmntstmplts_frm_nw_cntrllr.constructors.operacaoordemservico,})"><i
+                                aria-hidden="true" class="fa fa-times"></i> Cancelar</a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="prcsdcmntstmplts_frm_nw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

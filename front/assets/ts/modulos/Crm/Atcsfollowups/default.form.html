@@ -1,0 +1,120 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+
+            <nsj-seletor-toggle 
+                obj="{{$ctrl.figuraContatoList}}"
+                ng-on-toggle_change="$ctrl.escolheFiguraContato($event)"
+                style="cursor: pointer;">
+            </nsj-seletor-toggle>
+
+            <div ng-if="!$ctrl.entity.figuracontato && $ctrl.form.$submitted">
+                <div class="alert alert-danger" role="alert">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    <span class="sr-only">Erro:</span>
+                    O campo não pode ser vazio
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+
+            <label class="control-label" for="realizadoemdata" style="margin-top: 20px;">Realizado via:*</label>
+            <div class="mt-20" style="margin: 0px 0px 20px 0px">
+                <nsj-seletor-list id="meiocomunicacao" name="meiocomunicacao" obj="{{$ctrl.meiosDeComunicacao}}"
+                    ng-on-item_escolhido="$ctrl.escolherMeioComunicacao($event)">
+                </nsj-seletor-list>
+            </div>
+
+            <div ng-if="!$ctrl.entity.meiocomunicacao && $ctrl.form.$submitted">
+                <div class="alert alert-danger" role="alert">
+                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                    <span class="sr-only">Erro:</span>
+                    O campo não pode ser vazio
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+
+        </div>
+        <div class="col-sm-6">
+
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group">
+
+                <label class="control-label" for="receptor">Contato:*</label>
+                <input type='text' class="form-control" id="receptor" name="receptor"
+                    placeholder="Digite com quem foi feito o contato" ng-model="$ctrl.entity.receptor"
+                    ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.receptor.$error"
+                    ng-if="$ctrl.form.receptor.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo não pode ser vazio
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+
+
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+
+            <label class="control-label" for="historico">Histórico Padrão:*</label>
+            <span class="icone">
+                <i class="fas fa-info-circle blue"></i>
+                <nsj-tooltip tooltip-position="top">
+                    <p>
+                        <strong>Ao selecionar um Histórico Padrão, as observações do atendimento serão substituídas pelo texto do Histórico selecionado</strong>
+                    </p>
+                </nsj-tooltip>
+            </span>
+            <div class="form-group">
+                <nsj-lookup ng-change="$ctrl.confirmaMudancaHistoricoPadrao($ctrl.entity)" name="historicopadrao" id-name="historicopadrao"
+                    factory="CrmHistoricospadrao" ng-model="$ctrl.entity.historicopadrao"
+                    filter="{ 'tipo': [ {'condition':'eq','value':'100' }, {'condition':'eq','value':'101' },  ], }"
+                    max-label="2" constructor="{  }" config='{ "codigo":"codigo", "descricao":"descricao",  }'
+                    disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+            </div>
+
+            <div class="form-group">
+                <textarea class="form-control" rows="15" id="historico" name="historico"
+                    placeholder="Digite as observações do atendimento" ng-model="$ctrl.entity.historico"
+                    ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true"></textarea>
+                <div ng-messages="$ctrl.form.historico.$error"
+                    ng-if="$ctrl.form.historico.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo não pode ser vazio
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

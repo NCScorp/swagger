@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="cidadesinformacoesfunerarias" label="cidadesinformacoesfunerarias" project="ns">
+    <entity schema="ns" table="cidadesinformacoesfunerarias">
+        <fieldmodel name="cidadeinformacaofuneraria" datatype="guid" isid="true" column="cidadeinformacaofuneraria"/>
+        <fieldmodel name="estado" datatype="guid" column="estado" useCaseLink="ns\estados"  entityJoinType="left"/>
+        <fieldmodel name="pais" datatype="guid" column="pais" useCaseLink="ns\paises"  entityJoinType="left"/>
+        <fieldmodel name="municipio" datatype="guid" column="municipio" useCaseLink="ns\municipios"  entityJoinType="left"/>
+        <fieldmodel name="cidadeestrangeira" datatype="guid" column="cidadeestrangeira" useCaseLink="ns\cidadesestrangeiras" entityJoinType="left"/> 
+        <fieldmodel name="possuiiml" datatype="boolean"  column="possuiiml"/>
+        <fieldmodel name="possuisvo" datatype="boolean"  column="possuisvo"/>
+        <fieldmodel name="possuicemiteriomunicipal" datatype="boolean"  column="possuicemiteriomunicipal"/>
+        <fieldmodel name="possuicapelamunicipal" datatype="boolean"  column="possuicapelamunicipal"/>
+        <fieldmodel name="possuicrematorio" datatype="boolean"  column="possuicrematorio"/>
+        <fieldmodel name="trabalhacomfloresnaturais" datatype="boolean"  column="trabalhacomfloresnaturais"/>
+        <fieldmodel name="perfilfunerario" datatype="integer"  column="perfilfunerario">
+          <options>{"1":"Concessão", "2":"Municipal","3":"Regular","4":"Rodízio"}</options>
+        </fieldmodel>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="updated_at" datatype="date" column="updated_at"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+        <fieldmodel name="totalrankeados" datatype="integer"  column="totalrankeados"/>
+        <fieldmodel name="fornecedores" datatype="objectlist"  column="fornecedor" useCaseLink="ns\cidadesinfofunerariasfornecedores" entityJoinType="left"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser label="Cidades Informações Funerárias" layout="list" paginate="true" target="builtin">
+        <filters style="fixed">
+          <fieldsfilters>
+              <!-- <fieldfilter entitylink="estado" label="UF" maxoccurs='unbounded' >
+                   <conditions>
+                       <condition type="eq"/>
+                   </conditions>
+              </fieldfilter>
+              <fieldfilter entitylink="pais" label="País" maxoccurs='unbounded' >
+                   <conditions>
+                       <condition type="eq"/>
+                   </conditions>
+              </fieldfilter> -->
+              <!-- <fieldfilter entitylink="municipio.nome" label="Município" maxoccurs="unbounded"> -->
+              <fieldfilter entitylink="municipio" label="Município" maxoccurs="unbounded" visible="false">
+                <!-- <lookup label="Cidade" fielddetail="{'nome':'Cidade'}" allowinsert="false" /> -->
+                <conditions>
+                    <condition type="eq"/>
+                </conditions>
+              </fieldfilter>
+          </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="cidadeinformacaofuneraria" isid="true" visible="false"/>
+            <fieldbrowser alias="Estado" entitylink="estado" visible="true" fielddetaillookup="{'uf' : 'Estado'}"/>
+            <fieldbrowser alias="Pais" entitylink="pais" visible="true" fielddetaillookup="{'nome' : 'Pais'}"/>
+            <fieldbrowser alias="Municipio" entitylink="municipio" cansearch="true" visible="true" fielddetaillookup="{'nome': 'Cidade'}" />
+            <fieldbrowser alias="Ultima atualização" entitylink="updated_at" visible="true" />
+            <fieldbrowser alias="Cidade Estrangeira" entitylink="cidadeestrangeira" visible="true" fielddetaillookup="{'nome': 'Cidade'}" /> 
+            <!-- <fieldbrowser alias="Municipio" entitylink="municipio" visible="true" visible="pais.nome == 'Brasil'" fielddetaillookup="{'nome': 'Municipio'}" />
+            <fieldbrowser alias="Cidade Estrangeira" entitylink="cidadeestrangeira" visible="true" visible="pais.nome == 'Brasil'" fielddetaillookup="{'nome': 'Cidadeestrangeira'}" />  -->
+            <fieldbrowser entitylink="possuiiml" visible="false" />
+            <fieldbrowser entitylink="possuisvo" visible="false" />
+            <fieldbrowser entitylink="possuicemiteriomunicipal" visible="false" />
+            <fieldbrowser entitylink="possuicapelamunicipal" visible="false" />
+            <fieldbrowser entitylink="possuicrematorio" visible="false" />
+            <fieldbrowser entitylink="trabalhacomfloresnaturais" visible="false" />
+            <fieldbrowser entitylink="perfilfunerario" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="cadastro" label="Cidade Informações Funerárias">
+          <layout>
+              <headerform>
+                  <row>
+                    <cell>
+                      <groupbox>
+                        <caption text="Dados básicos"></caption>
+                        <row>
+                          <cell name="pais" controltype="lookup" label="País" colspan="4" entitylink="pais" browserlookup="paises" fieldlookup="pais" fieldaliaslookup="pais"  fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                            <validates>
+                              <validate type="vnull" displaytext="O campo país não pode estar vazio"></validate>
+                            </validates>
+                          </cell>
+                          <cell name="estado" controltype="lookup" visible="pais.pais == '1058'" label="Estado" colspan="4" entitylink="estado" browserlookup="estados" fieldlookup="estado" fieldaliaslookup="estado"  fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1">
+                            <validates>
+                              <validate type="vnull" displaytext="O campo estado não pode estar vazio"></validate>
+                            </validates>
+                          </cell>
+                          <cell label="Municipio" entitylink="municipio" visible="pais.pais == '1058'" controltype="lookup" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" colspan="4">
+                            <validates>
+                              <validate type="vnull" displaytext="O campo município não pode estar vazio"></validate>
+                              <validate type="unique" displaytext="O campo município não pode ser repetido."/>
+                            </validates>
+                          </cell>
+                          <cell label="Cidades estrangeiras" entitylink="cidadeestrangeira" visible="pais.pais != '1058'" controltype="lookup" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" colspan="4">
+                            <validates>
+                              <validate type="vnull" displaytext="O campo cidades estrangeiras não pode estar vazio"></validate>
+                            </validates>
+                          </cell>
+                        </row>
+                      </groupbox>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell>
+                      <groupbox>
+                        <caption text="Informações funerárias"/>
+
+                        <row>
+                            <cell name="possuisvo" controltype="checkbox" label="Possui SVO" colspan="4" entitylink="possuisvo"/>
+                            <cell name="possuiiml" controltype="checkbox" label="Possui IML" colspan="4" entitylink="possuiiml"/>
+                        </row>
+                        <row>
+                            <cell name="possuicrematorio" controltype="checkbox" label="Possui crematório" colspan="4" entitylink="possuicrematorio"/>
+                            <cell name="trabalhacomfloresnaturais" controltype="checkbox" label="Trabalha com flores naturais" colspan="4" entitylink="trabalhacomfloresnaturais"/>
+                        </row>
+                        <row>
+                            <cell name="possuicemiteriomunicipal" controltype="checkbox" label="Possui cemitério municipal" colspan="4" entitylink="possuicemiteriomunicipal"/>
+                            <cell name="possuicapelamunicipal" controltype="checkbox" label="Possui capela municipal" colspan="4" entitylink="possuicapelamunicipal"/>
+                        </row>
+                        <row>
+                          <cell name="perfilfunerario" controltype="combobox" label="Perfil de acionamento funerário" colspan="6" entitylink="perfilfunerario"/>
+                        </row>
+                      </groupbox>
+                    </cell>
+                  </row>
+
+                <row>
+                    <cell colspan="12" name="fornecedores" controltype="objectlist" entitylink="fornecedores" label="Ranking dos Prestadores de Serviços"/>
+                </row>
+              </headerform>
+          </layout>
+      </form>
+      <form name="view" label="Cidade Informações Funerárias">
+          <layout>
+              <headerform>
+                  <row>
+                    <cell>
+                      <groupbox>
+                        <caption text="Dados básicos"></caption>
+                        <row>
+                           <cell name="estado" controltype="lookup" visible="pais.pais == '1058'" label="Estado" colspan="6" entitylink="estado" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                           <cell name="municipio" controltype="lookup" visible="pais.pais == '1058'"  label="Municipio" colspan="6" entitylink="municipio" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                           <cell name="cidadeestrangeira" controltype="lookup" visible="pais.pais != '1058'" label="Cidade" colspan="12" entitylink="cidadeestrangeira" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                          </row>
+                      </groupbox>
+                    </cell>
+                  </row>
+                  <row>
+                    <cell>
+                      <groupbox>
+                        <caption text="Informações funerárias"/>
+                        <row>
+                            <cell name="possuisvo" controltype="checkbox" label="Possui SVO" colspan="6" entitylink="possuisvo"/>
+                            <cell name="possuiiml" controltype="checkbox" label="Possui IML" colspan="6" entitylink="possuiiml"/>
+                            <cell name="possuicrematorio" controltype="checkbox" label="Possui crematório" colspan="6" entitylink="possuicrematorio"/>
+                        </row>
+                        <row>
+                            <cell name="possuicemiteriomunicipal" controltype="checkbox" label="Possui cemitério municipal" colspan="4" entitylink="possuicemiteriomunicipal"/>
+                            <cell name="possuicapelamunicipal" controltype="checkbox" label="Possui capela municipal" colspan="4" entitylink="possuicapelamunicipal"/>
+                            <cell name="trabalhacomfloresnaturais" controltype="checkbox" label="Trabalha com flores naturais" colspan="4" entitylink="trabalhacomfloresnaturais"/>
+                        </row>
+                        <row>
+                          <cell name="perfilfunerario" controltype="combobox" label="Perfil de acionamento funerário" colspan="6" entitylink="perfilfunerario"/>
+                        </row>
+                        <row>
+                            <cell name="updated_at" controltype="dateedit" label="Última modificação" colspan="12" entitylink="updated_at" />
+                        </row>
+                      </groupbox>
+                    </cell>
+                  </row>
+                  <row>
+                      <cell colspan="12" name="fornecedores" controltype="objectlist" entitylink="fornecedores" label="Ranking dos Prestadores de Serviços"/>
+                    </row>
+              </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action form="view">
+          <name>retrieve</name>
+        </action>
+        <action form="cadastro" successMsg="A Cidade foi editada com sucesso!" failMsg="Ocorreu um erro ao editar a Cidade!">
+            <name>Update</name>
+            <api>
+                <name>cidadeInformacaoFunerariaAlterar_v3</name>
+                <fromto valueapi="cidadeestrangeira" valueentity="cidadeestrangeira"/>
+                <fromto valueapi="estado" valueentity="estado"/>
+                <fromto valueapi="municipio" valueentity="municipio"/>
+                <fromto valueapi="pais" valueentity="pais"/>
+                <fromto valueapi="cidadeinformacaofuneraria" valueentity="cidadeinformacaofuneraria"/>
+                <fromto valueapi="possuiiml" valueentity="possuiiml"/>
+                <fromto valueapi="possuisvo" valueentity="possuisvo"/>
+                <fromto valueapi="possuicrematorio" valueentity="possuicrematorio"/>
+                <fromto valueapi="possuicemiteriomunicipal" valueentity="possuicemiteriomunicipal"/>
+                <fromto valueapi="possuicapelamunicipal" valueentity="possuicapelamunicipal"/>
+                <fromto valueapi="trabalhacomfloresnaturais" valueentity="trabalhacomfloresnaturais"/>
+                <fromto valueapi="perfilfunerario" valueentity="perfilfunerario"/>
+                <fromto valueapi="updated_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+                <fromto valueapi="fornecedores" valueentity="fornecedores"/> 
+            </api>
+        </action>
+        <action form="cadastro" successMsg="A Cidade foi criada com sucesso!" failMsg="Ocorreu um erro ao criar a Cidade!">
+            <name>Insert</name>
+            <api>
+                <name>cidadeInformacaoFunerariaNovo_v2</name>
+                <fromto valueapi="cidadeestrangeira" valueentity="cidadeestrangeira"/>
+                <fromto valueapi="estado" valueentity="estado"/>
+                <fromto valueapi="municipio" valueentity="municipio"/>
+                <fromto valueapi="pais" valueentity="pais"/>
+                <fromto valueapi="possuiiml" valueentity="possuiiml"/>
+                <fromto valueapi="possuisvo" valueentity="possuisvo"/>
+                <fromto valueapi="possuicrematorio" valueentity="possuicrematorio"/>
+                <fromto valueapi="possuicemiteriomunicipal" valueentity="possuicemiteriomunicipal"/>
+                <fromto valueapi="possuicapelamunicipal" valueentity="possuicapelamunicipal"/>
+                <fromto valueapi="trabalhacomfloresnaturais" valueentity="trabalhacomfloresnaturais"/>
+                <fromto valueapi="perfilfunerario" valueentity="perfilfunerario"/>
+                <fromto valueapi="created_by" valueentity="logged_user"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+                <fromto valueapi="fornecedores" valueentity="fornecedores"/> 
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

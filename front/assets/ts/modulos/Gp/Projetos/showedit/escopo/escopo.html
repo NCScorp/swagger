@@ -1,0 +1,83 @@
+<tree-dnd 
+  id="tree-dnd"
+  tree-class="table table-bordered table-hover table-striped"
+  tree-data="$ctrl.tree_data"
+  tree-control="my_tree"
+  primary-key="projetoitemescopo"
+  column-defs="$ctrl.col_defs"
+  expand-on="$ctrl.expanding_property"
+  template-url="tree-dnd-template-render.html"
+
+  indent="30"
+  indent-plus="20"
+  indent-unit="px"
+  enable-status="true"
+  icon-leaf="none"
+  icon-expand="fas fa-chevron-down"
+  icon-collapse="fas fa-chevron-right"
+></tree-dnd>
+
+<script type="text/ng-template" id="tree-dnd-template-render.html">
+  <table ng-class="$tree_class">
+      <thead>
+          <tr>
+              <th ng-if="!($ctrl.entity.situacao === 1 || $ctrl.entity.situacao === 3)" class="width-70" style="border: 1px solid #ddd !important; border-top: 0 !important;">
+                <span>
+                  <nsj-button-dropdown class="mr-18 escopo-dropdown-action float-right" icon="fas fa-plus-circle fa-lg">
+                      <item-dropdown item-label="Adicionar Etapa" ng-click="$ctrl.addNode('ETAPA')" icon="fas fa-list" ></item-dropdown>
+                    </nsj-button-dropdown>
+                  </i>
+                </span>
+              </th>
+              <th ng-class="expandingProperty.titleClass" style="border: 1px solid #ddd !important; border-top: 0 !important;" ng-style="expandingProperty.titleStyle"
+                  compile="expandingProperty.titleTemplate">
+                  {{expandingProperty.displayName || expandingProperty.field || expandingProperty}}
+              </th>
+              <th ng-repeat="col in colDefinitions" style="border: 1px solid #ddd !important; border-top: 0 !important;" ng-class="col.titleClass" ng-style="col.titleStyle"
+                  compile="col.titleTemplate">
+                  {{col.displayName || col.field}}
+              </th>
+          </tr>
+      </thead>
+      <tbody tree-dnd-nodes>
+          <tr tree-dnd-node="node" ng-repeat="node in tree_nodes track by node.__hashKey__ "
+              ng-show="enabledFilter ? node.__filtered_visible__ === true && node.__visible__ : node.__visible__"
+              ng-click="onSelect(node)">
+              <td ng-if="!($ctrl.entity.situacao === 1 || $ctrl.entity.situacao === 3)" style="border-bottom: 1px solid #ddd !important;">
+                <div class="flex align-items-center justify-content-space-around pt-10">
+                  <span class="cursor-pointer h-22 w-18" ng-click="$ctrl.deleteNode(node)" ><i class="far fa-trash-alt fa-lg dark-gray-icon"></i></span>
+                  <nsj-button-dropdown ng-if="node.tipoitem === 0" class="escopo-dropdown-action float-right" icon="fas fa-plus-circle fa-lg">
+                    <item-dropdown item-label="Adicionar Etapa" ng-click="$ctrl.addNode('ETAPA', node)" icon="fas fa-list" ></item-dropdown>
+                    <item-dropdown icon="far fa-file" item-label="Adicionar OS">
+                      <ul slot="collapsed-list" id="collapsed-list" class="collapsed-list">
+                        <li ng-repeat="template in $ctrl.ordensServicosTemplates">
+                          <item-dropdown ng-click="$ctrl.addNode('ORDEM_DE_SERVICO', node, template)" item-label="{{ template.nome }}">
+                        </li>
+                      </ul>
+                    </item-dropdown>
+                  </nsj-button-dropdown>
+                </div>
+              </td>
+              <td tree-dnd-node-handle
+                class=""
+                ng-style="expandingProperty.cellStyle ? expandingProperty.cellStyle : {'padding-left': $callbacks.calsIndent(node.__level__), 'padding-right': '15px'}"
+                ng-class="expandingProperty.cellClass"
+                style="border: 1px solid #ddd !important;"
+                compile="expandingProperty.cellTemplate"
+              >
+              </td>
+              <td 
+                ng-repeat="col in colDefinitions" style="border: 1px solid #ddd !important;" ng-class="col.cellClass" ng-style="col.cellStyle"
+                compile="col.cellTemplate">
+              </td>
+          </tr>
+      </tbody>
+      <tfoot ng-if="$ctrl.treeScope.treeData.length === 0">
+        <tr>
+          <td colspan="9" class="text-center">
+            Não há nenhuma etapa criada.
+          </td>
+        </tr>
+      </tfoot>
+  </table>
+</script>

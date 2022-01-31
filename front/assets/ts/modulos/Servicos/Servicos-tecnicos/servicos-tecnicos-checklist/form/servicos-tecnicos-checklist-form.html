@@ -1,0 +1,31 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-7">
+            <div class="form-group"><label class="control-label" for="descricao">Descrição</label><input type='text'
+                    class="form-control" id="descricao" name="descricao" ng-model="$ctrl.entity.descricao"
+                    ng-disabled="$ctrl.entity.$$__submitting" />
+                <div ng-messages="$ctrl.form.descricao.$error"
+                    ng-if="$ctrl.form.descricao.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        É necessária uma descrição para o item da checklist.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                    class="control-label" for="obrigatorio"><input type='checkbox' class="" id="obrigatorio"
+                        name="obrigatorio" ng-model="$ctrl.entity.obrigatorio"
+                        ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                    Obrigatório
+                </label></div>
+        </div>
+    </div>
+</form>

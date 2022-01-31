@@ -1,0 +1,301 @@
+<div class="height-full">
+	<div class="box-seguro"
+		ng-repeat="dadoseguradora in $ctrl.entity.negociosdadosseguradoras track by $id(dadoseguradora)">
+		<h4 class="header-seguro">Seguro {{$index + 1}}</h4>
+		<div class="align-itens clearfix" style="padding: 15px 12px">
+			<div class="clearfix inputs-area">
+				<div class="row ">
+					<div class="col-sm-12" ng-if="false">
+						<div class="form-group">
+							<label class="control-label" for="atc {{$index}}"></label><input type='text'
+								class="form-control" id="atc {{$index}}" name="atc {{$index}}"
+								ng-model="dadoseguradora.negocio" ng-disabled="$ctrl.entity.$$__submitting" /></div>
+					</div>
+				</div>
+
+				<div class="row ">
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="control-label" for="produtoseguradora {{$index}}">Produto</label>
+							<nsj-lookup name="produtoseguradora {{$index}}" id-name="templatepropostagrupo {{$index}}"
+								factory="CrmTemplatespropostasgrupos" ng-model="dadoseguradora.produtoseguradora"
+								max-label="1" constructor="{ 'cliente' : $ctrl.entity.cliente.cliente,  }"
+								config='{ "nome":"Produto",  }'
+								disabled="(!$ctrl.entity.cliente)||$ctrl.entity.$$__submitting"
+								ng-change="$ctrl.atualizouProduto($index)"
+								ns-required="((!dadoseguradora.produtoseguradora)||$ctrl.form.$submitted) === true">
+							</nsj-lookup>
+							<div ng-messages="$ctrl.form['produtoseguradora ' + $index].$error"
+								ng-if="$ctrl.form['produtoseguradora ' + $index].$invalid && $ctrl.form['produtoseguradora ' + $index].$touched || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="required">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo produto não pode ser vazio
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="control-label" for="apolice {{$index}}">Apólice</label>
+							<nsj-lookup name="apolice {{$index}}" id-name="templateproposta {{$index}}"
+								factory="CrmTemplatespropostas" ng-model="dadoseguradora.apolice" max-label="1"
+								config='{ "nome":"Apólice",  }'
+								disabled="(!dadoseguradora.produtoseguradora)||$ctrl.entity.$$__submitting"
+								ng-change="$ctrl.atualizaValorDaApolice($index)"
+								ng-click="$ctrl.atualizaConstrutor($index)"
+								ns-required="((!dadoseguradora.produtoseguradora)||$ctrl.entity.$$__submitting) !== true">
+							</nsj-lookup>
+							<div ng-messages="$ctrl.form['apolice '+ $index].$error"
+								ng-if="($ctrl.form['apolice '+ $index].$invalid && $ctrl.form['apolice '+ $index].$touched) || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="required">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo apólice não pode ser vazio
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="control-label" for="valorapolice {{$index}}">Valor da Apólice</label>
+							<input type='money'
+								class="form-control" id="valorapolice {{$index}}" name="valorapolice {{$index}}"
+								ng-model="dadoseguradora.valorapolice"
+								ng-required="((!dadoseguradora.apolice)||$ctrl.entity.$$__submitting) !== true"
+								ng-disabled="(!dadoseguradora.apolice)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting"
+								ng-change="$ctrl.atualizaValorAutorizado($index)"
+								maxlength="16"
+								ui-money-mask />
+							<div ng-messages="$ctrl.form['valorapolice '+ $index].$error"
+								ng-if="$ctrl.form['valorapolice '+ $index ].$dirty || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="number">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									Valor informado não é um número.
+								</div>
+								<div class="alert alert-danger" role="alert" ng-message="greaterthanorequal">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O Valor da Apólice deve ser deve ser maior que 0.
+								</div>
+								<div class="alert alert-danger" role="alert" ng-message="required">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O Valor da Apólice não pode ser vazia.
+								</div>
+								<div class="alert alert-danger" role="alert" ng-message="maxlength">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo Valor da Apólice tem o tamanho máximo permitido de 10 caracteres
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="control-label" for="valorautorizado {{$index}}">Valor Autorizado</label>
+							<input type='money'
+								class="form-control" id="valorautorizado {{$index}}" name="valorautorizado {{$index}}"
+								ng-model="dadoseguradora.valorautorizado"
+								ng-required="((!dadoseguradora.apolice)||$ctrl.entity.$$__submitting) !== true"
+								ng-disabled="(!dadoseguradora.negociodadosseguradora)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting"
+								maxlength="16"
+								ui-money-mask />
+							<div ng-messages="$ctrl.form['valorautorizado '+ $index].$error"
+								ng-if="$ctrl.form['valorautorizado '+ $index ].$dirty || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="number">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									Valor informado não é um número.
+								</div>
+								<div class="alert alert-danger" role="alert" ng-message="greaterthanorequal">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O valor autorizado deve ser deve ser maior que 0.
+								</div>
+								<div class="alert alert-danger" role="alert" ng-message="required">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O valor autorizado não pode ser vazia.
+								</div>
+								<div class="alert alert-danger" role="alert" ng-message="maxlength">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo valor autorizado tem o tamanho máximo permitido de 10 caracteres
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+
+				<div class="row ">
+
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="control-label" for="sinistro {{$index}}">Sinistro</label><input type='text'
+								class="form-control" id="sinistro {{$index}}" name="sinistro {{$index}}"
+								ng-model="dadoseguradora.sinistro"
+								ng-required="((!dadoseguradora.apolice)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting) !== true"
+								ng-disabled="(!dadoseguradora.apolice)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting" />
+							<div ng-messages="$ctrl.form['sinistro '+ $index].$error"
+								ng-if="$ctrl.form['sinistro '+ $index ].$dirty || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="required">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo sinistro não pode ser vazio
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="control-label" for="apolicetipo {{$index}}">Tipo de Apólice</label>
+							<select class="form-control" id="apolicetipo {{$index}}" name="apolicetipo {{$index}}"
+								ng-model="dadoseguradora.apolicetipo"
+								ng-disabled="(!dadoseguradora.apolice)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting"
+								convert-to-number=" " convert-to-number>
+								<option value="0">Física</option>
+								<option value="1">Jurídica</option>
+							</select>
+						</div>
+					</div>
+					
+					<!-- Se o tipo da apólice for física, o campo tem tamanho 3. Se for jurídica, tem tamanho 6 -->
+					<div ng-class="dadoseguradora.apolicetipo == 1 ? 'col-sm-3' : 'col-sm-6'">
+						<div class="form-group">
+							<label class="control-label" for="titularnome {{$index}}">Titular da Apólice</label>
+							<input type='text' class="form-control" id="titularnome {{$index}}"
+								name="titularnome {{$index}}" maxlength="100" ng-model="dadoseguradora.titularnome"
+								ng-required="((!dadoseguradora.apolice)||$ctrl.entity.$$__submitting) !== true"
+								ng-disabled="(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting" />
+							<div ng-messages="$ctrl.form['titularnome '+ $index].$error"
+								ng-if="$ctrl.form['titularnome '+ $index].$dirty || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="required">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo Titular da Apólice não pode ser vazio.
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-sm-3" ng-if="dadoseguradora.apolicetipo == 1">
+						<div class="form-group">
+							<label class="control-label" for="beneficiario {{$index}}">Beneficiário</label>
+							<input 
+								type='text' class="form-control" id="beneficiario {{$index}}"
+								name="beneficiario {{$index}}" maxlength="100" ng-model="dadoseguradora.beneficiario"
+								ng-required=""
+								ng-disabled="(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting" />
+						</div>
+					</div>
+
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="control-label" for="titularcpf {{$index}}">CPF do Titular</label>
+							<input type='cpf' class="form-control" id="titularcpf {{$index}}" name="titularcpf {{$index}}"
+								placeholder="___.___.___-__" ng-model="dadoseguradora.titularcpf"
+								ng-disabled="(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting" ui-br-cpf-mask />
+							<div ng-messages="$ctrl.form['titularcpf '+ $index].$error" ng-if="$ctrl.form['titularcpf '+ $index].$dirty || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="cpf">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									CPF inválido.
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row ">
+
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="control-label" for="titularmatricula {{$index}}">Matrícula do Titular</label>
+							<input type='text' class="form-control" id="titularmatricula {{$index}}" name="titularmatricula {{$index}}"
+								maxlength="30" ng-model="dadoseguradora.titularmatricula"
+								ng-disabled="(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting" />
+							<div ng-messages="$ctrl.form['titularmatricula '+ $index].$error"
+								ng-if="$ctrl.form['titularmatricula '+ $index].$dirty || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="required">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo Matrícula do Titular deve possuir no máximo 30 caracteres.
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="control-label" for="titularvinculo {{$index}}">Vínculo Com o Falecido</label>
+							<nsj-lookup name="titularvinculo {{$index}}" id-name="titularvinculo {{$index}}" factory="CrmVinculos"
+								ng-model="dadoseguradora.titularvinculo" max-label="1" constructor="{  }"
+								config='{ "nome":"Nome",  }'
+								disabled="(!dadoseguradora.produtoseguradora)||(!dadoseguradora.produtoseguradora)||$ctrl.entity.$$__submitting">
+							</nsj-lookup>
+						</div>
+					</div>
+
+					<div class="col-sm-4">
+						<div class="form-group">
+							<label class="control-label" for="nomefuncionarioseguradora {{$index}}">Nome do Funcionário da
+								Seguradora</label>
+							<input type='text' class="form-control" id="nomefuncionarioseguradora {{$index}}"
+								name="nomefuncionarioseguradora {{$index}}" maxlength="100"
+								ng-model="dadoseguradora.nomefuncionarioseguradora"
+								ng-disabled="(!dadoseguradora.apolice)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting" />
+							<div ng-messages="$ctrl.form.nomefuncionarioseguradora.$error"
+								ng-if="$ctrl.form.nomefuncionarioseguradora.$dirty || $ctrl.form.$submitted">
+								<div class="alert alert-danger" role="alert" ng-message="maxlength">
+									<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+									<span class="sr-only">Erro:</span>
+									O campo Nome do Funcionário da Seguradora deve possuir no máximo 100 caracteres.
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-2">
+						<div class="custom-checkbox checkbox"
+							ng-class="{'disabled':(!dadoseguradora.apolice)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting}">
+							<label class="control-label" for="apoliceconfirmada {{$index}}">
+								<input type='checkbox' class="" id="apoliceconfirmada {{$index}}"
+									name="apoliceconfirmada {{$index}}" ng-model="dadoseguradora.apoliceconfirmada"
+									ng-disabled="(!dadoseguradora.apolice)||(!dadoseguradora.apolice)||$ctrl.entity.$$__submitting" />
+								<span class="checkmark"></span>
+								Apólice confirmada
+							</label>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<div class="pull-right bottom-buffer btn-add btn-group-flex">
+				<button type="button" ng-if="$last" class="btn btn-md btn-warning" ng-click="$ctrl.adicionarApolice();">
+					<i class="fas fa-plus"></i>
+					Adicionar
+				</button>
+				<button type="button" ng-if="$ctrl.entity.negociosdadosseguradoras.length > 1"
+					class="btn btn-md btn-danger" ng-click="$ctrl.removerApolice($index);">
+					<i class="fas fa-trash-alt"></i>
+					Excluir
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

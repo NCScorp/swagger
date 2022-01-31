@@ -1,0 +1,149 @@
+<div class="crm-painel-marketing">
+    <nsj-accordion init-open="true" headline="Coorte de Campanhas" class="coorte-campanhas">
+        <div class="coorte-campanhas-header">
+            <div class="form-group filtro">
+                <label class="control-label" for="codigodepromocao">Campanha de Origem</label>
+                <nsj-lookup name="codigodepromocao" id-name="promocaolead" factory="CrmPromocoesleads"
+                    ng-model="$ctrl.filtroCampanha" max-label="2" constructor="{  }"
+                    config='{ "nome":"Nome",  }'>
+                </nsj-lookup>
+            </div>
+            <div class="form-group filtro tipo-qualificacao">
+                <label class="control-label" for="tipoqualificacao">Tipo de qualificação</label>
+                <select class="form-control" id="tipoqualificacao" name="tipoqualificacao"
+                    ng-model="$ctrl.tipoDadosQualificacao"
+                >
+                    <option ng-value="$ctrl.EnumTipoDadosQualificacaoTela.tdqtTodos">
+                        Negócios ganhos e perdidos
+                    </option>
+                    <option ng-value="$ctrl.EnumTipoDadosQualificacaoTela.tdqtQualificados">
+                        Negócios ganhos
+                    </option>
+                    <option ng-value="$ctrl.EnumTipoDadosQualificacaoTela.tdqtDesqualificados">
+                        Negócios perdidos
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="coorte-campanhas-body">
+            <table class="dados" ng-if="$ctrl.painelTela != null">
+                <!-- Cabeçalho -->
+                <thead>
+                    <th></th>
+                    <th class="total">Total</th>
+                    <th class="mes" ng-repeat="mes in $ctrl.painelTela.meses">
+                        {{ $ctrl.getMesDescricao(mes.mes.anomes) }}
+                    </th>
+                    <th class="taxa-conversao">Tx. de Conversão</th>
+                </thead>
+                <!--  Corpo -->
+                <tbody>
+                    <tr ng-repeat="mes in $ctrl.painelTela.meses">
+                        <td class="mes">
+                            {{ $ctrl.getMesDescricao(mes.mes.anomes) }}
+                        </td>
+                        <td class="total">
+                            {{ mes.mes.negociostotais }}
+                        </td>
+                        <td ng-repeat="mesQualificacao in mes.listaQualificacao" class="qualificacao">
+                            <div class="qualificacao-container" ng-if="mesQualificacao.qualificacao != null">
+                                <div class="item qualificados" 
+                                    ng-if="[$ctrl.EnumTipoDadosQualificacaoTela.tdqtTodos, $ctrl.EnumTipoDadosQualificacaoTela.tdqtQualificados].indexOf($ctrl.tipoDadosQualificacao) > -1">
+                                    {{ mesQualificacao.qualificacao.negociosqualificados }}
+                                </div>
+                                <div class="item desqualificados"
+                                    ng-if="[$ctrl.EnumTipoDadosQualificacaoTela.tdqtTodos, $ctrl.EnumTipoDadosQualificacaoTela.tdqtDesqualificados].indexOf($ctrl.tipoDadosQualificacao) > -1">
+                                    {{ mesQualificacao.qualificacao.negociosdesqualificados }}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="taxa-conversao">
+                            {{ mes.taxaConversao }}%
+                        </td>
+                    </tr>
+                </tbody>
+                <!-- Rodapé -->
+                <tfoot>
+                    <div>
+                    <tr>
+                        <td class="titulo">Total</td>
+                        <td class="total">
+                            {{ $ctrl.painelTela.totalCriados }}
+                        </td>
+                        <td ng-repeat="mesQualificacao in $ctrl.painelTela.listaQualificacao" class="qualificacao">
+                            <div class="qualificacao-container">
+                                <div class="item qualificados" 
+                                    ng-if="[$ctrl.EnumTipoDadosQualificacaoTela.tdqtTodos, $ctrl.EnumTipoDadosQualificacaoTela.tdqtQualificados].indexOf($ctrl.tipoDadosQualificacao) > -1">
+                                    {{ mesQualificacao.negociosqualificados }}
+                                </div>
+                                <div class="item desqualificados"
+                                    ng-if="[$ctrl.EnumTipoDadosQualificacaoTela.tdqtTodos, $ctrl.EnumTipoDadosQualificacaoTela.tdqtDesqualificados].indexOf($ctrl.tipoDadosQualificacao) > -1">
+                                    {{ mesQualificacao.negociosdesqualificados }}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="taxa-conversao">
+                            {{ $ctrl.painelTela.taxaConversao }}%
+                        </td>
+                    </tr>
+                    </div>
+                </tfoot>
+            </table>
+            <p class="msg-sem-dados" ng-if="$ctrl.painelTela == null">
+                Painel não foi carregado
+            </p>
+        </div>
+    </nsj-accordion>
+
+    <div class="classificadores">
+        <div class="accordion-classificadores" ng-repeat="painelQualificacao in $ctrl.arrPaineisQualificacao">
+            <nsj-accordion init-open="true" headline="{{painelQualificacao.nome}}">
+                <div class="dados" ng-if="painelQualificacao.painel != null">
+                    <!-- Grupo de classificadores -->
+                    <div class="grupo" ng-repeat="grupo in painelQualificacao.painel.arrDadosPorGrupo">
+                        <div class="grupo-titulo">
+                            {{ grupo.nome }}
+                        </div>
+                        <!-- Entidade -->
+                        <div class="entidade" 
+                            ng-repeat="entidade in grupo.entidades"
+                            ng-class="{'filtrado': entidade.filtrado}"
+                        >
+                            <div class="entidade-titulo">
+                                {{ entidade.nome }}
+                            </div>
+                            <!-- Barra agrupadora de classificadores da entidade -->
+                            <div class="classificadores">
+                                <!-- Item de cada classificador na barra -->
+                                <div class="classificador ordem-{{classificador.ordem}} entidade-{{classificador.tipo}}" 
+                                    ng-repeat="classificador in entidade.classificadores"
+                                    ng-style="{'flex-grow': classificador.perc}"
+                                    ng-class="{'filtro-selecionado': classificador.filtrado}"
+                                    ng-click="painelQualificacao.painel.onClassificadorClick(classificador)">
+
+                                    <nsj-tooltip tooltip-position="top">
+                                        <div class="nome-classificador">
+                                            <span class="nome">{{classificador.nome}}</span> - 
+                                            <span class="perc">{{classificador.perc}}%</span>
+                                        </div>
+                                        <div class="qtd">Total: {{classificador.qtd}}</div>
+                                    </nsj-tooltip>
+                                </div>
+                                <div class="msg-sem-dados" ng-if="entidade.classificadores.length == 0">
+                                    <nsj-tooltip tooltip-position="top">
+                                        <div class="nome-classificador">
+                                            Sem dados
+                                        </div>
+                                    </nsj-tooltip>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="msg-painel-sem-dados" ng-if="painelQualificacao.painel == null">
+                    Painel não foi carregado
+                </p>
+            </nsj-accordion>
+        </div>
+    </div>
+</div>

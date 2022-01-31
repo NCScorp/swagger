@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="tiposacionamentos" label="tiposacionamentos" project="crm">
+    <entity schema="crm" table="tiposacionamentos">
+        <fieldmodel name="tiposacionamento" datatype="guid" isid="true" column="tiposacionamento"/>
+        <fieldmodel name="nome" datatype="string"  column="nome"/>
+        <fieldmodel name="descricao" datatype="string"  column="descricao"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+        <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem>id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser label="Tipos de Acionamento" layout="list" paginate="true" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="tiposacionamento" isid="true" visible="false"/>
+            <fieldbrowser alias="nome" entitylink="nome" visible="true"/>
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="false"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Tipo de Acionamento">
+            <layout>
+                <headerform>
+                <row>
+                    <cell controltype="textedit" label="Nome" colspan="12" entitylink="nome">
+                    <validates>
+                        <validate type="vnull" displaytext="O campo Nome não pode estar vazio"></validate>
+                        <validate type="maxlength" value="50" displaytext="O campo Nome aceita no máximo 50 caracteres"/>
+                    </validates>
+                    </cell>
+                </row>
+                <row>
+                    <cell controltype="textarea" label="Descrição" colspan="12" entitylink="descricao"/>
+                    <validates>
+                        <validate type="vnull" displaytext="O campo Descrição não pode estar vazio"></validate>
+                    </validates>
+                </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action form="default">
+          <name>retrieve</name>
+        </action>
+        <action form="default" successMsg="O Tipo de Acionamento foi criado com sucesso!" failMsg="Ocorreu um erro ao criar o Tipo de Acionamento!">
+          <name>Insert</name>
+          <api>
+            <name>tipoAcionamentoNovo_V2</name>
+            <fromto valueapi="nome" valueentity="nome"/>
+            <fromto valueapi="descricao" valueentity="descricao"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+             <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+          </api>
+        </action> 
+        <action form="default" successMsg="O Tipo de Acionamento foi editado com sucesso!" failMsg="Ocorreu um erro ao editar o Tipo de Acionamento!">
+          <name>Update</name>
+          <api>
+            <name>tipoAcionamentoAlterar_V2</name>
+            <fromto valueapi="tiposacionamento" valueentity="tiposacionamento"/>
+            <fromto valueapi="nome" valueentity="nome"/>
+            <fromto valueapi="descricao" valueentity="descricao"/>
+            <fromto valueapi="updated_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+             <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+          </api>
+        </action>
+        <action successMsg="O Tipo de Acionamento foi excluído com sucesso!" failMsg="Ocorreu um erro ao excluir o Tipo de Acionamento!">
+            <name>Delete</name>
+                <api>
+                    <name>tipoAcionamentoExcluir_V2</name>
+                    <fromto valueapi="tiposacionamento" valueentity="tiposacionamento" />
+                    <fromto valueapi="tenant" valueentity="tenant" />
+                     <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+                </api>
+        </action>
+    </actions>
+</nsjusecase>

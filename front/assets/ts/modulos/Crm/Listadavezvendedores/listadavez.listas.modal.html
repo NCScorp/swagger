@@ -1,0 +1,181 @@
+<div class="listadavez-listas-modal-container">
+    <div class="modal-header">
+        <div class="header-container">
+            <div class="titulo">
+                <h3 class="modal-title" id="modal-title"
+                    ng-if="crm_lstvez_listas_mdl_cntrllr.situacaoTela == crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao">
+
+                    {{crm_lstvez_listas_mdl_cntrllr.entity.nome}}
+                </h3>
+                <input class="modal-title-input" type="text" ng-model="crm_lstvez_listas_mdl_cntrllr.entity.nome"
+                    ng-if="crm_lstvez_listas_mdl_cntrllr.situacaoTela != crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao"
+                    ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave">
+            </div>
+            <div class="btn-fechar" ng-click="crm_lstvez_listas_mdl_cntrllr.close()" ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave">
+                <span class="icone-container">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="body-tela">
+        <!-- Painel da listagem -->
+        <div class="list-painel" ng-if="!crm_lstvez_listas_mdl_cntrllr.situacaoTela == crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao">
+            <div class="check-all-container">
+                <div class="div-check-container">
+                    <input type="checkbox" ng-checked="crm_lstvez_listas_mdl_cntrllr.estaoTodosSelecionados() && crm_lstvez_listas_mdl_cntrllr.entity.itens.length > 0"
+                        ng-click="crm_lstvez_listas_mdl_cntrllr.selectAll()"
+                        ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave || crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores || 
+                                    crm_lstvez_listas_mdl_cntrllr.entity.itens.length == 0">
+                </div>
+                <div class="div-select-container">
+                    <span class="qtd-itens-selecionados qtd-selecionado"
+                        ng-if="crm_lstvez_listas_mdl_cntrllr.getListavendedoritemselecionados().length > 0">
+
+                        {{crm_lstvez_listas_mdl_cntrllr.getListavendedoritemselecionados().length}}
+                    </span>
+                    <span class="nenhum-item-selecionado qtd-selecionado"
+                        ng-if="crm_lstvez_listas_mdl_cntrllr.getListavendedoritemselecionados().length == 0">
+                        
+                        Nenhum
+                    </span>
+                    membro(s) selecionado(s)
+                </div>
+                <div class="div-actions-container">
+                    <!-- Excluir vendedor -->
+                    <button class="btn btn-excluir" title="Remover" ng-click="crm_lstvez_listas_mdl_cntrllr.excluirItens()"
+                        ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave || crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores ||
+                            crm_lstvez_listas_mdl_cntrllr.getListavendedoritemselecionados().length < 1">
+                        <span class="icone-container btn-excluir" >
+                            <i class="fas fa-trash" aria-hidden="true"></i>
+                        </span>
+                    </button>
+
+                    <!-- Mover vendedor acima -->
+                    <button class="btn btn-up" title="Mover para cima" ng-click="crm_lstvez_listas_mdl_cntrllr.moverListaItemUp()"
+                        ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave || crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores ||
+                                    crm_lstvez_listas_mdl_cntrllr.getListavendedoritemselecionados().length != 1">
+                        <span class="icone-container btn-up" >
+                            <i class="fas fa-arrow-up" aria-hidden="true"></i>
+                        </span>
+                    </button>
+
+                    <!-- Mover vendedor abaixo -->
+                    <button class="btn btn-down" title="Mover para baixo" ng-click="crm_lstvez_listas_mdl_cntrllr.moverListaItemDown()"
+                        ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave || crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores ||
+                                    crm_lstvez_listas_mdl_cntrllr.getListavendedoritemselecionados().length != 1">
+                        <span class="icone-container btn-down"  >
+                            <i class="fas fa-arrow-down" aria-hidden="true"></i>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="btn-add-container">
+                <button class="btn btn-add-user" title="Adicionar novo" ng-click="crm_lstvez_listas_mdl_cntrllr.abrirAdicaoVendedor()"
+                    ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave || crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores">
+                    <span class="icone-container" >
+                        <i class="fas fa-user-plus" aria-hidden="true"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Container da listagem -->
+        <div class="list" ng-class="{'visualizar': crm_lstvez_listas_mdl_cntrllr.situacaoTela == crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao}">
+            <div class="tabela-container">
+                <!-- Listagem de dados -->
+                <table class="table table-striped table-hover table-condensed lst-vendedores">
+                    <thead>
+                        <tr>
+                            <th class="selecao">
+                                <!-- Coluna do checkbox -->
+                            </th>
+                            <th class="nome">
+                                Nome
+                            </th>
+                            <th class="posicao">
+                                Posição
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody ng-if="!crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores">
+                        <tr ng-repeat="vendedor in crm_lstvez_listas_mdl_cntrllr.entity.itens" class="linha-vendedor">
+                            <td class="selecao">
+                                <input type="checkbox" name="selecao" ng-model="vendedor.checked"
+                                    ng-if="!crm_lstvez_listas_mdl_cntrllr.situacaoTela == crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao">
+                            </td>
+                            <td class="nome">
+                                {{ vendedor.vendedor.vendedor_nome }} 
+                            </td>
+                            <td class="posicao">
+                                {{ $index + 1 }} 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="add-vendedor-container" ng-if="crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores">
+                <div class="add-vendedor-header">
+                    <div class="input-busca-container">
+                        <span class="icone-container">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </span>
+                        <input type="text" placeholder="Buscar.." ng-model="crm_lstvez_listas_mdl_cntrllr.filterVendedores"
+                            ng-change="crm_lstvez_listas_mdl_cntrllr.search(crm_lstvez_listas_mdl_cntrllr.serviceVendedores.filters)">
+                    </div>
+                </div>
+                <div class="add-vendedor-body">
+                    <div class="add-vendedor-lista" ng-if="!crm_lstvez_listas_mdl_cntrllr.isServiceVendedoresBusy()">
+                        <div class="add-vendedor-lista-item" ng-repeat="vendedor in crm_lstvez_listas_mdl_cntrllr.arrVendedores">
+                            <input type="checkbox" name="selecao" class="selecao" ng-model="vendedor.checked">
+                            <span class="vendedor-nome">{{vendedor.vendedor_nome}}</span>
+                        </div>
+                    </div>
+                    <!-- Loading da lista de vendedores -->
+                    <div class="content-loading" ng-if="crm_lstvez_listas_mdl_cntrllr.isServiceVendedoresBusy()">
+                        <div class="center-loading text-center">
+                            <div class="onloading"></div>
+                            Carregando...
+                        </div>
+                    </div>
+                </div>
+                <div class="add-vendedor-footer">
+                    <a class="btn btn-sm btn-cancelar" ng-click="crm_lstvez_listas_mdl_cntrllr.cancelarAdicaoVendedor()">
+                        Cancelar
+                    </a>
+                    <button class="btn btn-warning btn-adicionar" ng-click="crm_lstvez_listas_mdl_cntrllr.adicionarVendedores()">
+            
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                        Adicionar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-sm btn-cancelar" ng-click="crm_lstvez_listas_mdl_cntrllr.close()"
+            ng-if="crm_lstvez_listas_mdl_cntrllr.situacaoTela != crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao"
+            ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave">
+            Cancelar
+        </a>
+        <button type="submit" name="submit" class="btn btn-warning btn-salvar"
+            ng-if="crm_lstvez_listas_mdl_cntrllr.situacaoTela != crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao"
+            ng-click="crm_lstvez_listas_mdl_cntrllr.salvarLista()"
+            ng-class="{loading: crm_lstvez_listas_mdl_cntrllr.busySave}"
+            ng-disabled="crm_lstvez_listas_mdl_cntrllr.busySave || crm_lstvez_listas_mdl_cntrllr.entity.itens.length == 0 || crm_lstvez_listas_mdl_cntrllr.adicionandoVendedores">
+
+            <i class="fa fa-check" aria-hidden="true"></i>
+            Salvar
+        </button>
+        <button type="submit" name="submit" class="btn btn-editar"
+            tem-permissao="crm_listadavezvendedores_put"
+            ng-if="crm_lstvez_listas_mdl_cntrllr.situacaoTela == crm_lstvez_listas_mdl_cntrllr.EnumSituacaoTela.stVisualizacao"
+            ng-click="crm_lstvez_listas_mdl_cntrllr.editarLista()">
+
+            <span class="icone-container">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+            </span>
+            Editar
+        </button>
+    </div>
+</div>

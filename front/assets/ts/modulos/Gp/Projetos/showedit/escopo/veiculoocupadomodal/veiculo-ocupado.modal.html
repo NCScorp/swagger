@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h3 class="modal-title" id="modal-title">Veículo já atribuído
+  </h3>
+</div>
+<div class="modal-body" id="modal-body">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-12">
+        <p>
+          {{ $ctrl.entities.length > 1 ? 'Atualmente, o veículo selecionado já está atribuído às ordens de serviço abaixo:' : 'Atualmente, o veículo selecionado já está atribuído à ordem de serviço abaixo: ' }} 
+        </p>
+        <nsj-table class="table-veiculo-ocupado-modal" fields-config="$ctrl.fieldsConfig"
+          fields="$ctrl.entities">
+        </nsj-table>
+        <p style="color: #DC3545; font-weight: bold;">
+          Tem certeza que deseja continuar com essa atribuição?
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <div class="pull-right">
+    <button type="button" class="btn btn-default btn-delete btn-geral" ng-click="$ctrl.close(true)">
+      Sim
+    </button>
+    <button type="button" name="submit" class="btn btn-primary btn-save btn-geral" ng-click="$ctrl.close(false)">
+      Não
+    </button>
+  </div>
+</div>

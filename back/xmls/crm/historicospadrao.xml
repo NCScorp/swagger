@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="historicospadrao" label="historicospadrao" project="crm">
+  <entity schema="crm" table="historicospadrao">
+    <fieldmodel name="historicopadrao" datatype="guid" isid="true" column="historicopadrao"/>
+    <fieldmodel name="codigo" datatype="string" column="codigo"/>
+    <fieldmodel name="descricao" datatype="string" column="descricao"/>
+    <fieldmodel name="texto" datatype="string" column="texto"/>
+    <fieldmodel name="tipo" datatype="integer" column="tipo">
+      <options> {"100":"Geral","101":"Acompanhamento", "102":"Pendências"} </options>
+    </fieldmodel>
+    <fieldmodel name="created_by" datatype="json" column="created_by"/>
+    <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+    <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+    <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Históricos Padrões" layout="list" paginate="true" target="builtin">
+    <filters style="fixed">
+      <fieldsfilters>
+        <fieldfilter entitylink="tipo" label="Tipo" maxoccurs='unbounded' >
+          <conditions>
+            <condition type="eq"/>
+          </conditions>
+        </fieldfilter>
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser entitylink="historicopadrao" isid="true" visible="false"/>
+      <fieldbrowser entitylink="codigo" visible="true"/>
+      <fieldbrowser entitylink="descricao" visible="false"/>
+      <fieldbrowser entitylink="texto" visible="false"/>
+      <fieldbrowser alias="Tipo" entitylink="tipo" visible="true"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Histórico Padrão">
+      <layout>
+        <headerform>
+          <row>
+            <cell entitylink="codigo" controltype="textedit" label="Código" colspan="6">
+              <validates>
+                <validate type="vnull" displaytext="O campo Código não pode estar vazio"></validate>
+                <validate type="maxlength" value="30" displaytext="O campo Código aceita no máximo 30 caracteres"/>
+              </validates>
+            </cell>
+            <cell entitylink="tipo" controltype="combobox" label="Módulo" colspan="6">
+              <validates>
+                <validate type="vnull" displaytext="O campo Módulo não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell entitylink="descricao" controltype="textedit" label="Descrição" colspan="12">
+              <validates>
+                <validate type="vnull" displaytext="O campo Descrição não pode estar vazio"></validate>
+                <validate type="maxlength" value="50" displaytext="O campo Descrição aceita no máximo 50 caracteres"/>
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell entitylink="texto" controltype="textarea" label="Texto" colspan="12">
+              <validates>
+                <validate type="vnull" displaytext="O campo Texto não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>retrieve</name>
+    </action>
+    <action form="default" successMsg="O Histórico Padrão foi criado com sucesso!" failMsg="Ocorreu um erro ao criar o Histórico Padrão!">
+      <name>Insert</name>
+      <api>
+        <name>historicoPadraoNovo_V2</name>
+        <fromto valueapi="codigo" valueentity="codigo"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="texto" valueentity="texto"/>
+        <fromto valueapi="tipo" valueentity="tipo"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+         <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action> 
+    <action form="default" successMsg="O Histórico Padrão foi editado com sucesso!" failMsg="Ocorreu um erro ao editar o Histórico Padrão!">
+      <name>Update</name>
+      <api>
+        <name>historicoPadraoAlterar_V2</name>
+        <fromto valueapi="historicopadrao" valueentity="historicopadrao"/>
+        <fromto valueapi="codigo" valueentity="codigo"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="texto" valueentity="texto"/>
+        <fromto valueapi="tipo" valueentity="tipo"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+         <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+    <action successMsg="O Histórico Padrão foi excluído com sucesso!" failMsg="Ocorreu um erro ao excluir o Histórico Padrão!">
+      <name>Delete</name>
+      <api>
+        <name>historicoPadraoExcluir_V2</name>
+        <fromto valueapi="historicopadrao" valueentity="historicopadrao"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+         <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

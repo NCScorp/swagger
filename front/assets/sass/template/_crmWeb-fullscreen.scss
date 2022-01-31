@@ -1,0 +1,32 @@
+body {
+    // Layouts de tablet+
+    @media screen and (min-width: 768px) {
+        // Tela principal, com classe de ativação do fullscreen
+        #wrap.fullscreen-ativado {
+            // Barra superior
+            #nsj-header {
+                display: none;
+            }
+        
+            // Menu lateral
+            .nsj-menu {
+                display: none;
+            }
+        
+            // Container principal da tela
+            .container-fluid.main-container{
+                height: 100% !important;
+    
+                // Container da tela
+                .geral.clearfix {
+                    margin-left: 0;
+                    width: 100%;
+    
+                    .nsj-layout {
+                        height: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

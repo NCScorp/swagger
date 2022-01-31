@@ -1,0 +1,307 @@
+/*
+    Arquivo de estilização de telas do módulo de Negócios
+*/
+
+/*
+    Classes de estilização de situação pré negócio
+*/
+.label-situacaoprenegocio-vermelho{
+    background-color: #CA0813;
+}
+
+.label-situacaoprenegocio-laranja{
+    background-color: #FC571F;
+}
+
+.label-situacaoprenegocio-abobora{
+    background-color: #FD9827;
+}
+
+.label-situacaoprenegocio-amarelo{
+    background-color: #FEE433;
+}
+
+.label-situacaoprenegocio-verdeclaro{
+    background-color: #85E42B;
+}
+
+.label-situacaoprenegocio-verde{
+    background-color: #1FCA5D;
+}
+
+.label-situacaoprenegocio-azulclaro{
+    background-color: #23CFFD;
+}
+
+.label-situacaoprenegocio-azul{
+    background-color: #165AF1;
+}
+
+.label-situacaoprenegocio-roxo{
+    background-color: #8E1ED3;
+}
+
+.label-situacaoprenegocio-rosa{
+    background-color: #E41AAB;
+}
+
+.label-situacaoprenegocio-preto{
+    background-color: #1D1D1D;
+}
+
+.label-situacaoprenegocio-cinza1{
+    background-color: #4A4A4A;
+}
+
+.label-situacaoprenegocio-cinza2{
+    background-color: #767676;
+}
+
+.label-situacaoprenegocio-cinza3{
+    background-color: #A3A3A3;
+}
+
+.label-situacaoprenegocio-cinza4{
+    background-color: #D0D0D0;
+}
+
+// Header da tela de negócios
+.crm-negocio-header {    
+    .headline-fixed-negocios{
+        display: flex;
+        align-items: baseline;
+        float: left;
+        flex-direction: column;
+        color:#5a5a5a;
+        margin-bottom: -8px;
+        & li{
+            font-size: 12px;
+        }
+        & a{
+            color: rgba(91,63,12,082);
+        }
+        & label{
+            margin-left: 5px;
+            margin-right: -8px;
+            margin-bottom: 0px;
+        }
+        @media screen and (max-width:767px) {
+            margin-bottom: -30px;
+        }
+    }
+    
+    // Ações de negócios
+    .acoes {
+        //Dropdown de qualificação. Removo margin right para opções ficarem alinhadas
+        .acao.acao-dropdown-qualificacao {
+            nsj-button-group nsj-button button {
+                margin-right: 0;
+            }
+
+            // Deixo os itens do dropdown com cursor de mão
+            item-dropdown li {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+// Corpo da tela de negócios
+.crm-negocio-container {
+    .form-negocios-container {
+        form[name="crm_ngcs_frm_cntrllr.form"]{
+            overflow-y: auto;
+        }
+    }
+    .visualizacao-negocios-container {
+        .content-scroll{
+            overflow-y: auto;
+        }
+    }
+
+    //Lista de contatos do negócio
+    .lista-negocios-contatos{
+        .negocio-contato {
+            margin-bottom: 20px;
+        }
+    }
+
+    // Lista de contatos do negócio - Visualização
+    .lista-negocios-contatos-show {
+        width: 100%;
+    }
+}
+
+// Formulário da Modal de Qualificar Negócio
+.form-qualificar-negocio{
+    .vendedor-header {
+        display: flex;
+        justify-content: space-between;
+
+        .check-listadavez {
+            .texto {
+                margin-right: 10px;
+            }
+        }
+    }
+    .btn-qualificar {
+        background: #54a845;
+        border: none;
+
+        &:hover {
+            background: #54a845;
+        }
+    }
+}
+
+// Formulário da Modal de Desualificar Negócio
+.form-desqualificar-negocio{
+    .btn-desqualificar {
+        background: #dd3d45;
+        border: none;
+        
+        &:hover {
+            background: #dd3d45;
+        }
+    }
+}
+
+// Filtros da listagem
+.lst-negocios.filtro-atribuicao {
+    max-width: 600px;
+    display: flex;
+    flex-direction: row;
+
+    .label-filtro {
+        display: flex;
+        background-color: #eaeaea;
+        padding-right: 20px;
+        text-justify: unset;
+        align-items: center;
+        padding-left: 10px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        min-width: 130px;
+    }
+
+    nsj-lookup {
+        flex: 1;
+
+        .form-control.ui-select-toggle {
+            border-radius: 0;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+    }
+}
+
+.lst-negocios.filtro-desqualificados {
+    display: flex;
+    align-items: center;
+
+    .descricao {
+        margin-left: 5px;
+        margin-top: 5px;
+    }
+}
+//lista de followups do negocio (timeline)
+.follow-up-negocios-lista {
+    .seach-toolbar div.toolbar {
+        border-bottom-style:none;
+        border-bottom-width:0px;
+    }
+}
+
+#ns_followupsnegocios_list {
+    nsj-timeline {
+        nsj-timeline-item {
+            .sentido-acompanhamento {
+                &.contato-recebido {
+                    .icone {
+                        color: #31B0D5;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//Cor azul na seta do "para" no acompanhamento
+.seletor-toggle-arrow-para.sc-nsj-seletor-toggle{
+    color: #31B0D5;
+}
+
+.timeline-contato-icon{
+    color: #31B0D5;
+}
+
+//Espaçamento entre cada opção do componente - Solução temporária até o componente ser corrigido no Nasajon UI
+.seletor-item.sc-nsj-seletor-list{
+    margin-right: 10px;
+}
+
+/*
+    Classes de estilização de prioridades
+*/
+.label-prioridade-vermelho{
+    background-color: #CA0813;
+}
+
+.label-prioridade-laranja{
+    background-color: #FC571F;
+}
+
+.label-prioridade-abobora{
+    background-color: #FD9827;
+}
+
+.label-prioridade-amarelo{
+    background-color: #FEE433;
+}
+
+.label-prioridade-verdeclaro{
+    background-color: #85E42B;
+}
+
+.label-prioridade-verde{
+    background-color: #1FCA5D;
+}
+
+.label-prioridade-azulclaro{
+    background-color: #23CFFD;
+}
+
+.label-prioridade-azul{
+    background-color: #165AF1;
+}
+
+.label-prioridade-roxo{
+    background-color: #8E1ED3;
+}
+
+.label-prioridade-rosa{
+    background-color: #E41AAB;
+}
+
+.label-prioridade-preto{
+    background-color: #1D1D1D;
+}
+
+.label-prioridade-cinza1{
+    background-color: #4A4A4A;
+}
+
+.label-prioridade-cinza2{
+    background-color: #767676;
+}
+
+.label-prioridade-cinza3{
+    background-color: #A3A3A3;
+}
+
+.label-prioridade-cinza4{
+    background-color: #D0D0D0;
+}

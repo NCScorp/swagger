@@ -1,0 +1,150 @@
+<div ng-if="(ctrl_pendencias.layout == 'block') && (!ctrl_pendencias.arrPendencias || ctrl_pendencias.arrPendencias.length == 0) && !ctrl_pendencias.isBusyPendencias()"
+    class="state-empty">
+    <div class="empty-list">
+        <p class="text-center">
+            Não existem itens para mostrar nesta lista.
+        </p>
+    </div>
+</div>
+<div class="content-loading" ng-if="ctrl_pendencias.isBusyPendencias()">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>
+<div class="lista-pendencias">
+    <div class="container-block" ng-if="ctrl_pendencias.layout == 'block' && ctrl_pendencias.arrPendencias.length > 0">
+        <div class="pendencia" ng-repeat="pendencia in ctrl_pendencias.arrPendencias">
+            <div class="pendencia-header">
+                <div class="prioridade campo" ng-style="{'color': pendencia.prioridade.cor}">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div class="tipo-atendimento-container campo">
+                    Tipo: <span class="tipo-atendimento">{{pendencia.negociopendencialista.nome}}</span>
+                </div>
+                <div class="direita campo">
+                    <div class="prazo-container campo">
+                        {{ ctrl_pendencias.CrmAtcspendenciasUtilsService.minutosParaDataFormatada(pendencia.aberta_ha) }}
+                    </div>
+                    <div class="status campo"
+                        ng-class="{'aberta': pendencia.status == ctrl_pendencias.EStatusPendencia.sAberta, 'fechada': pendencia.status == ctrl_pendencias.EStatusPendencia.sFechada}">
+                        {{ctrl_pendencias.CrmAtcspendenciasUtilsService.getStatusDescricao(pendencia.status)}}
+                    </div>
+                </div>
+            </div>
+            <div class="pendencia-corpo">
+                <div class="numero">#{{pendencia.numero}}</div>
+                <div class="aberto-por">
+                    Aberta por <span class="aberto-por-nome">{{pendencia.created_by.nome}}</span>
+                    em <span
+                        class="aberto-por-data">{{ctrl_pendencias.CrmAtcspendenciasUtilsService.getDataFormatada(pendencia.created_at)}}</span>
+                    às <span
+                        class="aberto-por-hora">{{ctrl_pendencias.CrmAtcspendenciasUtilsService.getHoraFormatada(pendencia.created_at)}}</span>
+                </div>
+                <div class="atribuido-a-container" ng-if="pendencia.atribuidoa">
+                    Atribuída à <span ng-bind="pendencia.atribuidoa" class="atribuido-a"></span>
+                </div>
+                <div class="responsavel-impeditivo-container">
+                    Responsável do impeditivo: <span
+                        class="responsavel-impeditivo">{{ctrl_pendencias.CrmAtcspendenciasUtilsService.getImpeditivoDescricao(pendencia.impeditivo)}}</span>
+                </div>
+
+                <p class="descricao"><span class="texto">{{pendencia.texto}}</span></p>
+
+                <nsj-button icon="fa fa-info-circle"
+                    ng-click="ctrl_pendencias.crmAtcspendenciasForm(pendencia.negocio.negocio, pendencia)">
+                    Consultar Pendência
+                </nsj-button>
+                <nsj-button tem-permissao="crm_atcspendencias_marcar" icon="fas fa-check"
+                    ng-click="ctrl_pendencias.fecharPendencia(pendencia)"
+                    ng-disabled="ctrl_pendencias.entity.$$__submitting" class="btn-footer btn-fechar-pendencia"
+                    ng-class="{loading:ctrl_pendencias.entity.$$__submitting}"
+                    ng-if="pendencia.status == ctrl_pendencias.EStatusPendencia.sAberta">
+                    Fechar Pendência
+                </nsj-button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-table" ng-if="ctrl_pendencias.layout == 'table'">
+
+        <nsj-toolbar ng-on-change_toolbar="ctrl_pendencias.filtrar($event.detail)" search="true" refresh="true"
+            holder="Buscar..">
+
+            <nsj-filters slot="filters">
+                <label for="filtroatcpendencialista" id="labelfiltroatcpendencialista">
+                    Tipo
+                    <nsj-lookup name="filtroatcpendencialista" id-name="filtroatcpendencialista"
+                        factory="CrmAtcspendenciaslistas" ng-model="ctrl_pendencias.filtroAtcPendenciaLista"
+                        max-label="2" constructor="{ }" config='{ "nome":""}'></nsj-lookup>
+                </label>
+
+                <label for="filtroatribuidoa" id="labelfiltroatribuidoa">
+                    Atribuído a
+                    <nsj-lookup name="filtroatribuidoa" id-name="filtroatribuidoa" default-text="'Sem atribuição'" factory="CrmAtcspendencias"
+                        ng-model="ctrl_pendencias.filtroatribuidoa" max-label="2" constructor="{ }"
+                        config='{ "atribuidoa":"atribuidoa" }' ng-change="ctrl_pendencias.filtrar($event.detail)">
+                    </nsj-lookup>
+                </label>
+                </filters>
+
+        </nsj-toolbar>
+
+        <table class="nsj-table table">
+            <thead class="header">
+                <tr>
+                    <th><span>Atendimento</span></th>
+                    <th><span>Descrição</span></th>
+                    <th><span>Tipo</span></th>
+                    <th><span>Aberta há</span></th>
+                </tr>
+            </thead>
+            <tbody class="corpo">
+                <tr
+                    ng-if="(!ctrl_pendencias.arrPendencias || ctrl_pendencias.arrPendencias.length == 0) && !ctrl_pendencias.isBusyPendencias()">
+                    <td colspan="4">
+                        <div class="state-empty">
+                            <div class="empty-list">
+                                <p class="text-center">
+                                    Não existem itens para mostrar nesta lista.
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+
+                <tr ng-repeat="pendencia in ctrl_pendencias.arrPendencias" class="pendencia"
+                    ng-class="{'prazo-proximo-expiracao': pendencia.prazoStatus == ctrl_pendencias.EPendenciaPrazoStatus.ppsProximoExpiracao, 'prazo-expirado': pendencia.prazoStatus == ctrl_pendencias.EPendenciaPrazoStatus.ppsExpirado}">
+                    <td>
+                        <span class="prioridade" ng-style="{'color': pendencia.prioridade.cor}">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                        <span class="atendimento">#{{pendencia.negocio.codigo}}</span>
+                    </td>
+                    <td class="descricao"><span class="texto">{{pendencia.texto}}</span></td>
+                    <td class="tipo">{{pendencia.negociopendencialista.nome}}</td>
+                    <td class="aberta-ha">
+                        {{ctrl_pendencias.CrmAtcspendenciasUtilsService.minutosParaDataFormatada(pendencia.aberta_ha)}}
+                    </td>
+
+                    <td class="actions ng-binding">
+                        <div class="table-btns-actions">
+                            <nsj-actions action-model="{{pendencia}}">
+
+                                <nsj-action target="_self" icon="fas fa-eye" tooltip="Visualizar Atendimento"
+                                    disabled="false" ui-sref="crm_atcs_full({atc : pendencia.negocio.negocio})">
+                                </nsj-action>
+
+                                <nsj-action target="_self" icon="fas fa-exclamation-triangle"
+                                    tooltip="Consultar Pendência" disabled="false"
+                                    ng-click="ctrl_pendencias.crmAtcspendenciasForm(pendencia.negocio.negocio, pendencia)">
+                                </nsj-action>
+                            </nsj-actions>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

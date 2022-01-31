@@ -1,0 +1,229 @@
+// Container de contas a pagar do Atendimento Comercial
+#secao-contaspagar {
+    // Container de dados
+    .dados-container {
+        display: flex;
+        overflow-x: auto;
+        border-radius: 4px;
+
+        table.tabela-fornecedor.nsj-table {
+
+            // Fade-in ao sumir o skeleton e apresentar a tabela
+            tr {
+                td, th {
+                    animation: fade-in 800ms;
+                    -webkit-animation: fade-in 800ms;
+                }
+            }
+
+            margin-bottom: 0;
+
+            tbody, thead {
+                // Linhas
+                tr {
+                    &:hover {
+                        td {
+                            background-color: #eae7e2 !important;
+
+                            // Ações
+                            .table-btns-actions{
+                                nsj-actions {
+                                    .actions {
+                                        .actions-buttons {
+                                            background-color: #eae7e2 !important;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // Linhas de títulos
+                    &.titulos {
+                        background: #ddd;
+                        color: #5a5a5a;
+                        font-weight: 600;
+                        height: 35px;
+    
+                        &:hover {
+                            td {
+                                background: #ddd;
+                            }
+                        }
+                    }
+
+                    // Linha de dados
+                    &.dados{
+                        height: 40px;
+                        &.linha-fornecedor {
+                            td {
+                                background-color: #fafafa;
+                            }
+                        }
+
+                        td {
+                            .valor {
+                                // Edição não é apresentada
+                                .edicao {
+                                    display: none;
+                                    position: relative;
+
+                                    .icone-limpar {
+                                        display: none;
+                                        position: absolute;
+                                        top: 5px;
+                                        left: calc(100% - 15px);
+                                    }
+
+                                    &:hover {
+                                        .icone-limpar {
+                                            display: block;
+                                            cursor: pointer;
+                                        }
+                                    }
+                                }
+        
+                                // Se pode editar
+                                &.pode-editar {
+                                    // Apresento edição
+                                    .edicao {
+                                        display: block;
+        
+                                        input {
+                                            width: 100%;
+                                        }
+
+                                        .form-control {
+                                            height: 32px;
+                                        }
+                                    }
+                                    // Escondo visualização
+                                    .visualizacao {
+                                        display: none;
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+
+                    td, th {
+                        border: 1px solid #d6d6d6 !important;
+                        padding: 3px 20px !important;
+
+
+                        // Primeira coluna
+                        &:first-child {
+                            border-left: none !important;
+                        }
+
+                        &:last-child {
+                            border: none !important;
+                            border-left: none !important;
+                            padding: 0 !important;
+                        }
+
+                        // Penultima coluna: Coluna antes das ações
+                        &:nth-last-child(2){
+                            border-right: none !important;
+                        }
+
+                        &.prestadora {
+                            min-width: 250px;
+                        }
+                        &.numerodocumento, &.datadocumento, &.descricao{
+                            min-width: 200px;
+                        }
+
+                        // Coluna quantidade
+                        &.quantidade {
+                            width: 100px;
+                        }
+                        &.valoracordado, &.total {
+                            min-width: 150px;
+                        }
+
+                        &.valorpagar {
+                            min-width: 170px;
+                        }
+
+                        &.processamento {
+                            width: 150px !important;
+                            text-align: center;
+
+                            .tooltip-item {
+                                display: inline-block;
+
+                                nsj-tooltip {
+                                    .texto {
+                                        font-size: 13px;
+                                    }
+                                }
+
+                            }
+                            .tooltip-processado {
+                                .icone {
+                                    color: green;
+                                }
+                            }
+
+                            .tooltip-nao-processado {
+                                .icone {
+                                    color: gray;
+                                }
+                            }
+
+                            .tooltip-impedido {
+                                .icone {
+                                    color: orange;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .sem-dados{
+            animation: fade-in 800ms;
+            -webkit-animation: fade-in 800ms;
+        }
+
+    }
+
+    // Skeleton
+    .skeleton-container {
+
+        display: block;
+        overflow-x: hidden;
+
+        // Não mostrar bordas no header da tabela
+        table.tabela-skeleton{
+            thead{
+                tr.titulos{
+                    th{
+                        border: none !important;
+                    }
+                }
+            }
+        }
+
+        // Linhas com fundo branco
+        tbody{
+            tr{
+                td{
+                    background-color: #fafafa;
+                }
+            }
+        }
+
+        .skeleton-dados-tabela{ 
+
+            .item-skeleton{
+                width: 90px;
+                height: 18px;
+            }
+
+        }
+    }
+}

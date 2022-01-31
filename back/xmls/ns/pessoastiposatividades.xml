@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="pessoastiposatividades" label="pessoastiposatividades" orphan="false" project="ns">
+    <entity schema="ns" table="pessoastiposatividades">
+        <fieldmodel name="pessoatipoatividade" datatype="guid" isid="true" column="pessoatipoatividade"/>
+        <fieldmodel name="tipoatividade" datatype="string" column="tipoatividade"  useCaseLink="ns\tiposatividades" entityJoinType="left"/>
+        <fieldmodel name="pessoa" datatype="guid"  column="pessoa"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+         <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true" >tenant</constructoritem>
+      <constructoritem required="true" >pessoa</constructoritem>
+      <constructoritem required="true">id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser label="Tipo de atividades" layout="inline" paginate="true" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="pessoatipoatividade" isid="true" visible="false" unique="true"/>
+            <fieldbrowser alias="Tipo de atividade" entitylink="tipoatividade"  visible="true" fielddetaillookup="{'nome': 'Nome', 'descricao':'Descrição'}"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default">
+          <layout>
+            <headerform>
+              <row>
+                <cell name="tipoatividade" controltype="lookup" label="Tipo de atividade" colspan="6" entitylink="tipoatividade" fielddetaillookup="{'nome':'Nome', 'descricao':'Descrição'}" amountfieldslookup="2">
+                <validates>
+                  <validate type="unique" displaytext="O campo tipos de atividades não pode ter atividades repetidas."/>
+                </validates>
+                </cell>
+              </row> 
+            </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions> 
+        <action>
+          <name>retrieve</name>
+        </action>
+        <action>
+          <name>insert</name>
+          <api>
+            <name>pessoaTipoAtividadeNovo_v2</name>
+            <fromto valueapi="pessoa" valueentity="pessoa"/>
+            <fromto valueapi="tipoatividade" valueentity="tipoatividade"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+          </api>
+        </action>
+        <action>
+          <name>delete</name>
+          <api>
+            <name>pessoaTipoAtividadeExcluir_v2</name>
+            <fromto valueapi="pessoatipoatividade" valueentity="pessoatipoatividade"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+          </api>
+        </action>
+   </actions>
+</nsjusecase>
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+<div class="custom-form-view">
+    <nsj-accordion init-open keep-open headline="Dados do Acordo">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="form-group clearfix">
+                    <label class="control-label">Serviço </label>
+                    <p class="form-control-static">
+                        <span id="servico" class="form-control-static" ng-bind="$ctrl.entity.servico.nome || 'Não informado'"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="form-group clearfix">
+                    <label class="control-label">Valor </label>
+                    <p class="form-control-static">
+                        <span id="valor" class="form-control-static">
+                            {{ $ctrl.entity.valor | currency : 'R$ ' : 2 }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group clearfix">
+                    <label class="control-label">Prestadora de Serviços </label>
+                    <p class="form-control-static">
+                        <span id="prestador" class="form-control-static" ng-bind="$ctrl.entity.prestador.nomefantasia || 'Não informado'"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </nsj-accordion>
+</div>

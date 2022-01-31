@@ -1,0 +1,63 @@
+<div class="height-full layout-list">
+
+    <form nsj-focus name="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.busy }"
+        role="form" ng-submit="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="" headline-sub="true">
+            <div class="pull-right">
+
+
+
+                <button type="button" class="btn btn-sm btn-default btn-geral"
+                    ng-click="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.vincularItensDeContrato(crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.entity)">
+                    <i class="fas fa-exclamation"></i> <span>VincularItensDeContrato</span>
+                </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                    ng-click="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.desvincularItensDeContrato(crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.entity)">
+                    <i class="fas fa-exclamation"></i> <span>DesvincularItensDeContrato</span>
+                </button>
+                <a class="btn btn-sm btn-default"
+                    ui-sref="crm_responsabilidadesfinanceirasvalores({'responsabilidadefinanceira' : crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.constructors.responsabilidadefinanceira,})"
+                    title="Voltar à lista">Voltar à lista</a>
+
+
+
+
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <crm-responsabilidadesfinanceirasvalores-default entity="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.entity"
+                form="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.form" busy="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.busy"
+                action="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.action"
+                constructors="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.constructors">
+            </crm-responsabilidadesfinanceirasvalores-default>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+
+                    <div class="form-group pull-left">
+
+                        <button type="button" ng-click="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.submit()"
+                            ng-class="{loading:crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.entity.$$__submitting}"
+                            ng-disabled="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.entity.$$__submitting || crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.form.$pristine"
+                            class="btn btn-sm btn-warning btn-save btn-geral">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-sm"
+                            ui-sref="crm_responsabilidadesfinanceirasvalores({'responsabilidadefinanceira' : crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.constructors.responsabilidadefinanceira,})"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="crm_rspnsblddsfnncrsvlrs_frm_nw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

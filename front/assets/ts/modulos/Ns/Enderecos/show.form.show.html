@@ -1,0 +1,54 @@
+           
+                    <div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Nome </label><p class="form-control-static" ><span
+                                    id="nome" class="form-control-static" ng-bind="($ctrl.entity.nome) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Tipo de Endereço </label><p class="form-control-static" ><span
+                                    id="tipoendereco" class="form-control-static" ng-bind="([&quot;Local&quot;,&quot;Entrega&quot;,&quot;Cobran\u00e7a&quot;,&quot;Comercial&quot;][$ctrl.entity.tipoendereco])|| 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" >
+                                                    <div class="form-group clearfix"><label class="control-label">País </label><p class="form-control-static" ><span
+                                    id="pais" class="form-control-static" ng-bind="$ctrl.entity.pais.nome || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" ng-if="$ctrl.entity.pais.pais === '1058'">
+                                                    <div class="form-group clearfix"><label class="control-label">Estado </label><p class="form-control-static" ><span
+                                    id="estado" class="form-control-static" ng-bind="$ctrl.entity.estado.nome || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" ng-if="$ctrl.entity.pais.pais === '1058'">
+                                                    <div class="form-group clearfix"><label class="control-label">Município </label><p class="form-control-static" ><span
+                                    id="municipio" class="form-control-static" ng-bind="$ctrl.entity.municipio.nome || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" ng-if="$ctrl.entity.pais.pais !== '1058'">
+                                                    <div class="form-group clearfix"><label class="control-label">Cidades estrangeiras </label><p class="form-control-static" ><span
+                                    id="cidadeestrangeira" class="form-control-static" ng-bind="$ctrl.entity.cidadeestrangeira.nome || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" >
+                                                    <div class="form-group clearfix"><label class="control-label">CEP </label><p class="form-control-static" ><span
+                                    id="cep" class="form-control-static" ng-bind="($ctrl.entity.cep) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" >
+                                                    <div class="form-group clearfix"><label class="control-label">Bairro </label><p class="form-control-static" ><span
+                                    id="bairro" class="form-control-static" ng-bind="($ctrl.entity.bairro) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" >
+                                                    <div class="form-group clearfix"><label class="control-label">Tipo de Logradouro </label><p class="form-control-static" ><span
+                                    id="tipologradouro" class="form-control-static" ng-bind="$ctrl.entity.tipologradouro.tipologradouro || 'Não informado'"
+                                ></span><br><span class="sub-title"><b>Descricao: </b><span ng-bind="$ctrl.entity.tipologradouro.descricao || 'Não informado.'"></span></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" >
+                                                    <div class="form-group clearfix"><label class="control-label">Complemento </label><p class="form-control-static" ><span
+                                    id="complemento" class="form-control-static" ng-bind="($ctrl.entity.complemento) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" >
+                                                    <div class="form-group clearfix"><label class="control-label">Nome do Logradouro </label><p class="form-control-static" ><span
+                                    id="rua" class="form-control-static" ng-bind="($ctrl.entity.rua) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-4" >
+                                                    <div class="form-group clearfix"><label class="control-label">Número </label><p class="form-control-static" ><span
+                                    id="numero" class="form-control-static" ng-bind="($ctrl.entity.numero) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Pontos de Referência </label><p class="form-control-static" ><span
+                                    id="referencia" class="form-control-static" ng-bind="$ctrl.entity.referencia|| 'Não informado'"
+                                ></span></p></div>
+                        </div></div>

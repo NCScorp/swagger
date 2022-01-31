@@ -1,0 +1,196 @@
+#crm-atcs {
+    // Accordion de prestadores de serviço
+    .accordion-atcs-fornecedores {
+        .body {
+            padding: 0 !important;
+        }
+
+        .lista-fornecedores{
+            animation: fade-in 800ms;
+            -webkit-animation: fade-in 800ms;
+
+            .fornecedor {
+                padding: 0px 18px;
+                border-top: 1px solid #dddddd;
+                padding-top: 16px;
+
+                // O primeiro fornecedor não deve ter borda superior
+                &:first-child {
+                    border-top: none;
+                }
+
+                // Caracteristicas em comum de dados principais e dados ver mais
+                .dados-principais, .dados-ver-mais .dados-container {
+                    display: flex;
+                    flex-direction: row;
+
+                    .informacoes {
+                        .info {
+                            .titulo, .valor {
+                                display: inline;
+                            }
+                            .titulo {
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+
+                // Dados principais
+                .dados-principais {
+                    padding-bottom: 10px;
+
+                    .logo{
+                        display: inline-flex;
+                        border: 1px solid #e7e7e7;
+                        padding: 3px;
+                        width: 110px;
+                        min-width: 110px;
+                        height: 110px;
+                        border-radius: 50%;
+                        align-items: center;
+                        text-align: center;
+                        position: relative;
+                
+                        .imagem-fornecedor-container, .fornecedor-status{
+                            background: #e7e7e7;
+                            height: 100%;
+                            width: 100%;
+                            border-radius: 50%;
+                            justify-content: center;
+                            align-items: center;
+                        }
+                
+                        .imagem-fornecedor-container {
+                            display: flex;
+                            overflow: hidden;
+
+                            .icone-imagem-vazio{
+                                font-size: 40px;
+                                color: #999999;
+                            }
+                        }
+                
+                        .fornecedor-status {
+                            display: flex;
+                            position: absolute; //Defino como absoluto, pois deve ficar em cima do fundo, porém um pouco transparente
+                            left: 3px;
+                            top: 3px;
+                            height: calc(100% - 6px);
+                            width: calc(100% - 6px);
+                            color: white;
+                            flex-direction: column;
+
+                            // Fornecedor suspenso
+                            &.fncd-suspenso{
+                                background: rgba(214, 44, 40, 0.7);
+                            }
+
+                            // Fornecedor banido
+                            &.fncd-banido{
+                                background: rgba(0, 0, 0, 0.67);
+                            }
+                
+                            .icone {
+                                font-size: 18px;
+                            }
+                        }
+                    }
+
+                    .informacoes {
+                        padding-left: 5px;
+
+                        .info.razao-social {
+                            font-size: 16px;
+                        }
+
+                        .btn-ver-mais{
+                            margin-top: 10px;
+                            font-weight: 600;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                // Dados ver mais
+                .dados-ver-mais {
+                    .dados-container {
+                        border-top: 1px solid #dddddd;
+                        padding: 10px 0;
+
+                        .icone {
+                            margin-right: 15px;
+    
+                            .icone-container {
+                                width: 45px;
+                                display: inline-block;
+                                padding: 3px 0px;
+                                font-size: 24px;
+                                background: var(--color-4);
+                                color: white;
+                                text-align: center;
+                            }
+                        }
+
+                        .informacoes {
+                            margin-top: -5px;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Skeleton
+        .skeleton-container {
+            .fornecedor-envolvido-skeleton-container {
+                display: flex;
+                padding: 0px 18px;
+                padding-top: 16px;
+                padding-bottom: 10px;
+                border-top: 1px solid #dddddd;
+
+                .logo {
+                    display: inline-flex;
+                    border: 1px solid #e7e7e7;
+                    padding: 3px;
+                    width: 110px;
+                    min-width: 110px;
+                    height: 110px;
+                    border-radius: 50%;
+                    align-items: center;
+                    text-align: center;
+                    position: relative;
+                }
+                .informacoes {
+                    padding: 3px;
+                    padding-left: 5px;
+                    flex-grow: 1;
+
+                    .item-skeleton {
+                        width: 100%;
+                    }
+
+                    .grupo1 {
+                        margin-bottom: 20px;
+
+                        .item-skeleton {
+                            &:nth-child(1), &:nth-child(2){
+                                margin-bottom: 5px;
+                                max-width: 315px;
+
+                            }
+                            &:nth-child(3){
+                                max-width: 190px;
+                            }
+                        }
+                    }
+                    .grupo2 {
+                        .item-skeleton {
+                            max-width: 65px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

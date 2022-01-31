@@ -1,0 +1,51 @@
+<div class="height-full layout-list">
+
+    <form nsj-focus name="crm_prmcslds_frm_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : crm_prmcslds_frm_cntrllr.busy }" role="form"
+        ng-submit="crm_prmcslds_frm_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="Campanha de Origem " headline-sub="true">
+            <div class="pull-right">
+
+
+
+
+
+
+
+
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <crm-promocoesleads-default entity="crm_prmcslds_frm_cntrllr.entity" form="crm_prmcslds_frm_cntrllr.form"
+                busy="crm_prmcslds_frm_cntrllr.busy" action="crm_prmcslds_frm_cntrllr.action"
+                constructors="crm_prmcslds_frm_cntrllr.constructors"></crm-promocoesleads-default>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+
+                    <div class="form-group pull-left">
+
+                        <button type="button" ng-click="crm_prmcslds_frm_cntrllr.submit()"
+                            ng-class="{loading:crm_prmcslds_frm_cntrllr.entity.$$__submitting}"
+                            ng-disabled="crm_prmcslds_frm_cntrllr.entity.$$__submitting || crm_prmcslds_frm_cntrllr.form.$pristine"
+                            class="btn btn-sm btn-warning btn-save btn-geral">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-sm" ui-sref="crm_promocoesleads({})"><i class="fa fa-times"
+                                aria-hidden="true"></i> Cancelar</a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="crm_prmcslds_frm_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

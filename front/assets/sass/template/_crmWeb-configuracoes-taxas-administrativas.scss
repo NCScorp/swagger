@@ -1,0 +1,18 @@
+// Container do modal
+//_crmWeb-configuracoes-taxas-administrativas
+#crm_configuracoestaxasadministrativas_list {
+
+    .list-group-item.active {
+        background-color: #EFEDE7 !important;
+        .bold {
+            font-weight: bold;
+        }
+        span{
+            color: #4b4b4a !important;
+        }
+        .list-group-item-heading {
+            color: #5D4207;
+            font-weight: bold;
+        }
+    }
+}

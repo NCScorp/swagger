@@ -1,0 +1,81 @@
+ <form name="$ctrl.form" novalidate="novalidate" role="form"  class="height-full">
+               
+                    <div class="row " ><div class="col-sm-6" >
+                                                    <div class="form-group"><label class="control-label" for="nome">Nome</label><input type='text' class="form-control"     id="nome" name="nome"          maxlength="100" ng-model="$ctrl.entity.nome" ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" /><div ng-messages="$ctrl.form.nome.$error"  ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted"><div class="alert alert-danger" role="alert" ng-message="required" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    O nome do campo não pode ser vazio.
+                    
+                    
+                </div><div class="alert alert-danger" role="alert" ng-message="maxlength" ><span class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    
+                    
+                    O campo nome não pode ter mais que 100 caracteres
+                </div></div></div>
+                        </div><div class="col-sm-6" >
+                                                    <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label class="control-label" for="emissaonoprocesso"><input type='checkbox' class=""     id="emissaonoprocesso" name="emissaonoprocesso"           ng-model="$ctrl.entity.emissaonoprocesso" ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+                                
+            
+                        Documento pode ser emitido durante o atendimento
+                    </label></div>
+                        </div></div><div class="row " ng-if="$ctrl.entity.emissaonoprocesso"><div class="col-sm-12" ><fieldset ><legend>
+            Documentos necessários                        
+        </legend><div class="row " ><div class="col-sm-12" >
+                           <!-- Sobrescrito para retirar link do dado listado e desabilitar 
+     botão 'adicionar' quando nenhum documento estiver selecionado no lookup -->
+        <object-list class ="object-list"
+            entities='$ctrl.entity.documentosnecessarios'
+            service="NsDocumentosnecessarios"
+            constructors="{ 'tipodocumento' : $ctrl.entity.tipodocumento,  }"
+            autosaveEnabled= >
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="object-list-add">
+                        <label class="scheduler-border">Documentos necessários</label>
+                        <ng-form name="oblistctrl.form" role="form" inner-form class="form-add clearfix">
+                            <div class="box-add">
+                                <div class="align-itens clearfix">
+                                    <div class="clearfix inputs-area">
+                                        <ns-documentosnecessarios-default entity="subentity" form="oblistctrl.form" constructors="service.constructors" collection="oblistctrl.entities">
+
+                                        </ns-documentosnecessarios-default>
+                                    </div>
+                                    <div class="pull-right bottom-buffer btn-add">
+                                        <button type="button" class="btn btn-md btn-warning" ng-disabled="subentity.documentonecessario === undefined" ng-click="oblistctrl.add();$event.preventDefault();"><i class="fas fa-plus"></i> Adicionar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-form>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-striped table-hover table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th class='compact'></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="subentity in oblistctrl.entities"  ng-controller="ObjectListItemCtrl as itemctrl">
+                                <td>
+                                    <p>{{ subentity.documentonecessario.nome }} </p>
+                                </td>
+                                <td class='text-right no-wrap'>
+                                    <a class="btn btn-danger btn-circle" ng-click="oblistctrl.remove(subentity)" title="Remover"><i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot ng-if="oblistctrl.entities.length == 0">
+                            <tr>
+                                <td colspan="4" class="state-empty">
+                                    <div class="empty-list"><p class="text-center"> Não existem itens para mostrar nesta lista. </p></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </object-list>
+            </div></div></fieldset></div></div>
+</form>

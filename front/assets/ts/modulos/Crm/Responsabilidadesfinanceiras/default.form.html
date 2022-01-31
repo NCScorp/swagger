@@ -1,0 +1,147 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="propostaitem"></label><input type='text'
+                    class="form-control" id="propostaitem" name="propostaitem" ng-model="$ctrl.entity.propostaitem"
+                    ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.propostaitem.$error"
+                    ng-if="$ctrl.form.propostaitem.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo proposta item não pode ser vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="propostaitemfamilia"></label><input type='text'
+                    class="form-control" id="propostaitemfamilia" name="propostaitemfamilia"
+                    ng-model="$ctrl.entity.propostaitemfamilia" ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="propostaitemfuncao"></label><input type='text'
+                    class="form-control" id="propostaitemfuncao" name="propostaitemfuncao"
+                    ng-model="$ctrl.entity.propostaitemfuncao" ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="negocio"></label><input type='text'
+                    class="form-control" id="negocio" name="negocio" ng-model="$ctrl.entity.negocio"
+                    ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="valorservico"></label><input type='number'
+                    class="form-control" id="valorservico" name="valorservico" ng-model="$ctrl.entity.valorservico"
+                    ng-disabled="$ctrl.entity.$$__submitting" />
+                <div ng-messages="$ctrl.form.valorservico.$error"
+                    ng-if="$ctrl.form.valorservico.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="number"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        Valor informado não é um número.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="tipodivisao">tipo de divisao</label><select
+                    class="form-control" id="tipodivisao" name="tipodivisao" ng-model="$ctrl.entity.tipodivisao"
+                    ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" "
+                    ng-required="($ctrl.entity.$$__submitting) !== true" convert-to-number>
+                    <option value="0">Sem divisão</option>
+                    <option value="1">Divisão igual</option>
+                    <option value="2">Divisão percentual</option>
+                    <option value="3">Divisão por valor</option>
+                </select>
+                <div ng-messages="$ctrl.form.tipodivisao.$error"
+                    ng-if="$ctrl.form.tipodivisao.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Tipo de divisão não pode ser vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <object-list class="object-list" entities='$ctrl.entity.responsabilidadesfinanceirasvalores'
+                service="CrmResponsabilidadesfinanceirasvalores"
+                constructors="{ 'responsabilidadefinanceira' : $ctrl.entity.responsabilidadefinanceira,  }"
+                autosaveEnabled=>
+                <div>
+                    <div class="pull-right bottom-buffer"><a class="btn btn-md btn-warning"
+                            ng-click="$ctrl.crmResponsabilidadesfinanceirasvaloresForm(service.constructors)"><i
+                                class="fas fa-plus"></i> Adicionar
+                        </a></div>
+                    <div class="table-default">
+                        <table class="table table-striped table-hover table-condensed table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class='compact'></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="subentity in oblistctrl.entities"
+                                    ng-controller="ObjectListItemCtrl as itemctrl">
+                                    <td class='text-right no-wrap'><a class="btn btn-primary btn-circle"
+                                            ng-click="$ctrl.crmResponsabilidadesfinanceirasvaloresFormShow(subentity)"><i
+                                                class="fas fa-eye"></i></a><a class="btn btn-primary btn-circle"
+                                            ng-click="$ctrl.crmResponsabilidadesfinanceirasvaloresFormEdit(subentity)"><i
+                                                class="fas fa-edit"></i></a><a class="btn btn-danger btn-circle"
+                                            ng-click="oblistctrl.remove(subentity)" title="Remover"><i
+                                                class="fas fa-times"></i></a></td>
+                                </tr>
+                            </tbody>
+                            <tfoot ng-if="oblistctrl.entities.length == 0">
+                                <tr>
+                                    <td colspan="9" class="state-empty">
+                                        <div class="empty-list">
+                                            <p class="text-center"> Não existem itens para mostrar nesta lista. </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </object-list>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="proposta"></label><input type='text'
+                    class="form-control" id="proposta" name="proposta" ng-model="$ctrl.entity.proposta"
+                    ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.proposta.$error"
+                    ng-if="$ctrl.form.proposta.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo proposta não pode ser vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,41 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="fornecedorobj">Fornecedor</label>
+                <nsj-lookup name="fornecedorobj" id-name="fornecedor" factory="NsFornecedores"
+                    ng-model="$ctrl.entity.fornecedorobj" max-label="1" constructor="{  }"
+                    config='{ "codigo":"Código",  }' disabled="$ctrl.entity.$$__submitting"
+                    required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+                <div ng-messages="$ctrl.form.fornecedorobj.$error"
+                    ng-if="$ctrl.form.fornecedorobj.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Fornecedor não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="documentofop">Template de documento</label>
+                <nsj-lookup name="documentofop" id-name="documentofop" factory="NsDocumentosfop"
+                    ng-model="$ctrl.entity.documentofop" max-label="1" constructor="{  }"
+                    config='{ "codigodocumento":"Código",  }' disabled="$ctrl.entity.$$__submitting"
+                    required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+                <div ng-messages="$ctrl.form.documentofop.$error"
+                    ng-if="$ctrl.form.documentofop.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Template de documento não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

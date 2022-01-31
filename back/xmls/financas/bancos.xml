@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="bancos" label="bancos" project="financas" >
+    <entity schema="financas" table="bancos">
+        <fieldmodel name="banco" datatype="guid" isid="true" column="banco"/>
+        <fieldmodel name="codigo" datatype="string"  column="codigo"/>
+        <fieldmodel name="nome" datatype="string"  column="nome"/>
+        <fieldmodel name="numero" datatype="string"  column="numero"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser label="Bancos" layout="list" paginate="true" target="builtin">
+        <filters>
+        <fieldsfilters>
+                <fieldfilter entitylink="numero" maxoccurs="unbounded" visible="false">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="nome" maxoccurs="unbounded" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="banco" isid="true" visible="false"/>
+            <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true"/>
+            <fieldbrowser alias="Número" entitylink="numero" visible="true" cansearch="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Banco">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="nome" controltype="textedit" label="Nome" colspan="4" entitylink="nome"/>
+                      <cell name="numero" controltype="textedit" label="Número" colspan="2" entitylink="numero"/>
+                      <cell name="codigo" controltype="textedit" label="Código" colspan="2" entitylink="codigo"/>
+                   </row>                
+              </headerform>            
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action>
+          <name>retrieve</name>
+        </action>
+    </actions>
+</nsjusecase>
+
+

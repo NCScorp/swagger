@@ -1,0 +1,38 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-8">
+            <div class="form-group"><label class="control-label" for="tecnico">Técnico</label>
+                <nsj-lookup name="tecnico" id-name="tecnico" factory="tecnicosService" ng-model="$ctrl.entity.tecnico"
+                    list-excluded="$ctrl.collection" max-label="1" constructor="{  }" config='{ "nome":"nome",  }'
+                    disabled="$ctrl.entity.$$__submitting">
+                </nsj-lookup>
+                <div ng-messages="$ctrl.form.tecnico.$error" ng-if="$ctrl.form.tecnico.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Técnico não pode ser vazio.
+
+
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="unique"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Técnico não pode ser repetido.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div style="display: none" class="custom-checkbox checkbox"
+                ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+                <label class="control-label" for="responsavel">
+                    <input class="" id="responsavel" name="responsavel" ng-disabled="$ctrl.entity.$$__submitting"
+                        ng-model="$ctrl.entity.responsavel" type='checkbox' /><span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</form>

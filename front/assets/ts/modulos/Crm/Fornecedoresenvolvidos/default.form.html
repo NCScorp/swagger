@@ -1,0 +1,91 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="mensagem">
+                <p>
+                    <span class="destaque">Atenção!</span>
+                    <span> Após o acionamento e solicitação do orçamento não será mais possível a edição do pedido de
+                        serviço.</span>
+                </p>
+                <p><span>Determine um prazo máximo para que o prestador escolhido envie o orçamento.</span></p>
+            </div>
+        </div>
+        <div class="col-sm-0">
+            <!-- <div class="form-group"><label class="control-label" for="fornecedor"></label>
+                <nsj-lookup name="fornecedor" id-name="fornecedor" factory="NsFornecedores"
+                    ng-model="$ctrl.entity.fornecedor" template="ns-fornecedores-default" max-label="1"
+                    constructor="{  }" config='{ "codigo":"Codigo",  }' disabled="$ctrl.entity.$$__submitting"
+                    required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+                <div ng-messages="$ctrl.form.fornecedor.$error"
+                    ng-if="$ctrl.form.fornecedor.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Fornecedor não pode ser vazio.
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-7">
+            <div class="form-group"><label class="control-label" for="acionamentometodo">Via de
+                    acionamento</label><select class="form-control" id="acionamentometodo" name="acionamentometodo"
+                    ng-model="$ctrl.entity.acionamentometodo" ng-disabled="$ctrl.entity.$$__submitting"
+                    convert-to-number=" " ng-required="($ctrl.entity.$$__submitting) !== true" convert-to-number>
+                    <option value="1">Sistema</option>
+                    <option value="2">Email</option>
+                    <option value="3">Telefone</option>
+                </select>
+                <div ng-messages="$ctrl.form.acionamentometodo.$error"
+                    ng-if="$ctrl.form.acionamentometodo.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Via de acionamento não pode estar vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <div class="form-group">
+                <label class="control-label" for="acionamentorespostaprazo">Tempo limite de espera</label>
+                <div class="prazo-container">
+                    <input type='number' class="form-control" id="acionamentorespostaprazo"
+                        name="acionamentorespostaprazo" ng-model="$ctrl.entity.acionamentorespostaprazo"
+                        ng-disabled="$ctrl.entity.$$__submitting"
+                        ng-required="($ctrl.entity.$$__submitting) !== true" 
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57" onpaste="return false;" min="1" maxlength="6"/>
+                    <span class="texto">Minutos</span>
+                </div>
+                <div ng-messages="$ctrl.form.acionamentorespostaprazo.$error"
+                    ng-if="$ctrl.form.acionamentorespostaprazo.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="number">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        Valor informado não é um número.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo Tempo limite de espera não pode estar vazio
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-if="$ctrl.exibeMsgTempoZeroOuMenos()">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O Tempo limite de espera deve ser maior que 0.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true">
+                        </span>
+                        <span class="sr-only">Erro:</span>
+                        O campo Tempo limite de espera tem o tamanho máximo permitido de 6 dígitos
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

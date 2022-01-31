@@ -1,0 +1,28 @@
+<div class="form-group">
+	<label class="control-label" for="responsavelfinanceiro">Responsável financeiro</label>
+	<nsj-lookup name="responsavelfinanceiro" id-name="cliente" factory="NsClientes"
+		ng-model="$ctrl.entity.responsavelfinanceiro" max-label="1" list-excluded="$ctrl.responsavelMapped"
+		constructor="{  }" config='{ "nomefantasia":"Nome",  }' disabled="$ctrl.entity.$$__submitting"
+		required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+	<div ng-messages="$ctrl.form.responsavelfinanceiro.$error"
+		ng-if="$ctrl.form.responsavelfinanceiro.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="required">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo responsavelfinanceiro não pode ser vazio.
+
+
+		</div>
+	</div>
+</div>
+
+<div class="custom-checkbox checkbox" ng-if="$ctrl.principal === false"
+	ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+	<label class="control-label" for="principal"><input type='checkbox' class="" id="principal" name="principal"
+			ng-model="$ctrl.entity.principal" ng-disabled="$ctrl.entity.$$__submitting" /><span
+			class="checkmark"></span>
+
+
+		Principal
+	</label>
+</div>

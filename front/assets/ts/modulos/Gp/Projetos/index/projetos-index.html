@@ -1,0 +1,48 @@
+<nsj-tela-lista 
+    service="pjt_lst_cntrllr.service"
+    entities="pjt_lst_cntrllr.entities"
+    config="pjt_lst_cntrllr.configLista"
+>
+    <nsj-tela-lista-filtros>
+        <!-- Filtrando range do prazo final -->
+        <label class="filtro labelfiltrodata">
+            Prazo final de
+            <nsj-date-picker
+                    date-position="right"
+                    datepickeropts="{'disable-days-after': 'pjt_lst_cntrllr.filtroPrazoFinal.fim.value'}" editable="true" init-value="pjt_lst_cntrllr.filtroPrazoFinal.inicio.value"
+                    opts='{class:"form-control","id":"filtroprazofinalinicio" ,"name":"filtroprazofinalinicio", "ng-model":"pjt_lst_cntrllr.filtroPrazoFinal.inicio.value"}'
+                    type-select="single">
+            </nsj-date-picker>
+        </label>
+
+        <label class="filtro labelfiltrodata">
+            Prazo final até
+            <nsj-date-picker
+                    date-position="right"
+                    datepickeropts="{'disable-days-before': 'pjt_lst_cntrllr.filtroPrazoFinal.inicio.value'}" editable="true" init-value="pjt_lst_cntrllr.filtroPrazoFinal.fim.value"
+                    opts='{class:"form-control","id":"filtroprazofinalfim" ,"name":"filtroprazofinalfim", "ng-model":"pjt_lst_cntrllr.filtroPrazoFinal.fim.value"}'
+                    type-select="single">
+            </nsj-date-picker>
+        </label>
+        <!--Filtrando Cliente -->
+        <label class="filtro filtro-cliente" for="filtrocliente">
+            Cliente
+            <nsj-lookup config='{ "nomefantasia":""}' constructor="{  }"
+                factory="NsClientes"
+                id-name="filtrocliente" max-label="2"
+                name="cliente"
+                ng-model="pjt_lst_cntrllr.filtrocliente">
+            </nsj-lookup>
+        </label>
+
+        <!--Baseado no filtro de status na listagem doatendimento comercial--> 
+        <!--Situação-->
+        <nsj-filter-seletor options="{{pjt_lst_cntrllr.$rootScope.OPTIONS_Projetos}} "
+            max-occurs="{{pjt_lst_cntrllr.$rootScope.MAXOCCURS_Projetos}} "
+            input="{{pjt_lst_cntrllr.$rootScope.SELECTS_Projetos}} " text-disabled="Selecionar..."
+            model="{{pjt_lst_cntrllr.filters}}"
+            class="filtro filtro-situacao-projeto">
+        </nsj-filter-seletor>
+
+    </nsj-tela-lista-filtros>
+</nsj-tela-lista>

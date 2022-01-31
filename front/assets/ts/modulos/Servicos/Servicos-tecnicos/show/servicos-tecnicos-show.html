@@ -1,0 +1,39 @@
+<div class="height-full layout-list">
+    <nsj-headline headline-title="" headline-sub="true">
+        <div class="pull-right">
+
+            <a class="btn btn-sm btn-default hidden-md" ui-sref="servicostecnicos({})" title="Voltar"><i
+                    class="fas fa-reply"></i><span class="hidden-xs">Voltar</span></a>
+
+            <button tem-permissao="servicos_servicostecnicos_put" type="button" class="btn btn-sm btn-warning btn-edit"
+                ui-sref="servicostecnicos_edit({ 'servicotecnico' : srvcstcncs_frm_shw_cntrllr.entity.servicotecnico})"><i
+                    class="fas fa-edit"></i> <span class="hidden-xs">Editar</span></button>        
+
+
+            <button tem-permissao="servicos_servicostecnicos_delete" type="button" class="btn btn-sm btn-default btn-delete btn-geral"
+                ng-click="srvcstcncs_frm_shw_cntrllr.delete()"
+                ng-if="srvcstcncs_frm_shw_cntrllr.entity.servicotecnico  "><i class="fas fa-trash"></i> <span
+                    class="hidden-xs">Excluir</span></button>
+
+
+        </div>
+    </nsj-headline>
+    <div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : srvcstcncs_frm_shw_cntrllr.busy }">
+        <div class="nsj-form-view top-buffer bottom-buffer">
+            <servicos-tecnicos-show-form entity="srvcstcncs_frm_shw_cntrllr.entity"
+                action="srvcstcncs_frm_shw_cntrllr.action" busy="srvcstcncs_frm_shw_cntrllr.busy"
+                constructors="srvcstcncs_frm_shw_cntrllr.constructors"></servicos-tecnicos-show-form>
+        </div>
+
+        <div class="form-group pull-left">
+
+
+        </div>
+        <div class="content-loading" ng-if="srvcstcncs_frm_shw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </div>
+</div>

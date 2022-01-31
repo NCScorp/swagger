@@ -1,0 +1,110 @@
+// Container do modal
+#contratomaispagante-modal-footer {
+    .btn-cancelar{
+        cursor: pointer;
+        color: #5B3F0C;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+}
+#contratomaispagante-modal-body {
+
+    .aviso {
+        border-radius: 5px;
+        padding: 15px 15px;
+        color: #ffffff;
+        font-size: 1.5rem;
+        background-color: #3CAFD7;
+        margin-bottom: 15px;
+    }
+    // Tabela de dados
+    #table-contratomaispagante{
+        thead {
+            tr{
+                th {
+                    background: #EAEAEA;
+                    padding-left: 5px;
+                    border: 1px solid #d6d6d6 !important;
+                }
+                th.positionRelative {
+                    position: relative;
+                }
+                .buttonDropdown {
+                    display:inline;
+                    position: absolute;
+                    right:0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    nsj-button-dropdown {
+                        button.btn-default{
+                            border: 0px !important;
+                            background-color: rgba(255,255,255,0) !important;
+                        }
+                    }
+                }
+            }
+        }
+        tfoot {
+            tr{
+                td {
+                    background: #EAEAEA;
+                    padding-left: 5px;
+                    border: 1px solid #d6d6d6 !important;
+                }
+            }
+        }
+        tbody {
+            // Linhas
+            tr:nth-child(odd) {
+                background-color: #ffffff
+                td {
+                    background-color: #ffffff
+                }
+            }
+            tr:nth-child(even) {
+                background-color: #fafafa
+                td {
+                    background-color: #fafafa
+                }
+            }
+            tr.level-2 {
+                td {
+                    a, span {
+                        margin-left: 0px !important;
+                    }
+                    a > nsj-button {
+                        margin-left: 10px !important;
+                    }
+                }
+            }
+            tr {
+                td {
+                    border: 1px solid #d6d6d6 !important;
+                    &:nth-last-child(2){
+                        border-right: none !important;
+                    }
+                    &:last-child{
+                        border-left: none !important;
+                    }
+                }
+                &:hover {
+                    td {
+
+                        background: #eae7e2;
+
+                        // Ações
+                        .table-btns-actions{
+                            nsj-actions {
+                                .actions {
+                                    .actions-buttons {
+                                        background: #eae7e2;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

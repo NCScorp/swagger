@@ -1,0 +1,77 @@
+<div ng-class="{'nsj-loading-page' : crm_tcscnfgrcsdcmnts_lst_cntrllr.busy }"
+    class='crm_atcsconfiguracoesdocumentos nsj-layout  layout-table '>
+    <div class="nsj-aside-list height-full col-md-12"
+        ng-class="{ 'hidden-sm hidden-xs' : (('crm_atcsconfiguracoesdocumentos_show'| isStateEq) || ('crm_atcsconfiguracoesdocumentos_edit'| isStateEq) || ('crm_atcsconfiguracoesdocumentos_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+                <nsj-headline headline-title=""
+                    ng-class="{ 'hidden-sm hidden-xs' : (('crm_atcsconfiguracoesdocumentos_show'| isStateEq) || ('crm_atcsconfiguracoesdocumentos_edit'| isStateEq) || ('crm_atcsconfiguracoesdocumentos_new'| isStateEq ))}">
+
+                    <nsj-button color="warning" icon="fa fa-plus" size="xs" class="hidden-xs"
+                        ui-sref="crm_atcsconfiguracoesdocumentos_new({})">
+                        Criar
+                    </nsj-button>
+                    <nsj-button color="warning" format="fixed circle" icon="fa fa-plus" size="lg"
+                        class="hidden-sm hidden-md hidden-lg" ui-sref="crm_atcsconfiguracoesdocumentos_new({})">
+                        <span class="hidden-xs">Criar</span>
+                    </nsj-button>
+                </nsj-headline>
+
+                <nsj-toolbar ng-on-change_toolbar="crm_tcscnfgrcsdcmnts_lst_cntrllr.search($event.detail)"
+                    search="false" refresh="true" holder="Busca"
+                    model-search="{{crm_tcscnfgrcsdcmnts_lst_cntrllr.service.filter}}"
+                    select="{{crm_tcscnfgrcsdcmnts_lst_cntrllr.selectPage && crm_tcscnfgrcsdcmnts_lst_cntrllr.selected.length === crm_tcscnfgrcsdcmnts_lst_cntrllr.entities.length && !crm_tcscnfgrcsdcmnts_lst_cntrllr.selectAll && !crm_tcscnfgrcsdcmnts_lst_cntrllr.service.loadParams.finished}}"
+                    select-all="{{crm_tcscnfgrcsdcmnts_lst_cntrllr.selectAll}}"
+                    item-in-page="{{crm_tcscnfgrcsdcmnts_lst_cntrllr.entities.length}}"
+                    item-all="{{crm_tcscnfgrcsdcmnts_lst_cntrllr.entities[0].full_count}}">
+                </nsj-toolbar>
+                <div class="panel-body height-full">
+                    <nsj-table fields="crm_tcscnfgrcsdcmnts_lst_cntrllr.entities"
+                        fields-config='crm_tcscnfgrcsdcmnts_lst_cntrllr.fields'
+                        config-page='crm_tcscnfgrcsdcmnts_lst_cntrllr.service.loadParams'
+                        has-more-page='crm_tcscnfgrcsdcmnts_lst_cntrllr.loadMore()'>
+                        <nsj-actions action-model="{{$parent.entity}}">
+                            <nsj-action target="_self" icon="fas fa-eye" tooltip="Retrieve" disabled="false"
+                                ui-sref="crm_atcsconfiguracoesdocumentos_show({atcconfiguracaodocumento : $parent.entity.atcconfiguracaodocumento})">
+                            </nsj-action>
+
+
+
+
+
+
+
+
+                        </nsj-actions>
+
+                        <div class="empty-page" ng-if="crm_tcscnfgrcsdcmnts_lst_cntrllr.isFilterEmpty()">
+                            <div class="text-center">
+                                <span class="icon-page"><i class="fas fa-table fa-fw"></i></span>
+                                <h3></h3>
+                                <p>Ainda não existem itens nesta lista.</p>
+
+                                <a class="btn btn-warning btn-sm" ui-sref="crm_atcsconfiguracoesdocumentos_new({})"><i
+                                        class="fas fa-plus"></i> Criar</a>
+                            </div>
+                        </div>
+                        <div ng-if="!crm_tcscnfgrcsdcmnts_lst_cntrllr.isFilterEmpty()" class="empty-page">
+                            <div class="text-center">
+                                <p>Não foram encontrados itens para esta pesquisa.</p>
+                            </div>
+                        </div>
+                    </nsj-table>
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+
+    <div class="content-loading" ng-if="crm_tcscnfgrcsdcmnts_lst_cntrllr.busy">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+    </div>
+</div>

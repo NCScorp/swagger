@@ -1,0 +1,81 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        ng-click="crm_tcs_frm_cntrtxclr_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Excluir Contrato</h3>
+    <span ng-if='crm_tcs_frm_cntrtxclr_cntrllr.action == "insert"'>
+        <div>
+
+
+
+            <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.geraContrato(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>Gerar Contrato</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.excluiContrato(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>Exclui Contrato</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.atcStatusNovo(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>AtcStatusNovo</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.atcStatusEmAtendimento(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>AtcStatusEmAtendimento</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.atcStatusFechado(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>AtcStatusFechado</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.atcStatusReaberto(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>AtcStatusReaberto</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.atcStatusFinalizado(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>AtcStatusFinalizado</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.atcStatusCancelado(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>AtcStatusCancelado</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.atcStatusDescancelado(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>AtcStatusDescancelado</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.baixardocumento(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>Baixardocumento</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.enviaratendimentoemail(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>Enviaratendimentoemail</span>
+            </button> <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tcs_frm_cntrtxclr_cntrllr.indexRotasGoogleDirections(crm_tcs_frm_cntrtxclr_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>IndexRotasGoogleDirections</span>
+            </button>
+
+
+
+
+        </div>
+    </span>
+</div>
+<form nsg-focus name="crm_tcs_frm_cntrtxclr_cntrllr.form" novalidate="novalidate" role="form"
+    ng-submit="crm_tcs_frm_cntrtxclr_cntrllr.submit()">
+    <div class="modal-body" id="modal-body">
+        <crm-atcs-contratoexcluir entity="crm_tcs_frm_cntrtxclr_cntrllr.entity"
+            form="crm_tcs_frm_cntrtxclr_cntrllr.form" action="crm_tcs_frm_cntrtxclr_cntrllr.action"
+            constructors="crm_tcs_frm_cntrtxclr_cntrllr.constructors" busy="crm_tcs_frm_cntrtxclr_cntrllr.busy">
+        </crm-atcs-contratoexcluir>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-left">
+
+            <button type="submit" name="submit"
+                ng-disabled="crm_tcs_frm_cntrtxclr_cntrllr.form.$pristine || crm_tcs_frm_cntrtxclr_cntrllr.entity.$$__submitting"
+                class="btn btn-warning" ng-class="{loading:crm_tcs_frm_cntrtxclr_cntrllr.entity.$$__submitting}">
+                Salvar
+            </button>
+            <a class="btn btn-sm" ng-click="crm_tcs_frm_cntrtxclr_cntrllr.close()"><i class="fa fa-times"
+                    aria-hidden="true"></i> Fechar</a>
+
+        </div>
+    </div>
+</form>
+<div class="content-loading" ng-if="crm_tcs_frm_cntrtxclr_cntrllr.busy">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>

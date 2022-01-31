@@ -1,0 +1,66 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="familia">Família de produto</label>
+                <nsj-lookup name="familia" id-name="familia" factory="EstoqueFamilias" ng-model="$ctrl.entity.familia"
+                    list-excluded="$ctrl.collection" max-label="3" constructor="{  }"
+                    config='{ "codigo":"Código", "descricao":"Descrição", "valor":"Valor Base",  }'
+                    disabled="$ctrl.entity.$$__submitting" required="($ctrl.entity.$$__submitting) !== true">
+                </nsj-lookup>
+                <div ng-messages="$ctrl.form.familia.$error" ng-if="$ctrl.form.familia.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo família de produtos não pode ser vazio.
+
+
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="unique"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo família de produtos não pode ter produtos repetidos.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <!-- {# Sobrescrito para não permitir salvar a quantidade com valor zero ou negativo #} -->
+
+            <div class="form-group">
+                <label class="control-label" for="quantidade">Quantidade</label>
+                <input type='number' class="form-control" id="quantidade" name="quantidade"
+                    ng-model="$ctrl.entity.quantidade" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true"
+                    ng-greaterthanorequal="($ctrl.entity.quantidade) < 1 " min="1" maxlength="10" />
+                <div ng-messages="$ctrl.form.quantidade.$error"
+                    ng-if="$ctrl.form.quantidade.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="number">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        Valor informado não é um número.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="greaterthanorequal">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        A quantidade deve ser maior que 0.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="required">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        A quantidade não pode ser vazia.
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Erro:</span>
+                        O campo quantidade tem o tamanho máximo permitido de 10 caracteres
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

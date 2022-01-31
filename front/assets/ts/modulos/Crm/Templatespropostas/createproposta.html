@@ -1,0 +1,100 @@
+<!-- //novo crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr -->
+<!-- //antigo crm_tmpltsprpsts_frm_dflt_cntrllr -->
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        ng-click="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Template de Apólices (serviços cobertos pelo seguro)</h3>
+    <!-- <span ng-if='crm_tmpltsprpsts_frm_dflt_cntrllr.action == "insert"'>
+        <div>
+            <button type="button" class="btn btn-sm btn-default btn-geral"
+                ng-click="crm_tmpltsprpsts_frm_dflt_cntrllr.criaProposta(crm_tmpltsprpsts_frm_dflt_cntrllr.entity)">
+                <i class="fas fa-exclamation"></i> <span>CriaProposta</span>
+            </button>
+        </div>
+    </span> -->
+</div>
+
+<form nsg-focus name="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.form" novalidate="novalidate" role="form"
+    ng-submit="crm_tmpltsprpsts_frm_dflt_cntrllr.submit()" class="form-atcs-servicos-seguro">
+
+
+    <div class="content-loading"  ng-if="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.isBusy()">
+        <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+        </div>
+    </div>
+
+    <div class="modal-body" id="modal-body" ng-if="!crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.isBusy()">
+        <div class="container-fluid">
+            <span class="custom-checkbox checkbox pull-left" ng-if="!crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.isBusy()">
+                <label class="control-label">
+                    <input 
+                        type='checkbox' class="" 
+                        id="marcarDesmarcarTodos" name="marcarDesmarcarTodos" 
+                        ng-model="row.branch.obj.checkboxMarcarDesmarcarTodos" 
+                        ng-click="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.marcarDesmarcarTodos()"/> 
+                    <span class="checkmark"></span> Marcar / Desmarcar Todos
+                </label>
+            </span>
+        </div>
+        <div class="container-fluid">
+            <script type="text/ng-template" id="nodes_renderer.html">
+            <div>
+                <div ui-tree-handle class="tree-node tree-node-content">    
+                
+                    <div ng-if="lista.itens && lista.primeironivel==true" class="inner-adiciona-primeironivel">
+                        <button class="action-btn-tree-niveis" ng-if="collapsed" ng-click="toggle(this)" type="button"><span class="fa fa-caret-right"></button>
+                        <button class="action-btn-tree-niveis" ng-if="!collapsed" ng-click="toggle(this)" type="button" ><span class="fa fa-caret-down"></button>
+                        <span>{{lista.nome}}</span>
+                    </div>
+                    
+                    <div ng-if="lista.itens && !lista.primeironivel" class="inner-adiciona-segundonivel">
+                        <button class="action-btn-tree-niveis" ng-if="collapsed" ng-click="toggle(this)" type="button"><span class="fa fa-caret-right"></button>
+                        <button class="action-btn-tree-niveis" ng-if="!collapsed" ng-click="toggle(this)" type="button" ><span class="fa fa-caret-down"></button>
+                        <span>{{lista.nome}}</span>
+                    </div>
+
+                    <div ng-if="!lista.itens" class="inner-adiciona-terceironivel composicao" ng-class="{
+                        'situacao-nao-existe': lista.situacao.codigo == crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.EnumSituacaoServico.ssNaoExiste,
+                        'situacao-existe-no-pedido': lista.situacao.codigo == crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.EnumSituacaoServico.ssExisteNoPedido,
+                        'situacao-em-uso': lista.situacao.codigo == crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.EnumSituacaoServico.ssEmUso,
+                        'situacao-em-uso-apolice-diferente': lista.situacao.codigo == crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.EnumSituacaoServico.ssEmUsoApoliceDiferente,
+                    }">
+                        <button ng-if="lista.checked && lista.checked !== 'disabled' && lista.situacao.codigo != crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.EnumSituacaoServico.ssEmUso" class="checked action-btn-tree-niveis" ng-click="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.checkUncheck(lista)" type="button"><i class="fas fa-check-square"></i></button>
+                        <button ng-if="!lista.checked && lista.checked !== 'disabled' && lista.situacao.codigo != crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.EnumSituacaoServico.ssEmUso" class="check action-btn-tree-niveis" ng-click="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.checkUncheck(lista)" type="button"><i class="far fa-square"></i></button>
+                        <span>{{lista.composicaoFull.composicao.nome}}</span>
+                        <span class="situacao-composicao">{{lista.situacao.descricao}}</span>
+                    </div>
+
+                </div>
+                <ul ui-tree-nodes="" ng-model="lista.itens" ng-class="{hidden: collapsed}">
+                <li ng-repeat="lista in lista.itens" ui-tree-node ng-include="'nodes_renderer.html'" data-nodrag data-drag-enabled="false">
+                </li>
+                </ul>
+            </div>
+            </script>
+
+            <div ui-tree id="tree-root" data-nodrop-enabled data-nodrag data-drag-enabled="false" class="tree-striped">
+                <ul ui-tree-nodes ng-model="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.listaSegurosTreeFormat">
+                    <li class="primeironivel-tree-niveis-wrapper" ng-repeat="lista in crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.listaSegurosTreeFormat" ui-tree-node ng-include="'nodes_renderer.html'"></li>    
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="modal-footer">
+        <div class="pull-right">
+            <a class="btn btn-sm" ng-click="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.close()">
+                <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+            </a>
+            <button type="submit" name="submit" ng-click="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.adicionarNovo()"                
+                class="btn btn-warning" ng-class="{loading:crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.entity.$$__submitting}"
+                ng-disabled="crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.todosDesmarcados || crm_tmpltsprpsts_crt_prpst_frm_dflt_cntrllr.isBusy()">
+                Adicionar/Atualizar Serviços
+            </button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,22 @@
+<div class="row ">
+    <div class="col-sm-12">
+        <fieldset>
+            <div class="row  row-form-view">
+                <div class="col-sm-12">
+                    <div class="form-group clearfix"><label class="control-label">Função </label>
+                        <p class="form-control-static"><span id="funcao" class="form-control-static"
+                                ng-bind="$ctrl.entity.funcao.descricao || 'Não informado'"></span><br><span
+                                class="sub-title"><b>Código: </b><span
+                                    ng-bind="$ctrl.entity.funcao.codigo || 'Não informado.'"></span></span></p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group clearfix"><label class="control-label">Quantidade </label>
+                        <p class="form-control-static"><span id="quantidade" class="form-control-static"
+                                ng-bind="$ctrl.entity.quantidade|| 'Não informado'"></span></p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

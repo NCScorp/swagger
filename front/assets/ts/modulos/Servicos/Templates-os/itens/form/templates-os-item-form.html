@@ -1,0 +1,156 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+	<!-- Linha -->
+	<div class="row ">
+		<!-- Serviço Técnico -->
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label class="control-label" for="servicotecnico">Serviço Técnico</label>
+				<nsj-lookup config='{ "descricao":"descricao",  }' constructor="{  }"
+					disabled="$ctrl.entity.$$__submitting" factory="servicosTecnicosService" id-name="servicotecnico"
+					list-excluded="$ctrl.collection" max-label="1" name="servicotecnico"
+					ng-model="$ctrl.entity.servicotecnico"
+					required="($ctrl.entity.$$__submitting) !== true">
+				</nsj-lookup>
+				<div ng-if="$ctrl.form.servicotecnico.$dirty || $ctrl.form.$submitted">
+					<div class="alert alert-danger" ng-if="!$ctrl.entity.servicotecnico" role="alert">
+						<span aria-hidden="true" class="fa fa-exclamation-circle"></span>
+						<span class="sr-only">Erro:</span>
+						O campo Serviço Técnico não pode ser vazio.
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Quantidade -->
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label class="control-label" for="quantidade">Quantidade</label>
+				<input type='number' class="form-control" id="quantidade" name="quantidade" ng-min="1"
+					ng-model="$ctrl.entity.quantidade" ng-disabled="$ctrl.entity.$$__submitting"
+					ng-required="($ctrl.entity.$$__submitting) !== true" />
+
+				<div ng-messages="$ctrl.form.quantidade.$error"
+					ng-if="$ctrl.form.quantidade.$dirty || $ctrl.form.$submitted">
+					<div class="alert alert-danger" role="alert" ng-message="number">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						Valor informado não é um número.
+					</div>
+					<div class="alert alert-danger" role="alert" ng-message="required">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						O campo quantidade não pode ser vazio.
+					</div>
+					<div class="alert alert-danger" role="alert" ng-message="min">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						A quantidade deve ser maior que 0.
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- Valor -->
+		<div class="col-sm-3">
+			<div class="form-group">
+				<label class="control-label" for="valor">Valor</label>
+				<input type='money' class="form-control" id="valor" name="valor" maxlength="28" ng-model="$ctrl.entity.valor" ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" ui-money-mask/>
+				<div ng-messages="$ctrl.form.valor.$error" ng-if="$ctrl.form.valor.$dirty || $ctrl.form.$submitted">
+					<div class="alert alert-danger" role="alert" ng-message="required">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+						O campo Valor Unitário não pode ser vazio.
+		
+					</div>
+					<div class="alert alert-danger" role="alert" ng-message="maxlength">
+						<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+						<span class="sr-only">Erro:</span>
+		
+		
+						O campo valor Unitário não deve exceder 19 casas decimais.
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Linha: Adição de checklist -->
+	<div class="row add-checklist-container">
+		<!-- Checklist -->
+		<div class="form-checklist">
+			<div class="form-group">
+				<label class="control-label" for="checklist">Checklist</label>
+				<input type='text' class="form-control" id="checklist" name="checklist" 
+					ng-model="$ctrl.checklistTexto"
+					ng-if="!$ctrl.busyChecklist && $ctrl.entity.checklistCarregado" />
+			</div>
+		</div>
+		<div class="btn-add-checklist" ng-if="!$ctrl.busyChecklist && $ctrl.entity.checklistCarregado">
+			<button type="button" class="btn btn-sm btn-primary"
+				ng-click="$ctrl.onBtnAddChecklistClick()">
+				<i class="fas fa-plus"></i> Adicionar
+			</button>
+		</div>
+	</div>
+
+	<!-- Linha: Lista de checklists -->
+	<div class="row " ng-if="$ctrl.entity.arrChecklist.length > 0 && !$ctrl.busyChecklist && $ctrl.entity.checklistCarregado">
+		<div class="col-sm-12">
+			<div class="form-group clearfix">
+                <table class="nsj-table table table-striped table-hover table-condensed table-bordered btns-actions">
+                    <thead>
+                        <tr>
+                            <th>
+                                Descrição
+                            </th>
+							<th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="subentity in $ctrl.entity.arrChecklist">
+                            <td> {{ subentity.descricao }} </td>
+                            <!-- Ações -->
+                            <td class="td-acoes">
+                                <div class='table-btns-actions'>
+                                    <nsj-actions>
+                                        <!-- Exclusao -->
+                                        <nsj-action
+                                            ng-click="$ctrl.onBtnExcluirChecklistClick(subentity)"
+                                            icon="fas fa-trash"
+                                            title="Excluir"
+                                        >
+                                        </nsj-action>
+                                    </nsj-actions>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+		</div>
+	</div>
+
+	<!-- Linha: Mensagem de sem dados checklist -->
+    <div class="state-empty" ng-if="$ctrl.entity.arrChecklist.length == 0 && !$ctrl.busyChecklist && $ctrl.entity.checklistCarregado">
+        <div class="empty-list">
+            <p class="text-center"> Não existem itens para mostrar nesta lista. </p>
+        </div>
+    </div>
+
+	<!-- Mensagem erro ao buscar dados -->
+    <div class="state-empty erro-carregamento" ng-if="!$ctrl.busyChecklist && !$ctrl.entity.checklistCarregado">
+        <div class="empty-list">
+            <p class="text-center"> 
+                Não foi possível carregar checklist.
+                <span class="btn-retry" ng-click="$ctrl.onRecarregarChecklistClick()"> Tentar novamente</span>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Loading de serviços -->
+    <div class="content-loading" ng-if="$ctrl.busyChecklist">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando checklist...
+        </div>
+    </div>
+</form>

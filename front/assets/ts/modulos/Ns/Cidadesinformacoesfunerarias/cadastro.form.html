@@ -1,0 +1,297 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <fieldset>
+                <legend>
+                    Dados básicos
+                </legend>
+                <div class="row ">
+                    <div class="col-sm-4">
+                        <div class="form-group"><label class="control-label" for="pais">País</label>
+                            
+                            <nsj-lookup name="pais" id-name="pais" factory="NsPaises" ng-model="$ctrl.entity.pais"
+                                max-label="1" constructor="{  }" config='{ "nome":"Nome",  }'
+                                disabled="$ctrl.entity.$$__submitting"
+                                required="($ctrl.entity.$$__submitting) !== true"
+                                ns-required="true">
+                            </nsj-lookup>
+
+                            <div ng-messages="$ctrl.form.pais.$error"
+                                ng-if="$ctrl.form.pais.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    O campo país não pode estar vazio
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" ng-if="$ctrl.entity.pais.pais === '1058'">
+                        <div class="form-group"><label class="control-label" for="estado">Estado</label>
+                            
+                            <nsj-lookup name="estado" id-name="uf" factory="NsEstados" ng-model="$ctrl.entity.estado"
+                                max-label="1" constructor="{  }" config='{ "nome":"Nome",  }'
+                                disabled="$ctrl.entity.$$__submitting"
+                                required="($ctrl.entity.$$__submitting) !== true"
+                                ns-required="true">
+                            </nsj-lookup>
+
+                            <div ng-messages="$ctrl.form.estado.$error"
+                                ng-if="$ctrl.form.estado.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    O campo estado não pode estar vazio
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" ng-if="$ctrl.entity.pais.pais === '1058'">
+                        <div class="form-group">
+                            <label class="control-label" for="municipio">Municipio</label>
+
+                            <nsj-lookup name="municipio" id-name="codigo" factory="NsMunicipios"
+                                ng-model="$ctrl.entity.municipio"
+                                filter="{ 'uf': [ {'condition':'eq','value':$ctrl.entity.estado.uf },  ], }"
+                                list-excluded="$ctrl.collection" max-label="1" constructor="{  }"
+                                config='{ "nome":"Nome",  }' disabled="$ctrl.entity.$$__submitting"
+                                required="($ctrl.entity.$$__submitting) !== true"
+                                ns-required="true">
+                            </nsj-lookup>
+
+                            <div ng-messages="$ctrl.form.municipio.$error"
+                                ng-if="$ctrl.form.municipio.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required">
+                                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                                    <span class="sr-only">Erro:</span>
+                                    O campo município não pode estar vazio
+
+
+                                </div>
+                                <div class="alert alert-danger" role="alert" ng-message="unique">
+                                    <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                                    <span class="sr-only">Erro:</span>
+                                    O campo município não pode ser repetido.
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" ng-if="$ctrl.entity.pais.pais !== '1058'">
+                        <div class="form-group"><label class="control-label" for="cidadeestrangeira">Cidades
+                                estrangeiras</label>
+
+                            <nsj-lookup name="cidadeestrangeira" id-name="cidadeestrangeira"
+                                factory="NsCidadesestrangeiras" ng-model="$ctrl.entity.cidadeestrangeira" max-label="1"
+                                constructor="{  }" config='{ "nome":"Nome",  }' disabled="$ctrl.entity.$$__submitting"
+                                required="($ctrl.entity.$$__submitting) !== true"
+                                ns-required="true">
+                            </nsj-lookup>
+
+                            <div ng-messages="$ctrl.form.cidadeestrangeira.$error"
+                                ng-if="$ctrl.form.cidadeestrangeira.$dirty || $ctrl.form.$submitted">
+                                <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                        class="sr-only">Erro:</span>
+                                    O campo cidades estrangeiras não pode estar vazio
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <fieldset>
+                <legend>
+                    Informações funerárias
+                </legend>
+                <div class="row ">
+                    <div class="col-sm-4">
+                        <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                                class="control-label" for="possuisvo"><input type='checkbox' class="" id="possuisvo"
+                                    name="possuisvo" ng-model="$ctrl.entity.possuisvo"
+                                    ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                Possui SVO
+                            </label></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                                class="control-label" for="possuiiml"><input type='checkbox' class="" id="possuiiml"
+                                    name="possuiiml" ng-model="$ctrl.entity.possuiiml"
+                                    ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                Possui IML
+                            </label></div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-4">
+                        <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                                class="control-label" for="possuicrematorio"><input type='checkbox' class=""
+                                    id="possuicrematorio" name="possuicrematorio"
+                                    ng-model="$ctrl.entity.possuicrematorio"
+                                    ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                Possui crematório
+                            </label></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                                class="control-label" for="trabalhacomfloresnaturais"><input type='checkbox' class=""
+                                    id="trabalhacomfloresnaturais" name="trabalhacomfloresnaturais"
+                                    ng-model="$ctrl.entity.trabalhacomfloresnaturais"
+                                    ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                Trabalha com flores naturais
+                            </label></div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-4">
+                        <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                                class="control-label" for="possuicemiteriomunicipal"><input type='checkbox' class=""
+                                    id="possuicemiteriomunicipal" name="possuicemiteriomunicipal"
+                                    ng-model="$ctrl.entity.possuicemiteriomunicipal"
+                                    ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                Possui cemitério municipal
+                            </label></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                                class="control-label" for="possuicapelamunicipal"><input type='checkbox' class=""
+                                    id="possuicapelamunicipal" name="possuicapelamunicipal"
+                                    ng-model="$ctrl.entity.possuicapelamunicipal"
+                                    ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                Possui capela municipal
+                            </label></div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-sm-6">
+                        <div class="form-group"><label class="control-label" for="perfilfunerario">Perfil de acionamento
+                                funerário</label><select class="form-control" id="perfilfunerario"
+                                name="perfilfunerario" ng-model="$ctrl.entity.perfilfunerario"
+                                ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" " convert-to-number>
+                                <option value="1">Concessão</option>
+                                <option value="2">Municipal</option>
+                                <option value="3">Regular</option>
+                                <option value="4">Rodízio</option>
+                            </select></div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div tem-permissao="ns_cidadesinformacoesfunerarias_prestadores"
+                class="cidades-funerarias-cadastro-fornecedores">
+                <nsj-accordion id="accordion-fornecedores" init-open="true"
+                    headline="Ranking das Prestadoras de Serviço" class="accordion-fornecedores">
+                    <nsj-button tem-permissao="ns_cidadesinformacoesfunerarias_prestadores" slot="right"
+                        icon="fas fa-plus" ng-click="$ctrl.adicionarNovoFornecedor()">
+                    </nsj-button>
+
+                    <div class="table-container">
+                        <div class="info" ng-if="$ctrl.mostrarInfoFornecedores">
+                            <div class="icone-left">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="dados">
+                                <div class="titulo">Ordenamento de Ranking</div>
+                                <div class="informacao">Arraste as linhas para reordenar a colocação das Prestadoras de
+                                    Serviços.</div>
+                            </div>
+                            <div class="icone-fechar" ng-click="$ctrl.fecharInfoFornecedores()">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-hover lst-prestadoras">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>
+                                        Prestadora de Serviços
+                                    </th>
+                                    <th>
+                                        Ranqueada em
+                                    </th>
+                                    <th>
+                                        Status
+                                    </th>
+                                    <th class="acoes"></th>
+                                </tr>
+                            </thead>
+                            <tbody ng-sortable>
+                                <tr ng-repeat="fornecedor in $ctrl.entity.fornecedores" class="linha-prestadora">
+                                    <!-- Ícone que representa a funcionalidade de Drag & Drop -->
+                                    <td class="icon-drag">
+                                        <i class="fas fa-grip-vertical"></i>
+                                    </td>
+                                    <td class="nome">
+                                        <span class="icon">
+                                            <i class="fas fa-award"></i>
+                                        </span>
+                                        <span class="ordem">{{$index + 1}}º</span>
+                                        <span class="valor">{{ fornecedor.fornecedor.razaosocial }} </span>
+                                    </td>
+                                    <td class="ultimaatualizacao">
+                                        {{ $ctrl.getDataRanqueamento(fornecedor) }}
+                                    </td>
+                                    <td class="status">
+                                        <div class="status-container">
+                                            <div class="status-label" ng-class="{
+                                    'label-success ativa': fornecedor.fornecedor.status == $ctrl.EnumPrestadoraStatus.psAtiva, 
+                                    'suspensa': fornecedor.fornecedor.status == $ctrl.EnumPrestadoraStatus.psSuspensa, 
+                                    'banida': fornecedor.fornecedor.status == $ctrl.EnumPrestadoraStatus.psBanida
+                                }">
+                                                {{ $ctrl.getStatusNome(fornecedor.fornecedor.status) }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="acoes">
+                                        <div class='table-btns-actions'>
+                                            <span tem-permissao="ns_cidadesinformacoesfunerarias_prestadores"
+                                                class="icon" ng-click="$ctrl.removerFornecedor(fornecedor)">
+                                                <i class="fas fa-trash"></i>
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot ng-if="$ctrl.entity.fornecedores.length == 0">
+                                <tr>
+                                    <td colspan="5" class="state-empty">
+                                        <div class="empty-list">
+                                            <p class="text-center">
+                                                Não existem itens para mostrar nesta lista.
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </nsj-accordion>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,207 @@
+<div class="row  row-form-view">
+    <div class="col-sm-2">
+        <div class="form-group clearfix">
+            <label class="control-label">Código </label>
+            <p class="form-control-static">
+                <span class="form-control-static" id="codigo" ng-bind="($ctrl.entity.codigo) || 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="form-group clearfix">
+            <label class="control-label">Nome </label>
+            <p class="form-control-static">
+				<span class="form-control-static" id="descricao"
+                      ng-bind="($ctrl.entity.descricao) || 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="form-group clearfix">
+            <label class="control-label">Tipo Ordem de Serviço (Opcional) </label>
+            <p class="form-control-static">
+				<span class="form-control-static" id="tipoordemservico"
+                      ng-bind="$ctrl.entity.tipoordemservico.descricao || 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-sm-12">
+        <fieldset>
+            <legend>
+                Tipo de Manutenção (Opcional)
+            </legend>
+            <div class="row  row-form-view">
+                <div class="col-sm-6">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Tipo Manutenção </label>
+                        <p class="form-control-static">
+							<span id="utilizatipomanutencao"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.utilizatipomanutencao] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Nome</label>
+                        <p class="form-control-static">
+							<span class="form-control-static" id="tipomanutencao"
+                                  ng-bind="$ctrl.entity.tipomanutencao.descricao || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-sm-12">
+        <fieldset>
+            <legend>
+                Visita (Opcional)
+            </legend>
+            <div class="row  row-form-view">
+                <div class="col-sm-2">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Visita </label>
+                        <p class="form-control-static">
+							<span id="visita"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.visita] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Veículo </label>
+                        <p class="form-control-static">
+							<span id="veiculo"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.veiculo] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-sm-12">
+        <fieldset>
+            <legend>
+                Dados da OS (Opcionais)
+            </legend>
+            <div class="row  row-form-view">
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Vincular atendimento </label>
+                        <p class="form-control-static">
+							<span id="atendimento"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.atendimento] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Vincular Ordem de Serviço </label>
+                        <p class="form-control-static">
+							<span id="ordemdeservico"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.ordemdeservico] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Contrato </label>
+                        <p class="form-control-static">
+							<span id="contrato"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.contrato] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Projeto </label>
+                        <p class="form-control-static">
+							<span id="projeto"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.projeto] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row  row-form-view">
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Centro de custo </label>
+                        <p class="form-control-static">
+							<span id="centrodecusto"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.centrodecusto] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Utiliza materiais </label>
+                        <p class="form-control-static">
+							<span id="materiais"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.materiais] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Faturamento </label>
+                        <p class="form-control-static">
+							<span id="faturamento"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.faturamento] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Ativo </label>
+                        <p class="form-control-static">
+							<span id="ativo"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.ativo] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row  row-form-view">
+                <div class="col-sm-6">
+                    <div class="form-group clearfix">
+                        <label class="control-label">Encerrar Ordem de Serviço
+                            automaticamente ao executar visita </label>
+                        <p class="form-control-static">
+							<span id="encerraraoexecutarvisita"
+                                  ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.encerraraoexecutarvisita] || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>
+<div class="row "  ng-if="$ctrl.entity.operacoesdocumentostemplates.length > 1">
+    <div class="col-sm-12">
+        <fieldset >
+            <legend>
+                Layouts de Ordem de Serviço
+            </legend>
+            <div class="row  row-form-view">
+                <div class="col-sm-12">
+                    <div class="form-group clearfix" >
+                        <label class="control-label">Layouts de Ordem de Serviço
+                        </label>
+                        <p class="form-control-static">
+							<span ng-repeat="template in $ctrl.entity.operacoesdocumentostemplates"  ng-if="!template.padrao">
+                {{ template.documentofoptemplate.nomexsl }}
+								<span ng-if="$index + 1 < $ctrl.entity.operacoesdocumentostemplates.length">,
+								</span>
+							</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

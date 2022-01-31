@@ -1,0 +1,45 @@
+   
+
+ 
+
+
+
+<div ng-class="{'nsj-loading-page' : gp_trfs_lst_cntrllr.busy }" class='gp_tarefas nsj-layout  layout-table '> 
+    <div class="nsj-aside-list height-full col-md-12" ng-class="{ 'hidden-sm hidden-xs' : (('gp_tarefas_show'| isStateEq) || ('gp_tarefas_edit'| isStateEq) || ('gp_tarefas_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+<nsj-headline headline-title="Tarefas" ng-class="{ 'hidden-sm hidden-xs' : (('gp_tarefas_show'| isStateEq) || ('gp_tarefas_edit'| isStateEq) || ('gp_tarefas_new'| isStateEq ))}">
+    </nsj-headline>
+
+<nsj-toolbar ng-on-change_toolbar="gp_trfs_lst_cntrllr.search($event.detail)" search="true" refresh = "true" holder="Busca" model-search="{{gp_trfs_lst_cntrllr.service.filter}}" select="{{gp_trfs_lst_cntrllr.selectPage && gp_trfs_lst_cntrllr.selected.length === gp_trfs_lst_cntrllr.entities.length && !gp_trfs_lst_cntrllr.selectAll && !gp_trfs_lst_cntrllr.service.loadParams.finished}}" select-all="{{gp_trfs_lst_cntrllr.selectAll}}" item-in-page="{{gp_trfs_lst_cntrllr.entities.length}}" item-all="{{gp_trfs_lst_cntrllr.entities[0].full_count}}">
+                    </nsj-toolbar>
+                <div class="panel-body body-table">
+                                        <nsj-table fields="gp_trfs_lst_cntrllr.entities" fields-config='gp_trfs_lst_cntrllr.fields' config-page='gp_trfs_lst_cntrllr.service.loadParams' has-more-page='gp_trfs_lst_cntrllr.loadMore()' >
+    <nsj-actions action-model="{{$parent.entity}}">                        </nsj-actions>
+        
+        <div class="empty-page" ng-if="gp_trfs_lst_cntrllr.isFilterEmpty()">
+            <div class="text-center">
+                <span class="icon-page"><i class="fas fa-table fa-fw"></i></span>
+                <h3>Tarefas</h3>
+                <p>Ainda não existem itens nesta lista.</p>
+                            </div>
+        </div>    
+        <div ng-if="!gp_trfs_lst_cntrllr.isFilterEmpty()" class="empty-page">
+            <div class="text-center">
+                <p>Não foram encontrados itens para esta pesquisa.</p>
+            </div>
+        </div>
+</nsj-table>            
+                                        </div><!--/panel-body-->
+            </div><!--/panel-->
+        </div>
+    </div>
+
+    <div class="content-loading"  ng-if="gp_trfs_lst_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+            </div>
+</div>

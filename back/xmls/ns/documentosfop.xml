@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="documentosfop" label="documentosfop" project="ns">
+    <entity schema="ns" table="documentosfop">
+        <fieldmodel name="documentofop" datatype="guid" isid="true" column="documentofop"/>
+        <fieldmodel name="codigodocumento" datatype="string" column="codigodocumento"/>
+        <fieldmodel name="nomedocumento" datatype="string" column="nomedocumento"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="sistema" datatype="integer" column="sistema"/>
+    </entity>
+    <constructors>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Templates de Documento">
+        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="sistema">
+                    <conditions>
+                            <condition type="eq"/>
+                        </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="tenant">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="documentofop" visible="false" isid="true"/>
+            <fieldbrowser entitylink="codigodocumento" visible="true" cansearch="true"/>
+            <fieldbrowser entitylink="nomedocumento" visible="true" cansearch="true" />
+            <fieldbrowser entitylink="sistema" visible="true" cansearch="true" />
+            <fieldbrowser entitylink="tenant" visible="true" cansearch="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

@@ -1,0 +1,22 @@
+           
+                    <div class="row  row-form-view" ><div class="col-sm-12" >
+                                                    <div class="form-group clearfix"><label class="control-label">Nome </label><p class="form-control-static" ><span
+                                    id="nome" class="form-control-static" ng-bind="($ctrl.entity.nome) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-12" >
+                                                    <div class="form-group clearfix"><label class="control-label">Data </label><p class="form-control-static" ><span
+                                    id="created_at" class="form-control-static" ng-bind="($ctrl.entity.created_at| asDate | date: 'dd/MM/yyyy')|| 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-12" >
+                                                    <div class="form-group clearfix"><label class="control-label">Motivo </label><p class="form-control-static" ><span
+                                    id="motivo" class="form-control-static" ng-bind="($ctrl.entity.motivo) || 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-12" >
+                                                    <div class="form-group clearfix"><label class="control-label">Status </label><p class="form-control-static" ><span
+                                    id="status" class="form-control-static" ng-bind="([&quot;Em vigor&quot;,&quot;Arquivada&quot;,&quot;Exclu\u00edda&quot;][$ctrl.entity.status])|| 'Não informado'"
+                                ></span></p></div>
+                        </div></div><div class="row  row-form-view" ><div class="col-sm-6" >
+                                                    <div class="form-group clearfix"><label class="control-label">Estabelecimento </label><p class="form-control-static" ><span
+                                    id="estabelecimento" class="form-control-static" ng-bind="$ctrl.entity.estabelecimento.nomefantasia || 'Não informado'"
+                                ></span></p></div>
+                        </div></div>

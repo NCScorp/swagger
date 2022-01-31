@@ -1,0 +1,48 @@
+security:
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain:  true    
+
+    providers:
+        nasajon_provider:
+            id: Nasajon\LoginBundle\Provider\SamlProvider
+
+    firewalls:
+        healthcheck:
+            pattern: ^/healthcheck
+            security: false
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false   
+
+        api:
+            anonymous: ~
+            pattern: ^/api
+            stateless: true
+            provider: nasajon_provider
+            simple_preauth:
+                authenticator: Nasajon\LoginBundle\Security\Authentication\BearerTokenAuthenticator
+                
+
+        secured_area:
+            anonymous: ~
+            pattern: ^/private
+            stateless: true
+            provider: nasajon_provider
+            simple_preauth:
+                authenticator: Nasajon\LoginBundle\Security\Authentication\BearerTokenAuthenticator
+
+        profile:
+            anonymous: ~
+            pattern:   ^/profile
+            stateless: true
+            provider: nasajon_provider
+            simple_preauth:
+                authenticator: Nasajon\LoginBundle\Security\Authentication\BearerTokenAuthenticator
+            
+    access_control:
+        - { path: ^/api, methods: [OPTIONS],  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api,       roles: ROLE_USER }
+        - { path: ^/profile, methods: [OPTIONS],  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/fosrouting, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/,       roles: IS_AUTHENTICATED_FULLY }

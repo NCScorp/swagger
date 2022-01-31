@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        ng-click="crm_ngcscntts_frm_dflt_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Contato do Negócio</h3>
+    <span ng-if='crm_ngcscntts_frm_dflt_cntrllr.action == "insert"'>
+        <div>
+
+
+
+
+
+
+
+
+        </div>
+    </span>
+</div>
+<form nsg-focus name="crm_ngcscntts_frm_dflt_cntrllr.form" novalidate="novalidate" role="form"
+    ng-submit="crm_ngcscntts_frm_dflt_cntrllr.submit()">
+    <div class="modal-body" id="modal-body">
+        <crm-negocioscontatos-default entity="crm_ngcscntts_frm_dflt_cntrllr.entity"
+            form="crm_ngcscntts_frm_dflt_cntrllr.form" action="crm_ngcscntts_frm_dflt_cntrllr.action"
+            constructors="crm_ngcscntts_frm_dflt_cntrllr.constructors" busy="crm_ngcscntts_frm_dflt_cntrllr.busy">
+        </crm-negocioscontatos-default>
+    </div>
+    <div class="modal-footer">
+        <div class="pull-left">
+
+            <button type="submit" name="submit"
+                ng-disabled="crm_ngcscntts_frm_dflt_cntrllr.form.$pristine || crm_ngcscntts_frm_dflt_cntrllr.entity.$$__submitting"
+                class="btn btn-primary" ng-class="{loading:crm_ngcscntts_frm_dflt_cntrllr.entity.$$__submitting}">
+                Excluir
+            </button>
+            <a class="btn btn-sm" ng-click="crm_ngcscntts_frm_dflt_cntrllr.close()"><i class="fa fa-times"
+                    aria-hidden="true"></i> Fechar</a>
+
+        </div>
+    </div>
+</form>
+<div class="content-loading" ng-if="crm_ngcscntts_frm_dflt_cntrllr.busy">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>

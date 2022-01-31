@@ -1,0 +1,129 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="panel panel-default">
+        <div class="panel-heading" ng-bind="($ctrl.action == 'insert' ? 'Adicionar': 'Editar') + ' ' + 'Documento'">
+        </div>
+        <div class="panel-body">
+            <div class="row ">
+                <div class="col-sm-6">
+                                        <div class="form-group"><label class="control-label" for="tipodocumento">Tipo de documento</label>
+                        <nsj-lookup name="tipodocumento" id-name="tipodocumento" factory="NsTiposdocumentos"
+                            ng-model="$ctrl.entity.tipodocumento" list-excluded="$ctrl.collection" max-label="1"
+                            constructor="{  }" config='{ "nome":"Nome",  }' disabled="$ctrl.entity.$$__submitting"
+                            required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+                        <div ng-messages="$ctrl.form.tipodocumento.$error"
+                            ng-if="$ctrl.form.tipodocumento.$dirty || $ctrl.form.$submitted">
+                            <div class="alert alert-danger" role="alert" ng-message="unique"><span
+                                    class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                    class="sr-only">Erro:</span>
+                                A apólice não pode ter tipos de documento repetidos.
+
+
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-message="required"><span
+                                    class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                                    class="sr-only">Erro:</span>
+                                O campo tipo de documento não pode ser vazio.
+
+
+                            </div>
+                        </div>
+                    </div>
+                                    </div>
+                <div class="col-sm-6">
+                    <div class="form-group"><label class="control-label" for="tipodocumento">Tipo de cópia</label>
+                        <section>
+                                                        <div class="custom-checkbox checkbox checkbox-inline" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+                                <label class="control-label" for="copiasimples"><input type='checkbox' class=""
+                                        id="copiasimples" name="copiasimples" ng-model="$ctrl.entity.copiasimples"
+                                        ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                    Simples
+                                </label></div>
+                                                    
+                                                        <div class="custom-checkbox checkbox checkbox-inline" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+                                <label class="control-label" for="copiaautenticada"><input type='checkbox' class=""
+                                        id="copiaautenticada" name="copiaautenticada"
+                                        ng-model="$ctrl.entity.copiaautenticada"
+                                        ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                    Autenticada
+                                </label></div>
+                                                 
+                                                        <div class="custom-checkbox checkbox checkbox-inline" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+                                <label class="control-label" for="original"><input type='checkbox' class=""
+                                        id="original" name="original" ng-model="$ctrl.entity.original"
+                                        ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                                    Original
+                                </label></div>
+                            <div class="checkbox-container">
+                            <div class="custom-checkbox checkbox checkbox-inline checkbox-content" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+                                <label class="control-label" for="permiteenvioemail">
+                                    <input type='checkbox' class="" id="permiteenvioemail" name="permiteenvioemail" ng-model="$ctrl.entity.permiteenvioemail"
+                                        ng-disabled="$ctrl.entity.$$__submitting" />
+                                    <span class="checkmark"></span>
+                                    Enviar por e-mail
+                                </label>
+                            </div>
+                            <div class="templatespropostasdocumentos-tooltip">
+                                <span class="icone">
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                                <nsj-tooltip tooltip-position="top">
+                                    <p>
+                                        Ao marcar esta opção, o documento será enviado ao realizar a ação de enviar documentos para a seguradora.
+                                    </p>
+                                </nsj-tooltip>
+                            </div>
+                            </div>
+                            <div class="checkbox-container">
+                            <div class="custom-checkbox checkbox checkbox-inline checkbox-content" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+                                <label class="control-label" for="pedirinformacoesadicionais">
+                                    <input type='checkbox' class="" id="pedirinformacoesadicionais" name="pedirinformacoesadicionais" ng-model="$ctrl.entity.pedirinformacoesadicionais"
+                                        ng-disabled="$ctrl.entity.$$__submitting" />
+                                    <span class="checkmark"></span>
+                                    Pedir informações adicionais
+                                </label>
+                            </div>
+                            <div class="templatespropostasdocumentos-tooltip">
+                                <span class="icone">
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                                <nsj-tooltip tooltip-position="top">
+                                    <p>
+                                        Documentos relacionados ao Contas a Pagar.
+                                    </p>
+                                </nsj-tooltip>
+                            </div>
+                            </div>
+                            <div class="checkbox-container">
+                            <div class="custom-checkbox checkbox checkbox-inline checkbox-content" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+                                <label class="control-label" for="naoexibiremrelatorios">
+                                    <input type='checkbox' class="" id="naoexibiremrelatorios" name="naoexibiremrelatorios" ng-model="$ctrl.entity.naoexibiremrelatorios"
+                                        ng-disabled="$ctrl.entity.$$__submitting" />
+                                    <span class="checkmark"></span>
+                                    Não exibir nos relatórios de documentos automáticos
+                                </label>
+                            </div>
+                            <div class="templatespropostasdocumentos-tooltip">
+                                <span class="icone">
+                                    <i class="fas fa-info-circle"></i>
+                                </span>
+                                <nsj-tooltip tooltip-position="top">
+                                    <p>
+                                        Ao marcar esta opção o documento <b>não</b> será exibido no relatório de Autorização de Serviços, enviado para a prestadora.
+                                    </p>
+                                </nsj-tooltip>
+                            </div>
+                            </div>  
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

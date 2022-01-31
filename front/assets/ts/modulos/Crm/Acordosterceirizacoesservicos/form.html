@@ -1,0 +1,47 @@
+<div class="height-full layout-list">
+
+    <form nsj-focus name="crm_crdstrcrzcssrvcs_frm_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : crm_crdstrcrzcssrvcs_frm_cntrllr.busy }" role="form"
+        ng-submit="crm_crdstrcrzcssrvcs_frm_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="Acordo de terceirização de serviços " headline-sub="true">
+            <div class="pull-right">
+                <div class="form-group">
+                    <button type="button" ng-click="crm_crdstrcrzcssrvcs_frm_cntrllr.submit()"
+                        ng-class="{loading:crm_crdstrcrzcssrvcs_frm_cntrllr.entity.$$__submitting}"
+                        ng-disabled="crm_crdstrcrzcssrvcs_frm_cntrllr.entity.$$__submitting || crm_crdstrcrzcssrvcs_frm_cntrllr.form.$pristine"
+                        class="btn btn-sm btn-warning btn-save btn-geral">
+                        <i class="fa fa-check"></i> Salvar
+                    </button>
+
+                    <a 
+                        class="btn btn-sm btn-default btn-save btn-geral" 
+                        ui-sref="crm_acordosterceirizacoesservicos({})"
+                        ng-disabled="crm_crdstrcrzcssrvcs_frm_cntrllr.entity.$$__submitting">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                        Descartar Edição
+                    </a>
+                </div>
+            </div>
+        </nsj-headline>
+
+        <div class="nsj-form padding-content">
+
+            <crm-acordosterceirizacoesservicos-default entity="crm_crdstrcrzcssrvcs_frm_cntrllr.entity" form="crm_crdstrcrzcssrvcs_frm_cntrllr.form"
+                busy="crm_crdstrcrzcssrvcs_frm_cntrllr.busy" action="crm_crdstrcrzcssrvcs_frm_cntrllr.action"
+                constructors="crm_crdstrcrzcssrvcs_frm_cntrllr.constructors">
+            </crm-acordosterceirizacoesservicos-default>
+
+        </div>
+
+        <div class="content-loading" ng-if="crm_crdstrcrzcssrvcs_frm_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+
+    </form>
+
+</div>

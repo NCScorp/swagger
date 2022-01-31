@@ -1,0 +1,72 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="crm_fchfnncr_frm_dflt_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h3 class="modal-title" id="modal-title">Consulta de Itens do Pedido</h3>
+</div>
+
+
+
+<div class="modal-body mdl-bd-overflow-scroll" id="modal-body">
+    <div class="container-fluid">
+        <div class="row"> <strong>Prestador do Serviço: {{crm_fchfnncr_frm_dflt_cntrllr.encarregado}}</strong> </div>
+        <br/>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="content-loading"  ng-if="crm_fchfnncr_frm_dflt_cntrllr.isBusy()">
+                    <div class="center-loading text-center">
+                    <div class="onloading"></div>
+                    Carregando...
+                    </div>
+                </div>
+                <div ng-if="crm_fchfnncr_frm_dflt_cntrllr.lstPropostasItens"><tree-grid ng-if="crm_fchfnncr_frm_dflt_cntrllr.lstPropostasItens.length > 0" 
+                    tree-data="crm_fchfnncr_frm_dflt_cntrllr.lstPropostasItens" 
+                    expand-on="crm_fchfnncr_frm_dflt_cntrllr.expanding_property" 
+                    col-defs="crm_fchfnncr_frm_dflt_cntrllr.col_defs" 
+                    sorted-asc="fas fa-sort-alpha-up-alt" 
+                    sorted-desc="fas fa-sort-alpha-down-alt" 
+                    icon-expand="fas fa-chevron-right" 
+                    icon-collapse="fas fa-chevron-down"></tree-grid>
+                    <div ng-if="crm_fchfnncr_frm_dflt_cntrllr.lstPropostasItens === 'undefined' || crm_fchfnncr_frm_dflt_cntrllr.lstPropostasItens.length === 0">
+                        <p>Nenhum dado a exibir.</p>
+                    </div>
+                </div>
+
+                <div class="tree-grid-footer-appendix">
+                    <div class="tree-grid-footer-appendix-inner">
+                        
+                        <div class="input-wrapper">
+                            <div>
+                                <strong>Valor Total</strong>
+                                <input disabled class="form-control tree-input text-right" ng-model="(crm_fchfnncr_frm_dflt_cntrllr.somaValor | currency : 'R$ ' : 2) || '-'" ng-model-options="{ getterSetter: true }">
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <div>
+                                <strong>Total de descontos</strong>
+                                <input disabled class="form-control tree-input text-right" ng-model="(crm_fchfnncr_frm_dflt_cntrllr.somaDesconto | currency : 'R$ ' : 2) || '-'" ng-model-options="{ getterSetter: true }" >
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <div>
+                                <strong>Total de acréscimos</strong>
+                                <input disabled class="form-control tree-input text-right" ng-model="(crm_fchfnncr_frm_dflt_cntrllr.somaAcrescimo | currency : 'R$ ' : 2) || '-'" ng-model-options="{ getterSetter: true }">
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <div>
+                                <strong class="pull-right">Valor Total Final</strong>
+                                <input disabled class="pull-right form-control tree-input text-right" ng-model="(crm_fchfnncr_frm_dflt_cntrllr.valorFinal | currency : 'R$ ' : 2) || '-'" ng-model-options="{ getterSetter: true }">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    
+    <div class="pull-right">
+        <a class="" ng-click="crm_fchfnncr_frm_dflt_cntrllr.close()"><i class="fa fa-times" aria-hidden="true"></i> Fechar</a>
+    </div>
+</div>

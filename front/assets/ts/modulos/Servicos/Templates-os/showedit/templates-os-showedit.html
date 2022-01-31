@@ -1,0 +1,79 @@
+<div class="height-full layout-list">
+  <nsj-headline headline-title="" headline-sub="true">
+    <div class="pull-right action-buttons-wrapper">
+      <a class="btn btn-sm btn-default hidden-md" ui-sref="ordensservicos_templates({})" title="Voltar">
+        <i class="fas fa-reply"></i>
+        <span class="hidden-xs">Voltar</span>
+      </a>
+
+      <button tem-permissao="servicos_ordensservicostemplates_gerenciar" type="button" class="btn btn-sm btn-default btn-delete btn-geral"
+        ng-click="tpt_os_frm_shw_dt_cntrllr.delete()" ng-if="tpt_os_frm_shw_dt_cntrllr.entity.ordemservicotemplate  ">
+        <i class="fas fa-trash"></i>
+        <span class="hidden-xs">Excluir</span>
+      </button>
+    </div>
+  </nsj-headline>
+
+  <div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : tpt_os_frm_shw_dt_cntrllr.busy }">
+    <!-- Informações Gerais -->
+    <nsj-accordion init-open keep-open headline="Informações Gerais">
+      <nsj-button tem-permissao="servicos_ordensservicostemplates_gerenciar" ng-show="!tpt_os_frm_shw_dt_cntrllr.isEditing" slot="right" icon="fas fa-edit"
+        ng-click="tpt_os_frm_shw_dt_cntrllr.setEditing(true)">
+      </nsj-button>
+      <!-- Modo visualização -->
+      <div ng-if="!tpt_os_frm_shw_dt_cntrllr.isEditing" class="nsj-form-view top-buffer bottom-buffer">
+        <templates-os-show-form entity="tpt_os_frm_shw_dt_cntrllr.entity" action="tpt_os_frm_shw_dt_cntrllr.action"
+          busy="tpt_os_frm_shw_dt_cntrllr.busy" constructors="tpt_os_frm_shw_dt_cntrllr.constructors">
+        </templates-os-show-form>
+      </div>
+
+      <!-- Modo edição -->
+      <div ng-if="tpt_os_frm_shw_dt_cntrllr.isEditing">
+        <form nsj-focus name="tpt_os_frm_shw_dt_cntrllr.form" novalidate="novalidate"
+          ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : tpt_os_frm_shw_dt_cntrllr.busy }" role="form"
+          ng-submit="tpt_os_frm_shw_dt_cntrllr.submit()" class="height-full">
+          <templates-os-form entity="tpt_os_frm_shw_dt_cntrllr.entity" form="tpt_os_frm_shw_dt_cntrllr.form"
+            busy="tpt_os_frm_shw_dt_cntrllr.busy" action="tpt_os_frm_shw_dt_cntrllr.action"
+            constructors="tpt_os_frm_shw_dt_cntrllr.constructors">
+          </templates-os-form>
+          <ul class="list-unstyled list-inline pull-right">
+            <li>
+              <div class="form-group pull-right">
+                <button type="button" ng-click="tpt_os_frm_shw_dt_cntrllr.submit()"
+                  ng-class="{loading:tpt_os_frm_shw_dt_cntrllr.entity.$$__submitting}"
+                  ng-disabled="tpt_os_frm_shw_dt_cntrllr.entity.$$__submitting || tpt_os_frm_shw_dt_cntrllr.form.$pristine"
+                  class="btn btn-sm btn-warning btn-save btn-geral">
+                  <i class="fa fa-check"></i> Salvar
+                </button>
+                <a class="btn btn-sm btn-default" ng-click="tpt_os_frm_shw_dt_cntrllr.setEditing(false)"><i class="fa fa-times"
+                    aria-hidden="true"></i>
+                  Descartar</a>
+              </div>
+            </li>
+          </ul>
+        </form>
+      </div>
+    </nsj-accordion>
+    <!-- Serviços -->
+    <nsj-accordion init-open keep-open headline="Serviços" class="acordion-servicos">
+      <listagem-servicos-form entity="tpt_os_frm_shw_dt_cntrllr.entity" form="tpt_os_frm_shw_dt_cntrllr.form"
+        busy="tpt_os_frm_shw_dt_cntrllr.busy" action="tpt_os_frm_shw_dt_cntrllr.action"
+        constructors="tpt_os_frm_shw_dt_cntrllr.constructors">
+      </listagem-servicos-form>
+    </nsj-accordion>
+
+    <!-- Materiais -->
+    <nsj-accordion init-open keep-open headline="Materiais" class="acordion-materiais">
+      <listagem-materiais-form entity="tpt_os_frm_shw_dt_cntrllr.entity" form="tpt_os_frm_shw_dt_cntrllr.form"
+        busy="tpt_os_frm_shw_dt_cntrllr.busy" action="tpt_os_frm_shw_dt_cntrllr.action"
+        constructors="tpt_os_frm_shw_dt_cntrllr.constructors">
+      </listagem-materiais-form>
+    </nsj-accordion>
+    <div class="content-loading" ng-if="tpt_os_frm_shw_dt_cntrllr.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </div>
+</div>

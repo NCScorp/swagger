@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="contratos" label="contratos" project="financas">
+  <entity schema="financas" table="vw_contratos">
+    <!--
+      Atenção:
+      ao realizar alterações neste model, por favor conferir o arquivo 
+      AppBundle/Repository/Crm/NegociosRepository.php
+      e fazer as devidas modificações (pois o repository foi sobrescrito)
+    -->
+    <fieldmodel name="contrato" datatype="guid" isid="true" column="contrato"/>
+    <fieldmodel name="codigo" datatype="string" column="codigo"/>
+    <fieldmodel name="descricao" datatype="string" column="descricao"/>
+    <fieldmodel name="contratante" datatype="guid" column="participante" useCaseLink="ns\clientes" entityJoinType="left" />
+    <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" useCaseLink="ns\estabelecimentos" entityJoinType="left"/>
+    <fieldmodel name="conta" datatype="guid" column="conta" useCaseLink="financas\contas" entityJoinType="left"/>
+    <fieldmodel name="formapagamento" datatype="guid" column="id_formapagamento" useCaseLink="ns\formaspagamentos" entityJoinType="left"/>
+    <fieldmodel name="municipioprestacao" datatype="guid" column="pessoamunicipio" useCaseLink="servicos\pessoasmunicipios" entityJoinType="left"/>
+    <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    <fieldmodel name="itenscontratos" datatype="objectlist" useCaseLink="financas\itenscontratos" entityJoinType="left" />
+    <fieldmodel name="fornecedor" datatype="guid" notMapped="true"/>
+    <fieldmodel name="tipocontrato" datatype="integer" column="tipocontrato"/>
+    <fieldmodel name="cancelado" datatype="boolean" column="cancelado"/>
+    <fieldmodel name="emitirnotafiscal" datatype="boolean" column="emitirnotafiscal" />
+    <fieldmodel name="taxaadministrativa" datatype="boolean" notMapped="true" />
+    <fieldmodel name="atc" datatype="guid" notMapped="true" />
+    <fieldmodel name="valor" datatype="moeda" notMapped="true" />
+    <fieldmodel name="numerorps" datatype="integer" column="numerorps" />
+    <fieldmodel name="descontoglobalitensnaofaturados" datatype="moeda" column="descontoglobalitensnaofaturados" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Contratos" layout="list" paginate="true" target="builtin">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="contrato" isid="true" visible="false"/>
+      <fieldbrowser entitylink="emitirnotafiscal" visible="false"/>
+      <fieldbrowser entitylink="numerorps" visible="false"/>
+      <fieldbrowser entitylink="descontoglobalitensnaofaturados" visible="false"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <actions>
+    <action layer="back">
+      <name>insert</name>
+      <api>
+        <name>contratoRecebimentoPorAtendimentoComercialNovo_v3</name>
+        <fromto valueapi="codigo" valueentity="codigo"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="cliente" valueentity="contratante"/>
+        <fromto valueapi="municipioprestacao" valueentity="municipioprestacao"/>
+        <fromto valueapi="formapagamento" valueentity="formapagamento"/>
+        <fromto valueapi="estabelecimento" valueentity="estabelecimento"/>
+        <fromto valueapi="conta" valueentity="conta"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="itenscontratos" valueentity="itenscontratos"/>
+        <fromto valueapi="emitirnotafiscal" valueentity="emitirnotafiscal"/>
+        <fromto valueapi="taxaadministrativa" valueentity="taxaadministrativa"/>
+        <fromto valueapi="atc" valueentity="atc"/>
+        <fromto valueapi="valor" valueentity="valor"/>
+        <fromto valueapi="descontoglobalitensnaofaturados" valueentity="descontoglobalitensnaofaturados"/>
+      </api>
+    </action>
+    <action>
+      <name>delete</name>
+      <api>
+        <name>contratorecebimentoporatendimentocomercialexcluir_v2</name>
+        <fromto valueapi="contrato" valueentity="contrato"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="taxaadministrativa" valueentity="taxaadministrativa"/>
+        <fromto valueapi="atc" valueentity="atc"/>
+      </api>
+    </action>
+    <action layer="back">
+      <name>podeExcluir</name>
+      <api>
+        <name>podeexcluircontratorecebimentoporatendimentocomercial</name>
+        <fromto valueapi="contrato" valueentity="contrato"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+      </api>
+    </action>
+    <action>
+      <name>excluiContratoPagamento</name>
+      <api>
+        <name>contratopagamentoporatendimentocomercialexcluir</name>
+        <fromto valueapi="contrato" valueentity="contrato"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+      </api>
+    </action>
+    <action layer="back">
+      <name>insertContratoAPagar</name>
+      <api>
+        <name>contratopagamentoporatendimentocomercialnovo</name>
+        <fromto valueapi="codigo" valueentity="codigo"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="fornecedor" valueentity="fornecedor"/>
+        <fromto valueapi="formapagamento" valueentity="formapagamento"/>
+        <fromto valueapi="estabelecimento" valueentity="estabelecimento"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

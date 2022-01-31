@@ -1,0 +1,26 @@
+transformer:
+    source: "xmls"
+    target: "src/Nasajon/MDABundle"
+    fixedAttributes:
+        - "id_grupoempresarial"
+    plugins:
+        # - angular1:
+        #     useTypeScript: true
+        - symfony
+# compiler:
+#     namespace:
+#         dist: "web"
+#         MDA: "src/Nasajon/MDABundle/Resources/js"
+#         src: "assets/view"
+#     sourcePath:
+#         - "@MDA"
+#         - "@src"
+#     targetPath: "src/Nasajon/MDABundle/Resources/js"
+    
+# webpack:
+#     files:
+#         - "assets/"
+
+
+# environment:
+#     host : "http://localhost"

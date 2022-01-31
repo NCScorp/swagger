@@ -1,1 +1,4 @@
 ci/* @Nasajon/DevOps
+front/Dockerfile @Nasajon/DevOps
+back/Dockerfile @Nasajon/DevOps
+buildspec.yml @Nasajon/DevOps

@@ -1,0 +1,801 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+	<uib-tabset class='top-buffer'>
+		
+			<div class="row ">
+				<div class="col-sm-6">
+
+					<div class="form-group">
+						<label ng-if="$ctrl.entity.nomeFalecido" class="control-label" for="nome">Nome do
+							Falecido</label>
+						<label ng-if="!$ctrl.entity.nomeFalecido" class="control-label" for="nome">Nome</label>
+						<input type='text' class="form-control" id="nome" name="nome" maxlength="50"
+							ng-model="$ctrl.entity.nome" ng-disabled="$ctrl.entity.$$__submitting"
+							ng-required="($ctrl.entity.$$__submitting) !== true" />
+						<div ng-messages="$ctrl.form.nome.$error"
+							ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted">
+
+							<div class="alert alert-danger" role="alert" ng-message="required">
+								<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+								<span class="sr-only">Erro:</span>
+								O campo nome não pode estar vazio
+							</div>
+
+							<div class="alert alert-danger" role="alert" ng-message="maxlength">
+								<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+								<span class="sr-only">Erro:</span>
+								O campo aceita no máximo 50 caracteres
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+				<div class="col-sm-6">
+
+					<div class="form-group"><label class="control-label" for="codigo">Código</label><input type='text'
+							class="form-control" id="codigo" name="codigo" ng-model="$ctrl.entity.codigo"
+							ng-disabled="true||true||$ctrl.entity.$$__submitting" /></div>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label" for="area">Área de Atendimento Comercial</label>
+						<nsj-lookup name="area" ng-change="$ctrl.carregaInfoAreaAtc($ctrl.entity.area); $ctrl.recarregarCamposCustomizados();" id-name="atcarea"
+							factory="CrmAtcsareas" ng-model="$ctrl.entity.area" template="crm-atcsareas-default"
+							max-label="4" constructor="{  }" config='{ "codigo":"Código", "nome":"Nome",  }'
+							disabled="$ctrl.entity.$$__submitting" ns-required="($ctrl.entity.$$__submitting) !== true">
+						</nsj-lookup>
+						<div ng-messages="$ctrl.form.area.$error" ng-if="$ctrl.form.$submitted">
+							<div class="alert alert-danger" role="alert" ng-message="required">
+								<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+								<span class="sr-only">Erro:</span>
+								O campo área de atendimento comercial não pode ser vazio
+
+
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label" for="origem">Origem</label>
+						<nsj-lookup name="origem" id-name="midia" factory="CrmMidias" ng-model="$ctrl.entity.origem"
+							template="crm-midias-default" max-label="1" constructor="{  }" config='{ "nome":"Nome",  }'
+							disabled="$ctrl.entity.$$__submitting" ns-required="($ctrl.entity.$$__submitting) !== true">
+						</nsj-lookup>
+						<div ng-messages="$ctrl.form.origem.$error"
+							ng-if="$ctrl.form.origem.$dirty || $ctrl.form.$submitted">
+							<div class="alert alert-danger" role="alert" ng-message="required">
+								<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+								<span class="sr-only">Erro:</span>
+								O campo origem não pode ser vazio
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-sm-6">
+					<div class="form-group"><label class="control-label" for="tiposacionamento">Tipo de
+							acionamento</label>
+						<nsj-lookup name="tiposacionamento" id-name="tiposacionamento" factory="CrmTiposacionamentos"
+							ng-model="$ctrl.entity.tiposacionamento" max-label="1" constructor="{  }"
+							config='{ "nome":"Nome",  }' disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group"><label class="control-label" for="negociopai">Depende de</label><button
+							class="btn btn-link btn-tooltip" type='button' uib-popover-html="'
+                            Define o atendimento principal no qual esse atendimento será dependente, utilizando o projeto do atendimento principal como referência.
+                        '" popover-placement='auto bottom' popover-trigger="'mouseenter click outsideClick'"><i
+								class="fas fa-question-circle"></i></button>
+						<nsj-lookup name="negociopai" id-name="negocio" factory="CrmAtcs"
+							ng-model="$ctrl.entity.negociopai" filter="{ 'negocio': [ {'condition':'neq','value':'negocio' },  ],                 'negocio':{'condition':'neq', 'value': $ctrl.entity.negocio },
+                }" max-label="1" constructor="{  }" config='{ "nome":"Nome",  }'
+							disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+					</div>
+				</div>
+			</div>
+			<div class="row "></div>
+			<div class="row ">
+				<div class="col-sm-4">
+					<div class="form-group">
+						<label class="control-label" for="estabelecimento">Estabelecimento</label>
+						<nsj-lookup name="estabelecimento" id-name="estabelecimento" factory="NsEstabelecimentos"
+							ng-model="$ctrl.entity.estabelecimento" max-label="1" constructor="{  }"
+							config='{ "nomefantasia":"nomefantasia",  }'
+							disabled="$ctrl.entity.negocio||$ctrl.entity.negocio||$ctrl.entity.$$__submitting"
+							ns-required="($ctrl.entity.negocio||$ctrl.entity.negocio||$ctrl.entity.$$__submitting) !== true">
+						</nsj-lookup>
+						<div ng-messages="$ctrl.form.estabelecimento.$error"
+							ng-if="$ctrl.form.estabelecimento.$dirty || $ctrl.form.$submitted">
+							<div class="alert alert-danger" role="alert" ng-message="required">
+								<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+								<span class="sr-only">Erro:</span>
+								O campo Estabelecimento não pode ser vazio.
+
+
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="form-group">
+						<label class="control-label" for="possuiseguradora">Possui seguro?</label>
+						<div class="nsj-radio-btn-group">
+							<div class="item text-center" ng-click="$ctrl.onBtnPossuiSeguradoraClick(false)"><input
+									type="radio" ng-value="false" id="valor1" id="possuiseguradora"
+									name="possuiseguradora" ng-model="$ctrl.entity.possuiseguradora"
+									ng-disabled="true"><label for="valor1">Não</label>
+							</div>
+							<div class="item text-center" ng-click="$ctrl.onBtnPossuiSeguradoraClick(true)"><input
+									type="radio" ng-value="true" id="valor2" id="possuiseguradora"
+									name="possuiseguradora" ng-model="$ctrl.entity.possuiseguradora"
+									ng-disabled="true"><label for="valor2">Sim</label>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="control-label" for="cliente"
+							ng-if="!$ctrl.entity.possuiseguradora">Cliente</label>
+						<label class="control-label" for="cliente"
+							ng-if="$ctrl.entity.possuiseguradora">Seguradora</label>
+						<!-- {# abaixo com opção de adicionar novo #} -->
+						<nsj-lookup ng-if="!$ctrl.entity.possuiseguradora" name="cliente" id-name="cliente"
+							factory="NsClientes" ng-model="$ctrl.entity.cliente" template="ns-clientes-default"
+							size-modal="lg"
+							filter="{ 'tipo': [ {'condition':'eq','value':$ctrl.entity.possuiseguradoraint },  ], }"
+							max-label="1" constructor="{  }"
+							config=' { "nomefantasia":"Nome Fantasia", "cnpj": "CPF/CNPJ"}'
+							disabled="$ctrl.entity.$$__submitting" ng-change="$ctrl.alterarResponsavelFinanceiro()"
+							ns-required="($ctrl.entity.$$__submitting) !== true">
+						</nsj-lookup>
+						<!-- {# abaixo, sem opção de adicionar novo #} -->
+						<nsj-lookup ng-if="$ctrl.entity.possuiseguradora" name="cliente" id-name="cliente"
+							factory="NsClientes" ng-model="$ctrl.entity.cliente"
+							filter="{ 'tipo': [ {'condition':'eq','value':$ctrl.entity.possuiseguradoraint },  ], }"
+							max-label="1" constructor="{  }"
+							config=' { "nomefantasia":"Nome Fantasia", "cnpj": "CPF/CNPJ"}'
+							disabled="$ctrl.entity.$$__submitting" ng-change="$ctrl.alterarResponsavelFinanceiro()"
+							ns-required="($ctrl.entity.$$__submitting) !== true">
+						</nsj-lookup>
+						<div ng-messages="$ctrl.form.cliente.$error"
+							ng-if="$ctrl.form.cliente.$dirty || $ctrl.form.$submitted">
+							<div class="alert alert-danger" role="alert" ng-message="required"
+								ng-if="!$ctrl.entity.possuiseguradora">
+								<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+								<span class="sr-only">Erro:</span>
+								O campo cliente não pode ser vazio
+							</div>
+							<div class="alert alert-danger" role="alert" ng-message="required"
+								ng-if="$ctrl.entity.possuiseguradora">
+								<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+								<span class="sr-only">Erro:</span>
+								O campo seguradora não pode ser vazio
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4" ng-if="(!$ctrl.entity.possuiseguradora)">
+					<div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}">
+						<label class="control-label" for="clienteresponsavelfinanceiro"><input type='checkbox' class=""
+								id="clienteresponsavelfinanceiro" name="clienteresponsavelfinanceiro"
+								ng-model="$ctrl.entity.clienteresponsavelfinanceiro"
+								ng-change="$ctrl.clientecomoresponsavelfinanceiro()"
+								ng-disabled="$ctrl.entity.$$__submitting" />
+							<span class="checkmark"></span>
+							Cliente é responsável financeiro?
+						</label>
+					</div>
+
+
+					<!-- 4 para baixo não existiam -->
+					<!-- {% block viewedit_form_status %}
+							<div>
+								<span class="label top-buffer-min left-buffer" id="status" name="status" ng-model="crm_tcs_frm_cntrllr.entity.status" ng-class="{'label-primary' : crm_tcs_frm_cntrllr.entity.status == 0,
+																	'label-default' : crm_tcs_frm_cntrllr.entity.status == 1,
+																	'label-success' : crm_tcs_frm_cntrllr.entity.status == 2,
+																	'label-danger' : crm_tcs_frm_cntrllr.entity.status == 3 }" ng-disabled="true||true||$ctrl.entity.$$__submitting" convert-to-number=" " convert-to-number>
+									{{'{{ crm_tcs_frm_cntrllr.entity.statusLabel }}'}}
+								</span>
+							</div>
+						{% endblock viewedit_form_status %} -->
+					<!-- {# Sobrescrito para colocar o atributo no construtor #}
+						{% block viewedit_form_seguradoraprodutoseguradora %}
+							<div class="form-group">
+								<label class="control-label" for="seguradoraprodutoseguradora">Produto</label>
+								<nsj-lookup name="seguradoraprodutoseguradora" id-name="templatepropostagrupo" factory="CrmTemplatespropostasgrupos" ng-model="$ctrl.entity.seguradoraprodutoseguradora" max-label="1" constructor="{ 'cliente' : $ctrl.entity.cliente.cliente,  }" config='{ "nome":"Produto",  }' disabled="(!$ctrl.entity.cliente)||(!$ctrl.entity.cliente)||$ctrl.entity.$$__submitting" required="((!$ctrl.entity.cliente)||(!$ctrl.entity.cliente)||$ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+								<div ng-messages="$ctrl.form.seguradoraprodutoseguradora.$error" ng-if="$ctrl.form.seguradoraprodutoseguradora.$dirty || $ctrl.form.$submitted">
+									<div class="alert alert-danger" role="alert" ng-message="required">
+										<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+										<span class="sr-only">Erro:</span>
+										O campo produto não pode ser vazio
+									</div>
+								</div>
+							</div>
+						{% endblock viewedit_form_seguradoraprodutoseguradora %} -->
+					<!-- {# Sobrescrito para colocar o atributo no construtor #}
+						{% block viewedit_form_seguradoraapolice %}
+							<div class="form-group">
+								<label class="control-label" for="seguradoraapolice">Apólice</label>
+								<nsj-lookup name="seguradoraapolice" id-name="templateproposta" ng-change="$ctrl.mudouSeguradora()" factory="CrmTemplatespropostas" ng-model="$ctrl.entity.seguradoraapolice" max-label="1" constructor="{ 'templatepropostagrupo' : $ctrl.entity.seguradoraprodutoseguradora.templatepropostagrupo,  }" config='{ "nome":"Apólice",  }' disabled="(!$ctrl.entity.seguradoraprodutoseguradora)||(!$ctrl.entity.seguradoraprodutoseguradora)||$ctrl.entity.$$__submitting" required="((!$ctrl.entity.seguradoraprodutoseguradora)||(!$ctrl.entity.seguradoraprodutoseguradora)||$ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+								<div ng-messages="$ctrl.form.seguradoraapolice.$error" ng-if="$ctrl.form.seguradoraapolice.$dirty || $ctrl.form.$submitted">
+									<div class="alert alert-danger" role="alert" ng-message="required">
+										<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+										<span class="sr-only">Erro:</span>
+										O campo apólice não pode ser vazio
+									</div>
+								</div>
+
+							</div>
+						{% endblock viewedit_form_seguradoraapolice %} -->
+					<!-- {% block viewedit_form_seguradoratitularvinculo %}
+							<div class="form-group">
+								<label class="control-label" for="seguradoratitularvinculo">Vínculo com o atendido</label>
+								<nsj-lookup name="seguradoratitularvinculo" id-name="vinculo" factory="CrmVinculos" ng-model="$ctrl.entity.seguradoratitularvinculo" template="crm-vinculos-default" max-label="1" constructor="{  }" config='{ "nome":"Nome",  }' disabled="(!$ctrl.entity.seguradoraprodutoseguradora)||(!$ctrl.entity.seguradoraprodutoseguradora)||$ctrl.entity.$$__submitting"></nsj-lookup>
+							</div>
+							<section ng-if="$ctrl.camposcustomizadosContatos.length > 0">
+								<nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosContatos" id-field="camposcustomizadosContatos" ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)"></nsj-custom-field>
+							</section>
+
+						{% endblock viewedit_form_seguradoratitularvinculo %} -->
+				</div>
+			</div>
+			<div class="row " ng-if="$ctrl.entity.possuiseguradora">
+				<div class="col-sm-12">
+					<object-list class="object-list" entities='$ctrl.entity.negociosdadosseguradoras'
+						service="CrmAtcsdadosseguradoras" ng-if="$ctrl.entity.possuiseguradora"
+						constructors="{ 'negocio' : $ctrl.entity.negocio,  }" autosaveenabled=>
+						<div class="col-sm-12">
+							<div class="row">
+								<fieldset class="object-list-add">
+									<legend class="scheduler-border">Dados do Seguro</legend>
+									<crm-atcsdadosseguradoras-default entity="$ctrl.entity" form="$ctrl.form"
+										constructors="service.constructors">
+									</crm-atcsdadosseguradoras-default>
+
+								</fieldset>
+							</div>
+						</div>
+					</object-list>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-sm-12">
+					<!-- {# {% include '@src/Ns/Camposcustomizados/camposcustomizados.html.twig' %} #} -->
+					<section ng-if="$ctrl.camposcustomizadosResponsavel.length > 0">
+						<nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosResponsavel"
+							id-field="camposcustomizadosResponsavel" ng-prop-visible_config="$ctrl.config"
+							ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)">
+						</nsj-custom-field>
+					</section>
+					<section ng-if="$ctrl.camposcustomizadosFalecido.length > 0">
+						<nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosFalecido"
+							id-field="camposcustomizadosFalecido" ng-prop-visible_config="$ctrl.config"
+							ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)">
+						</nsj-custom-field>
+					</section>
+
+					<section ng-if="$ctrl.camposcustomizadosVelorioSepultamento.length > 0">
+					
+						<nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosVelorioSepultamento"
+							id-field="camposcustomizadosVelorioSepultamento" ng-prop-visible_config="$ctrl.config"
+							ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)">
+						</nsj-custom-field>
+					</section>
+
+
+					<section ng-if="$ctrl.camposcustomizadosTranslado.length > 0">
+					
+						<nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosTranslado"
+							id-field="camposcustomizadosTranslado" ng-prop-visible_config="$ctrl.config"
+							ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)">
+						</nsj-custom-field>
+					</section>
+
+					<section ng-if="$ctrl.camposcustomizadosPaciente.length > 0">
+						<nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosPaciente"
+							id-field="camposcustomizadosPaciente" ng-prop-visible_config="$ctrl.config"
+							ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)">
+						</nsj-custom-field>
+					</section>
+					<section ng-if="$ctrl.camposcustomizadosPet.length > 0">
+						<nsj-custom-field ng-prop-custom_fields="$ctrl.camposcustomizadosPet"
+							id-field="camposcustomizadosPet" ng-prop-visible_config="$ctrl.config"
+							ng-prop-model="$ctrl.entity.camposcustomizados" ng-on-field_change="$ctrl.change($event)">
+						</nsj-custom-field>
+					</section>
+
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-sm-12" ng-if="$ctrl.entity.area.localizacao">
+					<fieldset>
+						<legend>
+							Localização {{ $ctrl.entity.complementoCaption }}
+						</legend>
+						<div class="row ">
+							<div class="col-sm-4">
+								<div class="endereco-local-cadastrado">
+									<nsj-switch class="componente" name="localcadastrado" id="localcadastrado"
+										ng-model="$ctrl.localcadastrado"></nsj-switch>
+									<span class="texto"> Endereço c/ Local cadastrado no sistema</span>
+								</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group" ng-if="$ctrl.localcadastrado">
+                                    <label class="control-label" for="localizacaocarregar">Procurar local</label>
+                                    <nsj-lookup name="localizacaocarregar" id-name="endereco" factory="NsEnderecos"
+                                        ng-model="$ctrl.entity.localizacaocarregar"
+                                        filter="{ 'nome': [ {'condition':'isNotNull','value':'' },  ], }" max-label="1"
+                                        constructor="{  }" config='{ "nome":"Nome",  }'
+                                        disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+                                </div>
+
+                                <div class="form-group" ng-if="!$ctrl.localcadastrado">
+                                    <label class="control-label" for="endereco-google-places">Endereço pelo
+                                        google</label>
+                                    <nsj-lookup name="endereco-google-places" id-name="endereco-google-places"
+                                        factory="GooglePlacesService" ng-model="$ctrl.enderecogoogle" max-label="1"
+                                        constructor="{  }" config='{ "formatted_address":"formatted_address",  }'
+                                        disabled="$ctrl.entity.$$__submitting"
+                                        ng-change="$ctrl.preencherEnderecoGoogle()"></nsj-lookup>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label class="control-label" for="localizacaonome">
+                                        Identificação do local
+                                    </label>
+                                    <input 
+                                        type='text' 
+                                        class="form-control" 
+                                        id="localizacaonome"
+                                        name="localizacaonome" 
+                                        maxlength="150" 
+                                        ng-model="$ctrl.entity.localizacaonome"
+                                        ng-disabled="$ctrl.entity.$$__submitting"
+                                        
+										/>
+                                    <div ng-messages="$ctrl.form.localizacaonome.$error"
+                                        ng-if="$ctrl.form.localizacaonome.$dirty || $ctrl.form.$submitted">
+                                        <div class="alert alert-danger" role="alert" ng-message="required">
+                                            <span class="fa fa-exclamation-circle" aria-hidden="true">
+                                            </span>
+                                            <span class="sr-only">
+                                                Erro:
+                                            </span>
+                                            O campo não pode estar vazio
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" ng-message="maxlength">
+                                            <span class="fa fa-exclamation-circle" aria-hidden="true">
+                                            </span>
+                                            <span class="sr-only">
+                                                Erro:
+                                            </span>
+                                            Esse campo aceita no máximo 150 caracteres
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<div class="row ">
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label class="control-label" for="localizacaopais">País</label>
+									<nsj-lookup name="localizacaopais" id-name="pais" factory="NsPaises"
+										ng-model="$ctrl.entity.localizacaopais" max-label="1" constructor="{  }"
+										config='{ "nome":"País",  }' disabled="$ctrl.entity.$$__submitting"
+										ns-required="($ctrl.entity.$$__submitting) !== true"></nsj-lookup>
+									<div ng-messages="$ctrl.form.localizacaopais.$error"
+										ng-if="$ctrl.form.localizacaopais.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required">
+											<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+											<span class="sr-only">Erro:</span>
+											O campo não pode ser vazio
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4" ng-if="$ctrl.entity.localizacaopais.pais === '1058'">
+								<div class="form-group">
+									<label class="control-label" for="localizacaoestado">Estado</label>
+									<nsj-lookup name="localizacaoestado" id-name="uf" factory="NsEstados"
+										ng-model="$ctrl.entity.localizacaoestado" max-label="1" constructor="{  }"
+										config='{ "nome":"Estado",  }' disabled="$ctrl.entity.$$__submitting"
+										
+										></nsj-lookup>
+									<div ng-messages="$ctrl.form.localizacaoestado.$error"
+										ng-if="$ctrl.form.localizacaoestado.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required">
+											<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+											<span class="sr-only">Erro:</span>
+											O campo não pode ser vazio
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4" ng-if="$ctrl.entity.localizacaopais.pais === '1058'">
+								<div class="form-group">
+									<label class="control-label" for="localizacaomunicipio">Município</label>
+									<button class="btn btn-link btn-tooltip" type='button'
+										uib-popover-html="$ctrl.tooltipCidadesInformacoesFunerarias"
+										popover-placement='auto top' popover-trigger="'mouseenter click outsideClick'">
+										<i class="fas fa-question-circle"></i>
+									</button>
+
+									<!-- {# Filtrar o município de acordo com o estado selecionado #} -->
+									<nsj-lookup name="localizacaomunicipio"
+										ng-change="$ctrl.loadDadosCidadesInformacoesFunerarias()" id-name="codigo"
+										factory="NsMunicipios" ng-model="$ctrl.entity.localizacaomunicipio"
+										filter="{ 'uf': [ {'condition':'eq','value':$ctrl.entity.localizacaoestado.uf },  ], }"
+										keep-model-change-filter="true" max-label="1" constructor="{  }"
+										config='{ "nome":"Nome",  }' disabled="$ctrl.entity.$$__submitting"
+										
+										>
+									</nsj-lookup>
+
+									<div ng-messages="$ctrl.form.localizacaomunicipio.$error"
+										ng-if="$ctrl.form.localizacaomunicipio.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required">
+											<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+											<span class="sr-only">Erro:</span>
+											O campo não pode ser vazio
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4" ng-if="$ctrl.entity.localizacaopais.pais !== '1058'">
+
+								<div class="form-group"><label class="control-label"
+										for="localizacaocidadeestrangeira">Cidades estrangeiras</label>
+									<nsj-lookup name="localizacaocidadeestrangeira" id-name="cidadeestrangeira"
+										factory="NsCidadesestrangeiras"
+										ng-model="$ctrl.entity.localizacaocidadeestrangeira" max-label="1"
+										constructor="{  }" config='{ "nome":"Nome",  }'
+										disabled="$ctrl.entity.$$__submitting"
+
+									></nsj-lookup>
+									<div ng-messages="$ctrl.form.localizacaocidadeestrangeira.$error"
+										ng-if="$ctrl.form.localizacaocidadeestrangeira.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+											O campo não pode ser vazio
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row ">
+							<div class="col-sm-4">
+								<div class="form-group"><label class="control-label"
+										for="localizacaocep">CEP</label><input type='text' class="form-control"
+										id="localizacaocep" name="localizacaocep" maxlength="15"
+										ng-model="$ctrl.entity.localizacaocep"
+										ng-disabled="$ctrl.entity.$$__submitting" />
+									<div ng-messages="$ctrl.form.localizacaocep.$error"
+										ng-if="$ctrl.form.localizacaocep.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+
+
+											Esse campo aceita no máximo 15 caracteres
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group"><label class="control-label"
+										for="localizacaobairro">Bairro</label><input type='text' class="form-control"
+										id="localizacaobairro" name="localizacaobairro" maxlength="60"
+										ng-model="$ctrl.entity.localizacaobairro"
+										ng-disabled="$ctrl.entity.$$__submitting" />
+									<div ng-messages="$ctrl.form.localizacaobairro.$error"
+										ng-if="$ctrl.form.localizacaobairro.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+
+
+											Esse campo aceita no máximo 60 caracteres
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label class="control-label" for="localizacaotipologradouro">Tipo</label>
+
+									<nsj-lookup name="localizacaotipologradouro" id-name="tipologradouro"
+										factory="NsTiposlogradouros" ng-model="$ctrl.entity.localizacaotipologradouro"
+										max-label="2" constructor="{  }"
+										config='{ "tipologradouro":"Tipo", "descricao":"Descrição",  }'
+										disabled="$ctrl.entity.$$__submitting"
+									>
+									</nsj-lookup>
+
+								</div>
+							</div>
+						</div>
+						<div class="row ">
+							<div class="col-sm-4">
+								<div class="form-group"><label class="control-label"
+										for="localizacaorua">Rua</label>
+									
+									<input type='text' class="form-control"
+										id="localizacaorua" name="localizacaorua" maxlength="150"
+										ng-model="$ctrl.entity.localizacaorua" ng-disabled="$ctrl.entity.$$__submitting"/>
+
+										<div ng-messages="$ctrl.form.localizacaorua.$error"
+											ng-if="$ctrl.form.localizacaorua.$dirty || $ctrl.form.$submitted">
+
+										<div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+
+
+											Esse campo aceita no máximo 150 caracteres
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="form-group"><label class="control-label"
+										for="localizacaonumero">Número</label>
+									
+									<input type='text' class="form-control"
+										id="localizacaonumero" name="localizacaonumero" maxlength="10"
+										ng-model="$ctrl.entity.localizacaonumero"
+										ng-disabled="$ctrl.entity.$$__submitting"
+									/>
+
+										<div ng-messages="$ctrl.form.localizacaonumero.$error"
+											ng-if="$ctrl.form.localizacaonumero.$dirty || $ctrl.form.$submitted">
+
+											<div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+													class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+													class="sr-only">Erro:</span>
+												Esse campo aceita no máximo 10 caracteres
+											</div>
+										</div>
+								</div>
+							</div>
+							<div class="col-sm-8">
+								<div class="form-group"><label class="control-label"
+										for="localizacaocomplemento">Complemento</label><input type='text'
+										class="form-control" id="localizacaocomplemento" name="localizacaocomplemento"
+										maxlength="60" ng-model="$ctrl.entity.localizacaocomplemento"
+										ng-disabled="$ctrl.entity.$$__submitting" />
+									<div ng-messages="$ctrl.form.localizacaocomplemento.$error"
+										ng-if="$ctrl.form.localizacaocomplemento.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+
+
+											Esse campo aceita no máximo 60 caracteres
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row ">
+							<div class="col-sm-12">
+								<div class="form-group"><label class="control-label"
+										for="localizacaoreferencia">Referência</label><textarea class="form-control"
+										id="localizacaoreferencia" name="localizacaoreferencia"
+										ng-model="$ctrl.entity.localizacaoreferencia"
+										ng-disabled="$ctrl.entity.$$__submitting"></textarea></div>
+							</div>
+						</div>
+						<div class="row ">
+							<div class="col-sm-4" ng-if="$ctrl.entity.localizacaopais.pais === '1058'">
+								<div class="form-group" ng-if="$ctrl.entity.exibeMunicipioSepultamento">
+
+									<label class="control-label" for="localizacaoestadosepultamento">Estado de Sepultamento</label>
+									<nsj-lookup name="localizacaoestadosepultamento" id-name="uf" factory="NsEstados"
+										ng-model="$ctrl.entity.localizacaoestadosepultamento" max-label="1" constructor="{  }"
+										config='{ "nome":"Estado",  }' disabled="$ctrl.entity.$$__submitting"
+										ns-required="($ctrl.entity.$$__submitting) !== true">
+									</nsj-lookup>
+
+									<div ng-messages="$ctrl.form.localizacaoestadosepultamento.$error"
+										ng-if="$ctrl.form.localizacaoestadosepultamento.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required">
+											<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+											<span class="sr-only">Erro:</span>
+											O Estado de Sepultamento não pode ser vazio
+										</div>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-sm-4" ng-if="$ctrl.entity.localizacaopais.pais === '1058'">
+								<div class="form-group" ng-if="$ctrl.entity.exibeMunicipioSepultamento">
+
+									<label class="control-label" for="localizacaomunicipiosepultamento">Município de
+										Sepultamento</label>
+									<button class="btn btn-link btn-tooltip" type='button'
+										uib-popover-html="$ctrl.tooltipCidadesInformacoesFunerariasSepultamento"
+										popover-placement='auto bottom'
+										popover-trigger="'mouseenter click outsideClick'">
+										<i class="fas fa-question-circle"></i>
+									</button>
+									<nsj-lookup 
+										ng-change="$ctrl.loadDadosCidadesInformacoesFunerariasSepultamento()"
+										name="localizacaomunicipiosepultamento" 
+										id-name="codigo" 
+										factory="NsMunicipios"
+										filter="{ 'uf': [ {'condition':'eq','value':$ctrl.entity.localizacaoestadosepultamento.uf },  ], }"
+										ng-model="$ctrl.entity.localizacaomunicipiosepultamento" 
+										max-label="1"
+										constructor="{  }" config='{ "nome":"Nome",  }'
+										disabled="$ctrl.entity.$$__submitting"
+										ns-required="($ctrl.entity.$$__submitting) !== true">
+									</nsj-lookup>
+
+									<div ng-messages="$ctrl.form.localizacaomunicipiosepultamento.$error"
+										ng-if="$ctrl.form.localizacaomunicipiosepultamento.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required">
+											<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+											<span class="sr-only">Erro:</span>
+											O Município de Sepultamento não pode ser vazio
+										</div>
+									</div>
+
+									<a class="btn btn-xs" ng-click="$ctrl.abrirModalRotasGoogle()"
+										ng-if="$ctrl.entity.localizacaomunicipiosepultamento && $ctrl.entity.localizacaomunicipio.nome">
+										Ver Rotas
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="row ">
+							<div class="col-sm-4" ng-if="$ctrl.entity.localizacao">
+								<div class="form-group">
+                                    <label class="control-label" for="localizacaoexistentesalvar">
+                                        Salvar endereço como um local
+                                    </label>
+                                    <select
+										class="form-control" id="localizacaoexistentesalvar"
+										name="localizacaoexistentesalvar"
+										ng-model="$ctrl.entity.localizacaoexistentesalvar"
+										ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" "
+										ng-required="($ctrl.entity.$$__submitting) !== true" convert-to-number>
+										<option value="1" selected>Não salvar</option>
+										<option value="2">Salvar</option>
+										<option value="3">Salvar como</option>
+									</select>
+									<div ng-messages="$ctrl.form.localizacaoexistentesalvar.$error"
+										ng-if="$ctrl.form.localizacaoexistentesalvar.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+											O campo não pode estar vazio
+
+
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4" ng-if="(!$ctrl.entity.localizacao)">
+								<div class="form-group">
+                                    <label class="control-label" for="localizacaosalvar">
+                                        Salvar endereço como um local
+                                    </label>
+                                    <select class="form-control"
+										id="localizacaosalvar" name="localizacaosalvar"
+										ng-model="$ctrl.entity.localizacaosalvar"
+										ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" "
+										ng-required="($ctrl.entity.$$__submitting) !== true" convert-to-number>
+										<option value="1" selected>Não salvar</option>
+										<option value="2">Salvar</option>
+									</select>
+									<div ng-messages="$ctrl.form.localizacaosalvar.$error"
+										ng-if="$ctrl.form.localizacaosalvar.$dirty || $ctrl.form.$submitted">
+										<div class="alert alert-danger" role="alert" ng-message="required"><span
+												class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+												class="sr-only">Erro:</span>
+											O campo não pode estar vazio
+
+
+										</div>
+									</div>
+								</div>
+                            </div>
+                            <!--
+							<div class="col-sm-4">
+								<div class="form-group"><label class="control-label"
+										for="localizacaosalvar"></label><input type='hidden' class="form-control"
+										id="localizacaosalvar" name="localizacaosalvar"
+										ng-model="$ctrl.entity.localizacaosalvar"
+										ng-disabled="$ctrl.entity.$$__submitting" convert-to-number=" " /></div>
+                            </div>
+                            -->
+						</div>
+					</fieldset>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-sm-12">
+					<object-list class="object-list" entities='$ctrl.entity.responsaveisfinanceiros'
+						service="CrmAtcsresponsaveisfinanceiros" constructors="{ 'negocio' : $ctrl.entity.negocio,  }"
+						autosaveEnabled=>
+						<div><label class="control-label" for="responsaveisfinanceiros">Responsável Financeiro</label>
+							<div class="pull-right bottom-buffer"><a class="btn btn-md btn-warning"
+									ng-click="$ctrl.crmAtcsresponsaveisfinanceirosForm(service.constructors)"><i
+										class="fas fa-plus"></i> Adicionar
+								</a></div>
+							<div class="table-default">
+								<table class="table table-striped table-hover table-condensed table-bordered">
+									<thead>
+										<tr>
+											<th>
+												Nome
+											</th>
+											<th>
+												Principal
+											</th>
+											<th class='compact'></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="subentity in oblistctrl.entities"
+											ng-controller="ObjectListItemCtrl as itemctrl">
+											<td>
+												{{ subentity.responsavelfinanceiro.nomefantasia }}
+											</td>
+											
+											<td> {{ subentity.principal ? 'Sim' : 'Não'  }} </td>
+											<td class='text-right no-wrap'><a class="btn btn-danger btn-circle"
+													ng-click="oblistctrl.remove(subentity)" title="Remover"><i
+														class="fas fa-times"></i></a></td>
+										</tr>
+									</tbody>
+									<tfoot ng-if="oblistctrl.entities.length == 0">
+										<tr>
+											<td colspan="4" class="state-empty">
+												<div class="empty-list">
+													<p class="text-center"> Não existem itens para mostrar nesta lista.
+													</p>
+												</div>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+					</object-list>
+				</div>
+			</div>
+			<div class="row ">
+				<div class="col-sm-12">
+					<div class="form-group"><label class="control-label" for="observacoes">Observações</label><textarea
+							class="form-control" id="observacoes" name="observacoes" ng-model="$ctrl.entity.observacoes"
+							ng-disabled="$ctrl.entity.$$__submitting"></textarea></div>
+				</div>
+			</div>
+		
+	</uib-tabset>
+</form>

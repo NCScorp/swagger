@@ -1,0 +1,56 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="codigo">Código</label><input type='text'
+                    class="form-control" id="codigo" name="codigo" maxlength="30" ng-model="$ctrl.entity.codigo"
+                    ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.codigo.$error" ng-if="$ctrl.form.codigo.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Código não pode ser vazio
+
+
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+
+
+                        O campo Código aceita no máximo 30 caracteres
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="nome">Nome</label><input type='text'
+                    class="form-control" id="nome" name="nome" maxlength="100" ng-model="$ctrl.entity.nome"
+                    ng-disabled="$ctrl.entity.$$__submitting" />
+                <div ng-messages="$ctrl.form.nome.$error" ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+
+
+                        O campo Nome aceita no máximo 100 caracteres
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="custom-checkbox checkbox" ng-class="{'disabled':$ctrl.entity.$$__submitting}"><label
+                    class="control-label" for="bloqueado"><input type='checkbox' class="" id="bloqueado"
+                        name="bloqueado" ng-model="$ctrl.entity.bloqueado"
+                        ng-disabled="$ctrl.entity.$$__submitting" /><span class="checkmark"></span>
+
+
+                    Bloqueado
+                </label></div>
+        </div>
+    </div>
+</form>

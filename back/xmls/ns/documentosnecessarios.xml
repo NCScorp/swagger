@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="documentosnecessarios" label="documentosnecessarios" orphan="false" project="ns">
+    <entity schema="ns" table="documentosnecessarios">
+        <fieldmodel name="id" datatype="guid" column="id" isid="true" unique="true"/>
+        <fieldmodel name="tipodocumento" datatype="guid" column="documento"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="documentonecessario" datatype="guid" column="documentonecessario" useCaseLink="ns\tiposdocumentos" entityJoinType="left"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    </entity>
+    <constructors>
+      <constructoritem>tipodocumento</constructoritem>
+      <constructoritem>tenant</constructoritem>
+      <constructoritem>id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Documentos Necessários">
+<!--        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="tipodocumento" required="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>-->
+        <fieldsbrowser>
+            <fieldbrowser alias="id" entitylink="id" visible="false" isid="true" unique="true"/>
+            <fieldbrowser entitylink="tipodocumento" visible="false"/>            
+            <fieldbrowser alias="Documento" entitylink="documentonecessario" fielddetaillookup="nome" visible="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Documento">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell colspan="6" name="documentonecessario" controltype="lookup" entitylink="documentonecessario" label="Documento" fieldaliaslookup="nome" fielddetaillookup="nome" fieldlookup="tipodocumento">
+                         <validates>
+                        <validate type="unique" displaytext="O campo documentos necessários não pode ter documentos repetidos."/>
+                         </validates>
+                      </cell>
+                  </row>
+              </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>DocumentoNecessarioNovo_v2</name>
+                <fromto valueapi="documento" valueentity="tipodocumento"/>
+                <fromto valueapi="documentonecessario" valueentity="documentonecessario"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>DocumentoNecessarioExcluir_v2</name>
+                <fromto valueapi="id" valueentity="id"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>
+

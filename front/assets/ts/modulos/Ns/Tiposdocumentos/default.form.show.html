@@ -1,0 +1,66 @@
+<div class="row  row-form-view">
+    <div class="col-sm-6">
+        <div class="form-group clearfix"><label class="control-label">Nome </label>
+            <p class="form-control-static"><span id="nome" class="form-control-static"
+                    ng-bind="($ctrl.entity.nome) || 'Não informado'"></span></p>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group clearfix"><label class="control-label">Documento pode ser emitido durante o atendimento
+            </label>
+            <p class="form-control-static"><span id="emissaonoprocesso"
+                    ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.emissaonoprocesso] || 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row " ng-if="$ctrl.entity.emissaonoprocesso">
+    <div class="col-sm-12">
+        <fieldset>
+            <legend>
+                Documentos necessários
+            </legend>
+            <div class="row  row-form-view">
+                <div class="col-sm-12">
+                    <div class="form-group clearfix">
+                        <object-list class="object-list" entities='$ctrl.entity.documentosnecessarios'
+                            service="NsDocumentosnecessarios"
+                            constructors="{ 'tipodocumento' : $ctrl.entity.tipodocumento,  }" autosaveEnabled=>
+                            <div>
+                                <div>
+                                    <table class="table table-striped table-hover table-condensed table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Nome
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="subentity in oblistctrl.entities"
+                                                ng-controller="ObjectListItemCtrl as itemctrl">
+                                                <td>
+                                                    {{ subentity.documentonecessario.nome }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot ng-if="oblistctrl.entities.length == 0">
+                                            <tr>
+                                                <td colspan="4" class="state-empty">
+                                                    <div class="empty-list">
+                                                        <p class="text-center"> Não existem itens para mostrar nesta
+                                                            lista. </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </object-list>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

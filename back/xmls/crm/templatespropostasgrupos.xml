@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="templatespropostasgrupos" label="templatespropostasgrupos" orphan="false" project="crm">
+  <entity schema="crm" table="templatespropostasgrupos">
+    <fieldmodel name="templatepropostagrupo" datatype="guid" isid="true" column="templatepropostagrupo"/>
+    <fieldmodel name="nome" datatype="string"  column="nome"/>
+    <fieldmodel name="cliente" datatype="guid"  column="cliente"/>
+    <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+    <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+    <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    <fieldmodel name="email" datatype="string"  column="email"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid"  column="grupoempresarial"/>
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+    <constructoritem>cliente</constructoritem>
+  </constructors>
+  <viewbrowser label="Grupos de templates" layout="list" paginate="false" target="window">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="templatepropostagrupo" isid="true" visible="false"/>
+      <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true"/>
+      <fieldbrowser entitylink="cliente" visible="false" cansearch="false"/>
+      <fieldbrowser alias="Email" entitylink="email" visible="true"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Grupo de template">
+      <layout>
+        <headerform>
+          <row>
+            <cell controltype="textedit" label="Nome" colspan="12" entitylink="nome">
+              <validates>
+                <validate type="vnull" displaytext="O campo nome não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell name="email" controltype="email" label="Email" colspan="12" entitylink="email">
+              <validates>
+                <validate type="maxlength" value="150" displaytext="O campo Email aceita no máximo 150 caracteres"/>
+              </validates>
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default" successMsg="O Grupo de Template foi criado com sucesso!" failMsg="Ocorreu um erro ao criar o Grupo de Template!">
+      <name>Insert</name>
+      <api>
+        <name>TemplatePropostaGrupoNovo_v3</name>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="cliente" valueentity="cliente"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="email" valueentity="email"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action> 
+    <action form="default" successMsg="O Grupo de Template foi editado com sucesso!" failMsg="Ocorreu um erro ao editar o Grupo de Template!">
+      <name>Update</name>
+      <api>
+        <name>TemplatePropostaGrupoAlterar_v3</name>
+        <fromto valueapi="templatepropostagrupo" valueentity="templatepropostagrupo"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="email" valueentity="email"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api>
+    </action>
+    <action successMsg="O Grupo de Template foi excluído com sucesso!" failMsg="Ocorreu um erro ao excluir o Grupo de Template!">
+      <name>Delete</name>
+      <api>
+        <name>TemplatePropostaGrupoExcluir_v2</name>
+        <fromto valueapi="templatepropostagrupo" valueentity="templatepropostagrupo"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api> 
+    </action>
+  </actions>
+</nsjusecase>

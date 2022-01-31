@@ -1,0 +1,120 @@
+<!-- <div class="content-loading"  ng-if="ctrl_tcs_cntrtnts_ctrl.isbusyContratantes()">
+    <div class="center-loading text-center">
+    <div class="onloading"></div>
+    Carregando...
+    </div>
+</div> -->
+
+<div ng-if="!ctrl_tcs_cntrtnts_ctrl.isbusyContratantes()">
+
+    <div class="row">
+        <div class="col-md-4">
+            <strong>Total a Faturar: <span ng-bind="(ctrl_tcs_cntrtnts_ctrl.totalAFaturar | currency : 'R$' : 2) || ' '"></span></strong>
+        </div>
+        <div class="col-md-4">
+            <strong>Total Faturado: <span ng-bind="(ctrl_tcs_cntrtnts_ctrl.totalFaturado | currency : 'R$' : 2) || ' '"></span></strong>
+        </div>
+        <div class="col-md-4">
+            <strong>Falta Faturar: <span ng-bind="(ctrl_tcs_cntrtnts_ctrl.totalNaoFaturado() | currency : 'R$' : 2) || ' '"></span></strong>
+        </div>
+    </div>
+
+    <div class="row mt-20" ng-repeat="contratante in ctrl_tcs_cntrtnts_ctrl.arrContratantesTela">
+        <div class="col-xs-12">
+            <div class="form-group" style="display:block">
+                <nsj-accordion init-open headline="Contratante: {{'{{contratante.nome}}'}}">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="container-table">
+                                <table class="nsj-table table no-cell-border">
+                                    <thead class="header">
+                                        <tr>
+                                            <th><span>Serviços</span></th>
+                                            <th class="text-right"><span>Valor a Receber</span></th> 
+                                        </tr>
+                                    </thead>
+                                    <tbody class="corpo">
+                                        <tr ng-if="contratante.servicos.length === 0">
+                                            <td colspan="2">Nenhum item nesta responsabilidade.</td>
+                                        </tr>
+                                        <tr ng-repeat="servico in contratante.servicos track by $index">
+                                            <td><span ng-bind="servico.nome || ' '"></span></td>
+                                            <td class="text-right"><span ng-bind="(servico.valor | currency : 'R$' : 2) || ' '"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <th><span>Total</span></th>
+                                            <th class="text-right"><span ng-bind="(contratante.totalservicos | currency : 'R$' : 2) || ' '"></span></th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-4" ng-if="contratante.servicos.length > 0">
+                            <div class="form-group" ng-if="!contratante.contratogerado">
+                                <label class="control-label" for="cliente">Forma de Pagamento</label>
+                                <nsj-lookup 
+                                    name="formaspagamentos" 
+                                    id-name="formapagamento" 
+                                    factory="NsFormaspagamentos"
+                                    ng-model="contratante.formapagamento"
+                                    max-label="1" 
+                                    constructor="{  }" 
+                                    config='{ "descricao":"Forma de Pagamento",  }' 
+                                    >
+                                </nsj-lookup>
+                                <!-- {# <div ng-messages="$ctrl.form.cliente.$error" ng-if="$ctrl.form.cliente.$dirty || $ctrl.form.$submitted">
+                                    <div class="alert alert-danger" role="alert" ng-message="required">
+                                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                                        <span class="sr-only">Erro:</span>
+                                        O campo cliente não pode ser vazio  
+                                    </div>
+                                </div> #} -->
+                            </div>
+                            <div class="form-group" ng-if="!contratante.contratogerado">
+                                <label class="control-label" for="cliente">Município de Prestação</label>
+                                <nsj-lookup 
+                                    name="municipios"
+                                    id-name="pessoamunicipio" 
+                                    factory="ServicosPessoasmunicipios"
+                                    ng-model="contratante.municipioprestacao" 
+                                    max-label="1" 
+                                    constructor="{ 'pessoa' : ctrl_tcs_cntrtnts_ctrl.entity.cliente.cliente, }"
+                                    config='{ "nome":"Município de Prestacao",  }' 
+                                    >
+                                </nsj-lookup>
+
+                                {# <div ng-messages="$ctrl.form.cliente.$error" ng-if="$ctrl.form.cliente.$dirty || $ctrl.form.$submitted">
+                                    <div class="alert alert-danger" role="alert" ng-message="required">
+                                        <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                                        <span class="sr-only">Erro:</span>
+                                        O campo cliente não pode ser vazio  
+                                    </div>
+                                </div> #}
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" name="submit"
+                                    class="btn btn-success"
+                                    ng-class="{loading: ctrl_tcs_cntrtnts_ctrl.isBusyBtn() && contratante.gerandocontrato}"
+                                    ng-if="!contratante.contratogerado"
+                                    ng-click="ctrl_tcs_cntrtnts_ctrl.gerarContrato(contratante)"
+                                    ng-disabled="ctrl_tcs_cntrtnts_ctrl.formularioInvalido(contratante) || (ctrl_tcs_cntrtnts_ctrl.isBusyBtn() && contratante.gerandocontrato) ">
+                                    <i class="fas fa-check" aria-hidden="true"></i> Gerar Contrato
+                                </button>
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" name="submit" class="btn btn-danger"
+                                    ng-class="{loading: ctrl_tcs_cntrtnts_ctrl.isBusyBtn() && contratante.excluindocontrato}"
+                                    ng-if="contratante.contratogerado"
+                                    ng-click="ctrl_tcs_cntrtnts_ctrl.excluirContrato(contratante)"
+                                    ng-disabled="ctrl_tcs_cntrtnts_ctrl.isBusyBtn() && contratante.excluindocontrato">
+                                    <i class="fas fa-times" aria-hidden="true"></i> Excluir Contrato
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </nsj-accordion>
+            </div>
+        </div>
+    </div>
+    
+</div>

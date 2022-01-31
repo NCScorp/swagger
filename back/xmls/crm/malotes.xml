@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="malotes" label="Malotes" project="crm">
+  <entity schema="crm" table="malotes">
+    <fieldmodel name="malote" datatype="guid" isid="true" column="malote"/>
+    <fieldmodel name="dtenvio" datatype="date"  column="dtenvio"/>
+    <fieldmodel name="dtresposta" datatype="datetime"  column="dtresposta"/>
+    <fieldmodel name="codigo" datatype="string"  column="codigo"/>
+    <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+    <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+    <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+    <fieldmodel name="requisitantecliente" datatype="guid" column="requisitantecliente" useCaseLink="ns\clientes" entityJoinType="left"/>
+    <fieldmodel name="requisitantefornecedor" datatype="guid" column="requisitantefornecedor" useCaseLink="ns\fornecedores"  entityJoinType="left"/>
+    <fieldmodel name="requisitantenome" datatype="string" column="requisitantenome"/>
+    <fieldmodel name="requisitantecargo" datatype="string" column="requisitantecargo"/>
+     <fieldmodel name="requisitanteobservacoes" datatype="string" column="requisitanteobservacoes"/>
+    <fieldmodel name="requisitantemidia" datatype="guid" column="requisitantemidia" useCaseLink="crm\midias"  entityJoinType="left"/>
+    <fieldmodel name="status" datatype="integer"  column="status">
+      <options type="json">
+        {"0":"Novo","1":"Enviado","2":"Aceito","3":"Aceito parcialmente","4":"Recusado","5":"Fechado"}
+      </options>
+    </fieldmodel>
+    <fieldmodel name="statusaprova" datatype="integer"  notMapped="true">
+      <options type="json">
+        {"2":"Aceito","3":"Aceito parcialmente","4":"Recusado"}
+      </options>
+    </fieldmodel>
+    <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    <fieldmodel name="documentos" column="malote" datatype="objectlist" useCaseLink="crm\malotesdocumentos" entityJoinType="left" />
+     <fieldmodel name="enviomodal" datatype="integer" column="enviomodal">
+      <options type="json">
+        {"0":"Em mãos","1":"Correio","2":"E-mail"}
+      </options>
+    </fieldmodel>
+    <fieldmodel name="enviocodigorastreio" column="enviocodigorastreio" datatype="string"/>
+    <fieldmodel name="enviodata" column="enviodata" datatype="date"/>
+    <fieldmodel name="enviorecebimentodata" column="enviorecebimentodata" datatype="date"/>
+    <fieldmodel name="enviorecebidopornome" column="enviorecebidopornome" datatype="string"/>
+    <fieldmodel name="enviorecebidoporcargo" column="enviorecebidoporcargo" datatype="string"/>
+    <fieldmodel name="id_grupoempresarial" column="grupoempresarial" datatype="guid"/>
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+
+  <viewbrowser label="Malotes" layout="list" paginate="true" target="builtin">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="malote" isid="true" visible="false"/>
+      <fieldbrowser alias="Código" entitylink="codigo" visible="true" />
+      <fieldbrowser alias="Envio" entitylink="dtenvio" visible="true" cansearch="false" />
+      <fieldbrowser alias="requisitantecliente" entitylink="requisitantecliente"
+                    visible="true" cansearch="false" fielddetaillookup="{'razaosocial': 'Requisitante'}" />
+      <!-- <fieldbrowser alias="requisitantefornecedor" entitylink="requisitantefornecedor" visible="true" cansearch="false" fielddetaillookup="{'razaosocial': 'Fornecedor'}" /> -->
+      <fieldbrowser alias="Situação" entitylink="status" visible="true" cansearch="false" indefaultorder="true"
+                    style="label"
+                    labelcolors = "{ 'light blue': 'status == 0','yellow': 'status == 1', 'green': 'status == 2',
+                                     'grey': 'status == 3', 'red': 'status == 4', 'grey': 'status == 5', }"
+      />
+                    <!-- grey, red, blue, yellow, green e light blue -->
+      <fieldbrowser alias="Data de resposta do requisitante" style="sup" entitylink="dtresposta" visible="true" cansearch="true" />
+    </fieldsbrowser>
+  </viewbrowser>
+
+  <forms>
+    <form name="default" label="Malote">
+        <layout>
+          <headerform>
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Informações"></caption>
+                    <row>
+                      <cell name="codigo" entitylink="codigo" label="Lote" controltype="textedit" colspan="6" />
+                      <cell name="dtenvio" readonly="true" entitylink="dtenvio" label="Envio" controltype="dateedit" colspan="6" />
+                    </row>
+                    <row>
+                      <cell name="requisitantecliente"    entitylink="requisitantecliente"    label="Requisitante Cliente"    controltype="lookup"   colspan="12" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="1"/>
+                      <!-- <cell name="requisitantefornecedor" entitylink="requisitantefornecedor" label="Requisitante Fornecedor" controltype="lookup"   colspan="6" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="1"/> -->
+                    </row>
+                  </groupbox>
+                </cell>
+              </row>
+              <row>
+                <cell>
+                  <groupbox>
+                    <caption text="Documentos"></caption>
+                    <row readonly="malote &amp;&amp; status != 0">
+                        <cell name="documentos" label="Documentos" colspan="12" controltype="objectlist" entitylink="documentos">
+                        </cell>
+                    </row>
+                  </groupbox>
+                </cell>
+              </row>
+          </headerform>
+        </layout>
+    </form>
+    <form name="visualizacao" label="Malote">
+        <layout>
+          <headerform>
+              <row>
+                  <cell>
+                    <groupbox>
+                      <caption text="Informações"></caption>
+                      <row>
+                        <cell name="codigo"                 entitylink="codigo"                 label="Lote"                    controltype="textedit" colspan="6" />
+                        <cell name="dtenvio"                entitylink="dtenvio"                label="Envio"                   controltype="dateedit" colspan="6" />
+                        <cell name="requisitantecliente"    entitylink="requisitantecliente"    label="Requisitante Cliente"    controltype="lookup"   colspan="6" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="1"/>
+                        <!-- <cell name="requisitantefornecedor" entitylink="requisitantefornecedor" label="Requisitante Fornecedor" controltype="lookup"   colspan="6" allowinsertlookup="true" fielddetaillookup="{'nomefantasia':'Nome Fantasia'}" amountfieldslookup="1"/> -->
+                      </row>
+                    </groupbox>
+                  </cell>
+                </row>
+                <row>
+            <cell visible="status!=0">
+                    <groupbox>
+                      <caption text="Envio"></caption>
+                       <row>
+                        <cell name="enviomodal" controltype="combobox" label="Modalidade" colspan="6" entitylink="enviomodal"/> 
+                        <cell name="enviocodigorastreio" visible="enviomodal==1" entitylink="enviocodigorastreio" colspan="6" label="Código de rastreio" controltype="textedit" />
+                        <cell name="enviodata" entitylink="enviodata" visible="enviomodal==1 || enviomodal==2" colspan="6" label="Data de envio" controltype="dateedit"/>
+                        <cell name="enviorecebimentodata" entitylink="enviorecebimentodata" visible="enviomodal==0" colspan="6" label="Data de recebimento"  controltype="dateedit"/>
+                        <!-- <cell name="enviorecebidopornome" entitylink="enviorecebidopornome"  visible="enviomodal==0" colspan="6" label="Nome do receptor" controltype="textedit"/>
+                        <cell name="enviorecebidoporcargo" entitylink="enviorecebidoporcargo"  visible="enviomodal==0" colspan="6" label="Cargo do receptor" controltype="textedit"/> -->
+                       </row>
+                    </groupbox>
+            </cell>
+            </row>
+                <row>
+            <cell visible="requisitantemidia">
+                    <groupbox>
+                      <caption text="Requisição"></caption>
+                      <row>
+                        <cell name="status" controltype="combobox" label="Situação" colspan="6" entitylink="status" readonly="true" />
+                        <cell name="requisitantenome"                 entitylink="requisitantenome"                 label="Nome"                    controltype="textedit" colspan="6" />
+                        <cell name="requisitantecargo"                entitylink="requisitantecargo"                label="Cargo"                   controltype="textedit" colspan="6" />
+                        <cell name="requisitantemidia"    entitylink="requisitantemidia"    label="Forma de contato"    controltype="lookup"   colspan="6" allowinsertlookup="true" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1"/>
+                        <cell name="updated_at" entitylink="updated_at" label="Data de resposta" controltype="dateedit"/>
+                         <cell name="requisitanteobservacoes"                entitylink="requisitanteobservacoes"                label="Observações"                   controltype="textedit" colspan="6" />
+                      </row>
+                    </groupbox>
+                  </cell>
+            </row>
+            <row>
+              <cell>
+                <groupbox>
+                  <caption text="Documentos"></caption>
+                  <row>
+                    <cell name="documentos" label="Documentos" colspan="12" controltype="objectlist" entitylink="documentos" />
+                  </row>
+                </groupbox>
+              </cell>
+            </row>
+          </headerform>
+        </layout>
+      </form>
+       <form name="aprovar" label="Salvar resposta requisitante">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="requisitantenome" entitylink="requisitantenome" colspan="4" label="Requisitante" controltype="textedit" >
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                     <cell name="requisitantecargo" entitylink="requisitantecargo" colspan="4" label="Cargo" controltype="textedit" >
+                     <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                     </cell>
+                    <cell name="statusaprova" entitylink="statusaprova" colspan="4" label="Situação" controltype="combobox">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                  </row>
+                   <row>
+                      <cell name="requisitantemidia" entitylink="requisitantemidia" colspan="12" label="Origem" controltype="lookup" fielddetaillookup="{'nome': 'Nome'}">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                      </row>
+                      <row>
+                       <cell name="requisitanteobservacoes" entitylink="requisitanteobservacoes" colspan="12" label="Observações" controltype="textarea">
+                      </cell>
+                      </row>
+              </headerform>
+          </layout>
+      </form>
+      <form name="enviar" label="Enviar">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="enviomodal" entitylink="enviomodal" colspan="6" label="Tipo de envio" controltype="combobox" >
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                     <cell name="enviocodigorastreio" visible="enviomodal==1" entitylink="enviocodigorastreio" colspan="6" label="Código de rastreio" controltype="textedit" >
+                     <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                     </cell>
+                     </row>
+                     <row>
+                    <cell name="enviodata" entitylink="enviodata" visible="enviomodal==1 || enviomodal==2" colspan="6" label="Data de envio" controltype="dateedit">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                      <cell name="enviorecebimentodata" entitylink="enviorecebimentodata" visible="enviomodal==0" colspan="6" label="Data de recebimento" controltype="dateedit">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                       </row>
+                       <row>
+                        <cell name="enviorecebidopornome" entitylink="enviorecebidopornome"  visible="enviomodal==0" colspan="6" label="Nome do receptor" controltype="textedit">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                       <cell name="enviorecebidoporcargo" entitylink="enviorecebidoporcargo"  visible="enviomodal==0" colspan="6" label="Cargo do receptor" controltype="textedit">
+                        <validates>
+                          <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                        </validates>
+                      </cell>
+                      </row>
+              </headerform>
+          </layout>
+      </form>
+      <form name="editarenvio" label="Editar Envio do Malote">
+        <layout>
+          <headerform>
+              <row>
+                <cell readonly="true" name="enviomodal" entitylink="enviomodal" colspan="6" label="Tipo de envio" controltype="combobox"/>
+                <cell name="enviocodigorastreio" visible="enviomodal==1" entitylink="enviocodigorastreio" colspan="6" label="Código de rastreio" controltype="textedit" >
+                <validates>
+                    <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                  </validates>
+                </cell>
+              </row>
+              <row>
+                <cell name="enviodata" entitylink="enviodata" visible="enviomodal==1 || enviomodal==2" colspan="6" label="Data de envio" controltype="dateedit">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                  </validates>
+                </cell>
+                <cell name="enviorecebimentodata" entitylink="enviorecebimentodata" visible="enviomodal==0" colspan="6" label="Data de recebimento" controltype="dateedit">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                  </validates>
+                </cell>
+              </row>
+              <row>
+                <cell name="enviorecebidopornome" entitylink="enviorecebidopornome"  visible="enviomodal==0" colspan="6" label="Nome do receptor" controltype="textedit">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                  </validates>
+                </cell>
+                <cell name="enviorecebidoporcargo" entitylink="enviorecebidoporcargo"  visible="enviomodal==0" colspan="6" label="Cargo do receptor" controltype="textedit">
+                  <validates>
+                    <validate type="vnull" displaytext="O campo não pode estar vazio."/>
+                  </validates>
+                </cell>
+              </row>
+          </headerform>
+        </layout>
+      </form>
+  </forms>
+  <actions>
+    <action form="visualizacao">
+      <name>retrieve</name>
+    </action>
+    <action form="default" successMsg="O Malote foi criado com sucesso!" failMsg="Ocorreu um erro ao criar o Malote!">
+        <name>Insert</name>
+        <api>
+            <name>malotenovo_v2</name>
+            <fromto valueapi="codigo" valueentity="codigo"/>
+            <fromto valueapi="requisitantecliente" valueentity="requisitantecliente" />
+            <fromto valueapi="requisitantefornecedor" valueentity="requisitantefornecedor" />
+            <fromto valueapi="created_by" valueentity="logged_user" />
+            <fromto valueapi="tenant" valueentity="tenant" />
+            <fromto valueapi="documentos" valueentity="documentos" />
+            <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial" />
+        </api>
+    </action>
+    <action form="default" successMsg="O Malote foi editado com sucesso!" failMsg="Ocorreu um erro ao editar o Malote!">
+      <name>Update</name>
+      <api>
+          <name>malotealterar_v2</name>
+          <fromto valueapi="malote" valueentity="malote"/>
+          <fromto valueapi="codigo" valueentity="codigo"/>
+          <fromto valueapi="requisitantecliente" valueentity="requisitantecliente" />
+          <fromto valueapi="requisitantefornecedor" valueentity="requisitantefornecedor" />
+          <fromto valueapi="updated_by" valueentity="logged_user" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+          <fromto valueapi="documentos" valueentity="documentos" />
+          <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+    <action form="aprovar" appendto="view" label="Salvar resposta requisitante" method="post" sucessMsg="A Resposta do Requisitante foi salva com sucesso!" failMsg="Ocorreu um erro ao salvar a Resposta do Requisitante!">
+      <name>MaloteAprova</name>
+      <api>
+          <name>maloteaprova_v2</name>
+          <fromto valueapi="malote" valueentity="malote" />
+          <fromto valueapi="requisitantenome" valueentity="requisitantenome" />
+          <fromto valueapi="requisitantecargo" valueentity="requisitantecargo" />
+          <fromto valueapi="requisitantemidia" valueentity="requisitantemidia" />
+          <fromto valueapi="requisitanteobservacoes" valueentity="requisitanteobservacoes" />
+          <fromto valueapi="status" valueentity="statusaprova" />
+          <fromto valueapi="updated_by" valueentity="logged_user" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+          <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+    <action form="enviar" appendto="view" label="Enviar" method="post" sucessMsg="O Malote foi enviado com sucesso!" failMsg="Ocorreu um erro ao enviar o Malote!">
+      <name>MaloteEnviar</name>
+      <api>
+          <name>maloteenviar_v2</name>
+          <fromto valueapi="malote" valueentity="malote" />
+          <fromto valueapi="enviomodal" valueentity="enviomodal" />
+          <fromto valueapi="enviocodigorastreio" valueentity="enviocodigorastreio" />
+          <fromto valueapi="enviodata" valueentity="enviodata" />
+          <fromto valueapi="enviorecebimentodata" valueentity="enviorecebimentodata" />
+          <fromto valueapi="enviorecebidopornome" valueentity="enviorecebidopornome" />
+          <fromto valueapi="enviorecebidoporcargo" valueentity="enviorecebidoporcargo" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+          <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+    <action label="Cancelar envio" appendto="view" sucessMsg="O envio do Malote foi cancelado com sucesso!" failMsg="Ocorreu um erro ao cancelar o envio do Malote!">
+      <confirm>
+        <title>Cancelar o envio</title>
+        <message>Tem certeza que deseja cancelar o envio?</message>
+        <confirmBtn>Sim</confirmBtn>
+            <cancelBtn>Não</cancelBtn>
+      </confirm>
+        <name>malotecancelaenvio</name>
+        <api>
+            <name>malotecancelaenvio_v2</name>
+            <fromto valueapi="malote" valueentity="malote" />
+            <fromto valueapi="tenant" valueentity="tenant" />
+            <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial" />
+        </api>
+    </action>
+    <action form="editarenvio" appendto="view" label="Editar Envio do Malote" method="post" sucessMsg="O envio do Malote foi editado com sucesso!" failMsg="Ocorreu um erro ao editar o envio do Malote!">
+      <name>MaloteEditarEnvio</name>
+      <api>
+          <name>maloteeditarenvio_v2</name>
+          <fromto valueapi="malote" valueentity="malote" />
+          <fromto valueapi="enviomodal" valueentity="enviomodal" />
+          <fromto valueapi="enviocodigorastreio" valueentity="enviocodigorastreio" />
+          <fromto valueapi="enviodata" valueentity="enviodata" />
+          <fromto valueapi="enviorecebimentodata" valueentity="enviorecebimentodata" />
+          <fromto valueapi="enviorecebidopornome" valueentity="enviorecebidopornome" />
+          <fromto valueapi="enviorecebidoporcargo" valueentity="enviorecebidoporcargo" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+          <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

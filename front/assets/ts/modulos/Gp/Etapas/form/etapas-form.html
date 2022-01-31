@@ -1,0 +1,34 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+  <div class="row ">
+    <div class="col-sm-6">
+      <div class="form-group"><label class="control-label" for="nomeetapa">Nome da Etapa</label>
+        <input type='text' class="form-control" id="nomeetapa" name="nomeetapa" maxlength="30" ng-model="$ctrl.entity.nome"
+          ng-disabled="$ctrl.entity.$$__submitting" ng-required="($ctrl.entity.$$__submitting) !== true" />
+        <div ng-messages="$ctrl.form.nomeetapa.$error" ng-if="$ctrl.form.nomeetapa.$dirty || $ctrl.form.$submitted">
+          <div class="alert alert-danger" role="alert" ng-message="required"><span class="fa fa-exclamation-circle"
+              aria-hidden="true"></span><span class="sr-only">Erro:</span>
+            O campo Nome da Etapa não pode ser vazio.
+          </div>
+          <div class="alert alert-danger" role="alert" ng-message="maxlength"><span class="fa fa-exclamation-circle"
+              aria-hidden="true"></span><span class="sr-only">Erro:</span>
+            O campo Nome da Etapa não deve exceder 30 caracteres.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="form-group"><label class="control-label" for="tipo">Tipo</label>
+        <div class="flex">
+          <div class="padding-right-20">
+            <input type="radio" id="paralela" name="tipo" ng-model="$ctrl.entity.tipo" ng-checked="$ctrl.entity.tipo == 0" value="0" ng-disabled="$ctrl.entity.$$__submitting" />
+            <label for="paralela"> Paralela</label>
+          </div>
+          <div>
+            <input type="radio" id="sequencial" name="tipo" ng-model="$ctrl.entity.tipo" ng-checked="$ctrl.entity.tipo == 1" value="1" ng-disabled="$ctrl.entity.$$__submitting" />
+            <label for="sequencial"> Sequencial</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,26 @@
+<div ng-class="{'row  row-form-view': row.length > 1}" ng-repeat="row in $ctrl.camposcustomizados">
+  <div ng-class="campocustomizado.classe" ng-repeat="campocustomizado in row">
+    <div class="row " ng-if="campocustomizado.tipo == 'OB'  && $eval(campocustomizado.visible)" >
+      <div class="col-sm-12" style="margin-left:-15px">
+        <fieldset>
+                          <div class="row  row-form-view" ng-repeat="linha in campocustomizado.linha">
+            <div  ng-class="atributo.classe" ng-repeat="atributo in linha">
+              <div class="form-group clearfix">
+                <label class="control-label">{{atributo.label}}</label>
+                <p class="form-control-static" >
+                  <span class="form-control-static" ng-bind="($ctrl.entity.camposcustomizados[campocustomizado.campocustomizado][atributo.nome]) || 'Não informado'"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="form-group clearfix" ng-if="campocustomizado.tipo != 'OB'  && $eval(campocustomizado.visible)">
+      <label class="control-label">{{campocustomizado.label}}</label>
+      <p class="form-control-static" >
+        <span class="form-control-static" ng-bind="($ctrl.entity.camposcustomizados[campocustomizado.campocustomizado][atributo.nome]) || 'Não informado'"></span>
+      </p>
+    </div>
+  </div>
+</div>

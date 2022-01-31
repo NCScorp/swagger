@@ -1,0 +1,67 @@
+<div class="row  row-form-view">
+    <div class="col-sm-4">
+        <div class="form-group clearfix"><label class="control-label">Nome </label>
+            <p class="form-control-static"><span id="codigo" class="form-control-static"
+                    ng-bind="($ctrl.entity.codigo) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-4">
+        <div class="form-group clearfix"><label class="control-label">Descrição </label>
+            <p class="form-control-static"><span id="descricao" class="form-control-static"
+                    ng-bind="$ctrl.entity.descricao|| 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix">
+            <object-list class="object-list" entities='$ctrl.entity.equipetecnicotecnico'
+                service="equipesTecnicosService"
+                constructors="{ 'equipetecnico' : $ctrl.entity.equipetecnico,  }" autosaveEnabled=>
+                <div>
+                    <div>
+                        <table class="table table-bordered" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Responsável
+                                    </th>
+                                    <th>
+                                        Nome
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="subentity in oblistctrl.entities"
+                                    ng-controller="ObjectListItemCtrl as itemctrl">
+                                    <td> {{ subentity.responsavel ? 'Sim' : 'Não'  }} </td>
+                                    <td><a href ui-sref='tecnicos_show({ tecnico: subentity.tecnico.tecnico })'>
+                                            {{ subentity.tecnico.nome }}
+                                        </a></td>
+                                </tr>
+                            </tbody>
+                            <tfoot ng-if="oblistctrl.entities.length == 0">
+                                <tr>
+                                    <td colspan="6" class="state-empty">
+                                        <div class="empty-list">
+                                            <p class="text-center"> Não existem itens para mostrar nesta lista. </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </object-list>
+            <div ng-if="$ctrl.form.$dirty || $ctrl.form.$submitted">
+                <div class="alert alert-danger" role="alert"
+                    ng-if="!$ctrl.entity.equipetecnicotecnico || $ctrl.entity.equipetecnicotecnico.length < 2"><span
+                        class="fa fa-exclamation-circle" aria-hidden="true"></span><span class="sr-only">Erro:</span>
+                    A equipe deve ter no mínimo 2 Técnicos.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

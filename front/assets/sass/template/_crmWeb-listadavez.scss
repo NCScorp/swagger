@@ -1,0 +1,419 @@
+// Lista da vez: Tela principal - Header
+.crm-listadavez-header {
+    min-height: 40px;
+
+    .nsj-breadcrumb-back {
+        display: inline-block;
+    }
+
+    .acoes {
+        .btn-acao {
+            font-size: 14px;
+            color: #666;
+            padding: 8px 35px;
+            margin-right: 0;
+
+            &.btn-acao-regra-editar {
+                padding-left: 15px;
+
+                .icone {
+                    margin-right: 15px;
+                }
+            }
+
+            &.btn-acao-regra-salvar {
+                background: #54a845;
+                color: white;
+
+            }
+
+            .texto {
+                margin-left: 8px;
+            }
+        }
+    }
+}
+
+// Lista da vez: Tela inicial das listas de vendedores e configurações
+.crm-listadavez-container {
+    .abas-container {
+        // Header das tabs
+        .nav.nav-tabs {
+            .nav-item {
+                padding: 10px 40px;
+                font-size: 18px;
+                cursor: pointer;
+
+                &.ativa {
+                    border-top: 3px solid black;
+                    color: #138abb;
+                    border-left: 1px solid #ddd;
+                    border-right: 1px solid #ddd;
+                    padding-top: 8px; // Para borda não empurrar para baixo
+                }
+            }
+        }
+
+        // Conteúdo das tabs
+        .tab-conteudo {
+            // Listagem de listas de vendedores 
+            .aba-listas {
+                table.lst-listas {
+                    thead {
+                        background: #eaeaea;
+            
+                        tr {
+                            font-size: 14px;
+                            
+                            th {
+                                border: none !important;
+                                padding: 10px 8px;
+
+                                &.nome {
+                                    padding-left: 20px !important;
+                                }
+
+                                &.qtd {
+                                    width: 250px;
+                                    text-align: center;
+                                }
+
+                                &.data-criacao, &.ultima-atualizacao {
+                                    width: 200px;
+                                }
+                            }
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            border-bottom: 1px solid #ddd;
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+
+                            td {
+                                border: none !important;
+                                padding: 15px 8px;
+
+                                &.nome {
+                                    padding-left: 20px;
+                                }
+
+                                &.qtd {
+                                    text-align: center;
+                                    max-width: 250px;
+                                    width: 250px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .sem-dados {
+                    text-align: center;
+                    padding: 0 15px;
+                    font-size: 12px;
+                    font-weight: 600;
+
+                    .texto {
+                        background: #ddd;
+                        padding: 30px 0;
+                    }
+                }
+            }
+
+            // Regras da lista da ez
+            .aba-regras {
+                .listadavez-regras-container {
+                    margin-bottom: 100px;
+                    .barra-ferramentas {
+                        padding: 10px 0;
+                        border-bottom: 1px solid #ddd;
+    
+                        // Checkbox de marcar/desmarcar todos
+                        .check-all-container {
+                            display: inline-block;
+                            padding: 0 17px;
+                            border-right: 1px solid #ccc;
+    
+                            .custom-checkbox {
+                                margin-bottom: 0;
+                            }
+                        }
+    
+                        // Apresentação do total de itens selecionados
+                        .total-selecionados-container {
+                            display: inline-block;
+                            padding: 0 17px;
+    
+                            .valor {
+                                font-weight: 600;
+                            }
+                        }
+    
+                        // Botão de excluir em massa
+                        .excluir-em-massa-container {
+                            display: inline-block;
+    
+                            .btn-excluir {
+                                cursor: pointer;
+                                color: #6e5a69;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Lista da vez: Modal da lista de vendedores
+.listadavez-listas-modal-container {
+    .modal-header {
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .titulo {
+                flex: 1;
+
+                .modal-title, .modal-title-input {
+                    font-weight: 600;
+                }
+
+                .modal-title-input {
+                    width: 100%;
+                    font-size: 24px;
+                    border: 1px solid rgba(90, 90, 90, 0.5);
+                    padding: 4px 8px;
+                }
+            }
+            .btn-fechar {
+                font-size: 32px;
+                margin-left: 15px;
+                color: #999;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .body-tela {
+        height: 500px;
+
+        .list-painel {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 5px;
+            align-items: center;
+
+            .check-all-container {
+                display: flex;
+                align-items: center;
+                flex: 1;
+
+                .div-check-container {
+                    display: inline-block;
+                    padding: 0 15px;
+                }
+
+                .div-select-container {
+                    display: inline-block;
+                    padding-left: 20px;
+                    border-left: 1px solid #e5e5e5;
+
+                    .qtd-selecionado {
+                        font-weight: 600;
+                    }
+                }
+
+                .div-actions-container{
+                    display: inline-block;
+                    margin-left: 20px;
+
+                    button.btn {
+                        background: transparent;
+                        padding: 0 3px;
+                        font-size: 18px;
+                    }
+                }
+            }
+            .btn-add-container {
+                padding-right: 10px;
+                
+                button.btn {
+                    background: transparent;
+                    padding: 0 3px;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .list {
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 50px);
+            overflow-y: auto;
+
+            &.visualizar {
+                height: 100%;
+            }
+
+            .tabela-container {
+                table.lst-vendedores {
+                    margin-bottom: 0;
+
+                    thead {
+                        background: #eaeaea;
+            
+                        tr {
+                            font-size: 14px;
+                            
+                            th {
+                                border: none !important;
+                                padding: 10px 8px;
+
+                                &.selecao {
+                                    width: 50px;
+                                }
+
+                                &.posicao {
+                                    width: 100px;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+
+                    tbody {
+                        tr {
+                            td {
+                                border: none !important;
+                                padding: 15px 8px;
+
+                                &.selecao {
+                                    text-align: center;
+                                    padding-left: 19px;
+                                    padding-top: 12px;
+                                }
+
+                                &.posicao {
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .add-vendedor-container {
+                border: 1px solid #e5e5e5;
+                border-radius: 4px;
+                margin: 20px;
+                margin-top: 20px;
+                height: 370x;
+
+                .add-vendedor-header {
+                    padding: 10px 10px;
+
+                    .input-busca-container {
+                        display: flex;
+                        padding: 5px;
+                        border: 1px solid #e5e5e5;
+                        border-radius: 4px;
+
+                        .icone-container {
+                            color: #c4c4c4;
+                            padding: 1px 5px;
+                        }
+
+                        input {
+                            border: none !important;
+                            flex: 1;
+
+                            &:focus {
+                                outline: none;
+                            }
+                        }
+                    }
+                }
+
+                .add-vendedor-body {
+                    padding: 0 10px;
+                    height: 250px;
+                    overflow-y: auto;
+
+                    .add-vendedor-lista {
+                        overflow-y: auto;
+
+                        .add-vendedor-lista-item {
+                            display: flex;
+                            align-items: center;
+                            border-bottom: 1px solid #e5e5e5;
+                            padding: 10px 20px;
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                            input.selecao {
+                                margin: 0;
+                            }
+
+                            .vendedor-nome {
+                                margin-left: 10px;
+                                font-size: 12px;
+                                font-weight: 600;
+                            }
+                        }
+                    }
+                }
+
+                .add-vendedor-footer {
+                    padding: 15px 10px;
+                    text-align: right;
+                    border-top: 1px solid #e5e5e5;
+
+                    .btn-cancelar {
+                        font-size: 14px;
+                    }
+
+                    .btn-adicionar {
+                        background: #54a845;
+                        border: none;
+
+                        &:hover {
+                            background: #54a845;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .modal-footer {
+        .btn-cancelar {
+            font-size: 14px;
+        }
+
+        .btn-salvar {
+            background: #54a845;
+            border: none;
+
+            &:hover {
+                background: #54a845;
+            }
+        }
+
+        .btn-editar {
+            background: transparent;
+            border: 1px solid rgba(90, 90, 90, 0.5);
+            padding-right: 20px;
+
+            .icone-container {
+                margin-right: 10px;
+            }
+        }
+    }
+}

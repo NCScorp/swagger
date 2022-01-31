@@ -1,0 +1,38 @@
+
+<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+        <h3 class="modal-title" id="modal-title">Editar Produto</h3>
+        <span ng-if='crm_tmpltscmpscsfmls_frm_dflt_cntrllr.action == "insert"'>
+        <div >
+
+        
+        
+        
+        
+                
+        
+     
+    </div>
+        </span>
+    </div>
+        <form nsg-focus name="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.form" novalidate="novalidate" role="form"  ng-submit="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.submit()">
+    <div class="modal-body" id="modal-body">
+                            <crm-templatescomposicoesfamilias-default entity="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.entity" form="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.form" action="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.action" constructors="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.constructors" busy="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.busy"></crm-templatescomposicoesfamilias-default>
+                    </div>
+        <div class="modal-footer">
+        <div class="pull-left">
+            
+            <button type="submit" name="submit" ng-disabled="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.form.$pristine || crm_tmpltscmpscsfmls_frm_dflt_cntrllr.entity.$$__submitting" class="btn btn-warning" ng-class="{loading:crm_tmpltscmpscsfmls_frm_dflt_cntrllr.entity.$$__submitting}">
+                 Adicionar
+            </button>
+            <a class="btn btn-sm" ng-click="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.close()"><i class="fa fa-times" aria-hidden="true"></i> Fechar</a>
+            
+        </div>
+    </div>
+            </form>
+        <div class="content-loading"  ng-if="crm_tmpltscmpscsfmls_frm_dflt_cntrllr.busy">
+        <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+        </div>
+    </div>

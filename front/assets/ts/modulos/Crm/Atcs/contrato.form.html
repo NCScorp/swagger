@@ -1,0 +1,29 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="formapagamento">Forma de pagamento</label>
+                <nsj-lookup name="formapagamento" id-name="formapagamento" factory="NsFormaspagamentos"
+                    ng-model="$ctrl.entity.formapagamento" max-label="1" constructor="{  }"
+                    config='{ "descricao":"Descrição",  }' disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="contratante"></label><input type='text'
+                    class="form-control" id="contratante" name="contratante" ng-model="$ctrl.entity.contratante"
+                    ng-disabled="$ctrl.entity.$$__submitting" /></div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="municipioprestacao">Município de prestação</label>
+                <nsj-lookup name="municipioprestacao" id-name="pessoamunicipio" factory="ServicosPessoasmunicipios"
+                    ng-model="$ctrl.entity.municipioprestacao" max-label="1"
+                    constructor="{ 'pessoa' : $ctrl.entity.cliente,  }" config='{ "nome":"Nome",  }'
+                    disabled="$ctrl.entity.$$__submitting"></nsj-lookup>
+            </div>
+        </div>
+    </div>
+</form>

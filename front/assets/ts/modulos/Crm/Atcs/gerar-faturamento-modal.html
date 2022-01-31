@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Gerar Faturamento</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+    
+    <div class="container-fluid" style="padding-left: 0; padding-right: 0;">
+        <div class="row">
+
+            <div class="col-sm-12">
+                
+                <div class="alert-modal nsj-alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <strong>Atenção!</strong> <br> Após gerar o faturamento da Taxa Administrativa, só será possível editar suas informações se o faturamento for cancelado e gerado novamente.
+                </div>
+
+            </div>
+
+            <div class="col-sm-12">
+                <p>
+                    Ao gerar o faturamento da taxa administrativa, um contrato de recebimento será gerado no Finanças SQL para que seja processado e seu título a receber e RPS sejam criados.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+
+    <div class="pull-right">
+        <button
+            type="button" class="btn btn-default btn-delete btn-geral" ng-click="mdl_grrftrmnt_cntrllr.close()">
+            <i class="fa fa-ban"></i>
+            Não gerar faturamento
+        </button>
+
+        <button
+            type="button" name="submit" class="btn btn-warning btn-save btn-geral"
+            ng-click="mdl_grrftrmnt_cntrllr.gerarFaturamento()" style="margin-right: 0px;">
+            <i class="fa fa-check"></i>
+            Gerar faturamento
+        </button>
+        
+    </div>
+</div>
+
+<div class="content-loading loading-absolute" ng-if="mdl_grrftrmnt_cntrllr.busy" style="padding-top: 130px;">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>

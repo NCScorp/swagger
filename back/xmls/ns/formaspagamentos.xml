@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="formaspagamentos" label="formaspagamentos" project="ns" >
+    <entity schema="ns" table="formaspagamentos">
+        <fieldmodel name="formapagamento" datatype="guid" isid="true" column="formapagamento"/>
+        <fieldmodel name="codigo" datatype="string"  column="codigo"/>
+        <fieldmodel name="descricao" datatype="string"  column="descricao"/>
+        <fieldmodel name="bloqueada" datatype="string"  column="bloqueada"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem filter="true" filtercondition="eq" filtervalue="false">bloqueada</constructoritem>
+    </constructors>
+    <viewbrowser label="Bancos" layout="list" paginate="true" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="formapagamento" isid="true" visible="false"/>
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true"/>
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="false"/>
+            <fieldbrowser entitylink="bloqueada" visible="false"/>
+        </fieldsbrowser>
+        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="bloqueada">
+                    <conditions>
+                        <condition type="eq" />
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+    </viewbrowser>
+    <forms>
+    </forms>
+</nsjusecase>

@@ -1,0 +1,52 @@
+<div class="modal-conta-emprestimo">
+  <div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Conta Empréstimo</h3>
+  </div>
+  <div class="modal-body form-loading-layout-wrapper-body">
+    <div class="tela-container">
+      <p>
+        Por favor, informe a conta de empréstimo do funcionário que irá realizar
+        o pagamente deste serviço junto ao prestador.
+      </p>
+      <div>
+        <label for="conta_emprestimo">Conta Empréstimo</label>
+        <nsj-lookup
+          id="conta_emprestimo"
+          name="conta_emprestimo"
+          id-name="conta_emprestimo"
+          factory="FinancasContas"
+          ng-model="crm_atcs_cnt_mprstm_ctrl.contaEmprestimo"
+          max-label="2"
+          filter="{emprestimo:1}"
+          config='{ "nome":""}'
+        >
+        </nsj-lookup>
+      </div>
+    </div>
+    <div class="content-loading" ng-if="crm_atcs_cnt_mprstm_ctrl.isBusy()">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a
+      class="fechar btn btn-md"
+      ng-click="crm_atcs_cnt_mprstm_ctrl.close()"
+      ng-disabled="crm_atcs_cnt_mprstm_ctrl.isBusy()"
+    >
+      Cancelar
+    </a>
+    <button
+      type="button"
+      class="btn btn-md btn-warning"
+      ng-disabled="crm_atcs_cnt_mprstm_ctrl.isBusy()"
+      ng-click="crm_atcs_cnt_mprstm_ctrl.salvarContaEmprestimo()"
+      ng-class="{loading: crm_atcs_cnt_mprstm_ctrl.isBusy()}"
+    >
+      <i class="fas fa-check"></i>
+      <span class="texto">Salvar</span>
+    </button>
+  </div>
+</div>

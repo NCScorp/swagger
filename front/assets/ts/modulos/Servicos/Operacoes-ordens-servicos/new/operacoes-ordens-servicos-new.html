@@ -1,0 +1,51 @@
+<div class="height-full layout-list">
+  <form
+    nsj-focus
+    name="prcsrdnssrvcs_frm_nw_cntrllr.form"
+    novalidate="novalidate"
+    ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : prcsrdnssrvcs_frm_nw_cntrllr.busy }"
+    role="form"
+    ng-submit="prcsrdnssrvcs_frm_nw_cntrllr.submit()"
+    class="height-full"
+  >
+    <nsj-headline headline-title="" headline-sub="true">
+      <ul class="list-unstyled list-inline pull-right">
+        <li>
+          <div class="form-group pull-right">
+            <button
+              type="button"
+              ng-click="prcsrdnssrvcs_frm_nw_cntrllr.submit()"
+              ng-class="{loading:prcsrdnssrvcs_frm_nw_cntrllr.entity.$$__submitting}"
+              ng-disabled="prcsrdnssrvcs_frm_nw_cntrllr.entity.$$__submitting || prcsrdnssrvcs_frm_nw_cntrllr.form.$pristine"
+              class="btn btn-sm btn-warning btn-save btn-geral"
+            >
+              <i class="fa fa-check"></i> Salvar
+            </button>
+
+            <a
+              class="btn btn-sm btn-default"
+              ui-sref="operacoesordensservicos({})"
+              ><i class="fa fa-times" aria-hidden="true"></i> Descartar</a
+            >
+          </div>
+        </li>
+      </ul>
+    </nsj-headline>
+    <div class="nsj-form padding-content">
+      <operacoes-ordens-servicos-form
+        entity="prcsrdnssrvcs_frm_nw_cntrllr.entity"
+        form="prcsrdnssrvcs_frm_nw_cntrllr.form"
+        busy="prcsrdnssrvcs_frm_nw_cntrllr.busy"
+        action="prcsrdnssrvcs_frm_nw_cntrllr.action"
+        constructors="prcsrdnssrvcs_frm_nw_cntrllr.constructors"
+      >
+      </operacoes-ordens-servicos-form>
+    </div>
+    <div class="content-loading" ng-if="prcsrdnssrvcs_frm_nw_cntrllr.busy">
+      <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+      </div>
+    </div>
+  </form>
+</div>

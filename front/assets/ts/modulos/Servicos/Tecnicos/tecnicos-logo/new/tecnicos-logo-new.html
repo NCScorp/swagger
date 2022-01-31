@@ -1,0 +1,37 @@
+<div class="height-full layout-table">
+    <form nsj-focus name="tcncs_tcncslgs_frm_nw_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'table' === 'table','nsj-loading-page' : tcncs_tcncslgs_frm_nw_cntrllr.busy }"
+        role="form" ng-submit="tcncs_tcncslgs_frm_nw_cntrllr.submit()" class="height-full">
+        <nsj-headline headline-title="" headline-sub="true">
+            <div class="pull-right">
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <tecnicos-logo-form entity="tcncs_tcncslgs_frm_nw_cntrllr.entity"
+                form="tcncs_tcncslgs_frm_nw_cntrllr.form" busy="tcncs_tcncslgs_frm_nw_cntrllr.busy"
+                action="tcncs_tcncslgs_frm_nw_cntrllr.action" constructors="tcncs_tcncslgs_frm_nw_cntrllr.constructors">
+            </tecnicos-logo-form>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+                    <div class="form-group pull-left">
+                        <button type="button" ng-click="tcncs_tcncslgs_frm_nw_cntrllr.submit()"
+                            ng-class="{loading:tcncs_tcncslgs_frm_nw_cntrllr.entity.$$__submitting}"
+                            ng-disabled="tcncs_tcncslgs_frm_nw_cntrllr.entity.$$__submitting || tcncs_tcncslgs_frm_nw_cntrllr.form.$pristine"
+                            class="btn btn-sm btn-warning btn-save btn-geral">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+                        <a class="btn btn-sm"
+                            ui-sref="tecnicos_tecnicoslogos({'tecnico' : tcncs_tcncslgs_frm_nw_cntrllr.constructors.tecnico,})"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="tcncs_tcncslgs_frm_nw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,54 @@
+<div class="height-full layout-list">
+  <div class="passotres-form-container">
+    <form
+      name="$ctrl.form"
+      novalidate="novalidate"
+      role="form"
+      class="height-full"
+    >
+      <!--Linha 1-->
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group lookup-table-container">
+            <div class="formulario-lookup-container">
+              <label class="control-label" for="formulario">Formulário</label>
+
+              <nsj-lookup
+                name="formulario"
+                id-name="formulario"
+                factory="formulariosService"
+                ng-model="$ctrl.formulario"
+                constructor="{  }"
+                config=' { "nome":"Nome" }'
+                ns-required="true"
+                placeholder="Selecione para adicionar um formulário..."
+              >
+              </nsj-lookup>
+            </div>
+
+            <nsj-table
+              fields-config="$ctrl.fieldsConfig"
+              fields="$ctrl.entity.formularioList"
+              class="passotres-nsjtable"
+            >
+              <nsj-actions slot="actions" action-model="$parent.entity">
+                <nsj-action
+                  ng-click="$ctrl.removeFormulario($parent.entity)"
+                  disabled="false"
+                  icon="fas fa-trash"
+                  tooltip="Excluir"
+                ></nsj-action>
+              </nsj-actions>
+              <div
+                ng-if="$ctrl.entity.formularioList.length === 0"
+                class="clearfix"
+              >
+                <p class="text-center nfound">Nenhum formulário adicionado.</p>
+              </div>
+            </nsj-table>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

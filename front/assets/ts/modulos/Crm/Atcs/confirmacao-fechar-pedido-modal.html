@@ -1,0 +1,57 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+        ng-click="cnfrmc_fchr_pdd_mdl_cntrllr.close()"><span aria-hidden="true">&times;</span></button>
+    <h3 ng-if="cnfrmc_fchr_pdd_mdl_cntrllr.isFecharPedido()" class="modal-title" id="modal-title">Fechar Pedido</h3>
+    <h3 ng-if="cnfrmc_fchr_pdd_mdl_cntrllr.isCancelarAtendimento()" class="modal-title" id="modal-title">Cancelar Atendimento</h3>
+</div>
+
+
+
+<div class="modal-body" id="modal-body"> <!-- classe mdl-bd-overflow-scroll removida para diminuir tamanho da modal-->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <p ng-if="cnfrmc_fchr_pdd_mdl_cntrllr.isFecharPedido()">
+                    Ao realizar o fechamento do pedido, 
+                    todos os itens e serviços começarão 
+                    a ser processados e você não poderá 
+                    adicionar mais nenhum item ou serviço ao pedido.
+                    Deseja prosseguir com o fechamento do pedido?
+                </p>
+                <p ng-if="cnfrmc_fchr_pdd_mdl_cntrllr.isCancelarAtendimento()">
+                    Você está prestes a cancelar este atendimento. 
+                    Lembre-se que após o atendimento ser cancelado, 
+                    não será possível realizar quaisquer ações referentes 
+                    a ele. Entretanto, o atendimento permanecerá 
+                    visível e disponível para consulta.
+                </p>
+                <p ng-if="cnfrmc_fchr_pdd_mdl_cntrllr.isCancelarAtendimento()">
+                    Com o cancelamento do atendimento, seu projeto com suas 
+                    tarefas também serão cancelados caso não tenha nenhuma 
+                    tarefa em execução e/ou ordens de serviços geradas.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+
+    <div class="pull-right">
+        <a class="" ng-click="cnfrmc_fchr_pdd_mdl_cntrllr.close()" style="cursor: pointer;">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            Cancelar</a>
+
+        <button ng-if="cnfrmc_fchr_pdd_mdl_cntrllr.isFecharPedido()"
+            type="button" name="submit" class="btn btn-warning"
+            ng-click="cnfrmc_fchr_pdd_mdl_cntrllr.submit()">
+            <i class="fa fa-lock" aria-hidden="true"></i> Fechar Pedido
+        </button>
+        <button ng-if="cnfrmc_fchr_pdd_mdl_cntrllr.isCancelarAtendimento()"
+            type="button" name="submit" class="btn btn-danger"
+            ng-click="cnfrmc_fchr_pdd_mdl_cntrllr.submit()">
+            <i class="fa fa-ban" aria-hidden="true"></i> Cancelar Atendimento
+        </button>
+        
+    </div>
+</div>

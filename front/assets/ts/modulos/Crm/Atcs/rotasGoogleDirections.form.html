@@ -1,0 +1,39 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="enderecoorigem">Endereco Origem</label><input
+                    type='text' class="form-control" id="enderecoorigem" name="enderecoorigem"
+                    ng-model="$ctrl.entity.enderecoorigem" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.enderecoorigem.$error"
+                    ng-if="$ctrl.form.enderecoorigem.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Endereco Origem não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="enderecodestino">Endereco Destino</label><input
+                    type='text' class="form-control" id="enderecodestino" name="enderecodestino"
+                    ng-model="$ctrl.entity.enderecodestino" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.enderecodestino.$error"
+                    ng-if="$ctrl.form.enderecodestino.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Endereco Destino não pode estar vazio
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,60 @@
+<div class="height-full layout-list">
+
+    <form nsj-focus name="crm_prpstscptls_frm_cntrllr.form" novalidate="novalidate"
+        ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : crm_prpstscptls_frm_cntrllr.busy }"
+        role="form" ng-submit="crm_prpstscptls_frm_cntrllr.submit()" class="height-full">
+
+
+        <nsj-headline headline-title="Capítulo " headline-sub="true">
+            <div class="pull-right">
+
+
+
+                <button type="button" class="btn btn-sm btn-default btn-delete btn-geral"
+                    ng-click="crm_prpstscptls_frm_cntrllr.delete()"
+                    ng-if="crm_prpstscptls_frm_cntrllr.entity.propostacapitulo  "><i class="fas fa-trash"></i> <span
+                        class="hidden-xs">Excluir</span></button>
+
+                <a class="btn btn-sm btn-default"
+                    ui-sref="crm_propostascapitulos({'proposta' : crm_prpstscptls_frm_cntrllr.constructors.proposta,})"
+                    title="Voltar à lista">Voltar à lista</a>
+
+
+
+
+            </div>
+        </nsj-headline>
+        <div class="nsj-form padding-content">
+            <crm-propostascapitulos-default entity="crm_prpstscptls_frm_cntrllr.entity"
+                form="crm_prpstscptls_frm_cntrllr.form" busy="crm_prpstscptls_frm_cntrllr.busy"
+                action="crm_prpstscptls_frm_cntrllr.action" constructors="crm_prpstscptls_frm_cntrllr.constructors">
+            </crm-propostascapitulos-default>
+            <ul class="list-unstyled list-inline pull-left">
+                <li>
+
+                    <div class="form-group pull-left">
+
+                        <button type="button" ng-click="crm_prpstscptls_frm_cntrllr.submit()"
+                            ng-class="{loading:crm_prpstscptls_frm_cntrllr.entity.$$__submitting}"
+                            ng-disabled="crm_prpstscptls_frm_cntrllr.entity.$$__submitting || crm_prpstscptls_frm_cntrllr.form.$pristine"
+                            class="btn btn-sm btn-warning btn-save btn-geral">
+                            <i class="fa fa-check"></i> Salvar
+                        </button>
+
+                        <a class="btn btn-sm"
+                            ui-sref="crm_propostascapitulos({'proposta' : crm_prpstscptls_frm_cntrllr.constructors.proposta,})"><i
+                                class="fa fa-times" aria-hidden="true"></i> Cancelar</a>
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-loading" ng-if="crm_prpstscptls_frm_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </form>
+
+</div>

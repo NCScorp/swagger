@@ -1,0 +1,28 @@
+<div class="row ">
+    <div class="col-sm-12">
+        <fieldset>
+            <div class="row  row-form-view">
+                <div class="col-sm-12">
+                    <div class="form-group clearfix"><label class="control-label">Família </label>
+                        <p class="form-control-static"><span id="familia" class="form-control-static"
+                                ng-bind="$ctrl.entity.familia.descricao || 'Não informado'"></span><br><span
+                                class="sub-title"><b>Código: </b><span
+                                    ng-bind="$ctrl.entity.familia.codigo || 'Não informado.'"></span></span></p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group clearfix"><label class="control-label">Valor </label>
+                        <p class="form-control-static"><span id="number" class="form-control-static"
+                                ng-bind="($ctrl.entity.valor| currency : 'R$ ') || 'Não informado'"></span></p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group clearfix"><label class="control-label">Quantidade </label>
+                        <p class="form-control-static"><span id="quantidade" class="form-control-static"
+                                ng-bind="$ctrl.entity.quantidade|| 'Não informado'"></span></p>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</div>

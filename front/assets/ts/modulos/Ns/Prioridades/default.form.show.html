@@ -1,0 +1,88 @@
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Nome </label>
+            <p class="form-control-static"><span id="nome" class="form-control-static"
+                    ng-bind="($ctrl.entity.nome) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Descrição </label>
+            <p class="form-control-static"><span id="descricao" class="form-control-static"
+                    ng-bind="($ctrl.entity.descricao) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Prazo para expiração </label>
+            <p class="form-control-static"><span id="prazoexpiracao" class="form-control-static"
+                    ng-bind="($ctrl.entity.prazoexpiracao) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Notificar expiração faltando </label>
+            <p class="form-control-static"><span id="notificarexpiracaofaltando" class="form-control-static"
+                    ng-bind="($ctrl.entity.notificarexpiracaofaltando) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<!-- <div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Cor </label>
+            <p class="form-control-static"><span id="cor" class="form-control-static"
+                    ng-bind="($ctrl.entity.cor) || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div> -->
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix">
+            <label class="control-label">Ordem </label>
+            <p class="form-control-static">
+                <span id="ordem" class="form-control-static"
+                    ng-bind="$ctrl.entity.ordem|| 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label">Cor </label>
+            <p class="form-control-static"><span id="cor" class="form-control-static"
+               ng-bind="({
+                   &quot;#CA0813&quot;:&quot;Vermelho&quot;,
+                   &quot;#FC571F&quot;:&quot;Laranja&quot;,
+                   &quot;#FD9827&quot;:&quot;Ab\u00f3bora&quot;,
+                   &quot;#FEE433&quot;:&quot;Amarelo&quot;,
+                   &quot;#85E42B&quot;:&quot;Verde Claro&quot;,
+                   &quot;#1FCA5D&quot;:&quot;Verde&quot;,
+                   &quot;#23CFFD&quot;:&quot;Azul Claro&quot;,
+                   &quot;#165AF1&quot;:&quot;Azul&quot;,
+                   &quot;#8E1ED3&quot;:&quot;Roxo&quot;,
+                   &quot;#E41AAB&quot;:&quot;Rosa&quot;,
+                   &quot;#1D1D1D&quot;:&quot;Preto&quot;,
+                   &quot;#4A4A4A&quot;:&quot;Cinza 1&quot;,
+                   &quot;#767676&quot;:&quot;Cinza 2&quot;,
+                   &quot;#A3A3A3&quot;:&quot;Cinza 3&quot;,
+                   &quot;#D0D0D0&quot;:&quot;Cinza 4&quot;
+                }[$ctrl.entity.cor])|| 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix">
+            <label class="control-label">Definir como padrão </label>
+            <p class="form-control-static">
+                <span id="prioridadepadrao" class="form-control-static"
+                    ng-bind="{ 'true' : 'Sim', 'false' : 'Não' }[$ctrl.entity.prioridadepadrao] || 'Não informado'">
+                </span>
+            </p>
+        </div>
+    </div>
+</div>

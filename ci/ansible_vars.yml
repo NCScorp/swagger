@@ -1,3 +1,3 @@
-app: monitor-financeiro
+app: crm
 app_version: v1
-ssm_name: monitor-financeiro
+ssm_name: crm

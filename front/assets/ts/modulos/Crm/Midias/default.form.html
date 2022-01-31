@@ -1,0 +1,48 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="nome">Nome</label><input type='text'
+                    class="form-control" id="nome" name="nome" maxlength="20"
+                    validation='{ "route" : "crm_midias_unique", "params" : { "field" : "nome" , "id": "{{$ctrl.entity.midia}}" }, "constructors" : {{$ctrl.constructors}}, "callback" : "$ctrl.uniqueValidation" }'
+                    ng-model="$ctrl.entity.nome" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.nome.$error" ng-if="$ctrl.form.nome.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo Nome não pode estar vazio
+
+
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="maxlength"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+
+
+                        O campo Nome aceita no máximo 20 caracteres
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-message="unique"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        Já existe uma Mídia de Origem com este nome.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-12">
+            <!-- {# Sobrescrito para definir o máximo de caracteres a ser digitado no campo
+                Sobrescrito porque o MDA não gerava os arquivos corretamente ao adicionar a validação de maxlength no textarea #} -->
+            <div class="form-group">
+                <label class="control-label" for="descricao">Descrição</label>
+                <textarea class="form-control" id="descricao" name="descricao" ng-model="$ctrl.entity.descricao"
+                    ng-disabled="$ctrl.entity.$$__submitting" maxlength="20">
+		</textarea>
+            </div>
+        </div>
+    </div>
+</form>

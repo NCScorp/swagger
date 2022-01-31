@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="funcoes" label="funcoes" project="gp">
+    <entity schema="gp" table="funcoes">
+        <fieldmodel name="funcao" datatype="guid" isid="true" column="funcao"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel column="lastupdate" datatype="datetime" name="lastupdate" optimistLock="true" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="custos" datatype="objectlist"  column="funcao" useCaseLink="gp\funcoescustos" entityJoinType="left"/>
+        <fieldmodel name="funcaocoringa" datatype="boolean" column="funcaocoringa"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Funções">
+         <emptybuiltin title="Selecione ou adicione funções." gender="f">Selecione funções no painel ao lado para ver suas informações.</emptybuiltin>
+        <fieldsbrowser>
+            <fieldbrowser alias="Funcao" entitylink="funcao" visible="false" isid="true"/>
+            <fieldbrowser alias="codigo" entitylink="codigo" visible="true" cansearch="true"/>
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" cansearch="true"/>
+            <fieldbrowser alias="custos" entitylink="custos" visible="false"/>
+            <fieldbrowser alias="funcaocoringa" entitylink="funcaocoringa" visible="false"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Função">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell  colspan="12" name="codigo" controltype="textedit" entitylink="codigo" label="Código">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo código não pode ser vazio."/>
+                              <validate type="maxlength" value="30" displaytext="O tamanho máximo para o código é de 30 caracteres"/>
+                          </validates>
+                      </cell>
+                  </row>
+                  <row>
+                      <cell  colspan="12" name="descricao" controltype="textedit" entitylink="descricao" label="Descrição">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo descrição não pode ser vazio."/>
+                              <validate type="maxlength" value="150" displaytext="O tamanho máximo para a descrição é de 150 caracteres"/>
+                          </validates>
+                      </cell>
+                  </row>
+                  <row>
+                      <cell label="Permitir informar a descrição da função na inclusão do pedido/orçamento do Atendimento Comercial" colspan="12" name="funcaocoringa" controltype="checkbox" entitylink="funcaocoringa"/>
+                  </row>
+                  <row>
+                    <cell colspan="12" name="custos" controltype="objectlist" entitylink="custos" />
+                  </row>
+              </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Retrieve</name>
+        </action>
+        <action successMsg="A Função foi criada com sucesso!" failMsg="Ocorreu um erro ao criar a Função!">
+            <name>Insert</name>
+            <api>
+                 <name>funcoesnovo_v4</name>
+                <fromto valueapi="funcao" valueentity="funcao" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="custos" valueentity="custos"/>
+                <fromto valueapi="funcaocoringa" valueentity="funcaocoringa"/>
+            </api>
+        </action>
+        <action successMsg="A Função foi editada com sucesso!" failMsg="Ocorreu um erro ao editar a Função!">
+            <name>Update</name>
+             <api>
+                <name>funcoesalterar_v4</name>
+                <fromto valueapi="funcao" valueentity="funcao" />
+                <fromto valueapi="codigo" valueentity="codigo" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="custos" valueentity="custos"/>
+                <fromto valueapi="funcaocoringa" valueentity="funcaocoringa"/>
+            </api>
+        </action>
+        <action successMsg="A Função foi excluída com sucesso!" failMsg="Ocorreu um erro ao excluir a Função!">
+            <name>Delete</name>
+                <api>
+                    <name>funcoesexcluir_v2</name>
+                    <fromto valueapi="funcao" valueentity="funcao" />
+                </api>
+        </action>
+    </actions>
+</nsjusecase>

@@ -1,0 +1,185 @@
+           
+</div><uib-tabset class='top-buffer custom-form-view'>
+    <uib-tab heading="Dados">
+        <div class="nsj-form-view bottom-buffer top-buffer resumo-visualizacao" >
+
+            
+            <div class="row row-form-view" >
+                <div class="col-sm-12" >
+                    <div class="form-group clearfix">
+                        <!-- <label class="control-label">Nome </label> -->
+                        <label ng-if="crm_tcs_cntrllr.entity.nomeFalecido" class="control-label" for="nome">Nome do Falecido</label>
+		                <label ng-if="!crm_tcs_cntrllr.entity.nomeFalecido" class="control-label" for="nome">Nome</label>
+                        <p class="form-control-static" >
+                            <span id="nome" class="form-control-static" ng-bind="(crm_tcs_cntrllr.entity.nome) || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-12" >
+                    <div class="form-group clearfix">
+                        <label class="control-label">Código </label>
+                        <p class="form-control-static"><span id="codigo" class="form-control-static" ng-bind="(crm_tcs_cntrllr.entity.codigo) || 'Não informado'"></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INICIO dados seguro -->
+            <div class="mt-20 row row-form-view" ng-if="!crm_tcs_cntrllr.entity.possuiseguradora">
+                <div class="col-sm-12" >
+                    <div class="form-group clearfix">
+                        <label class="control-label" ng-if="!crm_tcs_cntrllr.entity.possuiseguradora">Cliente </label>
+                        <label class="control-label" ng-if="crm_tcs_cntrllr.entity.possuiseguradora">Seguradora </label>
+                        <p class="form-control-static" >
+                            <span id="nome" class="form-control-static" ng-bind="(crm_tcs_cntrllr.entity.cliente.nomefantasia) || 'Não informado'"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- FIM dados seguro -->
+
+            <div class="mt-20 row row-form-view" ng-if="crm_tcs_cntrllr.entity.possuiseguradora" >
+                <div class="form-group clearfix" >
+                    <object-list class ="object-list"
+                        entities='crm_tcs_cntrllr.entity.negociosdadosseguradoras'
+                        service="CrmAtcsdadosseguradoras"
+                        constructors="{ 'negocio' : $ctrl.entity.negocio,  }"
+                        autosaveEnabled= ><div ><div >
+                        <table class="table table-striped table-hover table-condensed table-bordered"><thead><tr>
+                            <th>Seguradora</th>
+                            <th>Produto</th>
+                            <th>Sinistro</th>
+                        </tr></thead><tbody>
+                            <tr ng-repeat="subentity in oblistctrl.entities"  ng-controller="ObjectListItemCtrl as itemctrl">
+                                <td>{{'{{ subentity.seguradora.nomefantasia }} '}}</td>
+                                <td>{{'{{ subentity.produtoseguradora.nome }} '}}</td>
+                                <td>{{'{{ subentity.sinistro }} '}}</td>
+                            </tr></tbody>
+                        <tfoot ng-if="oblistctrl.entities.length == 0">
+                            <tr>
+                                <td colspan="15" class="state-empty">
+                                    <div class="empty-list"><p class="text-center"> Não existem itens para mostrar nesta lista. </p></div>
+                                </td>
+                            </tr>
+                        </tfoot></table>
+                    </div></div></object-list>
+                </div>
+            </div>
+
+            <div class="mt-20 row row-campos-customizados-resumo" ng-if="crm_tcs_cntrllr.entity.area.localizacao === true">
+                <div class="col-sm-12 form-group clearfix">
+                    <label class="control-label">Município </label>
+                    <p class="form-control-static" >
+                        <span id="localizacaomunicipio" class="form-control-static" 
+                            ng-bind="crm_tcs_cntrllr.entity.localizacaomunicipio.nome || 'Não informado'">
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-20 row row-campos-customizados-resumo" ng-if="crm_tcs_cntrllr.entity.area.localizacao === true && crm_tcs_cntrllr.exibeCamposSepultamento">
+                <div class="form-group clearfix">
+                    <label class="control-label">
+                        Estado de Sepultamento
+                    </label>
+                    <p class="form-control-static">
+                        <span id="localizacaoestadosepultamento"
+                            class="form-control-static"
+                            ng-bind="$ctrl.entity.localizacaoestadosepultamento.nome || 'Não informado'">
+                        </span>
+                    </p>
+                </div>
+                <div class="form-group clearfix">
+                    <label class="control-label" >Município de Sepultamento </label>
+                    <p class="form-control-static">
+                        <span id="localizacaomunicipiosepultamento" class="form-control-static"
+                            ng-bind="crm_tcs_cntrllr.entity.localizacaomunicipiosepultamento.nome || 'Não informado'">
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-20 row row-campos-customizados-resumo" ng-if="crm_tcs_cntrllr.camposcustomizadosResponsavelViewResumo.length > 0" >
+                    <nsj-custom-field style="width: 100%"
+                        ng-prop-custom_fields="crm_tcs_cntrllr.camposcustomizadosResponsavelViewResumo" 
+                        id-field="camposcustomizadosResponsavelViewResumo" 
+                        ng-prop-visible_config="crm_tcs_cntrllr.config" 
+                        ng-prop-model="crm_tcs_cntrllr.entity.camposcustomizados" 
+                        mode="view"></nsj-custom-field>
+            </div>
+
+            <div class="mt-20 row row-campos-customizados-resumo" ng-if="crm_tcs_cntrllr.camposcustomizadosFalecidoViewResumo.length > 0" >
+                <nsj-custom-field style="width: 100%"
+                    ng-prop-custom_fields="crm_tcs_cntrllr.camposcustomizadosFalecidoViewResumo" 
+                    id-field="camposcustomizadosFalecidoViewResumo" 
+                    ng-prop-visible_config="crm_tcs_cntrllr.config" 
+                    ng-prop-model="crm_tcs_cntrllr.entity.camposcustomizados" 
+                    mode="view"></nsj-custom-field>
+            </div>
+            
+            <!--INICIO responsaveis financeiros-->
+            <!-- <div class="mt-20 row row-form-view" >
+                <div class="col-sm-12" >                     
+                    <object-list class ="object-list"
+entities='crm_tcs_cntrllr.entity.responsaveisfinanceiros'
+service="CrmAtcsresponsaveisfinanceiros"
+constructors="{ 'negocio' : crm_tcs_cntrllr.entity.negocio,  }"
+autosaveEnabled= >
+                        <div class="row row-form-view">
+                            <div class="col-xs-6 form-group clearfix">
+                                <label class="text-left control-label"><p class="text-left">Nome Responsável Financeiro</p></label>
+                            </div>
+                            <div class="col-xs-6 form-group clearfix">
+                                <label class="text-left control-label"><p class="text-left">Telefone </p></label>
+                            </div>
+                        </div>
+                        <div class="row row-form-view" ng-repeat="subentity in oblistctrl.entities"  ng-controller="ObjectListItemCtrl as itemctrl">
+                            <div class="col-xs-6 form-group clearfix">
+                                <p class="form-control-static"><a href ui-sref='ns_clientes_show({ cliente: subentity.responsavelfinanceiro.cliente })'>{{'{{ subentity.responsavelfinanceiro.nomefantasia }} '}}</a></p>
+                            </div>
+                            <div class="col-xs-6 form-group clearfix">
+                                {#<!-- <p class="form-control-static"><span>        {{'{{ subentity.principal ? \'Sim\' : \'Não\'  }} '}}</span></p> -->#}
+                                <p class="form-control-static" ><span id="respfinanceiroprincipaltelefone" class="form-control-static" ng-bind="(subentity.responsavelfinanceiro.telefone) | mask: '+99 (99) 99999-9999' || 'Não informado'" ></span></p>
+                            </div>
+                        </div>
+                    </object-list>               
+                </div>
+            </div> -->
+            <div class="mt-20 row row-form-view" >
+                <div class="col-sm-12" >        
+                    <div class="form-group clearfix">
+                        <object-list class ="object-list"
+                        entities='crm_tcs_cntrllr.entity.responsaveisfinanceiros'
+                        service="CrmAtcsresponsaveisfinanceiros"
+                        constructors="{ 'negocio' : crm_tcs_cntrllr.entity.negocio,  }"
+                        autosaveEnabled= >
+                            <div>
+                                <div class="table-default">
+                                    <table class="table table-striped table-hover table-condensed table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome do Responsável Financeiro</th>
+                                                <th>Telefone</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="subentity in oblistctrl.entities"  ng-controller="ObjectListItemCtrl as itemctrl">
+                                                <td><a href ui-sref='ns_clientes_show({ cliente: subentity.responsavelfinanceiro.cliente })'>{{'{{ subentity.responsavelfinanceiro.nomefantasia }} '}}</a></td>
+                                                <td><p><span id="respfinanceiroprincipaltelefone" class="form-control-static" ng-bind="subentity.responsavelfinanceiro.telefone ? (subentity.responsavelfinanceiro.telefone | mask: '+99 (99) 99999-9999') : 'Não informado'" ></span></p></td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot ng-if="oblistctrl.entities.length == 0">
+                                            <tr>
+                                                <td colspan="2" class="state-empty"><div class="empty-list"><p class="text-center"> Não existem itens para mostrar nesta lista. </p></div></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </object-list>
+                    </div>
+                </div>
+            </div>
+            <!--FIM responsaveis financeiros-->   
+        </div>        
+    </uib-tab>
+</uib-tabset><div>

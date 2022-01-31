@@ -1,0 +1,68 @@
+   
+
+ 
+
+
+
+<div ng-class="{'nsj-loading-page' : ns_tpstvdds_lst_cntrllr.busy }" class='ns_tiposatividades nsj-layout '> 
+    <div class="nsj-aside-list height-full col-md-4" ng-class="{ 'hidden-sm hidden-xs' : (('ns_tiposatividades_show'| isStateEq) || ('ns_tiposatividades_edit'| isStateEq) || ('ns_tiposatividades_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+<nsj-headline headline-title="Tipos de atividades" ng-class="{ 'hidden-sm hidden-xs' : (('ns_tiposatividades_show'| isStateEq) || ('ns_tiposatividades_edit'| isStateEq) || ('ns_tiposatividades_new'| isStateEq ))}">
+    
+                <nsj-button tem-permissao="ns_tiposatividades_create" color="warning" icon="fa fa-plus" size="xs" class="hidden-xs"
+                            ui-sref="ns_tiposatividades_new({})"
+                               
+                        >
+            Criar
+        </nsj-button>
+        <nsj-button tem-permissao="ns_tiposatividades_create" color="warning" format="fixed circle" icon="fa fa-plus" size="lg" class="hidden-sm hidden-md hidden-lg"
+                            ui-sref="ns_tiposatividades_new({})"
+                               
+                        >
+            <span class="hidden-xs">Criar</span>
+        </nsj-button>
+    </nsj-headline>
+
+<nsj-toolbar ng-on-change_toolbar="ns_tpstvdds_lst_cntrllr.search($event.detail)" search="true" refresh = "true" holder="Busca" model-search="{{ns_tpstvdds_lst_cntrllr.service.filter}}" select="{{ns_tpstvdds_lst_cntrllr.selectPage && ns_tpstvdds_lst_cntrllr.selected.length === ns_tpstvdds_lst_cntrllr.entities.length && !ns_tpstvdds_lst_cntrllr.selectAll && !ns_tpstvdds_lst_cntrllr.service.loadParams.finished}}" select-all="{{ns_tpstvdds_lst_cntrllr.selectAll}}" item-in-page="{{ns_tpstvdds_lst_cntrllr.entities.length}}" item-all="{{ns_tpstvdds_lst_cntrllr.entities[0].full_count}}">
+                    </nsj-toolbar>
+                <div class="panel-body body-list">
+                                        <div class="list-group" id="ns_tiposatividades_list" infinite-scroll='ns_tpstvdds_lst_cntrllr.nextPage()' infinite-scroll-disabled='ns_tpstvdds_lst_cntrllr.isBusy()' infinite-scroll-distance='1'>    <a href ui-sref='ns_tiposatividades_show({tipoatividade : entity.tipoatividade})'  class="list-group-item" ng-repeat="entity in ns_tpstvdds_lst_cntrllr.entities" ui-sref-active="active">
+                        
+                    <h4 class="list-group-item-heading">
+                                        {{ entity.nome }} 
+                            </h4>
+                    </a>            <p class="list-group-item" ng-if="!ns_tpstvdds_lst_cntrllr.finished && (ns_tpstvdds_lst_cntrllr.service.to_load <= 0)">
+            <a href="" ng-click="ns_tpstvdds_lst_cntrllr.loadMore()">Ver mais...</a>
+        </p>
+        <p class="text-center article-loading height-full" ng-class="{'onloading' : ns_tpstvdds_lst_cntrllr.isBusy() }" ng-if="ns_tpstvdds_lst_cntrllr.isBusy()"></p>
+    <p class="text-center nfound" ng-if="ns_tpstvdds_lst_cntrllr.entities.length == 0 && !ns_tpstvdds_lst_cntrllr.isBusy()">Nenhum dado encontrado</p>
+</div>
+            
+                                        </div><!--/panel-body-->
+            </div><!--/panel-->
+        </div>
+    </div>
+
+    <div class='empty-page col-md-8 article-area height-full padding-h-clear' ui-view>
+    <div class="bt-new-article new-article text-center height-full empty-page-nodisplay">
+        <span class="icon-page"><i class="fas fa-table fa-fw"></i></span>
+        <h3>Selecione ou Adicione um Tipo de Atividade</h3>
+        <p>Selecione um Tipo de Atividade no painel ao lado para ver suas informações. </p>
+                                <a tem-permissao="ns_tiposatividades_create" class="btn btn-sm btn-warning"
+                                            ui-sref="ns_tiposatividades_new({})"
+                                    
+                                        >
+                <i class="fas fa-plus"></i> Criar
+            </a>
+        
+    </div>
+</div>
+<div class="content-loading"  ng-if="ns_tpstvdds_lst_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+            </div>
+</div>

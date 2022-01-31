@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="templatespropostascapituloscomposicoes" label="templatespropostascapituloscomposicoes" project="crm" orphan="false">
+    <entity schema="crm" table="templatespropostascapituloscomposicoes">
+        <fieldmodel name="templatepropostacomposicao" datatype="guid" isid="true" column="templatepropostacapitulocomposicao"/>
+        <fieldmodel name="templatepropostacapitulo" datatype="string" column="templatepropostacapitulo"/>
+        <fieldmodel name="composicao" datatype="guid" column="composicao"  useCaseLink="crm\composicoes" entityJoinType="left"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="observacao" datatype="string" column="observacao"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="templateproposta" datatype="string" notMapped="true"/>
+        <fieldmodel name="templatepropostagrupo" datatype="string" notMapped="true"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid"  column="grupoempresarial"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+        <constructoritem>id_grupoempresarial</constructoritem>
+      <constructoritem required="true">templatepropostacapitulo</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Serviços">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="templatepropostacomposicao" visible="false" isid="true"/>
+            <fieldbrowser entitylink="templatepropostacapitulo" visible="false" cansearch="false"/>
+            <fieldbrowser alias="Serviços" entitylink="composicao"  visible="true" fielddetaillookup="{'nome': 'Serviço'}"/>
+            <fieldbrowser entitylink="nome" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="descricao" visible="false" cansearch="false"/>
+            <fieldbrowser entitylink="observacao" visible="false" cansearch="false"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Vincular agrupador ao serviço">
+          <layout>
+              <headerform>
+                  <row>
+                      <cell name="composicao" controltype="lookup" label="Serviço" colspan="6" entitylink="composicao" fielddetaillookup="{'nome':'Nome', 'codigo':'Código', 'descricao':'Descrição'}" amountfieldslookup="3" allowinsertlookup="true">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo serviço não pode ser vazio."/>
+                          </validates>
+                      </cell>
+                  </row>
+                  <!-- <row>
+                    <cell label="Nome" controltype="textedit" colspan="6" entitylink="nome"/>
+                  </row> -->
+                  <row>
+                    <cell label="Observação" controltype="textarea" colspan="12" entitylink="observacao"/>
+                  </row>
+                  <row>
+                    <cell controltype="textedit" colspan="6" entitylink="templateproposta" />
+                    <cell controltype="textedit" colspan="6" entitylink="templatepropostagrupo"/>
+                  </row>
+              </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>TemplatePropostaCapituloComposicaoNovo_v3</name>
+                <fromto valueapi="templatepropostacapitulo" valueentity="templatepropostacapitulo"/>
+                <fromto valueapi="composicao" valueentity="composicao"/>
+                <fromto valueapi="nome" valueentity ="nome"/>
+                <fromto valueapi="descricao" valueentity ="descricao"/>
+                <fromto valueapi="observacao" valueentity ="observacao"/>
+                <fromto valueapi="created_by" valueentity ="logged_user"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>TemplatePropostaCapituloComposicaoAlterar_v2</name>
+                <fromto valueapi="templatepropostacomposicao" valueentity="templatepropostacomposicao"/>
+                <fromto valueapi="composicao" valueentity="composicao"/>
+                <fromto valueapi="observacao" valueentity ="observacao"/>
+                <fromto valueapi="updated_by" valueentity ="logged_user"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>TemplatePropostaCapituloComposicaoExcluir_v2</name>
+                <fromto valueapi="templatepropostacapitulocomposicao" valueentity="templatepropostacomposicao"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

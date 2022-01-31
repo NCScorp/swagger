@@ -1,0 +1,22 @@
+<div class="row  row-form-view">
+    <div class="col-sm-6">
+        <div class="form-group clearfix"><label class="control-label">Configuração de Documento </label>
+            <p class="form-control-static"><span id="atcconfiguracaodocumento" class="form-control-static"
+                    ng-bind="$ctrl.entity.atcconfiguracaodocumento.atcconfiguracaodocumento || 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group clearfix"><label class="control-label">Documento Fop </label>
+            <p class="form-control-static"><span id="documentofop" class="form-control-static"
+                    ng-bind="$ctrl.entity.documentofop.nomedocumento || 'Não informado'"></span></p>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group clearfix"><label class="control-label">Tipo </label>
+            <p class="form-control-static"><span id="tipo" class="form-control-static"
+                    ng-bind="({&quot;1&quot;:&quot;Prestador&quot;,&quot;2&quot;:&quot;Seguradora&quot;}[$ctrl.entity.tipo])|| 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+</div>

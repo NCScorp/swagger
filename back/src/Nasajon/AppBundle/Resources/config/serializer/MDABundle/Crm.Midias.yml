@@ -1,0 +1,5 @@
+Nasajon\MDABundle\Entity\Crm\Midias:
+    xml_root_name: midia
+    properties:
+        midia:
+            exclude: true

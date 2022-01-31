@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="cnaestiposatividades" label="cnaestiposatividades" orphan="false" project="ns">
+    <entity schema="ns" table="cnaestiposatividades">
+        <fieldmodel name="cnaetipoatividade" datatype="guid" isid="true" column="cnaetipoatividade"/>
+        <fieldmodel name="cnae" datatype="string" column="cnae"  useCaseLink="ns\cnaes" entityJoinType="left"/>
+        <fieldmodel name="tipoatividade" datatype="guid"  column="tipoatividade"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true" >tenant</constructoritem>
+      <constructoritem required="true" >tipoatividade</constructoritem>
+    </constructors>
+    <viewbrowser label="CNAEs" layout="list" paginate="true" target="builtin">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="cnaetipoatividade" isid="true" visible="false"/>
+            <fieldbrowser alias="CNAE" entitylink="cnae"  visible="true" fielddetaillookup="{'cnae': 'CNAE', 'descricao': 'Descrição'}"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default">
+          <layout>
+            <headerform>
+              <row>
+                <cell name="cnae" controltype="lookup" label="CNAE" colspan="6" entitylink="cnae" fielddetaillookup="{'cnae':'CNAE', 'descricao':'Descrição'}" amountfieldslookup="2">
+                 <validates>
+                  <validate type="unique" displaytext="O campo documentos necessários não pode ter documentos repetidos."/>
+                 </validates>
+                </cell>
+              </row> 
+            </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions> 
+        <action>
+          <name>retrieve</name>
+        </action>
+        <action>
+          <name>insert</name>
+          <api>
+            <name>CnaeTipoAtividadeNovo</name>
+            <fromto valueapi="tipoatividade" valueentity="tipoatividade"/>
+            <fromto valueapi="cnae" valueentity="cnae"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+          </api>
+        </action>
+        <action>
+          <name>delete</name>
+          <api>
+            <name>CnaeTipoAtividadeExcluir</name>
+            <fromto valueapi="cnaetipoatividade" valueentity="cnaetipoatividade"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+          </api>
+        </action>
+   </actions>
+</nsjusecase>

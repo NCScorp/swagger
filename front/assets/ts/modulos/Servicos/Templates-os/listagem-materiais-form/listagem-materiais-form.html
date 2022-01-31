@@ -1,0 +1,62 @@
+<!-- Ações -->
+<div class="btn-adicionar bottom-buffer" ng-if="!$ctrl.busyMateriais && $ctrl.entity.materiaisCarregado">
+  <button tem-permissao="servicos_ordensservicostemplates_gerenciar" class="btn btn-md btn-warning" ng-disabled="$ctrl.disableAction" ng-click="$ctrl.onBtnAddMaterialClick()">
+    <i class="fas fa-plus"></i> Adicionar
+  </button>
+</div>
+
+<!-- Listagem de materiais -->
+<div class="row row-form-view"
+  ng-if="!$ctrl.busyMateriais && $ctrl.entity.materiaisCarregado">
+  <div class="col-sm-12">
+    <div class="form-group clearfix">
+      <table class="nsj-table table table-striped table-hover table-condensed table-bordered btns-actions">
+        <thead>
+          <tr>
+            <th>
+              Item
+            </th>
+            <th>
+              Quantidade
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="subentity in $ctrl.entity.arrMateriais track by $index">
+            <td> {{ subentity.item.especificacao }} </td>
+            <td> {{ subentity.quantidade }} </td>
+            <!-- Ações -->
+            <td>
+              <div class='table-btns-actions'>
+                <nsj-actions>
+                  <!-- Edição -->
+                  <nsj-action tem-permissao="servicos_ordensservicostemplates_gerenciar" ng-click="$ctrl.onBtnEdtMaterialClick(subentity)" icon="fas fa-edit" title="Editar">
+                  </nsj-action>
+                  <!-- Exclusao -->
+                  <nsj-action tem-permissao="servicos_ordensservicostemplates_gerenciar" ng-click="$ctrl.onBtnExcluirMaterialClick(subentity)" icon="fas fa-trash" title="Excluir">
+                  </nsj-action>
+                </nsj-actions>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot ng-if="$ctrl.entity.arrMateriais.length == 0">
+          <tr>
+              <td colspan="6" class="state-empty">
+                  <div class="empty-list">
+                      <p class="text-center"> Não existem itens para mostrar nesta lista. </p>
+                  </div>
+              </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="content-loading" ng-if="$ctrl.busyMateriais">
+  <div class="center-loading text-center">
+      <div class="onloading"></div>
+      Carregando...
+  </div>
+</div>

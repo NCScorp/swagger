@@ -1,0 +1,31 @@
+Nasajon\MDABundle\Entity\Crm\Atcs:
+    xml_root_name: atendimentocomercial
+    properties:
+        negocio:
+            exclude: true
+        id_pessoa:
+            exclude: true
+        created_at:
+            exclude: true
+        updated_at:
+            exclude: true
+        updated_by:
+            exclude: true
+        tenant:
+            exclude: true
+        camposcustomizados:
+            exclude: true
+        possuinegociofilho:
+            exclude: true
+        status:
+            exclude: true
+        projeto_href:
+            exclude: true
+        id_grupoempresarial:
+            exclude: true
+        projeto:
+            exclude: true
+        responsaveisfinanceiros:
+            xml_list:
+                entry_name: responsavelfinanceiro
+            

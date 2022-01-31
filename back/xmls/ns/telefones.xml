@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="telefones" label="telefones" project="ns" orphan="false">
+    <entity schema="ns" table="telefones">
+        <fieldmodel name="telefone_id" datatype="guid" isid="true" column="id"/>
+        <fieldmodel name="ddi" datatype="string"  column="ddi"/>
+        <fieldmodel name="ddd" datatype="string"  column="ddd"/>
+        <fieldmodel name="telefone" datatype="string"  column="telefone"/>
+        <fieldmodel name="ramal" datatype="string"  column="ramal"/>
+        <fieldmodel name="chavetel" datatype="string"  column="chavetel"/>
+        <fieldmodel name="tptelefone" datatype="integer"  column="tptelefone"/>
+        <fieldmodel name="descricao" datatype="string"  column="descricao"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="ordemimportancia" datatype="integer"  column="ordemimportancia"/>
+        <fieldmodel name="contato" datatype="guid"  column="contato"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+        <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+        <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+        <fieldmodel name="id_pessoa" datatype="guid"  column="id_pessoa"/>
+        <fieldmodel name="principal" datatype="boolean"  column="principal"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">contato</constructoritem>
+    </constructors>
+    <viewbrowser label="telefones" layout="list" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="telefone_id" isid="true" visible="false"/>
+            <fieldbrowser alias="DDI" entitylink="ddi" visible="true"/>
+            <fieldbrowser alias="DDD" entitylink="ddd" visible="true"/>
+            <fieldbrowser alias="Telefone" entitylink="telefone" visible="true"/>
+            <fieldbrowser alias="Ramal" entitylink="ramal" visible="true"/>
+            <fieldbrowser alias="Descricao" entitylink="descricao" visible="true"/>
+            <fieldbrowser alias="Contato" entitylink="contato" visible="false"/>
+            <fieldbrowser alias="Principal" entitylink="principal" visible="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Telefones">
+          <layout>
+            <headerform>
+              <row>
+                <cell name="ddi" controltype="textedit" label="DDI" colspan="2" entitylink="ddi">
+                  <validates>
+                    <validate type="maxlength" value="3" displaytext="O campo DDI contém no máximo 3 caracteres"></validate>
+                  </validates>
+                </cell>
+                <cell name="ddd" controltype="textedit" label="DDD" colspan="2" entitylink="ddd">
+                  <validates>
+                    <validate type="maxlength" value="3" displaytext="O campo DDD contém no máximo 3 caracteres"></validate>
+                  </validates>
+                </cell>  
+                <cell name="telefone" controltype="textedit" label="Telefone" colspan="3" entitylink="telefone">
+                  <validates>
+                    <validate type="maxlength" value="15" displaytext="O campo telefone contém no máximo 15 caracteres"/>
+                    <validate type="vnull" displaytext="O campo telefone não pode ser vazio"/>
+                  </validates>
+                </cell>
+                <cell name="ramal" controltype="textedit" label="Ramal" colspan="2" entitylink="ramal">
+                  <validates>
+                    <validate type="maxlength" value="6" displaytext="O campo Ramal contém no máximo 6 caracteres"></validate>
+                  </validates>
+                </cell>
+                <cell name="principal" controltype="checkbox" label="Principal?" colspan="3" entitylink="principal"/>
+              </row>
+              <row>
+                <cell name="descricao" controltype="textedit" label="Observação" colspan="12" entitylink="descricao">
+                  <validates>
+                    <validate type="maxlength" value="100" displaytext="O campo descrição contém no máximo 100 caracteres"></validate>
+                  </validates>
+                </cell>
+              </row>
+            </headerform>
+          </layout>
+      </form>
+      <form name="show" label="Telefones">
+          <layout>
+            <headerform>
+              <row>
+                <cell>
+                   <groupbox>
+                       <caption text="Telefone"></caption>
+                      <row>
+                        <cell name="ddi" controltype="textedit" label="DDI" colspan="12" entitylink="ddi" />
+                      </row>
+                      <row>
+                        <cell name="ddd" controltype="textedit" label="DDD" colspan="12" entitylink="ddd" />
+                      </row>
+                      <row>
+                        <cell name="telefone" controltype="textedit" label="Telefone" colspan="12" entitylink="telefone" />
+                      </row>
+                      <row>
+                        <cell name="ramal" controltype="textedit" label="Ramal" colspan="12" entitylink="ramal" />
+                      </row>
+                      <row>
+                        <cell name="descricao" controltype="textedit" label="Observação" colspan="12" entitylink="descricao" />
+                      </row>    
+                      <row>
+                        <cell name="principal" controltype="checkbox" label="Principal" colspan="12" entitylink="principal" />
+                      </row>    
+                   </groupbox>
+                </cell>
+              </row>
+             </headerform>
+          </layout>  
+      </form>
+    </forms>
+    <actions>
+        <action form="show">
+          <name>retrieve</name>
+        </action>
+        <action>
+          <name>insert</name>
+          <api>
+            <name>telefoneNovo_v2</name>
+            <fromto valueapi="contato" valueentity="contato"/>
+            <fromto valueapi="id_pessoa" valueentity="id_pessoa"/>
+            <fromto valueapi="ddd" valueentity="ddd"/>
+            <fromto valueapi="telefone" valueentity="telefone"/>
+            <fromto valueapi="chavetel" valueentity="chavetel"/>
+            <fromto valueapi="descricao" valueentity="descricao"/>
+            <fromto valueapi="ramal" valueentity="ramal"/>
+            <fromto valueapi="tptelefone" valueentity="tptelefone"/>
+            <fromto valueapi="ddi" valueentity="ddi"/>
+            <fromto valueapi="ordemimportancia" valueentity="ordemimportancia"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="principal" valueentity="principal"/>
+          </api>
+        </action>
+        <action>
+          <name>update</name>
+          <api>
+            <name>telefoneAlterar_v2</name>
+            <fromto valueapi="id" valueentity="telefone_id"/>
+            <fromto valueapi="contato" valueentity="contato"/>
+            <fromto valueapi="id_pessoa" valueentity="id_pessoa"/>
+            <fromto valueapi="ddd" valueentity="ddd"/>
+            <fromto valueapi="telefone" valueentity="telefone"/>
+            <fromto valueapi="chavetel" valueentity="chavetel"/>
+            <fromto valueapi="descricao" valueentity="descricao"/>
+            <fromto valueapi="ramal" valueentity="ramal"/>
+            <fromto valueapi="tptelefone" valueentity="tptelefone"/>
+            <fromto valueapi="ddi" valueentity="ddi"/>
+            <fromto valueapi="ordemimportancia" valueentity="ordemimportancia"/>
+            <fromto valueapi="updated_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="principal" valueentity="principal"/>
+          </api>
+        </action>
+        <action>
+          <name>delete</name>
+          <api>
+            <name>telefoneExcluir</name>
+            <fromto valueapi="id" valueentity="telefone_id"/>
+          </api>
+        </action>
+   </actions>
+</nsjusecase>

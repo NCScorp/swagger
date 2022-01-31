@@ -1,0 +1,38 @@
+<div class="atc-documento-limpar-modal form-loading-layout-wrapper-body">
+    <!-- Header da modal -->
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="crm_mdl_atc_doc_lmp_cntrllr.close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="modal-title">Anexo(s)</h3>
+    </div>
+    <form novalidate="novalidate" role="form" >
+        <!-- Body da modal -->
+        <div class="modal-body" id="modal-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <ns-dropzone  
+                        model="crm_mdl_atc_doc_lmp_cntrllr.modelDropzone" 
+                        options="crm_mdl_atc_doc_lmp_cntrllr.optionsDropzone" 
+                        remove-file="crm_mdl_atc_doc_lmp_cntrllr.removeFile(file)"
+                        envio-desabilitado="true" >
+                    </ns-dropzone>
+                </div>
+            </div>
+        </div>
+        <!-- Footer da modal -->
+        <div class="modal-footer">
+            <div class="pull-right">
+                <a class="btn btn-default" ng-click="crm_mdl_atc_doc_lmp_cntrllr.close()">
+                    <i class="fa fa-times" aria-hidden="true"></i> Fechar
+                </a>
+            </div>
+        </div>
+    </form>
+    <div class="content-loading" ng-if="crm_mdl_atc_doc_lmp_cntrllr.isBusy()">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            {{ crm_mdl_atc_doc_lmp_cntrllr.busyMensagem }}
+        </div>
+    </div>
+</div>

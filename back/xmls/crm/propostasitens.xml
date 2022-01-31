@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="propostasitens" label="propostasitens" project="crm">
+  <entity schema="crm" table="propostasitens">
+    <!--
+      Atenção:
+      ao realizar alterações neste model, por favor conferir o arquivo 
+      AppBundle/Repository/Crm/PropostasitensRepository.php
+      e fazer as devidas modificações (pois o repository foi sobrescrito)
+    -->
+    <fieldmodel name="propostaitem" datatype="guid" isid="true" column="propostaitem"/>
+    <fieldmodel name="propostacapitulo" datatype="guid" column="propostacapitulo" useCaseLink="crm\propostascapitulos" entityJoinType="left"/>
+    <fieldmodel name="proposta" datatype="guid" column="proposta"  useCaseLink="crm\propostas" entityJoinType="left"/>
+    <fieldmodel name="composicao" datatype="guid" column="composicao"  useCaseLink="crm\composicoes" entityJoinType="left"/>
+    <fieldmodel name="nomeservicoalterado" datatype="boolean" column="nomeservicoalterado"/>
+    <fieldmodel name="nome" datatype="string"  column="nome" />
+    <fieldmodel name="codigo" datatype="string"  column="codigo"/>
+    <fieldmodel name="descricao" datatype="string"  column="descricao"/>
+    <fieldmodel name="especificarendereco" datatype="boolean" notMapped="true"></fieldmodel>
+    <fieldmodel name="especificadata" datatype="boolean" notMapped="true"></fieldmodel>
+   <!-- <fieldmodel name="localizacao" datatype="guid"  column="localizacao" useCaseLink="ns\enderecos" entityJoinType="left"/>
+    <fieldmodel name="localizacaocidadeestrangeira" datatype="guid"  column="localizacaocidadeestrangeira" useCaseLink="ns\cidadesestrangeiras" entityJoinType="left"/>
+    <fieldmodel name="localizacaoestado" datatype="string" column="localizacaoestado" useCaseLink="ns\estados"  entityJoinType="left"/>
+    <fieldmodel name="localizacaopais" datatype="string" column="localizacaopais" useCaseLink="ns\paises"  entityJoinType="left"/>
+    <fieldmodel name="localizacaomunicipio" datatype="string" column="localizacaomunicipio" useCaseLink="ns\municipios"  entityJoinType="left"/>
+    <fieldmodel name="localizacaocep" datatype="string"  column="localizacaocep"/>
+    <fieldmodel name="localizacaobairro" datatype="string"  column="localizacaobairro"/>
+    <fieldmodel name="localizacaorua" datatype="string"  column="localizacaorua"/>
+    <fieldmodel name="localizacaonumero" datatype="string"  column="localizacaonumero"/>
+    <fieldmodel name="localizacaocomplemento" datatype="string" column="localizacaocomplemento"/>
+    <fieldmodel name="localizacaoreferencia" datatype="string"  column="localizacaoreferencia"/> -->
+    <fieldmodel name="datahorainicio" datatype="datetime" column="datahorainicio"/>
+    <fieldmodel name="datahorafim" datatype="datetime" column="datahorafim"/>
+    <fieldmodel name="previsaodatahorainicio" datatype="datetime" column="previsaodatahorainicio"/>
+    <fieldmodel name="previsaodatahorafim" datatype="datetime" column="previsaodatahorafim"/>
+    <fieldmodel name="valor" datatype="moeda" column="valor"/>
+    <fieldmodel name="quantidade" datatype="float" column="quantidade"/>
+    <fieldmodel name="tarefa" datatype="guid" column="tarefa" useCaseLink="gp\tarefas"  entityJoinType="left"/>
+    <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+    <fieldmodel name="created_by" datatype="json" column="created_by"/>
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+    <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    <!-- <fieldmodel name="itemcontrato" datatype="guid" column="itemcontrato" useCaseLink="financas\itenscontratos" entityJoinType="left"/>
+    <fieldmodel name="itemcontratoAPagar" datatype="guid" column="itemcontratoAPagar" useCaseLink="financas\itenscontratos" entityJoinType="left"/> -->
+    <fieldmodel name="negocio" datatype="guid" column="negocio" useCaseLink="crm\atcs" entityJoinType="left"/> <!-- Evitando construtores, passo na entidade os dados do contrato usados ao criar/remover o item de contrato na criação/remover de propostaitem-->
+    <fieldmodel name="fornecedor" datatype="guid" column="fornecedor" useCaseLink="ns\fornecedores" entityJoinType="left"/>
+    <fieldmodel name="camposcustomizados" datatype="json" column="camposcustomizados" />
+    <fieldmodel name="escolhacliente" datatype="boolean" column="escolhacliente" />
+    <!-- Objectlist de propostasitensfamilias/funcoes -->
+    <fieldmodel name="propostasitensfamilias" datatype="guid" column="propostaitem" useCaseLink="crm\propostasitensfamilias" entityJoinType="left"/>
+    <fieldmodel name="propostasitensfuncoes" datatype="guid" column="propostaitem" useCaseLink="crm\propostasitensfuncoes" entityJoinType="left"/>
+    <fieldmodel name="propostasitensenderecos" datatype="objectlist" column="propostasitensenderecos" useCaseLink="crm\propostasitensenderecos" entityJoinType="left" />
+    <fieldmodel name="templatepropostacomposicao" datatype="guid" column="templatepropostacomposicao" useCaseLink="crm\templatespropostascapituloscomposicoes" entityJoinType="left"/>
+    <fieldmodel name="itemdefaturamentovalor" datatype="moeda" column="itemdefaturamentovalor"/>
+    <fieldmodel name="servicoorcamento" datatype="guid" column="servicoorcamento"  useCaseLink="crm\orcamentos" entityJoinType="left"/> <!-- guid do orcamento referente à execucao de serviço -->
+    <fieldmodel name="prestadorprazoselecao" datatype="integer" notMapped="true"></fieldmodel>
+    <fieldmodel name="previsaodatainicio" datatype="date" notMapped="true"/>
+    <fieldmodel name="previsaohorainicio" datatype="time" notMapped="true"/>
+    <fieldmodel name="previsaodatafim" datatype="date" notMapped="true"/>
+    <fieldmodel name="previsaohorafim" datatype="time" notMapped="true"/>
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    <fieldmodel name="observacaocomposicao" datatype="string"  column="observacaocomposicao" />
+    <fieldmodel name="id_apolice" datatype="guid"  column="id_apolice" />
+    <fieldmodel name="valorapolice" datatype="float"  column="valorapolice" />
+    <fieldmodel name="possuifuncoes" datatype="boolean"  notMapped="true" />
+    <fieldmodel name="possuifamilias" datatype="boolean"  notMapped="true" />    
+    <fieldmodel name="deletarsomentecomposicoes" datatype="boolean" notMapped="true" />
+    <!-- <fieldmodel name="contrato" datatype="string" notMapped="true"></fieldmodel> -->
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>negocio</constructoritem>
+    <constructoritem>proposta</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+    <!-- <constructoritem required="true">tarefa</constructoritem> -->
+  </constructors>
+  <viewbrowser paginate="true" layout="list" target="window" label="Composição">
+    <filters>
+      <fieldsfilters>
+        <fieldfilter entitylink="propostacapitulo" maxoccurs="unbounded" visible="false">
+            <conditions>
+              <condition type="eq"/>
+            </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="fornecedor" maxoccurs="unbounded" visible="false">
+            <conditions>
+              <condition type="eq"/>
+            </conditions>
+        </fieldfilter>
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser entitylink="propostaitem" visible="false" isid="true"/>
+      <fieldbrowser entitylink="propostacapitulo" visible="false" cansearch="false"/>
+      <fieldbrowser entitylink="nomeservicoalterado" visible="true" cansearch="false"/>
+      <fieldbrowser entitylink="nome" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Previsão de início"  entitylink="previsaodatahorainicio" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Previsão de fim" entitylink="previsaodatahorafim" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Valor da execução do serviço" entitylink="itemdefaturamentovalor" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Quantidade" entitylink="quantidade" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Serviço" entitylink="composicao"  visible="true" fielddetaillookup="{'nome': 'Serviço'}"/>
+      <fieldbrowser entitylink="camposcustomizados" visible="false" cansearch="false" />
+      <fieldbrowser alias="propostasitensfamilias" entitylink="propostasitensfamilias"  visible="true" fielddetaillookup="{'propostaitem': 'Proposta Item'}" />
+      <fieldbrowser alias="propostasitensfuncoes" entitylink="propostasitensfuncoes"  visible="true" fielddetaillookup="{'propostaitem': 'Proposta Item'}" />
+      <fieldbrowser alias="tarefa" entitylink="tarefa"  visible="true" fielddetaillookup="{'previsaoinicio': 'Previsao Inicio'}" />
+      <fieldbrowser entitylink="fornecedor" visible="false" cansearch="false" />
+      <fieldbrowser entitylink="escolhacliente" visible="false" cansearch="false" />
+      <fieldbrowser entitylink="servicoorcamento" visible="false" cansearch="false" />
+      <fieldbrowser alias="Data previsão de início" entitylink="previsaodatainicio" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Hora previsão de início" entitylink="previsaohorainicio" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Data previsão de fim" entitylink="previsaodatafim" visible="true" cansearch="false"/>
+      <fieldbrowser alias="Hora previsão de fim" entitylink="previsaohorafim" visible="true" cansearch="false"/>
+      <!-- <fieldbrowser entitylink="itemcontrato" visible="false" cansearch="false" />
+      <fieldbrowser entitylink="itemcontratoAPagar" visible="false" cansearch="false" /> -->
+      <fieldbrowser entitylink="observacaocomposicao" visible="true" cansearch="false" />
+      <fieldbrowser entitylink="id_apolice" visible="false" cansearch="false" />
+      <fieldbrowser entitylink="valorapolice" visible="true" cansearch="false" />
+      <fieldbrowser entitylink="negocio" visible="false" cansearch="false" />
+      <fieldbrowser entitylink="created_at" visible="false" cansearch="false" />
+      <!-- <fieldbrowser entitylink="contrato" visible="false" cansearch="false" /> -->
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Vincular agrupador ao Serviço">
+      <layout>
+        <headerform>
+          <row>
+            <cell controltype="lookup" entitylink="propostacapitulo" visible="false"> 
+              <lookupconstructors>
+                <lookupconstructor valueapi='proposta' valueentity='proposta'/>
+              </lookupconstructors>
+            </cell>
+            <cell controltype="lookup" label="Serviço" colspan="12" entitylink="composicao" fielddetaillookup="{'nome':'Nome', 'codigo':'Código', 'descricao':'Descrição'}" amountfieldslookup="3" allowinsertlookup="true">
+              <validates>
+                <validate type="vnull" displaytext="O campo Serviço não pode ser vazio."/>
+              </validates>
+            </cell>  
+          </row>
+          <row>
+            <cell controltype="textedit" label="Descrição" colspan="12" entitylink="nome">
+              <validates>
+                <validate type="maxlength" value="150" displaytext="O campo Nome aceita no máximo 150 caracteres"/>
+              </validates>
+            </cell>
+            <cell label="Nome Serviço Alterado" controltype="checkbox" entitylink="nomeservicoalterado" colspan="12" />
+          </row>
+          <row>
+            <cell  label="camposcustomizados" controltype="textedit" colspan="12" entitylink="camposcustomizados"/>                
+          </row>
+          <!-- <row>
+            <cell label="Valor da execução do serviço" controltype="money" colspan="6" entitylink="itemdefaturamentovalor">
+              <validates>
+                <validate type="vnull" displaytext="O valor da execução do serviço não pode ser vazio" />
+              </validates>
+            </cell>
+          </row> -->
+          <row visible="composicao">
+            <cell name="especificarendereco" controltype="checkbox" label="Especificar endereço" entitylink="especificarendereco" colspan="12">
+            </cell>
+          </row>
+          <row visible="especificarendereco  &amp;&amp; composicao">
+            <cell name="propostasitensenderecos" controltype="objectlist" entitylink="propostasitensenderecos" colspan="12">
+            </cell>
+          </row>
+          <row visible="composicao">
+            <cell name="especificadata" controltype="checkbox" label="Especificar data" entitylink="especificadata" colspan="12" />
+          </row>
+          <row>
+            <cell label="Previsão de início"  controltype="dateinput" colspan="1" entitylink="previsaodatahorainicio"/>
+            <cell label="Previsão de fim"   controltype="dateinput" colspan="1" entitylink="previsaodatahorafim"/>
+          </row>
+          <row visible="especificadata  &amp;&amp; composicao">
+            <cell label="Data previsão de início" entitylink="previsaodatainicio" controltype="dateinput" colspan="3">
+              <validates>
+                <validate type="vnull" displaytext="O campo Data Previsão de Início não pode ser vazio." />
+              </validates>
+            </cell>
+            <cell label="Hora previsão de início" entitylink="previsaohorainicio" controltype="textedit" colspan="3">
+              <validates>
+                <validate type="vnull" displaytext="O campo Hora Previsão de Início não pode ser vazio." />
+              </validates>
+            </cell>
+            <cell label="Data previsão de fim" entitylink="previsaodatafim" controltype="dateinput" colspan="3">
+              <validates>
+                <validate type="vnull" displaytext="O campo Data Previsão de Fim não pode ser vazio." />
+              </validates>
+            </cell>
+            <cell label="Hora previsão de fim" entitylink="previsaohorafim" controltype="textedit" colspan="3">
+              <validates>
+                <validate type="vnull" displaytext="O campo Hora Previsão de Fim não pode ser vazio." />
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell visible="false" controltype="textarea" label="Observação" entitylink="observacaocomposicao" colspan="12" />
+          </row>
+        </headerform>
+      </layout>
+    </form>
+    <form name="edicao" label="Editar Serviço ou produto oferecido">
+      <layout>
+        <headerform>
+          <!-- Comentado porque agora a modal de editar uma propostaitem já abre com o campo endereço e previsões de inicio e fim já mostrados em tela, sem precisar marcar check -->
+          <!-- <row>
+            <cell name="especificarendereco" controltype="checkbox" label="Especificar endereço" entitylink="especificarendereco" colspan="12" />
+          </row> -->
+          <row>
+            <cell controltype="textedit" label="Descrição" colspan="12" entitylink="nome">
+              <validates>
+                <validate type="maxlength" value="150" displaytext="O campo Nome aceita no máximo 150 caracteres"/>
+              </validates>
+            </cell>
+            <cell label="Nome Serviço Alterado" controltype="checkbox" entitylink="nomeservicoalterado" colspan="12" />
+          </row>
+          <row>
+            <cell name="propostasitensenderecos" controltype="objectlist" entitylink="propostasitensenderecos" colspan="12" />
+          </row>
+          <!-- <row>
+            <cell name="especificadata" controltype="checkbox" label="Especificar data" entitylink="especificadata" colspan="12" />
+          </row> -->
+          <row>
+            <cell label="Previsão de início"  controltype="dateinput" colspan="1" entitylink="previsaodatahorainicio"/>
+            <cell label="Previsão de fim"   controltype="dateinput" colspan="1" entitylink="previsaodatahorafim"/>
+          </row>
+          <row>
+              <cell label="Data previsão de início" entitylink="previsaodatainicio" controltype="dateinput" colspan="3"/>
+              <cell label="Hora previsão de início" entitylink="previsaohorainicio" controltype="textedit" colspan="3"/>
+              <cell label="Data previsão de fim" entitylink="previsaodatafim" controltype="dateinput" colspan="3"/>
+              <cell label="Hora previsão de fim" entitylink="previsaohorafim" controltype="textedit" colspan="3"/>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+    <form name="propostasItensVincularFornecedor" label="propostasItensVincularFornecedor">
+      <layout>
+        <headerform>
+          <row>
+             <cell label="Fornecedor" colspan="12" controltype="lookup" entitylink="fornecedor" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" readonly="escolhacliente &amp;&amp; fornecedor">
+              <lookupconstructors>
+                <lookupconstructor valueapi='pessoa' valueentity='fornecedor'/>
+              </lookupconstructors>
+            </cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+    <!-- Form referente a definir escolha do cliente quanto ao prestador de serviço -->
+    <form name="propostasitensfornecedorescolhacliente">
+        <layout>
+            <headerform>
+                <row>
+                    <cell name="escolhacliente" entitylink="escolhacliente" controltype="hidden">
+                        <validates>
+                            <validate type="vnull" displaytext=" Obrigatório escolhacliente." />
+                        </validates>
+                    </cell>
+                    <cell name="propostaitem" entitylink="propostaitem" controltype="hidden">
+                        <validates>
+                            <validate type="vnull" displaytext=" Obrigatório propostaitem." />
+                        </validates>
+                    </cell>
+                </row>
+            </headerform>
+        </layout>
+    </form>
+  </forms>
+  <actions>
+    <action>
+      <name>retrieve</name>
+    </action>
+    <action>
+      <name>Insert</name>
+      <api>
+        <name>propostaItemNovo_v9</name>
+        <fromto valueapi="proposta" valueentity="proposta"/>
+        <fromto valueapi="propostacapitulo" valueentity="propostacapitulo"/>
+        <fromto valueapi="composicao" valueentity="composicao"/>
+        <fromto valueapi="nome" valueentity="nome"/>
+        <fromto valueapi="descricao" valueentity="descricao"/>
+        <fromto valueapi="codigo" valueentity="codigo"/>
+        <fromto valueapi="previsaodatahorainicio" valueentity="previsaodatahorainicio"/>
+        <fromto valueapi="previsaodatahorafim" valueentity="previsaodatahorafim"/>
+        <fromto valueapi="itemdefaturamentovalor" valueentity="itemdefaturamentovalor"/>
+        <fromto valueapi="quantidade" valueentity="quantidade"/>
+        <fromto valueapi="created_by" valueentity ="logged_user"/>
+        <fromto valueapi="created_at" valueentity ="created_at"/>
+        <fromto valueapi="tenant" valueentity ="tenant"/>
+        <fromto valueapi="negocio" valueentity ="negocio"/>
+        <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+        <!-- <fromto valueapi="propostasitensenderecos" valueentity="propostasitensenderecos" /> -->
+        <!-- <fromto valueapi="datahorainicio" valueentity="datahorainicio"/>
+        <fromto valueapi="datahorafim" valueentity="datahorafim"/> -->
+        <fromto valueapi="templatepropostacomposicao" valueentity="templatepropostacomposicao" />
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="observacaocomposicao" valueentity="observacaocomposicao"/>
+        <fromto valueapi="id_apolice" valueentity="id_apolice"/>
+        <fromto valueapi="valorapolice" valueentity="valorapolice"/>
+        <fromto valueapi="nomeservicoalterado" valueentity="nomeservicoalterado"/>
+      </api>
+    </action>
+    <action form="edicao" disable="tarefa.situacao == 2">
+      <name>Update</name>
+      <api>
+        <name>propostaItemAlterar_v6</name>
+        <fromto valueapi="propostaitem" valueentity="propostaitem"/>
+        <fromto valueapi="previsaodatahorainicio" valueentity ="previsaodatahorainicio"/>
+        <fromto valueapi="previsaodatahorafim" valueentity ="previsaodatahorafim"/>
+        <fromto valueapi="valor" valueentity="valor"/>
+        <fromto valueapi="quantidade" valueentity="quantidade"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="proposta" valueentity ="proposta"/>
+        <fromto valueapi="tarefa" valueentity ="tarefa"/>
+        <fromto valueapi="propostasitensenderecos" valueentity="propostasitensenderecos" />
+        <fromto valueapi="camposcustomizados" valueentity="camposcustomizados" />
+        <fromto valueapi="updated_at" valueentity ="updated_at"/>
+        <!-- <fromto valueapi="datahorainicio" valueentity="datahorainicio"/>
+        <fromto valueapi="datahorafim" valueentity="datahorafim"/> -->
+        <fromto valueapi="observacaocomposicao" valueentity="observacaocomposicao"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="id_apolice" valueentity="id_apolice"/>
+        <fromto valueapi="valorapolice" valueentity="valorapolice"/>
+        <fromto valueapi="templatepropostacomposicao" valueentity="templatepropostacomposicao" />
+        <fromto valueapi="nome" valueentity="nome" />
+        <fromto valueapi="nomeservicoalterado" valueentity="nomeservicoalterado" />
+      </api>
+    </action>
+    <action disable="tarefa.situacao == 2">
+      <name>Delete</name>
+      <api>
+        <name>propostaItemExcluir_v2</name>
+        <fromto valueapi="propostaitem" valueentity="propostaitem"/>
+        <fromto valueapi="tenant" valueentity ="tenant"/>
+        <fromto valueapi="proposta" valueentity ="proposta"/>
+        <fromto valueapi="deleted_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <!-- <action layer="back">
+      <name>editaItemContratoNaPropostaItem</name>
+      <api>
+        <name>editaItemContratoNaPropostaItem</name>
+        <fromto valueapi="propostaitem" valueentity="propostaitem" />
+        <fromto valueapi="itemcontrato" valueentity="itemcontrato" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action>
+    <action layer="back">
+      <name>editaItemContratoAPagarNaPropostaItem</name>
+      <api>
+        <name>editaItemContratoAPagarNaPropostaItem</name>
+        <fromto valueapi="propostaitem" valueentity="propostaitem" />
+        <fromto valueapi="itemcontratoAPagar" valueentity="itemcontratoAPagar" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="updated_by" valueentity="logged_user" />
+      </api>
+    </action> -->
+    <action form="propostasItensVincularFornecedor" label="propostasItensVincularFornecedor">
+      <name>propostasItensVincularFornecedor</name>
+      <api>
+        <name>propostasItensVincularFornecedor</name>
+        <fromto valueapi="propostaitem" valueentity="propostaitem" />
+        <fromto valueapi="fornecedor" valueentity="fornecedor" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+      </api>
+    </action>
+    <action>
+      <name>propostasItensDesvincularFornecedor</name>
+      <api>
+        <name>propostasItensDesvincularFornecedor</name>
+        <fromto valueapi="propostaitem" valueentity="propostaitem" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+      </api>
+    </action>
+    <action form="propostasitensfornecedorescolhacliente">
+        <name>propostasitensfornecedorescolhacliente</name>
+        <api>
+            <name>propostasitensfornecedorescolhacliente</name>
+            <fromto valueapi="propostaitem" valueentity="propostaitem" />
+            <fromto valueapi="escolhacliente" valueentity="escolhacliente" />
+            <fromto valueapi="tenant" valueentity="tenant" />
+            <fromto valueapi="updated_at" valueentity ="updated_at"/>
+            <fromto valueapi="updated_by" valueentity="logged_user"/>
+        </api>
+    </action>
+    <action layer="front">
+        <name>orcamentosExcluir</name>
+        <api>
+          <name>orcamentosExcluir</name>
+          <fromto valueapi="propostaitem" valueentity="propostaitem" />
+          <fromto valueapi="tenant" valueentity="tenant" />
+        </api>
+      </action>
+  </actions>
+</nsjusecase>

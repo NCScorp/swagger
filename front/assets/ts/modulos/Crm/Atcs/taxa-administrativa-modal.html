@@ -1,0 +1,191 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Taxa Administrativa</h3>
+</div>
+
+<div class="modal-body" id="modal-body">
+    
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-sm-12">
+                
+                <div ng-if="!tx_dmnstrtv_mdl_cntrllr.modoVisualizacao" class="alert-modal nsj-alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <strong>Atenção!</strong> <br> Após a geração do faturamento da Taxa Administrativa, não será mais possível editar as informações abaixo.
+                </div>
+
+                <div ng-if="tx_dmnstrtv_mdl_cntrllr.modoVisualizacao" class="alert-modal nsj-alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <strong>Atenção!</strong> <br> Após o cancelamento do faturamento da Taxa Administrativa, não será mais possível reverter a ação.
+                </div>
+
+                <div ng-if="tx_dmnstrtv_mdl_cntrllr.modoVisualizacao" style="margin-bottom: 15px;">
+                    O faturamento da Taxa Administrativa foi gerado em {{ tx_dmnstrtv_mdl_cntrllr.getDataFormatada(tx_dmnstrtv_mdl_cntrllr.entity.createdcontratotaxa_at) }}, 
+                    por {{tx_dmnstrtv_mdl_cntrllr.entity.createdcontratotaxa_by.nome}}
+                </div>
+
+            </div>
+
+            <div class="col-sm-12">
+                <div>
+                    <table class="table nsj-table" style="margin-bottom: 200px;">
+                        <thead>
+                            <tr>
+
+                                <th>
+                                    Estabelecimento
+                                </th>
+
+                                <th>
+                                    Seguradora
+                                </th>
+
+                                <th>
+                                    Serviço
+                                </th>
+
+                                <th>
+                                    Forma de Pagamento
+                                </th>
+
+                                <th>
+                                    Município de Prestação
+                                </th>
+
+                                <th>
+                                    Valor
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>
+                                    {{ tx_dmnstrtv_mdl_cntrllr.estabelecimento }}
+                                </td>
+
+                                <td>
+                                    {{ tx_dmnstrtv_mdl_cntrllr.seguradora }}
+                                </td>
+
+                                <td>
+                                    {{ tx_dmnstrtv_mdl_cntrllr.servico }}
+                                </td>
+
+                                <!-- Forma de Pagamento -->
+                                <td>
+
+                                    <!-- Modo editável -->
+                                    <nsj-lookup
+                                        ng-if="!tx_dmnstrtv_mdl_cntrllr.modoVisualizacao"
+                                        name="formapagamento"
+                                        id-name="formapagamento"
+                                        factory="NsFormaspagamentos"
+                                        ng-model="tx_dmnstrtv_mdl_cntrllr.formapagamento"
+                                        max-label="1"
+                                        constructor="{  }"
+                                        config='{"descricao":"Descrição"}'
+                                        ns-required="(tx_dmnstrtv_mdl_cntrllr.entity.$$__submitting) !== true">
+                                    </nsj-lookup>
+
+                                    <!-- Modo visualização -->
+                                    <span
+                                        ng-if="tx_dmnstrtv_mdl_cntrllr.modoVisualizacao"
+                                        id="formapagamento" 
+                                        class="form-control-static" 
+                                        ng-bind="tx_dmnstrtv_mdl_cntrllr.formapagamento.descricao || 'Não informado'"
+                                    ></span>
+
+                                </td>
+
+                                <!-- Município de Prestação -->
+                                <td>
+
+                                    <!-- Modo editável -->
+                                    <nsj-lookup 
+                                        ng-if="!tx_dmnstrtv_mdl_cntrllr.modoVisualizacao"
+                                        name="municipios"
+                                        id-name="pessoamunicipio" 
+                                        factory="ServicosPessoasmunicipios"
+                                        ng-model="tx_dmnstrtv_mdl_cntrllr.municipioprestacao" 
+                                        max-label="1" 
+                                        constructor="{ 'cliente' : tx_dmnstrtv_mdl_cntrllr.entity.cliente.cliente, }"
+                                        config='{ "nome":"Município de Prestacao",  }' 
+                                        ns-required="(tx_dmnstrtv_mdl_cntrllr.entity.$$__submitting) !== true">
+                                    </nsj-lookup>
+
+                                    <!-- Modo visualização -->
+                                    <span 
+                                        ng-if="tx_dmnstrtv_mdl_cntrllr.modoVisualizacao"
+                                        id="municipioprestacao" 
+                                        class="form-control-static" 
+                                        ng-bind="tx_dmnstrtv_mdl_cntrllr.municipioprestacao.nome || 'Não informado'"
+                                    ></span>
+
+                                </td>
+
+                                <!-- Valor -->
+                                <td>
+
+                                    <!-- Modo editável -->
+                                    <input 
+                                        ng-if="!tx_dmnstrtv_mdl_cntrllr.modoVisualizacao"
+                                        type='money' 
+                                        class="form-control" 
+                                        id="valor" 
+                                        name="valor" 
+                                        ng-model="tx_dmnstrtv_mdl_cntrllr.valor" 
+                                        maxlength="16"
+                                        ui-money-mask 
+                                    />
+
+                                    <!-- Modo visualização -->
+                                    <span ng-if="tx_dmnstrtv_mdl_cntrllr.modoVisualizacao" id="valor" class="form-control-static">
+                                        {{ tx_dmnstrtv_mdl_cntrllr.valor | currency : 'R$ ' : 2 }}
+                                    </span>
+
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+
+    <div class="pull-right">
+        <button
+            type="button" class="btn btn-default btn-delete btn-geral" ng-click="tx_dmnstrtv_mdl_cntrllr.close()">
+            Fechar
+        </button>
+
+        <button tem-permissao="crm_contratostaxasadm_gerenciar" ng-if="tx_dmnstrtv_mdl_cntrllr.modoVisualizacao" type="button" class="btn btn-default btn-delete btn-geral" ng-click="tx_dmnstrtv_mdl_cntrllr.cancelarFaturamento()">
+            <i class="fas fa-ban"></i>
+            Cancelar faturamento
+        </button>
+        
+        <button tem-permissao="crm_contratostaxasadm_gerenciar" ng-if="!tx_dmnstrtv_mdl_cntrllr.modoVisualizacao" type="button" class="btn btn-warning btn-save btn-geral" ng-click="tx_dmnstrtv_mdl_cntrllr.gerarFaturamento()">
+            <i class="fas fa-calculator"></i>
+            Gerar faturamento
+        </button>
+
+        <button tem-permissao="crm_contratostaxasadm_gerenciar" ng-if="!tx_dmnstrtv_mdl_cntrllr.modoVisualizacao" type="button" class="btn btn-warning btn-save btn-geral" ng-click="tx_dmnstrtv_mdl_cntrllr.salvarEscolhasAtc()">
+            <i class="fa fa-check"></i>
+            Salvar
+        </button>
+        
+    </div>
+</div>
+
+<div class="content-loading loading-absolute" ng-if="tx_dmnstrtv_mdl_cntrllr.busy" style="padding-top: 270px;">
+    <div class="center-loading text-center">
+        <div class="onloading"></div>
+        Carregando...
+    </div>
+</div>

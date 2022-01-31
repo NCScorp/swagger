@@ -1,0 +1,40 @@
+<div class="height-full layout-">
+    <nsj-headline headline-title="Configuração de Documentos " headline-sub="true">
+        <div class="pull-right">
+
+            <a class="btn btn-sm btn-default hidden-lg hidden-md" ui-sref="crm_atcsconfiguracoesdocumentos({})"
+                title="Voltar"><i class="fas fa-reply"></i><span class="hidden-xs">Voltar</span></a>
+
+
+
+            <a class="btn btn-sm btn-default" ui-sref="crm_atcsconfiguracoesdocumentos({})"
+                title="Voltar à lista">Voltar à lista</a>
+
+
+            <button type="button" class="btn btn-sm btn-warning btn-edit"
+                ui-sref="crm_atcsconfiguracoesdocumentos_edit({ 'atcconfiguracaodocumento' : crm_tcscnfgrcsdcmnts_frm_shw_cntrllr.entity.atcconfiguracaodocumento})"><i
+                    class="fas fa-edit"></i> <span class="hidden-xs">Editar</span></button>
+
+
+        </div>
+    </nsj-headline>
+    <div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : crm_tcscnfgrcsdcmnts_frm_shw_cntrllr.busy }">
+        <div class="nsj-form-view top-buffer bottom-buffer">
+            <crm-atcsconfiguracoesdocumentos-default-show entity="crm_tcscnfgrcsdcmnts_frm_shw_cntrllr.entity"
+                action="crm_tcscnfgrcsdcmnts_frm_shw_cntrllr.action" busy="crm_tcscnfgrcsdcmnts_frm_shw_cntrllr.busy"
+                constructors="crm_tcscnfgrcsdcmnts_frm_shw_cntrllr.constructors">
+            </crm-atcsconfiguracoesdocumentos-default-show>
+        </div>
+
+        <div class="form-group pull-left">
+
+
+        </div>
+        <div class="content-loading" ng-if="crm_tcscnfgrcsdcmnts_frm_shw_cntrllr.busy">
+            <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="templatescomposicoesfamilias" label="templatescomposicoesfamilias" project="crm" orphan="false">
+    <entity schema="crm" table="templatespropostascomposicoesfamilias">
+        <fieldmodel name="templatecomposicaofamilia" datatype="guid" isid="true" column="templatepropostacomposicaofamilia"/>
+        <fieldmodel name="templatepropostacomposicao" datatype="string" column="templatepropostacapitulocomposicao"/>
+        <fieldmodel name="familia" datatype="string" column="familia"  useCaseLink="estoque\familias" entityJoinType="left"/>
+        <fieldmodel name="quantidade" datatype="integer" column="quantidade"/>
+        <fieldmodel name="valor" datatype="float" column="valor"/>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid"  column="grupoempresarial"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+        <constructoritem>id_grupoempresarial</constructoritem>
+      <constructoritem required="true">templatepropostacomposicao</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="window" label="Composição">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="templatecomposicaofamilia" visible="false" isid="true"/>
+            <fieldbrowser entitylink="templatepropostacomposicao" visible="false" cansearch="false"/>
+            <fieldbrowser alias="Família de produto" entitylink="familia"  visible="true" fielddetaillookup="{'codigo': 'Código', 'descricao':'Descrição', 'valor':'Valor Base'}"/>
+            <fieldbrowser alias="Quantidade" entitylink="quantidade" visible="true"/>
+            <fieldbrowser alias="Valor" entitylink="valor" visible="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Editar Produto">
+          <layout>
+              <headerform>
+                  <row readonly="templatecomposicaofamilia">
+                      <cell  controltype="lookup" label="Família de produto" colspan="6" entitylink="familia" fielddetaillookup="{'codigo':'Código', 'descricao':'Descrição', 'valor':'Valor Base'}" amountfieldslookup="3">
+                          <validates>
+                              <validate type="vnull" displaytext="O campo família de produtos não pode ser vazio."/>
+                          </validates>
+                      </cell>
+                  </row>
+                  <row>
+                      <cell controltype="textedit" label="Quantidade" colspan="12" entitylink="quantidade">
+                          <validates>
+                              <validate type="greaterthan" value="0" displaytext="A quantidade deve ser maior que 0."/>
+                          </validates>
+                      </cell>
+                  </row>
+              </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>TemplatePropostaComposicaoFamiliaNovo_v2</name>
+                <fromto valueapi="templatepropostacapitulocomposicao" valueentity="templatepropostacomposicao"/>
+                <fromto valueapi="familia" valueentity="familia"/>
+                <fromto valueapi="quantidade" valueentity="quantidade"/>
+                <fromto valueapi="valor" valueentity="valor"/>
+                <fromto valueapi="created_by" valueentity ="logged_user"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+        <action>
+            <name>Update</name>
+            <api>
+                <name>TemplatePropostaComposicaoFamiliaAlterar_v2</name>
+                <fromto valueapi="templatepropostacomposicaofamilia" valueentity="templatecomposicaofamilia"/>
+                <fromto valueapi="templatepropostacapitulocomposicao" valueentity="templatepropostacomposicao"/>
+                <fromto valueapi="familia" valueentity="familia"/>
+                <fromto valueapi="quantidade" valueentity="quantidade"/>
+                <fromto valueapi="valor" valueentity="valor"/>
+                <fromto valueapi="updated_by" valueentity ="logged_user"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>TemplatePropostaComposicaoFamiliaExcluir_v2</name>
+                <fromto valueapi="templatepropostacomposicaofamilia" valueentity="templatecomposicaofamilia"/>
+                <fromto valueapi="tenant" valueentity ="tenant"/>
+                <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

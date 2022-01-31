@@ -1,0 +1,121 @@
+ <form name="$ctrl.form" novalidate="novalidate" role="form"  class="height-full">
+               
+                    <div class="row " ><div class="col-sm-12" >
+                        
+    <nsj-seletor-toggle obj="{{$ctrl.figuraContatoList}}" 
+        ng-on-toggle_change="$ctrl.escolheFiguraContato($event)" ></nsj-seletor-toggle>
+    
+    <div ng-if="!$ctrl.entity.figuracontato && $ctrl.form.$submitted">
+        <div class="alert alert-danger" role="alert" >
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            O campo não pode ser vazio
+        </div>
+    </div>
+
+        </div></div><div class="row " ><div class="col-sm-12" >
+                        
+    <label class="control-label" for="realizadoemdata" style="margin-top: 20px;">Realizado via:*</label>
+
+    <div class="mt-20" style="margin: 0px 0px 20px 0px">
+        <nsj-seletor-list 
+            id="meiocomunicacao" 
+            name="meiocomunicacao" 
+            obj="{{$ctrl.meiosDeComunicacao}}" 
+            ng-on-item_escolhido="$ctrl.escolherMeioComunicacao($event)">
+        </nsj-seletor-list>
+    </div>
+
+    <div ng-if="!$ctrl.entity.meiocomunicacao && $ctrl.form.$submitted">
+        <div class="alert alert-danger" role="alert" >
+            <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+            <span class="sr-only">Erro:</span>
+            O campo não pode ser vazio
+
+
+        </div>
+    </div>
+
+        </div></div><div class="row " ><div class="col-sm-12" >
+                           
+        </div></div><div class="row " ><div class="col-sm-6" >
+                        <div class="form-group">
+	<label class="control-label" for="realizadoemdata">Realizado em:*</label>
+	<nsj-date-picker editable='true' 
+        init-value='$ctrl.entity.realizadoemdata' 
+        date-position="right" type-select="single" 
+        opts="{'class':'form-control', 'id':'realizadoemdata', 'name':'realizadoemdata' , 'ng-model':'$ctrl.entity.realizadoemdata' , 'ng-disabled':'true' , 'ng-required':'($ctrl.entity.$$__submitting) !== true' }">
+    </nsj-date-picker>
+	<div ng-messages="$ctrl.form.realizadoemdata.$error" ng-if="$ctrl.form.realizadoemdata.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="required">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo não pode ser vazio
+		</div>
+	</div>
+</div>
+        </div><div class="col-sm-6" >
+                        <div class="form-group">
+	<label class="control-label" for="realizadoemhora">Às:*</label>
+        <input type='time' class="form-control" id="realizadoemhora" name="realizadoemhora" 
+            ng-model="$ctrl.entity.realizadoemhora" ng-disabled="true" 
+            ng-required="($ctrl.entity.$$__submitting) !== true"
+                    />
+        <div ng-messages="$ctrl.form.realizadoemhora.$error" ng-if="$ctrl.form.realizadoemhora.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="required">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo não pode ser vazio
+		</div>
+	</div>
+</div>
+        </div></div><div class="row " ><div class="col-sm-12" >
+                                </div></div><div class="row " ><div class="col-sm-12" >
+                        <div class="form-group">
+	<label class="control-label" for="receptor">Contato:*</label>
+
+    <nsj-lookup 
+        name="negociocontato" id-name="id" 
+        factory="CrmNegocioscontatos" 
+        ng-model="$ctrl.entity.negociocontato" max-label="2" 
+        constructor="{ 'documento' : $ctrl.entity.documento,  }" 
+        config='{ "nome":"nome", "sobrenome":"sobrenome",  }' 
+        disabled="$ctrl.entity.$$__submitting"
+        ng-change="$ctrl.defineNomeContatoReceptor()"
+    ></nsj-lookup>
+
+    <input ng-show="false" 
+        type='text' class="form-control" id="receptor" name="receptor" 
+        ng-model="$ctrl.entity.receptor" ng-disabled="$ctrl.entity.$$__submitting" 
+        ng-required="($ctrl.entity.$$__submitting) !== true"/>
+        
+    <div ng-messages="$ctrl.form.receptor.$error" ng-if="$ctrl.form.receptor.$dirty || $ctrl.form.$submitted">
+		<div class="alert alert-danger" role="alert" ng-message="required">
+			<span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+			<span class="sr-only">Erro:</span>
+			O campo Contato não pode estar vazio
+		</div>
+	</div>
+</div>
+
+        </div></div><div class="row " ><div class="col-sm-12" >
+                        
+    <label class="control-label" for="historico">Observações:*</label>
+    <div class="form-group">
+        
+    <div class="form-group">
+        <textarea class="form-control"
+            id="historico" name="historico" placeholder="Digite as observações do atendimento"
+            ng-model="$ctrl.entity.historico" ng-disabled="$ctrl.entity.$$__submitting || $ctrl.textAreaBlocked"
+            ng-required="($ctrl.entity.$$__submitting) !== true"></textarea>
+        <div ng-messages="$ctrl.form.historico.$error"
+            ng-if="$ctrl.form.historico.$dirty || $ctrl.form.$submitted">
+            <div class="alert alert-danger" role="alert" ng-message="required" >
+                <span class="fa fa-exclamation-circle" aria-hidden="true"></span>
+                <span class="sr-only">Erro:</span>
+                    O campo não pode ser vazio
+            </div>
+        </div>
+    </div>
+        </div></div>
+</form>

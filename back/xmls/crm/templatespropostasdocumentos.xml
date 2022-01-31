@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="templatespropostasdocumentos" label="templatespropostasdocumentos" orphan="false" project="crm">
+    <entity schema="crm" table="templatespropostasdocumentos">
+        <fieldmodel name="templatepropostadocumento" datatype="guid" isid="true" column="templatepropostadocumento"/>
+        <fieldmodel name="templateproposta" datatype="guid" column="templateproposta"/>
+        <fieldmodel name="created_at" datatype="datetime"  column="created_at"/>
+        <fieldmodel name="created_by" datatype="json"  column="created_by"/>
+        <fieldmodel name="updated_at" datatype="datetime"  column="updated_at"/>
+        <fieldmodel name="updated_by" datatype="json"  column="updated_by"/>
+        <fieldmodel name="tenant" datatype="integer"  column="tenant"/>
+        <fieldmodel name="tipodocumento" datatype="guid" column="tipodocumento"  useCaseLink="ns\tiposdocumentos" entityJoinType="left"/>
+        <fieldmodel name="copiasimples" datatype="boolean" column="copiasimples"/>
+        <fieldmodel name="copiaautenticada" datatype="boolean" column="copiaautenticada"/>
+        <fieldmodel name="original" datatype="boolean" column="original"/>
+        <fieldmodel name="permiteenvioemail" datatype="boolean" column="permiteenvioemail" />
+        <fieldmodel name="id_grupoempresarial" datatype="guid"  column="grupoempresarial"/>
+        <fieldmodel name="pedirinformacoesadicionais" datatype="boolean" column="pedirinformacoesadicionais" />
+        <fieldmodel name="naoexibiremrelatorios" datatype="boolean" column="naoexibiremrelatorios"/>
+    </entity>
+    <constructors>
+        <constructoritem>tenant</constructoritem>
+        <constructoritem>id_grupoempresarial</constructoritem>
+        <constructoritem>templateproposta</constructoritem>
+    </constructors>
+    <viewbrowser label="Documentos do template de apólice" layout="list" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="templatepropostadocumento" isid="true" visible="false"/>
+            <fieldbrowser entitylink="templateproposta" visible="false"/>
+            <fieldbrowser alias="Tipo de documento" entitylink="tipodocumento"  visible="true" fielddetaillookup="{'nome': 'Nome', 'nome':'Nome'}"/>
+            <fieldbrowser alias="Cópia simples" entitylink="copiasimples"  visible="true"/>
+            <fieldbrowser alias="Cópia autenticada" entitylink="copiaautenticada"  visible="true"/>
+            <fieldbrowser alias="Original" entitylink="original"  visible="true"/>
+            <fieldbrowser alias="Permite envio de e-mail" entitylink="permiteenvioemail" visible="false" cansearch="false" />
+            <fieldbrowser alias="Pedir informações adicionais" entitylink="pedirinformacoesadicionais" visible="false" cansearch="false" />
+            <fieldbrowser alias="naoexibiremrelatorios" entitylink="naoexibiremrelatorios"  visible="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Documentos">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell name="tipodocumento" controltype="lookup" label="Tipo de documento" colspan="6" entitylink="tipodocumento" fielddetaillookup="{'nome': 'Nome', 'nome':'Nome'}" amountfieldslookup="1">
+                            <validates>
+                                <validate type="unique" displaytext="A apólice não pode ter tipos de documento repetidos."/>
+                                <validate type="vnull" displaytext="O campo tipo de documento não pode ser vazio."/>
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell name="copiasimples" controltype="checkbox" label="Cópia simples" colspan="3" entitylink="copiasimples"/>
+                    </row>
+                    <row>
+                        <cell name="copiaautenticada" controltype="checkbox" label="Cópia autenticada" colspan="4" entitylink="copiaautenticada"/>
+                    </row>
+                    <row>
+                        <cell name="original" controltype="checkbox" label="Original" colspan="3" entitylink="original"/>
+                    </row>
+                    <row>
+                        <cell name="permiteenvioemail" controltype="checkbox" label="Permite envio por e-mail" colspan="3" entitylink="permiteenvioemail"/>
+                    </row>
+                    <row>
+                        <cell name="pedirinformacoesadicionais" controltype="checkbox" label="Pedir informações adicionais" colspan="3" entitylink="pedirinformacoesadicionais"/>
+                    </row>
+                    <row>
+                        <cell name="naoexibiremrelatorios" controltype="checkbox" label="naoexibiremrelatorios" colspan="3" entitylink="naoexibiremrelatorios"/>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+  <actions>
+    <action>
+        <name>retrieve</name>
+    </action>
+    <action form="default">
+        <name>Insert</name>
+        <api>
+            <name>TemplatePropostaDocumentoNovo_v5</name>
+            <fromto valueapi="templateproposta" valueentity="templateproposta"/>
+            <fromto valueapi="tipodocumento" valueentity="tipodocumento"/>
+            <fromto valueapi="copiasimples" valueentity="copiasimples"/>
+            <fromto valueapi="copiaautenticada" valueentity="copiaautenticada"/>
+            <fromto valueapi="original" valueentity="original"/>
+            <fromto valueapi="permiteenvioemail" valueentity="permiteenvioemail"/>
+            <fromto valueapi="created_by" valueentity="logged_user"/>
+            <fromto valueapi="tenant" valueentity="tenant"/>
+            <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+            <fromto valueapi="pedirinformacoesadicionais" valueentity="pedirinformacoesadicionais"/>
+            <fromto valueapi="naoexibiremrelatorios" valueentity="naoexibiremrelatorios"/>
+        </api>
+    </action>
+    <action form="default">
+      <name>Update</name>
+      <api>
+        <name>TemplatePropostaDocumentoAlterar_v5</name>
+        <fromto valueapi="templatepropostadocumento" valueentity="templatepropostadocumento"/>
+        <fromto valueapi="tipodocumento" valueentity="tipodocumento"/>
+        <fromto valueapi="copiasimples" valueentity="copiasimples"/>
+        <fromto valueapi="copiaautenticada" valueentity="copiaautenticada"/>
+        <fromto valueapi="original" valueentity="original"/>
+        <fromto valueapi="permiteenvioemail" valueentity="permiteenvioemail"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="pedirinformacoesadicionais" valueentity="pedirinformacoesadicionais"/>
+        <fromto valueapi="naoexibiremrelatorios" valueentity="naoexibiremrelatorios"/>
+      </api>
+    </action>
+    <action>
+      <name>Delete</name>
+      <api>
+        <name>TemplatePropostaDocumentoExcluir_v2</name>
+        <fromto valueapi="templatepropostadocumento" valueentity="templatepropostadocumento"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="grupoempresarial" valueentity="id_grupoempresarial"/>
+      </api> 
+    </action>
+  </actions>
+</nsjusecase>

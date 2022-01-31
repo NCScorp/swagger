@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="cidadesinfofunerariasfornecedores" label="cidadesinfofunerariasfornecedores" project="ns" orphan="false">
+    <entity schema="ns" table="cidadesinfofunerariasfornecedores">
+        <fieldmodel name="cidadeinfofunerariafornecedor" datatype="guid" isid="true" column="cidadeinfofunerariafornecedor"/>
+        <fieldmodel name="fornecedor" datatype="guid" column="id_fornecedor" useCaseLink="ns\fornecedores" entityJoinType="left"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+        <fieldmodel name="cidadeinformacaofuneraria" datatype="guid" column="id_cidadefuneraria"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="ordem" datatype="integer" column="ordem"/>
+        <fieldmodel name="updated_by" datatype="json" column="updated_by"/>
+        <fieldmodel name="created_by" datatype="json" column="created_by"/>
+        <fieldmodel name="updated_at" datatype="date" column="updated_at"/>
+        <fieldmodel name="created_at" datatype="date" column="created_at"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">id_grupoempresarial</constructoritem>
+      <constructoritem required="true">cidadeinformacaofuneraria</constructoritem>
+    </constructors>
+    <viewbrowser label="Ranking dos Prestadores de Serviços" layout="list" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="cidadeinfofunerariafornecedor" isid="true" visible="false"/>
+            <fieldbrowser entitylink="cidadeinformacaofuneraria" visible="false"/>
+            <fieldbrowser entitylink="fornecedor" visible="false"/>
+            <fieldbrowser entitylink="ordem" visible="true"/>
+            <fieldbrowser entitylink="updated_at" visible="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+      <form name="default" label="Ranking dos Prestadores de Serviços">
+          <layout>
+            <headerform>
+              <row>
+                <cell label="Fornecedor" colspan="12" controltype="lookup" entitylink="fornecedor" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" >
+                   <validates>
+                        <validate type="unique" displaytext="O Fornecedor deve ser único."/>
+                        <validate type="vnull" displaytext="O Fornecedor não pode ser vazio."/>
+                    </validates>
+                </cell>
+              </row>
+              <row>
+                 <cell controltype="number" label="Ordem" colspan="12" entitylink="ordem">
+                    <validates>
+                        <validate type="vnull" displaytext="O campo ordem não pode estar vazio"></validate>
+                        <validate type="greaterthan" value="-1" displaytext="O campo ordem deve ser maior ou igualque 0."/>
+                    </validates>
+                </cell>
+              </row>
+            </headerform>
+          </layout>
+      </form>
+      <form name="show" label="Ranking dos Prestadores de Serviços">
+          <layout>
+            <headerform>
+              <row>
+                <cell label="Fornecedor" colspan="12" controltype="lookup" entitylink="fornecedor" fielddetaillookup="{'nome':'Nome'}" amountfieldslookup="1" readonly="true" >
+                </cell>
+              </row>
+              <row>
+                <cell name="ordem" controltype="textedit" label="Ordem" colspan="12" entitylink="ordem"/>
+              </row>
+            </headerform>
+          </layout>
+      </form>
+    </forms>
+    <actions>
+     <action form="show">
+          <name>retrieve</name>
+     </action>
+    <action>
+      <name>Insert</name>
+      <api>
+        <name>CidadeInfoFunerariaFornecedorNovo</name>
+        <fromto valueapi="id_cidadefuneraria" valueentity="cidadeinformacaofuneraria"/>
+        <fromto valueapi="id_fornecedor" valueentity="fornecedor"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="ordem" valueentity="ordem"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="created_by" valueentity="logged_user"/>
+      </api>
+    </action> 
+    <action>
+      <name>Update</name>
+      <api>
+        <name>CidadeInfoFunerariaFornecedorAlterar</name>
+        <fromto valueapi="cidadeinfofunerariafornecedor" valueentity="cidadeinfofunerariafornecedor"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="ordem" valueentity="ordem"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="updated_by" valueentity="logged_user"/>
+      </api>
+    </action>
+    <action>
+      <name>Delete</name>
+      <api>
+        <name>CidadeInfoFunerariaFornecedorExcluir</name>
+        <fromto valueapi="cidadeinfofunerariafornecedor" valueentity="cidadeinfofunerariafornecedor"/>
+        <fromto valueapi="id_grupoempresarial" valueentity="id_grupoempresarial"/>
+        <fromto valueapi="tenant" valueentity="tenant"/>
+        <fromto valueapi="id_cidadefuneraria" valueentity="cidadeinformacaofuneraria"/>
+      </api> 
+    </action>
+  </actions>
+</nsjusecase>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="motivosdesqualificacoesprenegocios" label="motivosdesqualificacoesprenegocios" project="crm">
+  <entity schema="crm" table="motivosdesqualificacoesprenegocios">
+    <fieldmodel name="motivodesqualificacaoprenegocio" datatype="guid" isid="true" column="motivodesqualificacaoprenegocio" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    <fieldmodel name="codigo" datatype="string" column="codigo" />
+    <fieldmodel name="descricao" datatype="string" column="descricao" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+    <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+    <constructoritem>id_grupoempresarial</constructoritem>
+  </constructors>
+  <viewbrowser label="Motivos Desqualificações Pre Negocios">
+    <!-- <filters>
+      <fieldsfilters>
+        <fieldfilter entitylink="prenegocio" maxoccurs="unbounded" visible="true">
+          <conditions>
+            <condition type="eq"></condition>
+          </conditions>
+        </fieldfilter>
+      </fieldsfilters>
+    </filters> -->
+    <fieldsbrowser>
+      <fieldbrowser entitylink="motivodesqualificacaoprenegocio" isid="true" visible="false" />
+      <fieldbrowser entitylink="codigo" visible="true"/>
+      <fieldbrowser entitylink="descricao" visible="true"/>
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default" label="Motivos Desqualificações Pré Negocio">
+      <layout>
+        <headerform>
+
+          <row>
+            <cell controltype="textedit" label="codigo" colspan="6" entitylink="codigo">
+              <validates>
+                <validate type="vnull" displaytext="O campo codigo não pode estar vazio"></validate>
+              </validates>
+            </cell>
+            <cell controltype="textedit" label="descricao" colspan="6" entitylink="descricao">
+              <validates>
+                <validate type="vnull" displaytext="O campo descricao não pode estar vazio"></validate>
+              </validates>
+            </cell>
+          </row>
+
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action form="default">
+      <name>retrieve</name>
+    </action>
+  </actions>
+</nsjusecase>

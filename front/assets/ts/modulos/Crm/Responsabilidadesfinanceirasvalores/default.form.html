@@ -1,0 +1,48 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="responsabilidadefinanceira"></label><input
+                    type='text' class="form-control" id="responsabilidadefinanceira" name="responsabilidadefinanceira"
+                    ng-model="$ctrl.entity.responsabilidadefinanceira" ng-disabled="$ctrl.entity.$$__submitting" />
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="responsavelfinanceiro"></label><input type='text'
+                    class="form-control" id="responsavelfinanceiro" name="responsavelfinanceiro"
+                    ng-model="$ctrl.entity.responsavelfinanceiro" ng-disabled="$ctrl.entity.$$__submitting"
+                    ng-required="($ctrl.entity.$$__submitting) !== true" />
+                <div ng-messages="$ctrl.form.responsavelfinanceiro.$error"
+                    ng-if="$ctrl.form.responsavelfinanceiro.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="required"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        O campo responsavel financeiro não pode ser vazio.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-sm-6">
+            <div class="form-group"><label class="control-label" for="valorpagar"></label><input type='number'
+                    class="form-control" id="valorpagar" name="valorpagar" ng-model="$ctrl.entity.valorpagar"
+                    ng-disabled="$ctrl.entity.$$__submitting" />
+                <div ng-messages="$ctrl.form.valorpagar.$error"
+                    ng-if="$ctrl.form.valorpagar.$dirty || $ctrl.form.$submitted">
+                    <div class="alert alert-danger" role="alert" ng-message="number"><span
+                            class="fa fa-exclamation-circle" aria-hidden="true"></span><span
+                            class="sr-only">Erro:</span>
+                        Valor informado não é um número.
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

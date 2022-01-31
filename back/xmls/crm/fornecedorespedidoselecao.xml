@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="fornecedorespedidoselecao" label="fornecedorespedidoselecao" project="crm" >
+    <entity schema="crm" table="vw_fornecedorespedidoselecao_v3">
+        <fieldmodel name="fornecedor" datatype="guid" isid="true" column="fornecedor"/>
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="ordem" datatype="integer" column="ordem"/>
+        <fieldmodel name="razaosocial" datatype="string" column="razaosocial"/>
+        <fieldmodel name="nomefantasia" datatype="string" column="nomefantasia"/>
+        <fieldmodel name="status" datatype="integer" column="status"/>
+        <fieldmodel name="ultimaatualizacao" datatype="datetime" column="ultimaatualizacao"/>
+        <fieldmodel name="municipioibge" datatype="string" column="municipioibge"/>
+        <fieldmodel name="origemconsulta" datatype="integer" column="origemconsulta"/>
+        <fieldmodel name="estabelecimentoid" datatype="guid" column="estabelecimentoid" useCaseLink="ns\estabelecimentos" entityJoinType="left"/>
+        <fieldmodel name="cnpj" datatype="string" column="cnpj"/>
+    </entity>
+    <constructors>
+      <constructoritem required="true">tenant</constructoritem>
+      <constructoritem required="true">id_grupoempresarial</constructoritem>
+    </constructors>
+    <viewbrowser label="Selecione o Prestador de Serviço " layout="table" paginate="true" target="window">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="fornecedor" isid="true" visible="false"/>
+            <fieldbrowser alias="Município" entitylink="municipioibge" visible="true" cansearch="true" indefaultorder="true"/>
+            <fieldbrowser alias="Ordem" entitylink="ordem" visible="true" cansearch="true" indefaultorder="true"/>
+            <fieldbrowser alias="Razão Social" entitylink="razaosocial" visible="true" cansearch="true" />
+            <fieldbrowser alias="Nome Fantasia" entitylink="nomefantasia" visible="true" cansearch="true" />
+            <fieldbrowser alias="Status" entitylink="status" visible="true"/>
+            <fieldbrowser alias="Ranqueado em" entitylink="ultimaatualizacao" visible="true"/>
+            <fieldbrowser alias="Origem" entitylink="origemconsulta" visible="true"/>
+            <fieldbrowser alias="Estabelecimento" entitylink="estabelecimentoid" visible="false"/>
+            <fieldbrowser alias="CNPJ" entitylink="cnpj" visible="true"/>
+        </fieldsbrowser>
+        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="municipioibge">
+                    <conditions>
+                        <condition type="eq" />
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+    </viewbrowser>
+    <forms>
+    </forms>
+</nsjusecase>

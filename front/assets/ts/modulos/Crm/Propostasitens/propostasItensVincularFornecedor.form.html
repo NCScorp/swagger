@@ -1,0 +1,13 @@
+<form name="$ctrl.form" novalidate="novalidate" role="form" class="height-full">
+
+    <div class="row ">
+        <div class="col-sm-12">
+            <div class="form-group"><label class="control-label" for="fornecedor">Fornecedor</label>
+                <nsj-lookup name="fornecedor" id-name="fornecedor" factory="NsFornecedores"
+                    ng-model="$ctrl.entity.fornecedor" max-label="1" constructor="{  }" config='{ "nome":"Nome",  }'
+                    disabled="$ctrl.entity.escolhacliente && $ctrl.entity.fornecedor||$ctrl.entity.escolhacliente && $ctrl.entity.fornecedor||$ctrl.entity.$$__submitting">
+                </nsj-lookup>
+            </div>
+        </div>
+    </div>
+</form>

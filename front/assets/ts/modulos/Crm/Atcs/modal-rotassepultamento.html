@@ -1,0 +1,40 @@
+<div class="rotas-sepultamento-modal">
+    <div class="modal-header">        
+        <h3 class="modal-title" id="modal-title">Rotas</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+            ng-click="crm_atcs_rotas_sepultamento_mdl_ctrl.close()"><span aria-hidden="true">&times;</span></button>
+    </div>
+
+    <div class="modal-body" >
+        <div ng-if="!crm_atcs_rotas_sepultamento_mdl_ctrl.isBusy()">
+            <span>{{crm_atcs_rotas_sepultamento_mdl_ctrl.error}}</span>
+            <table class="table table-bordered" ng-if="crm_atcs_rotas_sepultamento_mdl_ctrl.error == null">
+                <thead>
+                    <tr>
+                        <th class="active">Rota</th>
+                        <th class="active">Distância</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="rota in crm_atcs_rotas_sepultamento_mdl_ctrl.rotas">
+                        <td>Via {{rota.sumario}}</td>
+                        <td>{{rota.distancia}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="center-loading text-center" ng-if="crm_atcs_rotas_sepultamento_mdl_ctrl.isBusy()">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <a class="fechar btn btn-sm" ng-click="crm_atcs_rotas_sepultamento_mdl_ctrl.close()"
+            ng-disabled="crm_atcs_rotas_sepultamento_mdl_ctrl.isBusy()">
+            Fechar
+        </a>
+    </div>
+</div>

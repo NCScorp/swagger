@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+        
+    webpack:
+        image: "nasajon/yarn"
+        working_dir: /home/node/app
+        environment:
+        - NODE_ENV=development
+        volumes:
+        - $PWD:/home/node/app
+        privileged: true
+        restart: always   
+        ports:
+        - "9000:9000"
+        command: "node node_modules/.bin/webpack-dev-server"

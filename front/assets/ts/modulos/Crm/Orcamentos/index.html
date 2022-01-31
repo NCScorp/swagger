@@ -1,0 +1,95 @@
+<div ng-class="{'nsj-loading-page' : crm_rcmnts_lst_cntrllr.busy }" class='crm_orcamentos nsj-layout '>
+    <div class="nsj-aside-list height-full col-md-12"
+        ng-class="{ 'hidden-sm hidden-xs' : (('crm_orcamentos_show'| isStateEq) || ('crm_orcamentos_edit'| isStateEq) || ('crm_orcamentos_new'| isStateEq ))}">
+        <div class='row height-full'>
+
+            <div class="panel panel-default height-full">
+                <nsj-headline headline-title="Orçamento"
+                    ng-class="{ 'hidden-sm hidden-xs' : (('crm_orcamentos_show'| isStateEq) || ('crm_orcamentos_edit'| isStateEq) || ('crm_orcamentos_new'| isStateEq ))}">
+
+                    <nsj-button color="warning" icon="fa fa-plus" size="xs" class="hidden-xs"
+                        ui-sref="crm_orcamentos_new({})">
+                        Criar
+                    </nsj-button>
+                    <nsj-button color="warning" format="fixed circle" icon="fa fa-plus" size="lg"
+                        class="hidden-sm hidden-md hidden-lg" ui-sref="crm_orcamentos_new({})">
+                        <span class="hidden-xs">Criar</span>
+                    </nsj-button>
+                </nsj-headline>
+
+                <nsj-toolbar ng-on-change_toolbar="crm_rcmnts_lst_cntrllr.search($event.detail)" search="false"
+                    refresh="true" holder="Busca" model-search="{{crm_rcmnts_lst_cntrllr.service.filter}}"
+                    select="{{crm_rcmnts_lst_cntrllr.selectPage && crm_rcmnts_lst_cntrllr.selected.length === crm_rcmnts_lst_cntrllr.entities.length && !crm_rcmnts_lst_cntrllr.selectAll && !crm_rcmnts_lst_cntrllr.service.loadParams.finished}}"
+                    select-all="{{crm_rcmnts_lst_cntrllr.selectAll}}"
+                    item-in-page="{{crm_rcmnts_lst_cntrllr.entities.length}}"
+                    item-all="{{crm_rcmnts_lst_cntrllr.entities[0].full_count}}">
+                    <nsj-filters slot="filters">
+                        <nsj-filter-seletor options="{{crm_rcmnts_lst_cntrllr.$rootScope.OPTIONS_CrmOrcamentos}} "
+                            ng-if="false" type="seletor"
+                            max-occurs="{{crm_rcmnts_lst_cntrllr.$rootScope.MAXOCCURS_CrmOrcamentos}} "
+                            input="{{crm_rcmnts_lst_cntrllr.$rootScope.SELECTS_CrmOrcamentos}} "
+                            text-disabled="Selecionar..." model="{{crm_rcmnts_lst_cntrllr.filters}} ">
+                        </nsj-filter-seletor>
+                    </nsj-filters>
+
+                </nsj-toolbar>
+                <div class="panel-body body-list">
+                    <div class="list-group" id="crm_orcamentos_list" infinite-scroll='crm_rcmnts_lst_cntrllr.nextPage()'
+                        infinite-scroll-disabled='crm_rcmnts_lst_cntrllr.isBusy()' infinite-scroll-distance='1'> <a href
+                            ui-sref='crm_orcamentos_show({orcamento : entity.orcamento})' class="list-group-item"
+                            ng-repeat="entity in crm_rcmnts_lst_cntrllr.entities" ui-sref-active="active">
+
+                            <h4 class="list-group-item-heading">
+                                {{ entity.orcamento }}
+                            </h4>
+                            <p class="list-group-item-text"><strong>familia:</strong>
+
+                                {{ entity.propostaitemfamilia.propostaitemfamilia }}
+                            </p>
+                            <p class="list-group-item-text"><strong>valor:</strong>
+
+                                {{ entity.propostaitemfamilia.valor| currency : "R$ " }}
+                            </p>
+                            <p class="list-group-item-text"><strong>funcao:</strong>
+
+                                {{ entity.propostaitemfuncao.propostaitemfuncao }}
+                            </p>
+                            <p class="list-group-item-text"><strong>Valor:</strong>
+                                {{ entity.valor| currency : "R$ " }}
+                            </p>
+                            <p class="list-group-item-text"><strong>Acrescimo:</strong>
+                                {{ entity.acrescimo }}
+                            </p>
+                            <p class="list-group-item-text"><strong>Desconto:</strong>
+                                {{ entity.desconto }}
+                            </p>
+                            <p class="list-group-item-text">
+                                {{ entity.faturar ? 'Sim' : 'Não'  }}
+                            </p>
+                        </a>
+                        <p class="list-group-item"
+                            ng-if="!crm_rcmnts_lst_cntrllr.finished && (crm_rcmnts_lst_cntrllr.service.to_load <= 0)">
+                            <a href="" ng-click="crm_rcmnts_lst_cntrllr.loadMore()">Ver mais...</a>
+                        </p>
+                        <p class="text-center article-loading height-full"
+                            ng-class="{'onloading' : crm_rcmnts_lst_cntrllr.isBusy() }"
+                            ng-if="crm_rcmnts_lst_cntrllr.isBusy()"></p>
+                        <p class="text-center nfound"
+                            ng-if="crm_rcmnts_lst_cntrllr.entities.length == 0 && !crm_rcmnts_lst_cntrllr.isBusy()">
+                            Nenhum dado encontrado</p>
+                    </div>
+
+                </div>
+                <!--/panel-body-->
+            </div>
+            <!--/panel-->
+        </div>
+    </div>
+
+    <div class="content-loading" ng-if="crm_rcmnts_lst_cntrllr.busy">
+        <div class="center-loading text-center">
+            <div class="onloading"></div>
+            Carregando...
+        </div>
+    </div>
+</div>

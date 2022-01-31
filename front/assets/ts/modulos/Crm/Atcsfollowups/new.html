@@ -1,0 +1,27 @@
+<div ng-controller="CrmAtcsfollowupsFormNewController as ctrl_newfollowups" ng-inject="{entity:crm_tcs_cntrllr.entity}">
+    <form nsj-focus name="ctrl_newfollowups.form" novalidate="novalidate" ng-class="{'content-scroll':'list' === 'table','nsj-loading-page' : ctrl_newfollowups.busy }" role="form" class="height-full">
+
+        <crm-atcsfollowups-default
+            entity="ctrl_newfollowups.entity"
+            form="ctrl_newfollowups.form"
+            busy="ctrl_newfollowups.busy"
+            action="ctrl_newfollowups.action"
+            constructors="ctrl_newfollowups.constructors">
+
+        </crm-atcsfollowups-default>
+
+        <button type="button"
+                ng-click="ctrl_newfollowups.submit()"
+                ng-class="{loading:ctrl_newfollowups.entity.$$__submitting}"
+                ng-disabled="ctrl_newfollowups.entity.$$__submitting || ctrl_newfollowups.form.$pristine"
+                class="btn btn-sm btn-warning btn-save btn-geral">
+
+            <i class="fa fa-check"></i> Salvar
+        </button>
+
+        <a class="btn btn-sm" ng-click="ctrl_followups.mudaVisualizacaoFollowup()">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            Cancelar
+        </a>
+    </form>
+</div>

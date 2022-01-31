@@ -1,0 +1,269 @@
+.crm-painel-view {
+    @mixin classificadorcores($cor-base) {
+        &.ordem-0 {
+            background-color: $cor-base;
+        }
+        &.ordem-1 {
+            background-color: lighten($cor-base, 10%);
+        }
+        &.ordem-2 {
+            background-color: lighten($cor-base, 20%);
+        }
+        &.ordem-3 {
+            background-color: lighten($cor-base, 30%);
+        }
+        &.ordem-4 {
+            background-color: lighten($cor-base, 40%)
+        }
+        &.ordem-5 {
+            background-color: lighten($cor-base, 50%);
+        }
+        &.ordem-6 {
+            background-color: lighten($cor-base, 60%);
+        }
+    }
+
+    // Body da tela de paineis
+    .painel-body {
+        // Painel de marketing
+        .crm-painel-marketing{
+            padding: 15px 0;
+
+            // Accordion de coorte de campanhas
+            .coorte-campanhas {
+                margin: 20px;
+                margin-top: 0;
+
+                .body {
+                    padding: 10px 0;
+                    
+                    // Header
+                    .coorte-campanhas-header {
+                        display: flex;
+                        flex-wrap: wrap;
+    
+                        .filtro {
+                            padding: 0 5px;
+                            min-width: 250px;
+                            flex: 1;
+                        }
+                    }
+                    
+                    // Corpo
+                    .coorte-campanhas-body {
+                        // Aparece barra de scroll lateral, quando necessário
+                        overflow-y: auto;
+                        border-top: 1px solid #ccc;
+                        padding-top: 10px;
+    
+                        // Tabela de dados
+                        table.dados {
+                            width: 100%;
+                            font-size: 14px;
+                            border-spacing: 4px;
+                            border-collapse: separate;
+                            
+                            // Cabeçalho
+                            thead {
+                                th {
+                                    padding: 0 5px;
+                                    height: 50px;
+                                    background-color: #eaeaea;
+                                    text-align: center;
+    
+                                    &.total {
+                                        padding: 0 10px;
+                                        background-color: #a9a9a9;
+                                        width: 100px;
+                                    }
+                                    &.taxa-conversao {
+                                        width: 150px;
+                                    }
+                                }
+                            }
+                            // Corpo e Rodapé
+                            tbody, tfoot {
+                                tr {
+                                    td {
+                                        text-align: center;
+    
+                                        &:first-child {
+                                            font-weight: 600;
+                                            padding: 0 5px;
+                                            width: 120px;
+                                        }
+    
+                                        &:first-child, &.taxa-conversao {
+                                            background-color: #eaeaea;
+                                        }
+    
+                                        &.total {
+                                            background-color: #a9a9a9;
+                                        }
+    
+                                        &.qualificacao {
+                                            .qualificacao-container {
+                                                display: flex;
+                                                flex-direction: column;
+                                                min-height: 50px;
+    
+                                                .item {
+                                                    display: flex;
+                                                    align-items: center;
+                                                    justify-content: center;
+                                                    flex-grow: 1;
+                                                    margin-bottom: 2px;
+    
+                                                    &:last-child {
+                                                        margin-bottom: 0;
+                                                    }
+    
+                                                    &.qualificados {
+                                                        border: 1px solid #55d170;
+                                                    }
+        
+                                                    &.desqualificados {
+                                                        border: 1px solid #f15e5e;
+                                                    }
+                                                }
+    
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            // Rodapé
+                            tfoot {
+                                background-color: transparent;
+                            }
+                        }
+
+                        // Mensagem quando o painel não foi carregado
+                        .msg-sem-dados {
+                            text-align: center;
+                            margin: 10px;
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+
+            // Grupo de accordions classificadores
+            .classificadores {
+                display: flex;
+                flex-wrap: wrap;
+
+                .accordion-classificadores{
+                    flex: 1;
+                    min-width: 300px;
+
+                    nsj-accordion {
+                        margin: 20px;
+                        margin-top: 0;
+
+                        .body {
+                            padding-top: 0;
+                            padding-bottom: 0;
+
+                            // Grupo de dados
+                            .grupo {
+                                padding: 10px 0;
+    
+                                .grupo-titulo {
+                                    text-align: center;
+                                    font-weight: 600;
+                                }
+    
+                                // Entidade
+                                .entidade {
+                                    // Barra de classificadores da entidade
+                                    .classificadores {
+                                        display: flex;
+                                        height: 30px;
+                                        
+                                        .msg-sem-dados {
+                                            flex: 1;
+                                            background-color: #d9d9d9;
+                                        }
+    
+                                        // Item de cada classificador na barra
+                                        .classificador {
+                                            // Campanha de origem
+                                            &.entidade-0{
+                                                @include classificadorcores(#388c38);
+                                            }
+                                            // Mídia de origem
+                                            &.entidade-1{
+                                                @include classificadorcores(#5e945e);
+                                            }
+                                            // Tipo de acionamento
+                                            &.entidade-2{
+                                                @include classificadorcores(#7a967a);
+                                            }
+                                            // Estabelecimento
+                                            &.entidade-3{
+                                                @include classificadorcores(#51718e);
+                                            }
+                                            // Area de negócio
+                                            &.entidade-4{
+                                                @include classificadorcores(#68848d);
+                                            }
+                                            // Atribuição
+                                            &.entidade-5{
+                                                @include classificadorcores(#828a94);
+                                            }
+                                            // Segmento de atuação
+                                            &.entidade-6{
+                                                @include classificadorcores(#904f4f);
+                                            }
+                                            // Faturamento Anual
+                                            &.entidade-7{
+                                                @include classificadorcores(#966a64);
+                                            }
+                                            // É cliente
+                                            &.entidade-8{
+                                                @include classificadorcores(#dc9e9e);
+                                            }
+                                            // Cargo do contato
+                                            &.entidade-9{
+                                                @include classificadorcores(#968034);
+                                            }
+                                            // Qualificado em
+                                            &.entidade-10{
+                                                @include classificadorcores(#966c94);
+                                            }
+                                            // Motivos de desqualificação
+                                            &.entidade-11{
+                                                @include classificadorcores(#7a6396);
+                                            }
+                                        }
+                                    }
+    
+                                    &.filtrado {
+                                        .classificadores {
+                                            .classificador {
+                                                opacity: 0.1;
+    
+                                                &.filtro-selecionado {
+                                                    opacity: 1;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            // Mensagem quando o painel não foi carregado
+                            .msg-painel-sem-dados {
+                                text-align: center;
+                                margin: 10px;
+                                font-weight: 600;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

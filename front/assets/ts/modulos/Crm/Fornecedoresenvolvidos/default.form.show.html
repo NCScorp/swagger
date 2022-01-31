@@ -1,0 +1,29 @@
+<div class="row  row-form-view">
+    <div class="col-sm-12">
+        <div class="form-group clearfix"><label class="control-label"></label>
+            <p class="form-control-static"><span id="block_mensagem" class="form-control-static"
+                    ng-bind="($ctrl.entity.block_mensagem) || 'Não informado'"></span></p>
+        </div>
+    </div>
+    <div class="col-sm-0">
+        <div class="form-group clearfix"><label class="control-label"></label>
+            <p class="form-control-static"><span id="fornecedor" class="form-control-static"
+                    ng-bind="$ctrl.entity.fornecedor.codigo || 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>
+<div class="row  row-form-view">
+    <div class="col-sm-7">
+        <div class="form-group clearfix"><label class="control-label">Via de acionamento </label>
+            <p class="form-control-static"><span id="acionamentometodo" class="form-control-static"
+                    ng-bind="({&quot;1&quot;:&quot;Sistema&quot;,&quot;2&quot;:&quot;Email&quot;,&quot;3&quot;:&quot;Telefone&quot;}[$ctrl.entity.acionamentometodo])|| 'Não informado'"></span>
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="form-group clearfix"><label class="control-label">Tempo limite de espera </label>
+            <p class="form-control-static"><span id="acionamentorespostaprazo" class="form-control-static"
+                    ng-bind="$ctrl.entity.acionamentorespostaprazo|| 'Não informado'"></span></p>
+        </div>
+    </div>
+</div>

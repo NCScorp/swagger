@@ -1,0 +1,42 @@
+<div class="row  row-form-view">
+	<div class="col-sm-12" ng-if="false">
+		<div class="form-group clearfix">
+			<label class="control-label"></label>
+			<p class="form-control-static">
+				<span id="propostacapitulo" class="form-control-static" ng-if="false"
+					ng-bind="$ctrl.entity.propostacapitulo || 'Não informado'"></span>
+			</p>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="form-group clearfix"><label class="control-label">Serviço </label>
+			<p class="form-control-static"><span id="composicao" class="form-control-static"
+					ng-bind="$ctrl.entity.composicao.nome || 'Não informado'"></span><br><span
+					class="sub-title"><b>Código: </b><span
+						ng-bind="$ctrl.entity.composicao.codigo || 'Não informado.'"></span></span><br>
+
+					<span class="sub-title"><b>Descrição: </b>
+					<span ng-if="!$ctrl.entity.nomeservicoalterado" ng-bind="$ctrl.entity.composicao.descricao || 'Não informado.'"></span>
+					<span ng-if="$ctrl.entity.nomeservicoalterado" ng-bind="$ctrl.entity.nome || 'Não informado.'"></span>
+				</span>
+			</p>
+		</div>
+	</div>
+</div>
+<div class="row  row-form-view">
+	<div class="col-sm-12">
+		<nsj-custom-field id-field="camposcustomizadosArray" ng-if="$ctrl.camposcustomizadosArray.length > 0"
+			ng-prop-custom_fields="$ctrl.camposcustomizadosArray" ng-prop-model="$ctrl.entity.camposcustomizados"
+			mode="view">
+			</nsj-custom-fields>
+	</div>
+</div>
+
+<div class="row  row-form-view">
+	<div class="col-sm-12" ng-if="false">
+		<div class="form-group clearfix"><label class="control-label">Observação </label>
+			<p class="form-control-static"><span id="observacaocomposicao" class="form-control-static"
+					ng-bind="$ctrl.entity.observacaocomposicao|| 'Não informado'"></span></p>
+		</div>
+	</div>
+</div>

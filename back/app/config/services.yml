@@ -1,0 +1,797 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+parameters:
+    documentos_adapter_path: '%env(amazon_s3_bucket_path)%arquivos'
+    logos_adapter_path: '%env(amazon_s3_bucket_path)%logos'
+    imagens_adapter_path: '%env(amazon_s3_bucket_path)%arquivos'
+    gp_url: '%env(gp_url)%'
+    diretorio_sistema_id: '%env(diretorio_sistema_id)%'
+    #parameter_name: value
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+
+    # makes classes in src/AppBundle available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    Nasajon\AppBundle\:
+        resource: '../../src/Nasajon/AppBundle/*'
+
+    # Classe resonsável por renomear os arquivos "upados" pela classe UploadListener
+    app.upload_listener_renamer:
+        class: Nasajon\AppBundle\EventListener\UploadListenerRenamer
+        public: true
+
+    appbundle.upload_listener:
+        class : Nasajon\AppBundle\EventListener\UploadListener
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+            # Abaixo, opções de eventos para serem manipulados no UploadListener
+            # - { name: kernel.event_listener, event: oneup_uploader.post_upload, method: onPostUpload }
+            # - { name: kernel.event_listener, event: oneup_uploader.pre_upload, method: onPreUpload }
+        arguments :
+            - "@knp_gaufrette.filesystem_map"
+
+    cloudwatch_handler:
+        class: Maxbanton\Cwh\Handler\CloudWatch
+        arguments:
+            - "@aws.cloudwatchlogs" 	# Config Name
+            - '%env(cloudwatchlogs_group)%'  # Group Name
+            - '%env(cloudwatchlogs_stream)%' # Stream Name
+            - 30                     # retention Days
+            - 10                  # logs In Batch
+            - { mytag: "tag" }       # tags
+            - INFO               # logLevel
+            - true               # bubble
+            - false              #createGroup (Se deixar true, ele fara uma requisição para saber se existe toda vez que criar um log e isso deixa API lenta)
+
+
+    
+    Nasajon\AppBundle\EventListener\MDAFixedAttributesListener:
+        class : Nasajon\AppBundle\EventListener\MDAFixedAttributesListener
+        tags:
+           - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 100 }
+        arguments :
+            - "@security.token_storage"
+            - "@nasajon_mda.fixed_attributes"
+            - '@Nasajon\AppBundle\Repository\TenantsRepository'
+
+    Nasajon\MDABundle\Controller\Ns\Pessoas\LogosController:
+        class : Nasajon\AppBundle\Controller\Ns\Pessoas\LogosController
+
+    Nasajon\MDABundle\Service\Ns\Pessoas\LogosService:
+        class : Nasajon\AppBundle\Service\Ns\Pessoas\LogosService
+        public: true
+        arguments :
+            $repository: '@Nasajon\MDABundle\Repository\Ns\Pessoas\LogosRepository'
+            $uploadFilesService: '@appbundle.upload_files_service'
+
+    Nasajon\MDABundle\Controller\Crm\ListadavezconfiguracoesController:
+        class : Nasajon\AppBundle\Controller\Crm\ListadavezconfiguracoesController
+
+    Nasajon\MDABundle\Service\Crm\ListadavezconfiguracoesService:
+        class : Nasajon\AppBundle\Service\Crm\ListadavezconfiguracoesService
+        public: true
+        arguments :
+            $repository: '@Nasajon\MDABundle\Repository\Crm\ListadavezconfiguracoesRepository'
+            $lstvzrgsrvc: '@Nasajon\MDABundle\Service\Crm\ListadavezregrasService'
+
+    Nasajon\MDABundle\Controller\Crm\ResponsabilidadesfinanceirasController:
+        class : Nasajon\AppBundle\Controller\Crm\ResponsabilidadesfinanceirasController
+
+    Nasajon\MDABundle\Service\Crm\ResponsabilidadesfinanceirasService:
+        class : Nasajon\AppBundle\Service\Crm\ResponsabilidadesfinanceirasService
+        public: true
+        arguments :
+            $repository: '@Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasRepository'
+            $crmRspnsblddsfnncrsvlrsSrvc: '@Nasajon\MDABundle\Service\Crm\ResponsabilidadesfinanceirasvaloresService'
+    
+    Nasajon\MDABundle\Repository\Crm\PropostasitensRepository:
+        class : Nasajon\AppBundle\Repository\Crm\PropostasitensRepository
+        public: true
+            
+    Nasajon\MDABundle\Service\Crm\ResponsabilidadesfinanceirasvaloresService:
+        class : Nasajon\MDABundle\Service\Crm\ResponsabilidadesfinanceirasvaloresService
+        public: true
+
+    Nasajon\MDABundle\Service\Crm\ListadavezvendedoresService:
+        class : Nasajon\AppBundle\Service\Crm\ListadavezvendedoresService
+        public: true
+        arguments :
+            - '@Nasajon\MDABundle\Repository\Crm\ListadavezvendedoresRepository'
+            - '@Nasajon\MDABundle\Service\Crm\ListadavezvendedoresitensService'
+
+    Nasajon\LoginBundle\Controller\ProfileController:
+        class : Nasajon\AppBundle\LoginBundle\Controller\ProfileController
+
+    Nasajon\LoginBundle\Controller\MainController:
+        class : Nasajon\AppBundle\LoginBundle\Controller\MainController
+
+    Nasajon\MDABundle\Service\Ns\CamposcustomizadosService:
+        class : Nasajon\MDABundle\Service\Ns\CamposcustomizadosService
+        public: true
+
+    Nasajon\MDABundle\Service\Ns\EnderecosService:
+        class : Nasajon\MDABundle\Service\Ns\EnderecosService
+        public: true
+    
+    Nasajon\MDABundle\Controller\Ns\EnderecosController:
+        class : Nasajon\AppBundle\Controller\Ns\EnderecosController
+        public: true
+    
+    appbundle.upload_files_service:
+        class : Nasajon\AppBundle\Service\Common\UploadFilesAmazonS3Service
+        public: true
+        arguments:
+            $adapter: '@gaufrette.logos_adapter'
+            $s3Client: '@aws.s3'
+            $s3Bucket: '%env(amazon_s3_bucket_name)%'
+            $s3Path: '%logos_adapter_path%'
+    
+    appbundle.envio_email_service:
+        class : Nasajon\AppBundle\Service\Common\EnvioEmailService
+        public: true
+        arguments:
+          $diretorio: '@nasajon_sdk.diretorio'
+
+    appbundle.documentos_fop_service:
+        class : Nasajon\AppBundle\Service\Common\DocumentosFopService
+        public: true
+        arguments:
+          - '@nasajon_sdk.diretorio'
+
+    Nasajon\AppBundle\Service\Common\GoogleMapsService:
+        class : Nasajon\AppBundle\Service\Common\GoogleMapsService
+        public: true
+        arguments:
+            $googlemaps_apikey: '%env(googlemaps_apikey)%'
+            $tipoLogradouroService: '@Nasajon\MDABundle\Service\Ns\TiposlogradourosService'
+            $paisesService: '@Nasajon\MDABundle\Service\Ns\PaisesService'
+            $municipiosService: '@Nasajon\MDABundle\Service\Ns\MunicipiosService'
+            $estadosService: '@Nasajon\MDABundle\Service\Ns\EstadosService'
+            $cidadesestrangeirasService: '@Nasajon\MDABundle\Service\Ns\CidadesestrangeirasService'
+
+    Nasajon\MDABundle\Type\Validation\ExistValidator:
+        class : Nasajon\AppBundle\Type\Validation\ExistValidator
+        public: true
+        arguments:
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+
+    Nasajon\AppBundle\Service\Crm\AtcsRelatoriosService:
+        class : Nasajon\AppBundle\Service\Crm\AtcsRelatoriosService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\AtcsRelatoriosRepository'
+            - "@security.token_storage"
+            - "@nasajon_mda.fixed_attributes"
+            - '@Nasajon\MDABundle\Service\Crm\AtcsareasService'
+            - '@Nasajon\MDABundle\Service\Ns\EstabelecimentosService'
+            - '@Nasajon\MDABundle\Service\Ns\ClientesService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcsresponsaveisfinanceirosService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcsdadosseguradorasService'
+            - '@Nasajon\AppBundle\Service\Crm\ConfiguracoestaxasadministrativasService'
+
+    Nasajon\MDABundle\Service\Crm\FornecedoresenvolvidosService:
+        class : Nasajon\AppBundle\Service\Crm\FornecedoresenvolvidosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosRepository'
+            - '@Nasajon\MDABundle\Service\Crm\FornecedoresenvolvidosanexosService'
+            - '@Nasajon\MDABundle\Service\Crm\OrcamentosService'
+            - '@Nasajon\MDABundle\Service\Ns\FornecedoresdocumentosService'
+            - '@Nasajon\MDABundle\Service\Ns\TiposdocumentosService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcstiposdocumentosrequisitantesService'
+            - '@appbundle.upload_files_service'
+            - '@Nasajon\AppBundle\Service\Crm\AtcsRelatoriosService'
+            - '@appbundle.documentos_fop_service'
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsRepository'
+            - '@Nasajon\MDABundle\Service\Crm\PropostasitensService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcscontasapagarService'
+
+    Nasajon\MDABundle\Service\Crm\FornecedoresenvolvidosanexosService:
+        class : Nasajon\AppBundle\Service\Crm\FornecedoresenvolvidosanexosService
+        public: true
+        arguments :
+            $repository: '@Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosanexosRepository'
+            $uploadFilesService: '@appbundle.upload_files_service'
+            $adapter: '@gaufrette.documentos_adapter'
+            $s3Path: '%documentos_adapter_path%'
+            
+
+    Nasajon\MDABundle\Controller\Crm\AtcscontasapagarController:
+        class : Nasajon\AppBundle\Controller\Crm\AtcscontasapagarController
+        public: true
+
+    Nasajon\MDABundle\Controller\Ns\DocumentosfopController:
+        class : Nasajon\AppBundle\Controller\Ns\DocumentosfopController
+        public: true
+
+    Nasajon\MDABundle\Service\Ns\DocumentosfopService:
+        class : Nasajon\AppBundle\Service\Ns\DocumentosfopService
+        public: true
+
+    Nasajon\MDABundle\Service\Crm\AtcsRelatoriosRpsService:
+        class : Nasajon\AppBundle\Service\Crm\AtcsRelatoriosRpsService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsRelatoriosRpsRepository'
+            - "@security.token_storage"
+            - "@nasajon_mda.fixed_attributes"
+
+    Nasajon\MDABundle\Repository\Crm\AtcsRelatoriosRpsRepository:
+        class : Nasajon\AppBundle\Repository\Crm\AtcsRelatoriosRpsRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Ns\TelefonesRepository:
+        class : Nasajon\AppBundle\Repository\Ns\TelefonesRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\OrcamentosRepository:
+        class : Nasajon\AppBundle\Repository\Crm\OrcamentosRepository
+        public: true
+        
+    Nasajon\MDABundle\Repository\Financas\ProjetosRepository:
+        class : Nasajon\AppBundle\Repository\Financas\ProjetosRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Ns\FornecedoresRepository:
+        class : Nasajon\AppBundle\Repository\Ns\FornecedoresRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Ns\FornecedoressuspensosRepository:
+        class : Nasajon\AppBundle\Repository\Ns\FornecedoressuspensosRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Crm\AtcspendenciasRepository:
+        class : Nasajon\AppBundle\Repository\Crm\AtcspendenciasRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosRepository:
+        class : Nasajon\AppBundle\Repository\Crm\FornecedoresenvolvidosRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository:
+        class : Nasajon\AppBundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Gp\FuncoescustosRepository:
+        class : Nasajon\AppBundle\Repository\Gp\FuncoescustosRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosRepository:
+        class : Nasajon\AppBundle\Repository\Crm\FornecedoresenvolvidosRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository:
+        class : Nasajon\AppBundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Gp\FuncoescustosRepository:
+        class : Nasajon\AppBundle\Repository\Gp\FuncoescustosRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosRepository:
+        class : Nasajon\AppBundle\Repository\Crm\FornecedoresenvolvidosRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository:
+        class : Nasajon\AppBundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository
+        public: true
+    
+    Nasajon\MDABundle\Repository\Gp\FuncoescustosRepository:
+        class : Nasajon\AppBundle\Repository\Gp\FuncoescustosRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Financas\ContratosRepository:
+        class : Nasajon\AppBundle\Repository\Financas\ContratosRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\AtcsresponsaveisfinanceirosRepository:
+        class : Nasajon\AppBundle\Repository\Crm\AtcsresponsaveisfinanceirosRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Ns\ClientesRepository:
+        class : Nasajon\AppBundle\Repository\Ns\ClientesRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\AtcstiposdocumentosrequisitantesRepository:
+        class : Nasajon\AppBundle\Repository\Crm\AtcstiposdocumentosrequisitantesRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\PropostasitensfamiliasRepository:
+        class : Nasajon\AppBundle\Repository\Crm\PropostasitensfamiliasRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\PropostasitensfuncoesRepository:
+        class : Nasajon\AppBundle\Repository\Crm\PropostasitensfuncoesRepository
+        public: true
+        
+    Nasajon\MDABundle\Service\Ns\ClientesService:
+        class: Nasajon\AppBundle\Service\Ns\ClientesService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Ns\ClientesRepository'
+            - '@Nasajon\MDABundle\Service\Crm\TemplatespropostasgruposService'
+            - '@Nasajon\MDABundle\Service\Ns\ClientesanexosService'
+            - '@Nasajon\MDABundle\Service\Ns\ClientesdocumentosService'
+            - '@Nasajon\MDABundle\Service\Ns\ContatosService'
+            - '@Nasajon\MDABUndle\Service\Ns\EnderecosService'
+            - '@Nasajon\MDABundle\Service\Ns\PessoastiposatividadesService'
+            - '@Nasajon\AppBundle\Service\Ns\TelefonesService'
+            - '@Nasajon\MDABundle\Service\Web\ConfiguracoesService' 
+
+    Nasajon\MDABundle\Service\Ns\ClientesanexosService:
+        class: Nasajon\AppBundle\Service\Ns\ClientesanexosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Ns\ClientesanexosRepository'
+            - '@appbundle.upload_files_service'
+            - '@gaufrette.documentos_adapter'
+            - '%documentos_adapter_path%'
+
+    Nasajon\MDABundle\Service\Ns\FornecedoresanexosService:
+        class: Nasajon\AppBundle\Service\Ns\FornecedoresanexosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Ns\FornecedoresanexosRepository'
+            - '@appbundle.upload_files_service'
+            - '@gaufrette.documentos_adapter'
+            - '%documentos_adapter_path%'
+
+    Nasajon\MDABundle\Service\Ns\TiposdocumentosService:
+        class: Nasajon\AppBundle\Service\Ns\TiposdocumentosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Ns\TiposdocumentosRepository'
+            - '@Nasajon\MDABundle\Service\Ns\DocumentosnecessariosService'
+            
+    Nasajon\MDABundle\Service\Crm\NegociosService:
+        class: Nasajon\AppBundle\Service\Crm\NegociosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\NegociosRepository'
+            - '@Nasajon\MDABundle\Service\Crm\NegociosContatosService'
+            - '@Nasajon\MDABundle\Service\Ns\ProspectsService'
+            - '@Nasajon\MDABundle\Service\Crm\ListadavezconfiguracoesService'
+            - '@Nasajon\MDABundle\Service\Crm\ListadavezvendedoresitensService'
+
+    Nasajon\AppBundle\Service\Relatorios\RelatorioPainelMarketingService:
+        class: Nasajon\AppBundle\Service\Relatorios\RelatorioPainelMarketingService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Relatorios\RelatorioPainelMarketingRepository'
+
+
+    Nasajon\MDABundle\Service\Crm\AtcspendenciasService:
+        class: Nasajon\AppBundle\Service\Crm\AtcspendenciasService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\AtcspendenciasRepository'
+
+    Nasajon\MDABundle\Service\Crm\AtcsService:
+        class: Nasajon\AppBundle\Service\Crm\AtcsService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsRepository'
+            - '@Nasajon\MDABundle\Service\Crm\HistoricoatcsService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcsdocumentosService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcsresponsaveisfinanceirosService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostasService'
+            - '@Nasajon\MDABundle\Service\Ns\CamposcustomizadosService'
+            - '@Nasajon\MDABundle\Service\Web\ConfiguracoesService' 
+            - '@Nasajon\MDABundle\Service\Crm\AtcsdadosseguradorasService' 
+            - '@Nasajon\MDABundle\Service\Crm\AtcspendenciaslistasService' 
+            - '@Nasajon\MDABundle\Service\Crm\AtcspendenciasService' 
+            - '@Nasajon\MDABundle\Service\Ns\ClientesdocumentosService' 
+            - '@Nasajon\MDABundle\Service\Ns\FornecedoresdocumentosService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcstiposdocumentosrequisitantesService'
+            - '@Nasajon\MDABundle\Service\Ns\TiposdocumentosService'
+            - '@Nasajon\MDABundle\Service\Financas\ContratosService'
+            - '@Nasajon\MDABundle\Service\Financas\ProjetosService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostascapitulosService'
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@Nasajon\AppBundle\Repository\TenantsRepository'
+            - '@Nasajon\MDABundle\Service\Ns\FornecedoresService'
+            - '@Nasajon\MDABundle\Service\Crm\ResponsabilidadesfinanceirasService'
+            - '@Nasajon\MDABundle\Service\Crm\ResponsabilidadesfinanceirasvaloresService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostasitensService'
+            - '@Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository'
+            - '@Nasajon\AppBundle\Service\Crm\AtcsRelatoriosService'
+            - '@Nasajon\AppBundle\Service\Crm\AtcsRelatoriosRpsService'
+            - '@appbundle.documentos_fop_service'
+            - '@Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosRepository'
+            - '@Nasajon\MDABundle\Service\Crm\FornecedoresenvolvidosanexosService'
+            - '@Nasajon\MDABundle\Service\Ns\DocumentosfopService'
+            - '@jms_serializer.serializer'
+            - '@Nasajon\AppBundle\Service\Common\EnvioEmailService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcsconfiguracoestemplatesemailsService'
+            - '@Nasajon\AppBundle\Service\Common\GoogleMapsService'
+            - '@Nasajon\AppBundle\Service\Crm\TemplatespropostascapitulosService'
+            - '@Nasajon\MDABundle\Service\Crm\TemplatespropostascapituloscomposicoesService'
+            - '@appbundle.upload_files_service'
+            - '@Nasajon\MDABundle\Service\Crm\OrcamentosService'
+            - '@Nasajon\MDABundle\Service\Financas\ItenscontratosService'
+            - '@Nasajon\AppBundle\Service\Crm\ConfiguracoestaxasadministrativasService'
+            - '@Nasajon\MDABundle\Service\Servicos\ItensdefaturamentoService'
+            - "@nasajon_mda.fixed_attributes"
+            - '@gaufrette.documentos_adapter'
+            - '%documentos_adapter_path%'
+            - '@Nasajon\MDABundle\Service\Crm\HistoricosatcsanexosService'
+            
+
+    Nasajon\MDABundle\Service\Crm\HistoricoatcsService:
+        class: Nasajon\AppBundle\Service\Crm\HistoricoatcsService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\HistoricoatcsRepository'
+            - '@Nasajon\MDABundle\Service\Crm\HistoricosatcsanexosService'
+
+    Nasajon\MDABundle\Service\Crm\HistoricosatcsanexosService:
+        class: Nasajon\AppBundle\Service\Crm\HistoricosatcsanexosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\HistoricosatcsanexosRepository'
+            - '@appbundle.upload_files_service'
+            - '@gaufrette.documentos_adapter'
+            - '%documentos_adapter_path%'
+
+    Nasajon\MDABundle\Service\Financas\ProjetosService:
+        class: Nasajon\AppBundle\Service\Financas\ProjetosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Financas\ProjetosRepository'
+            - '@Nasajon\MDABundle\Service\Web\ConfiguracoesService'
+            - '@Nasajon\MDABundle\Service\Gp\TiposprojetosService'
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@Symfony\Component\HttpFoundation\RequestStack'
+            - '@Nasajon\AppBundle\Repository\TenantsRepository'
+
+    Nasajon\MDABundle\Service\Financas\ContasfornecedoresService:
+        class: Nasajon\AppBundle\Service\Financas\ContasfornecedoresService
+        public: true
+        arguments:
+        - '@Nasajon\MDABundle\Repository\Financas\ContasfornecedoresRepository' 
+        - '@Nasajon\MDABundle\Service\Financas\BancosService'
+
+    Nasajon\MDABundle\Service\Crm\AtcstiposdocumentosrequisitantesService:
+        class: Nasajon\AppBundle\Service\Crm\AtcstiposdocumentosrequisitantesService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\AtcstiposdocumentosrequisitantesRepository'
+            - '@Nasajon\MDABundle\Service\Crm\AtcsdocumentosService'
+
+    Nasajon\MDABundle\Service\Crm\PropostascapitulosService:
+        class: Nasajon\AppBundle\Service\Crm\PropostascapitulosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\PropostascapitulosRepository'       
+
+    Nasajon\MDABundle\Service\Crm\PropostasService:
+        class: Nasajon\AppBundle\Service\Crm\PropostasService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\PropostasRepository'
+            - '@Nasajon\MDABundle\Service\Crm\PropostascapitulosService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostasitensService'
+
+    Nasajon\MDABundle\Service\Crm\PropostasitensService:
+        class: Nasajon\AppBundle\Service\Crm\PropostasitensService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\PropostasitensRepository'
+            - '@Nasajon\MDABundle\Service\Servicos\ItensdefaturamentoService'
+            - '@Nasajon\MDABundle\Service\Financas\ItenscontratosService'
+            - '@Nasajon\MDABundle\Service\Crm\ComposicoesService'
+            - '@Nasajon\MDABundle\Service\Gp\TarefasService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostasitensenderecosService'
+            - '@Nasajon\MDABundle\Service\Web\ConfiguracoesService'
+            - '@Nasajon\MDABundle\Service\Crm\TemplatespropostascapituloscomposicoesService'
+            - '@Nasajon\MDABundle\Service\Crm\TemplatescomposicoesfamiliasService'
+            - '@Nasajon\MDABundle\Service\Crm\TemplatescomposicoesfuncoesService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostasitensfamiliasService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostasitensfuncoesService'
+            - '@Nasajon\MDABundle\Service\Crm\PropostascapitulosService'
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsRepository'
+            - '@Nasajon\MDABUndle\Service\Financas\ProjetosService'
+            - '@Nasajon\MDABundle\Service\Ns\FornecedoresService'
+            - '@Nasajon\MDABundle\Service\Financas\ContratosService'
+            - '@Nasajon\MDABundle\Service\Crm\OrcamentosService'
+            - '@Nasajon\MDABundle\Repository\Crm\PropostasRepository'
+            - '@Nasajon\MDABundle\Repository\Crm\TemplatesPropostasRepository'
+            - '@Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository'
+            - '@Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosRepository'
+
+
+    Nasajon\MDABundle\Service\Crm\PropostasitensfamiliasService:
+        class: Nasajon\AppBundle\Service\Crm\PropostasitensfamiliasService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\PropostasitensfamiliasRepository'
+            - '@Nasajon\MDABundle\Service\Crm\OrcamentosService'
+            - '@Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository'
+    
+    Nasajon\MDABundle\Service\Crm\PropostasitensfuncoesService:
+        class: Nasajon\AppBundle\Service\Crm\PropostasitensfuncoesService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\PropostasitensfuncoesRepository'
+            - '@Nasajon\MDABundle\Service\Crm\OrcamentosService'
+            - '@Nasajon\MDABundle\Repository\Crm\ResponsabilidadesfinanceirasvaloresRepository'
+
+    Nasajon\MDABundle\Service\Crm\OrcamentosService:
+        class: Nasajon\AppBundle\Service\Crm\OrcamentosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\OrcamentosRepository'
+            - '@Nasajon\MDABundle\Service\Crm\HistoricoatcsService'
+            - '@Nasajon\MDABundle\Service\Crm\ComposicoesService'
+            - '@Nasajon\MDABundle\Service\Estoque\FamiliasService'
+            - '@Nasajon\MDABundle\Service\Servicos\ItensdefaturamentoService'
+            - '@Nasajon\MDABundle\Service\Financas\ItenscontratosService'
+            - '@Nasajon\MDABundle\Service\Web\ConfiguracoesService'
+            - '@Nasajon\AppBundle\Repository\Crm\PropostasitensRepository'
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsRepository'
+            - '@Nasajon\MDABundle\Repository\Crm\FornecedoresenvolvidosRepository'
+        
+    Nasajon\MDABundle\Service\Gp\TarefasService:
+        class: Nasajon\AppBundle\Service\Gp\TarefasService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Gp\TarefasRepository'
+            - '@Nasajon\MDABundle\Service\Web\ConfiguracoesService'
+            - '@Symfony\Component\HttpFoundation\RequestStack'
+            - '@Symfony\Component\DependencyInjection\ContainerInterface'
+            - '@Nasajon\MDABundle\Repository\Crm\PropostasRepository'
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsRepository'
+            - '@Nasajon\AppBundle\Repository\TenantsRepository'
+            - '@Nasajon\MDABundle\Service\Crm\ComposicoesService'
+            - '@Nasajon\AppBundle\Repository\Gp\ProjetosescopoRepository'
+
+    Nasajon\MDABundle\Service\Crm\TemplatespropostasdocumentosService:
+        class: Nasajon\MDABundle\Service\Crm\TemplatespropostasdocumentosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\TemplatespropostasdocumentosRepository'
+
+    Nasajon\MDABundle\Service\Crm\TemplatespropostasService:
+        class: Nasajon\AppBundle\Service\Crm\TemplatespropostasService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\TemplatespropostasRepository'
+            - '@Nasajon\MDABundle\Service\Crm\TemplatespropostasdocumentosService'
+            - '@Nasajon\AppBundle\Service\Crm\TemplatespropostascapitulosService'
+            - '@Nasajon\AppBundle\Service\Crm\TemplatescomposicoesfamiliasService'
+            - '@Nasajon\AppBundle\Service\Crm\TemplatescomposicoesfuncoesService'
+
+    Nasajon\MDABundle\Service\Crm\TemplatespropostasgruposService:
+        class: Nasajon\AppBundle\Service\Crm\TemplatespropostasgruposService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\TemplatespropostasgruposRepository'
+
+    Nasajon\MDABundle\Service\Crm\TemplatespropostascapitulosService:
+        class: Nasajon\AppBundle\Service\Crm\TemplatespropostascapitulosService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\TemplatespropostascapitulosRepository'        
+
+    Nasajon\MDABundle\Service\Crm\TemplatespropostascapituloscomposicoesService:
+        class: Nasajon\AppBundle\Service\Crm\TemplatespropostascapituloscomposicoesService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\TemplatespropostascapituloscomposicoesRepository'
+            - '@Nasajon\AppBundle\Service\Crm\TemplatescomposicoesfamiliasService'
+            - '@Nasajon\AppBundle\Service\Crm\TemplatescomposicoesfuncoesService'
+            - '@Nasajon\MDABundle\Service\Crm\ComposicoesfamiliasService'
+            - '@Nasajon\MDABundle\Service\Crm\ComposicoesfuncoesService'
+
+    Nasajon\MDABundle\Service\Crm\TemplatescomposicoesfamiliasService:
+        class: Nasajon\AppBundle\Service\Crm\TemplatescomposicoesfamiliasService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\TemplatescomposicoesfamiliasRepository'
+
+    Nasajon\MDABundle\Service\Crm\TemplatescomposicoesfuncoesService:
+        class: Nasajon\AppBundle\Service\Crm\TemplatescomposicoesfuncoesService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Crm\TemplatescomposicoesfuncoesRepository'        
+
+    Nasajon\MDABundle\Repository\Crm\TemplatescomposicoesfamiliasRepository:
+        class: Nasajon\AppBundle\Repository\Crm\TemplatescomposicoesfamiliasRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\TemplatescomposicoesfuncoesRepository:
+        class: Nasajon\AppBundle\Repository\Crm\TemplatescomposicoesfuncoesRepository
+        public: true
+
+    Nasajon\MDABundle\Service\Ns\FornecedoresService:
+        class: Nasajon\AppBundle\Service\Ns\FornecedoresService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Ns\FornecedoresRepository'
+            - '@Nasajon\MDABundle\Service\Financas\ContasfornecedoresService'
+            - '@Nasajon\MDABundle\Service\Ns\AdvertenciasService'
+            - '@Nasajon\MDABundle\Service\Ns\ContatosService'
+            - '@Nasajon\MDABundle\Service\Ns\EnderecosService'
+            - '@Nasajon\MDABundle\Service\Ns\FornecedoresanexosService'
+            - '@Nasajon\MDABundle\Service\Ns\FornecedoresdocumentosService'
+            - '@Nasajon\MDABundle\Service\Ns\HistoricofornecedoresService'
+            - '@Nasajon\MDABundle\Service\Ns\PessoastiposatividadesService'
+            - '@Nasajon\AppBundle\Service\Ns\TelefonesService'
+            - '@appbundle.upload_files_service'
+            - '@appbundle.envio_email_service'
+            - "@nasajon_mda.fixed_attributes"
+            - '@Nasajon\MDABundle\Service\Crm\TemplatesemailadvertirprestadorService'
+
+    Nasajon\MDABundle\Service\Ns\ContatosService:
+        class : Nasajon\AppBundle\Service\Ns\ContatosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Ns\ContatosRepository'
+            - '@Nasajon\AppBundle\Service\Ns\TelefonesService'
+
+    Nasajon\MDABundle\Service\Crm\AtcsdocumentosService:
+        class : Nasajon\AppBundle\Service\Crm\AtcsdocumentosService
+        public: true
+        arguments:
+            $repository: '@Nasajon\AppBundle\Repository\Crm\AtcsdocumentosRepository'
+            $adapter: '@gaufrette.documentos_adapter'
+            $s3Client: '@aws.s3'
+            $s3Bucket: '%env(amazon_s3_bucket_name)%'
+            $s3Path: '%documentos_adapter_path%'
+            $uploadFilesService: '@appbundle.upload_files_service'
+            $atcscontasapagarService: '@Nasajon\MDABundle\Service\Crm\AtcscontasapagarService'
+
+    Nasajon\MDABundle\Service\Crm\MalotesService:
+        class : Nasajon\AppBundle\Service\Crm\MalotesService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\MalotesRepository'
+            - '@Nasajon\MDABundle\Service\Crm\MalotesdocumentosService'
+
+    Nasajon\MDABundle\Service\Crm\AtcsfollowupsService:
+        class : Nasajon\AppBundle\Service\Crm\AtcsfollowupsService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsfollowupsRepository'
+            - '@Nasajon\MDABundle\Service\Crm\AtcsfollowupsanexosService'
+    
+    Nasajon\MDABundle\Service\Crm\AtcsfollowupsanexosService:
+        class : Nasajon\AppBundle\Service\Crm\AtcsfollowupsanexosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsfollowupsanexosRepository'
+            - '%documentos_adapter_path%'
+            - '@appbundle.upload_files_service'
+
+    Nasajon\MDABundle\Service\Financas\ContratosService:
+        class : Nasajon\AppBundle\Service\Financas\ContratosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Financas\ContratosRepository'
+            - '@Nasajon\MDABundle\Service\Financas\ItenscontratosService'
+
+    Nasajon\MDABundle\Service\Servicos\PessoasmunicipiosService:
+        class : Nasajon\AppBundle\Service\Servicos\PessoasmunicipiosService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Servicos\PessoasmunicipiosRepository'
+
+    Nasajon\MDABundle\Repository\Crm\AtcsRepository:
+        class : Nasajon\AppBundle\Repository\Crm\AtcsRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\MalotesdocumentosRepository:
+        class : Nasajon\AppBundle\Repository\Crm\MalotesdocumentosRepository
+        public: true
+
+    Nasajon\MDABundle\Service\Crm\MalotesdocumentosService:
+        class : Nasajon\AppBundle\Service\Crm\MalotesdocumentosService
+        public: true
+        arguments:
+            $repository: '@Nasajon\MDABundle\Repository\Crm\MalotesdocumentosRepository'
+            $adapter: '@gaufrette.documentos_adapter'
+            $s3Client: '@aws.s3'
+            $s3Bucket: '%env(amazon_s3_bucket_name)%'
+            $s3Path: '%documentos_adapter_path%'
+            $uploadFilesService: '@appbundle.upload_files_service'
+            $crmAtcsDocumentosService: '@Nasajon\MDABundle\Service\Crm\AtcsdocumentosService'
+            $crmAtcstiposdocumentosrequisitantesService: '@Nasajon\MDABundle\Service\Crm\AtcstiposdocumentosrequisitantesService'
+
+    Nasajon\MDABundle\Service\Web\ConfiguracoesService:
+        class: Nasajon\AppBundle\Service\Web\ConfiguracoesService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Web\ConfiguracoesRepository'
+            - '@cache.configuracao'
+
+    Nasajon\MDABundle\Repository\Web\ConfiguracoesRepository:
+        class : Nasajon\AppBundle\Repository\Web\ConfiguracoesRepository
+        public: true          
+
+    Nasajon\MDABundle\Repository\Gp\FuncoesRepository:
+        class : Nasajon\AppBundle\Repository\Gp\FuncoesRepository
+        public: true   
+
+    Nasajon\AppBundle\Service\Ns\DatahoraservidorService:
+        class: Nasajon\AppBundle\Service\Ns\DatahoraservidorService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Ns\DatahoraservidorRepository'
+            
+    Nasajon\MDABundle\ControllerGp\FuncoesController:
+        class : Nasajon\AppBundle\Controller\Gp\FuncoesController
+        public: true
+        
+    Nasajon\MDABundle\ControllerGp\FornecedoressuspensosController:
+        class : Nasajon\AppBundle\Controller\Gp\FornecedoressuspensosController
+        public: true
+
+    Nasajon\MDABundle\Repository\Ns\AdvertenciasRepository:
+        class : Nasajon\AppBundle\Repository\Ns\AdvertenciasRepository
+        public: true
+      
+    Nasajon\MDABundle\Repository\Ns\CidadesinfofunerariasfornecedoresRepository:
+        class : Nasajon\AppBundle\Repository\Ns\CidadesinfofunerariasfornecedoresRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Gp\TarefasRepository:
+        class : Nasajon\AppBundle\Repository\Gp\TarefasRepository
+        public: true
+
+    Nasajon\MDABundle\Repository\Crm\AtcsdadosseguradorasRepository:
+        class : Nasajon\AppBundle\Repository\Crm\AtcsdadosseguradorasRepository
+        public: true
+
+    Nasajon\MDABundle\Service\Crm\AtcsdadosseguradorasService:
+        class: Nasajon\AppBundle\Service\Crm\AtcsdadosseguradorasService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\AtcsdadosseguradorasRepository'
+            - '@Nasajon\MDABundle\Service\Crm\templatespropostasdocumentosService'
+            - '@Nasajon\MDABundle\Service\Ns\TiposdocumentosService'
+            - '@Nasajon\MDABundle\Service\Crm\AtcstiposdocumentosrequisitantesService'
+
+    Nasajon\MDABundle\Controller\Crm\TemplatesemailadvertirprestadorController:
+        class: Nasajon\AppBundle\Controller\Crm\TemplatesemailadvertirprestadorController
+        public: true
+
+    Nasajon\MDABundle\Service\Crm\TemplatesemailadvertirprestadorService:
+        class: Nasajon\AppBundle\Service\Crm\TemplatesemailadvertirprestadorService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Crm\TemplatesemailadvertirprestadorRepository'
+
+    Nasajon\MDABundle\Service\Estoque\UnidadesService:
+        class : Nasajon\AppBundle\Service\Estoque\UnidadesService
+        public: true       
+
+    Nasajon\AppBundle\Security\UserVoter:
+        class: Nasajon\AppBundle\Security\UserVoter
+        arguments: 
+          $diretorio_sistema_id: '%env(diretorio_sistema_id)%'     
+          $token: "@security.token_storage"
+        tags:
+            - { name: security.voter }
+
+    Nasajon\MDABundle\Service\Crm\FornecedorespedidoselecaoService:
+        class : Nasajon\AppBundle\Service\Crm\FornecedorespedidoselecaoService
+        public: true        
+
+    Nasajon\MDABundle\Service\Servicos\ServicostecnicosService:
+        class : Nasajon\AppBundle\Service\Servicos\ServicostecnicosService
+        public: true
+        arguments:
+            - '@Nasajon\AppBundle\Repository\Servicos\ServicostecnicosRepository'
+
+    Nasajon\MDABundle\Service\Crm\ConfiguracoestaxasadministrativasService:
+        class : Nasajon\AppBundle\Service\Crm\ConfiguracoestaxasadministrativasService
+        public: true

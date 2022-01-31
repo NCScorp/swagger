@@ -1,0 +1,30 @@
+<div class="height-full layout-list">    
+            <nsj-headline headline-title="País " headline-sub="true">
+<div class="pull-right">
+
+                    <a class="btn btn-sm btn-default hidden-lg hidden-md" ui-sref="ns_paises({})" title="Voltar"><i class="fas fa-reply"></i><span class="hidden-xs">Voltar</span></a>
+        
+        
+        
+        
+                
+        
+     
+    </div>
+</nsj-headline>
+    <div class="nsj-form padding-content" ng-class="{'nsj-loading-page' : ns_pss_frm_shw_cntrllr.busy }">
+        <div class="nsj-form-view top-buffer bottom-buffer">
+            <ns-paises-default-show entity="ns_pss_frm_shw_cntrllr.entity" action="ns_pss_frm_shw_cntrllr.action" busy="ns_pss_frm_shw_cntrllr.busy" constructors="ns_pss_frm_shw_cntrllr.constructors"></ns-paises-default-show>
+                                </div>
+        
+<div class="form-group pull-left">
+        
+        
+            </div>        <div class="content-loading"  ng-if="ns_pss_frm_shw_cntrllr.busy">
+                <div class="center-loading text-center">
+                <div class="onloading"></div>
+                Carregando...
+                </div>
+        </div>
+    </div>
+</div>
