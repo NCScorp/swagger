@@ -23,24 +23,18 @@ node('aws-codebuild') {
             sh 'cp app/config/parameters.yml.dist app/config/parameters.yml'
             sh 'cp common.env.dist common.env'
         }
-     
-    stages {
-        stage('Ok') {
-            steps {
-                echo "Ok"
-            }
-        }
-    }
-    post {
-        always {
-            emailext body: 'A Test EMail', subject: 'Test'
-        }
-    }  
+    
+ 
 
         stage('Composer-dev Backend'){
             docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
                 sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
             }
+            post {
+                always {
+                    emailext body: 'A Test EMail', subject: 'Test'
+                }
+            }             
         }
     
         stage('MDA') {
