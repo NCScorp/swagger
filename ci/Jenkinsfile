@@ -23,13 +23,6 @@ node('aws-codebuild') {
             sh 'cp app/config/parameters.yml.dist app/config/parameters.yml'
             sh 'cp common.env.dist common.env'
         }
-        
-        stage('Ok') {
-            steps {
-                echo "Ok"
-            }
-        }
-    }
      
     stages {
         stage('Ok') {
