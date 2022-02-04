@@ -1,5 +1,5 @@
 version: '2'
-
+require --dev phpstan/phpstan
 services:
     app:
         image: nasajon/php:7.1-fpm-symfony-dev
