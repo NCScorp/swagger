@@ -71,6 +71,7 @@ node('aws-codebuild') {
 
     }
 
+    stage('Send File')
     def replaceFilePath = filePath {
     sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
     }
@@ -85,27 +86,6 @@ node('aws-codebuild') {
                 reportFiles          : file,
                 reportName           : reportName
             ])
-        }
-    }
-
-    if (env.BRANCH_NAME == 'development') {
-        stage('Deploy Dev'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=dev'"
-        }
-    }
-    else if (env.BRANCH_NAME == 'master') {
-        stage('Deploy QA'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
-        }
-    }
-    else if (env.BRANCH_NAME == 'production') {
-        stage('Pipeline Prod'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
-        }
-    }
-    else {
-        stage('Build Docker Image'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
         }
     }
     
