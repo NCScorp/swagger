@@ -30,6 +30,7 @@ node('aws-codebuild') {
             sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
         }
             docker.image("jakzal/phpqa").inside("-v /root/.ssh:/root/.ssh") {
+                
             
             }   
         parallel (
@@ -64,7 +65,12 @@ node('aws-codebuild') {
                 dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
             }
 
-            def replaceFilePath(filePath) {
+            
+        )
+ 
+
+    }
+    def replaceFilePath(filePath) {
                 sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
             }
 
@@ -79,11 +85,7 @@ node('aws-codebuild') {
                         reportName           : reportName
                     ])
                 }
-            }                   
-        )
- 
-
-    }
+            }
 
 
     if (env.BRANCH_NAME == 'development') {
