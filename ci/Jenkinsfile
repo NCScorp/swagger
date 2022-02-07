@@ -71,7 +71,7 @@ node('aws-codebuild') {
 
     }
 
-    def replaceFilePath(filePath) {
+    def replaceFilePath = filePath {
     sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
     }
 
