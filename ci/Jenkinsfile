@@ -29,7 +29,7 @@ node('aws-codebuild') {
         docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
             sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
         }
-            docker.image("nasajon/phpstan:latest").inside("-v /root/.ssh:/root/.ssh") {
+            docker.image("jakzal/phpqa").inside("-v /root/.ssh:/root/.ssh") {
             
             }   
         parallel (
