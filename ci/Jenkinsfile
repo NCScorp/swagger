@@ -77,8 +77,8 @@ node('aws-codebuild') {
                     replaceFilePath('build/logs/pmd-cpd.xml')
                     dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
                 }
-            )
-        }
+        )
+        
     }
      
 
