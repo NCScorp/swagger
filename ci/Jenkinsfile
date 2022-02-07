@@ -29,67 +29,47 @@ node('aws-codebuild') {
         }
     }
 
-    stage('MDA') {
-        docker.image('nasajon/php-node').inside("-v /root/.ssh:/root/.ssh -e NODE_ENV=production -e SYMFONY_DEPRECATIONS_HELPER=disabled") {
-            sh 'php vendor/nasajon/mdatransformer/bin/transformer nasajon:mda:builder --nocache'
-        }
-    }
 
-    stage('Tests') {
-        docker.image('postgres:11.5').withRun('-e "POSTGRES_DB=integratto2" -e "POSTGRES_USER=postgres"') { c ->
-            docker.image('postgres:11.5').inside("--link ${c.id}:postgres -e POSTGRES_DB=integratto2 -e POSTGRES_USER=postgres -e PGPASSWORD=postgres") {
-                sh "bash $WORKSPACE/vendor/nasajon/bancosweb/run_dump $WORKSPACE/vendor/nasajon/bancosweb/dump"
+        stage('PHPSTAN - Prepare directory') {
+            docker.image('phpstan:latest'){
+                sh 'rm -rf build/logs'
+                sh 'mkdir -p build/logs'
             }
-            docker.image('nasajon/php:7.1-fpm-symfony-dev').inside("--link ${c.id}:postgres --env-file $WORKSPACE/common.env -e SYMFONY_DEPRECATIONS_HELPER=disabled -e sp_metadata=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/idp-FederationMetadata.xml -e sp_certificate_crt=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.crt -e sp_certificate_pem=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.pem") {
-                sh 'bin/console doctrine:migrations:migrate --no-interaction'
-                sh 'vendor/codeception/codeception/codecept run --fail-fast --no-colors --xml'
-            }
-        }
-    } 
-
-    stage('Pulling') {
-            sh 'docker pull jakzal/phpqa'
-        }
-
-        stage('Prepare directory') {
-            sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa chmod -R 777 build'
-            sh 'rm -rf build/logs'
-            sh 'mkdir -p build/logs'
         }
 
         stage('Install dependencies') {
-            sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa composer install --ignore-platform-reqs --no-scripts --no-progress --no-suggest'
+            sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa composer install --ignore-platform-reqs --no-scripts --no-progress --no-suggest'
         }
 
         stage("Testing") {
             parallel (
                 "PHPCodeSniffer": {
-                    sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR2 --encoding=UTF-8 --ignore="*.js" src/  || exit 0'
+                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR2 --encoding=UTF-8 --ignore="*.js" src/  || exit 0'
                     replaceFilePath('build/logs/checkstyle.xml')
                     checkstyle pattern: 'build/logs/checkstyle.xml'
                 },
 
                 "PHPStan": {
-                    sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpstan analyse src/ || exit 0'
+                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpstan analyse src/ || exit 0'
                 },
 
                 "PhpMetrics": {
-                    sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmetrics --report-html=build/logs/phpmetrics.html src/ || exit 0'
+                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpmetrics --report-html=build/logs/phpmetrics.html src/ || exit 0'
                     publishHTMLReport('build/logs', 'phpmetrics.html', 'PHPMetrics')
                 },
 
                 "PHPMessDetector": {
-                    sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmd src/ xml cleancode,codesize,unusedcode --reportfile build/logs/pmd.xml || exit 0'
+                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpmd src/ xml cleancode,codesize,unusedcode --reportfile build/logs/pmd.xml || exit 0'
                     replaceFilePath('build/logs/pmd.xml')
                     pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
                 },
 
                 "PHPMagicNumberDetector": {
-                    sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmnd src/ --exclude=tests --progress --non-zero-exit-on-violation --ignore-strings=return,condition,switch_case,default_parameter,operation || exit 0'
+                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpmnd src/ --exclude=tests --progress --non-zero-exit-on-violation --ignore-strings=return,condition,switch_case,default_parameter,operation || exit 0'
                 },
 
                 "PHPCopyPasteDetector": {
-                    sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
+                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
                     replaceFilePath('build/logs/pmd-cpd.xml')
                     dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
                 }
