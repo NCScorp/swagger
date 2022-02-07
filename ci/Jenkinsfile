@@ -70,23 +70,21 @@ node('aws-codebuild') {
  
 
     }
-
-    stage('Send File')
-    def replaceFilePath = filePath {
-    sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
-    }
-
-    def publishHTMLReport(reportDir, file, reportName) {
-        if (fileExists("${reportDir}/${file}")) {
-            publishHTML(target: [
-                allowMissing         : true,
-                alwaysLinkToLastBuild: true,
-                keepAll              : true,
-                reportDir            : reportDir,
-                reportFiles          : file,
-                reportName           : reportName
-            ])
-        }
-    }
     
+}
+def replaceFilePath(filePath) {
+    sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
+}
+
+def publishHTMLReport(reportDir, file, reportName) {
+    if (fileExists("${reportDir}/${file}")) {
+        publishHTML(target: [
+            allowMissing         : true,
+            alwaysLinkToLastBuild: true,
+            keepAll              : true,
+            reportDir            : reportDir,
+            reportFiles          : file,
+            reportName           : reportName
+        ])
+    }
 }
