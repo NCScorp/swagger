@@ -45,6 +45,41 @@ node('aws-codebuild') {
                 sh 'vendor/codeception/codeception/codecept run --fail-fast --no-colors --xml'
             }
         }
+
+        parallel (
+                "PHPCodeSniffer": {
+                    sh 'docker run --rm -v $(pwd):/app -w /app phpstan/phpstan:latest phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR2 --encoding=UTF-8 --ignore="*.js" src/  || exit 0'
+                    replaceFilePath('build/logs/checkstyle.xml')
+                    checkstyle pattern: 'build/logs/checkstyle.xml'
+                },
+
+                "PHPStan": {
+                    sh 'docker run --rm -v $(pwd):/app -w /app phpstan/phpstan:latest phpstan analyse src/ || exit 0'
+                },
+
+                "PhpMetrics": {
+                    sh 'docker run --rm -v $(pwd):/app -w /app phpstan/phpstan:latest phpmetrics --report-html=build/logs/phpmetrics.html src/ || exit 0'
+                    publishHTMLReport('build/logs', 'phpmetrics.html', 'PHPMetrics')
+                },
+
+                "PHPMessDetector": {
+                    sh 'docker run --rm -v $(pwd):/app -w /app phpstan/phpstan:latest phpmd src/ xml cleancode,codesize,unusedcode --reportfile build/logs/pmd.xml || exit 0'
+                    replaceFilePath('build/logs/pmd.xml')
+                    pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
+                },
+
+                "PHPMagicNumberDetector": {
+                    sh 'docker run --rm -v $(pwd):/app -w /app phpstan/phpstan:latest phpmnd src/ --exclude=tests --progress --non-zero-exit-on-violation --ignore-strings=return,condition,switch_case,default_parameter,operation || exit 0'
+                },
+
+                "PHPCopyPasteDetector": {
+                    sh 'docker run --rm -v $(pwd):/app -w /app phpstan/phpstan:latest phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
+                    replaceFilePath('build/logs/pmd-cpd.xml')
+                    dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
+                }
+            )
+        }
+    }
     } 
 
     stage('Composer'){
