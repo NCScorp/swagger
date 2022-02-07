@@ -64,22 +64,22 @@ node('aws-codebuild') {
                 dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
             }
         )
-        def replaceFilePath(filePath) {
-            sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
-        }
+    def replaceFilePath(filePath) {
+        sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
+    }
 
-        def publishHTMLReport(reportDir, file, reportName) {
-            if (fileExists("${reportDir}/${file}")) {
-                publishHTML(target: [
-                    allowMissing         : true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll              : true,
-                    reportDir            : reportDir,
-                    reportFiles          : file,
-                    reportName           : reportName
-                ])
-            }
-        }        
+    def publishHTMLReport(reportDir, file, reportName) {
+        if (fileExists("${reportDir}/${file}")) {
+            publishHTML(target: [
+                allowMissing         : true,
+                alwaysLinkToLastBuild: true,
+                keepAll              : true,
+                reportDir            : reportDir,
+                reportFiles          : file,
+                reportName           : reportName
+            ])
+        }
+    }        
 
     }
 
