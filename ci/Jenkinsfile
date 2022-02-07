@@ -28,9 +28,7 @@ node('aws-codebuild') {
             sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
         }
     }
-
-
-        stage('PHPSTAN - Prepare directory') {
+        stage('PHPSTAN - Prepare directory').inside("-v /root/.ssh:/root/.ssh") {
             docker.image('phpstan:latest'){
                 sh 'rm -rf build/logs'
                 sh 'mkdir -p build/logs'
