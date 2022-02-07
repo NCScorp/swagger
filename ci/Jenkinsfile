@@ -21,64 +21,52 @@ node('aws-codebuild') {
         sh 'touch app/logs/test.log'
         sh 'cp app/config/parameters.yml.dist app/config/parameters.yml'
         sh 'cp common.env.dist common.env'
+        sh 'rm -rf build/logs'  
+        sh 'mkdir -p build/logs'
     }
 
     stage('Composer-dev'){
         docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
             sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
         }
-    }
-        stage('PHPSTAN - Prepare directory').inside("-v /root/.ssh:/root/.ssh") {
-            docker.image('phpstan:latest'){
-                sh 'rm -rf build/logs'
-                sh 'mkdir -p build/logs'
+            docker.image("nasajon/phpstan:latest").inside("-v /root/.ssh:/root/.ssh") {
+            
+            }   
+        parallel (
+            "PHPCodeSniffer": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR2 --encoding=UTF-8 --ignore="*.js" src/  || exit 0'
+                replaceFilePath('build/logs/checkstyle.xml')
+                checkstyle pattern: 'build/logs/checkstyle.xml'
+            },
+
+            "PHPStan": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpstan analyse src/ || exit 0'
+            },
+
+            "PhpMetrics": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmetrics --report-html=build/logs/phpmetrics.html src/ || exit 0'
+                publishHTMLReport('build/logs', 'phpmetrics.html', 'PHPMetrics')
+            },
+
+            "PHPMessDetector": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmd src/ xml cleancode,codesize,unusedcode --reportfile build/logs/pmd.xml || exit 0'
+                replaceFilePath('build/logs/pmd.xml')
+                pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
+            },
+
+            "PHPMagicNumberDetector": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmnd src/ --exclude=tests --progress --non-zero-exit-on-violation --ignore-strings=return,condition,switch_case,default_parameter,operation || exit 0'
+            },
+
+            "PHPCopyPasteDetector": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
+                replaceFilePath('build/logs/pmd-cpd.xml')
+                dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
             }
-        }
+        )
 
-        stage('Install dependencies') {
-            sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa composer install --ignore-platform-reqs --no-scripts --no-progress --no-suggest'
-        }
-
-        stage("Testing") {
-            parallel (
-                "PHPCodeSniffer": {
-                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR2 --encoding=UTF-8 --ignore="*.js" src/  || exit 0'
-                    replaceFilePath('build/logs/checkstyle.xml')
-                    checkstyle pattern: 'build/logs/checkstyle.xml'
-                },
-
-                "PHPStan": {
-                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpstan analyse src/ || exit 0'
-                },
-
-                "PhpMetrics": {
-                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpmetrics --report-html=build/logs/phpmetrics.html src/ || exit 0'
-                    publishHTMLReport('build/logs', 'phpmetrics.html', 'PHPMetrics')
-                },
-
-                "PHPMessDetector": {
-                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpmd src/ xml cleancode,codesize,unusedcode --reportfile build/logs/pmd.xml || exit 0'
-                    replaceFilePath('build/logs/pmd.xml')
-                    pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
-                },
-
-                "PHPMagicNumberDetector": {
-                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpmnd src/ --exclude=tests --progress --non-zero-exit-on-violation --ignore-strings=return,condition,switch_case,default_parameter,operation || exit 0'
-                },
-
-                "PHPCopyPasteDetector": {
-                    sh 'docker run --rm -v $(pwd):/app -w /app jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
-                    replaceFilePath('build/logs/pmd-cpd.xml')
-                    dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
-                }
-            )
-        }
-
-    stage('Composer'){
-        docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
-            sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --no-dev --ignore-platform-reqs'
-        }
     }
+
 
     if (env.BRANCH_NAME == 'development') {
         stage('Deploy Dev'){
