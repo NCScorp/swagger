@@ -80,7 +80,7 @@ node('aws-codebuild') {
             )
         }
     }
-    } 
+     
 
     stage('Composer'){
         docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
