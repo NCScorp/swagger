@@ -1,0 +1,326 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+parameters:
+    #parameter_name: value
+    imagens_adapter_path: '%env(amazon_s3_bucket_path)%imagens'
+    informes_adapter_path: '%env(amazon_s3_bucket_path)%'
+    recibospagamentos_adapter_path: '%env(amazon_s3_bucket_path)%'
+    solicitacoesdocumentos_adapter_path: '%env(amazon_s3_bucket_path)%'
+    diretorio_sistema_id: '%env(diretorio_sistema_id)%'
+    
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+
+
+
+    # makes classes in src/AppBundle available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/AppBundle/{Entity,Tests}'
+
+    # add more services, or override services that need manual wiring
+    # AppBundle\Service\ExampleService:
+    #     arguments:
+    #         $someArgument: 'some_value'
+
+    appbundle.mda_fixed_attribute_listener:
+        class: AppBundle\EventListener\MDAFixedAttributesListener
+        shared: false
+        tags:
+           - { name: kernel.event_listener, event: kernel.controller, method: onKernelController, priority: 100 }
+        arguments:
+              - "@security.token_storage"
+              - "@nasajon_mda.fixed_attributes"
+              - '@AppBundle\Repository\Ns\TenantsRepository'
+              - '@Nasajon\MDABundle\Service\Persona\TrabalhadoresService'
+              - '@AppBundle\Service\PermissoesService'
+              - '@Nasajon\MDABundle\Service\Web\ConfiguracoesService'
+
+    appbundle.upload_listener:
+        class : AppBundle\EventListener\UploadListener
+        tags:
+            - { name: kernel.event_listener, event: oneup_uploader.post_persist, method: onUpload }
+        arguments :
+            - "@knp_gaufrette.filesystem_map"
+
+    Nasajon\LoginBundle\Controller\ProfileController:
+        class : AppBundle\LoginBundle\Controller\ProfileController
+
+    Nasajon\MDABundle\Service\Meurh\InformesrendimentosService:
+        class: AppBundle\Service\Meurh\InformesrendimentosService
+        public: true
+        arguments:
+            $repository: '@Nasajon\MDABundle\Repository\Meurh\InformesrendimentosRepository'
+            $adapter: '@gaufrette.informes_adapter'
+            $fixedAttributes: '@nasajon_mda.fixed_attributes'
+
+    Nasajon\MDABundle\Service\Meurh\RecibospagamentosService:
+        class: AppBundle\Service\Meurh\RecibospagamentosService
+        public: true
+        arguments:
+            $repository: '@Nasajon\MDABundle\Repository\Meurh\RecibospagamentosRepository'
+            $adapter: '@gaufrette.recibospagamentos_adapter'
+            $fixedAttributes: '@nasajon_mda.fixed_attributes'
+
+    Nasajon\MDABundle\Repository\Meurh\InformesrendimentosRepository:
+      class: AppBundle\Repository\Meurh\InformesrendimentosRepository
+      public: true
+
+    Nasajon\MDABundle\Service\Meurh\SolicitacoessalariossobdemandaService:
+        class: AppBundle\Service\Meurh\SolicitacoessalariossobdemandaService
+        public: true
+        arguments:
+            $repository: '@Nasajon\MDABundle\Repository\Meurh\SolicitacoessalariossobdemandaRepository'
+            $agenciasService: '@Nasajon\MDABundle\Service\Financas\AgenciasService' 
+            $trabalhadoresService: '@Nasajon\MDABundle\Service\Persona\TrabalhadoresService'
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+
+    Nasajon\MDABundle\Service\Persona\TrabalhadoresService:
+        class: AppBundle\Service\Persona\TrabalhadoresService
+        public: true
+        arguments:
+            $repository: '@AppBundle\Repository\Persona\TrabalhadoresRepository'
+            $fixedAttributes: '@nasajon_mda.fixed_attributes'
+
+    Nasajon\MDABundle\Repository\Persona\TrabalhadoresRepository:
+        class: AppBundle\Repository\Persona\TrabalhadoresRepository
+        public: true
+
+    Nasajon\MDABundle\Service\Ns\EstabelecimentosService:
+        class: AppBundle\Service\Ns\EstabelecimentosService
+        public: true
+        arguments:
+             $repository: '@AppBundle\Repository\Ns\EstabelecimentosRepository'
+             
+    AppBundle\Security\ConfiguracoesVoter:
+        class: AppBundle\Security\ConfiguracoesVoter
+        arguments: 
+          $fixedAttributes: "@nasajon_mda.fixed_attributes"
+          $diretorio_sistema_id: '%env(diretorio_sistema_id)%'     
+          $token: "@security.token_storage"
+        tags:
+            - { name: security.voter }
+
+    Nasajon\MDABundle\Service\Web\ConfiguracoesService:
+        class: AppBundle\Service\Web\ConfiguracoesService
+        public: true
+        arguments:
+            - '@Nasajon\MDABundle\Repository\Web\ConfiguracoesRepository'
+            - '@Nasajon\MDABundle\Service\Ns\ConfiguracoesService'
+    
+    Nasajon\MDABundle\Repository\Ns\ConfiguracoesRepository:
+        class: AppBundle\Repository\Ns\ConfiguracoesRepository
+        public: true
+        arguments:
+            - "@database_connection"
+
+    Nasajon\MDABundle\Service\Meurh\SolicitacoesferiasService:
+        class: AppBundle\Service\Meurh\SolicitacoesferiasService
+        public: true
+        arguments: 
+            - "@Nasajon\\MDABundle\\Repository\\Meurh\\SolicitacoesferiasRepository"
+            - "@nasajon_mda.fixed_attributes"
+            - "@Nasajon\\MDABundle\\Service\\Persona\\TrabalhadoresService"
+            - "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            - "@nasajon_sdk.diretorio"
+            - "@Nasajon\\MDABundle\\Service\\Ns\\EstabelecimentosService"
+
+    Nasajon\MDABundle\Repository\Meurh\SolicitacoesferiasRepository:
+        class: AppBundle\Repository\Meurh\SolicitacoesferiasRepository
+        public: true
+        arguments:
+            - "@database_connection"
+
+    AppBundle\Validator\Constraints\MarcacaoValidator:
+        class: AppBundle\Validator\Constraints\MarcacaoValidator
+        public: true
+        arguments:
+            - "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            - "@nasajon_mda.fixed_attributes"
+            - "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoesferiasService"
+            - "@Nasajon\\MDABundle\\Repository\\Meurh\\SolicitacoesferiasRepository"
+     
+    AppBundle\Validator\Constraints\SaldoValidator:
+        class: AppBundle\Validator\Constraints\SaldoValidator
+        public: true
+        arguments:
+            - "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            - "@nasajon_mda.fixed_attributes"
+            - "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoesferiasService"
+   
+    AppBundle\Validator\Constraints\DiasVendidosValidator:
+        class: AppBundle\Validator\Constraints\DiasVendidosValidator
+        public: true
+        arguments:
+            - "@nasajon_mda.fixed_attributes"
+            - "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoesferiasService"
+
+    AppBundle\Validator\Constraints\PeriodoAquisitivoValidator:
+        class: AppBundle\Validator\Constraints\PeriodoAquisitivoValidator
+        public: true
+        arguments:
+            - "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            - "@nasajon_mda.fixed_attributes"
+            - "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoesferiasService"
+
+    Nasajon\MDABundle\Service\Ns\ConfiguracoesService:
+        class: AppBundle\Service\Ns\ConfiguracoesService
+        public: true
+        arguments:
+            $repository: '@Nasajon\MDABundle\Repository\Ns\ConfiguracoesRepository'
+
+    Nasajon\MDABundle\Repository\Meurh\RecibospagamentosRepository:
+      class: AppBundle\Repository\Meurh\RecibospagamentosRepository
+      public: true
+
+    Nasajon\MDABundle\Repository\Meurh\SolicitacoesalteracoesenderecosRepository:
+      class: AppBundle\Repository\Meurh\SolicitacoesalteracoesenderecosRepository
+      public: true
+
+    Nasajon\MDABundle\Repository\Ns\EstabelecimentosRepository:
+      class: AppBundle\Repository\Ns\EstabelecimentosRepository
+      public: true
+
+    Nasajon\MDABundle\Repository\Meurh\SolicitacoesfaltasRepository:
+      class: AppBundle\Repository\Meurh\SolicitacoesfaltasRepository
+      public: true
+
+    Nasajon\MDABundle\Repository\Meurh\SolicitacoesalteracoesvtsRepository:
+      class: AppBundle\Repository\Meurh\SolicitacoesalteracoesvtsRepository
+      public: true
+
+    Nasajon\MDABundle\Repository\Meurh\SolicitacoessalariossobdemandaRepository:
+      class: Nasajon\MDABundle\Repository\Meurh\SolicitacoessalariossobdemandaRepository
+      public: true
+
+    cloudwatch_handler:
+        class: Maxbanton\Cwh\Handler\CloudWatch
+        arguments:
+            - "@aws.cloudwatchlogs"             # Config Name
+            - '%env(cloudwatchlogs_group)%'     # Group Name
+            - '%env(cloudwatchlogs_stream)%'    # Stream Name
+            - 30                                # Retention Days
+            - 10                                # logs In Batch
+            - { mytag: "tag" }                  # tags
+            - WARNING            # logLevel
+            - true               # bubble
+            - false              #createGroup (Se deixar true, ele fara uma requisição para saber se existe toda vez que criar um log e isso deixa API lenta)
+    
+    AppBundle\Service\PermissoesService:
+        class: AppBundle\Service\PermissoesService
+        public: true
+        arguments:
+            - "@nasajon_login_bundle_cache"
+            - "@nasajon_sdk.diretorio"
+
+
+    Nasajon\MDABundle\Service\Meurh\SolicitacoesfaltasService:
+        class: AppBundle\Service\Meurh\SolicitacoesfaltasService
+        public: true
+        arguments:
+            $repository: '@Nasajon\MDABundle\Repository\Meurh\SolicitacoesfaltasRepository'
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+            $diretorioSDK : "@nasajon_sdk.diretorio"
+            $configuracoesService : "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            $estabelecimentosService: "@Nasajon\\MDABundle\\Service\\Ns\\EstabelecimentosService"
+            $trabalhadoresService: "@Nasajon\\MDABundle\\Service\\Persona\\TrabalhadoresService"
+
+    Nasajon\MDABundle\Repository\Persona\TarifasconcessionariasvtsRepository:
+        class: AppBundle\Repository\Persona\TarifasconcessionariasvtsRepository
+        public: true
+        arguments:
+            - "@database_connection"
+
+    Nasajon\MDABundle\Service\Meurh\SolicitacoesalteracoesvtsService:
+        class: AppBundle\Service\Meurh\SolicitacoesalteracoesvtsService
+        public: true
+        arguments: 
+            - "@Nasajon\\MDABundle\\Repository\\Meurh\\SolicitacoesalteracoesvtsRepository"
+            - "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoesalteracoesvtstarifasService"
+            - "@nasajon_mda.fixed_attributes"
+            - "@Nasajon\\MDABundle\\Service\\Persona\\TarifasconcessionariasvtsService"
+            - "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoeshistoricosService"
+            - "@nasajon_sdk.diretorio"
+            - "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            - "@Nasajon\\MDABundle\\Service\\Ns\\EstabelecimentosService"
+            - "@Nasajon\\MDABundle\\Service\\Persona\\TrabalhadoresService"
+
+
+    Nasajon\MDABundle\Service\Meurh\SolicitacoesalteracoesenderecosService:
+        class: AppBundle\Service\Meurh\SolicitacoesalteracoesenderecosService
+        public: true
+        arguments:
+            - "@Nasajon\\MDABundle\\Repository\\Meurh\\SolicitacoesalteracoesenderecosRepository"
+            - "@Nasajon\\MDABundle\\Service\\Persona\\TrabalhadoresService"
+            - "@Nasajon\\MDABundle\\Service\\Ns\\PaisesService"
+            - "@Nasajon\\MDABundle\\Service\\Ns\\MunicipiosService"
+            - "@Nasajon\\MDABundle\\Service\\Ns\\TiposlogradourosService"
+            - "@nasajon_mda.fixed_attributes"
+            - "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoeshistoricosService"
+            - "@nasajon_sdk.diretorio"
+            - "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            - "@Nasajon\\MDABundle\\Service\\Ns\\EstabelecimentosService"
+
+
+    Nasajon\MDABundle\Service\Meurh\SolicitacoesdocumentosService:
+        class: AppBundle\Service\Meurh\SolicitacoesdocumentosService
+        public: true
+        arguments:
+            $repository: "@Nasajon\\MDABundle\\Repository\\Meurh\\SolicitacoesdocumentosRepository" 
+            $adapter: '@gaufrette.solicitacoesdocumentos_adapter'
+            $solicitacoesService: "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoesService"
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+            $solicitacoesHistoricosService: "@Nasajon\\MDABundle\\Service\\Meurh\\SolicitacoeshistoricosService"
+            $estabelecimentosService: "@Nasajon\\MDABundle\\Service\\Ns\\EstabelecimentosService"
+            $tiposdocumentoscolaboradoresService: "@Nasajon\\MDABundle\\Service\\Persona\\TiposdocumentoscolaboradoresService"
+
+    Nasajon\MDABundle\Service\Persona\DocumentoscolaboradoresService:
+        class: AppBundle\Service\Persona\DocumentoscolaboradoresService
+        public: true
+        arguments:
+            $repository: '@AppBundle\Repository\Persona\DocumentoscolaboradoresRepository'
+            $solicitacoesalteracoesenderecosService: '@Nasajon\MDABundle\Service\Meurh\SolicitacoesalteracoesenderecosService'
+            $trabalhadoresService: '@AppBundle\Service\Persona\TrabalhadoresService'
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+
+    Nasajon\MDABundle\Service\Meurh\SolicitacoeshistoricosService:
+        class: AppBundle\Service\Meurh\SolicitacoeshistoricosService
+        public: true
+
+    Nasajon\MDABundle\Repository\Meurh\SolicitacoeshistoricosRepository:
+        class: AppBundle\Repository\Meurh\SolicitacoeshistoricosRepository
+        public: true
+        arguments:
+            - "@database_connection"
+
+    Nasajon\MDABundle\Service\Meurh\TiposdocumentosrequeridosService:
+        class: AppBundle\Service\Meurh\TiposdocumentosrequeridosService
+        public: true
+        arguments:
+            $repository: "@Nasajon\\MDABundle\\Repository\\Meurh\\TiposdocumentosrequeridosRepository"
+            $configuracoesService: "@Nasajon\\MDABundle\\Service\\Web\\ConfiguracoesService"
+            $tiposdocumentoscolaboradoresService: "@Nasajon\\MDABundle\\Service\\Persona\\TiposdocumentoscolaboradoresService"
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+
+    Nasajon\MDABundle\Repository\Meurh\TiposdocumentosrequeridosRepository:
+        class: AppBundle\Repository\Meurh\TiposdocumentosrequeridosRepository
+        public: true
+        arguments:
+            - "@database_connection"
+
+    Nasajon\MDABundle\Repository\Web\ConfiguracoesRepository:
+        class: AppBundle\Repository\Web\ConfiguracoesRepository
+        public: true
+        arguments:
+            - "@database_connection"

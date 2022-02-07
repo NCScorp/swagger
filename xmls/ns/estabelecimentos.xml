@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="estabelecimentos" label="estabelecimentos" project="ns">
+    <entity schema="ns" table="estabelecimentos">
+    <!-- <entity schema="servicos" table="vwestabelecimentos"> -->
+        <fieldmodel name="estabelecimento" datatype="guid" isid="true" column="estabelecimento" />
+        <fieldmodel name="nomefantasia" datatype="string" column="nomefantasia" />
+        <!-- <fieldmodel name="id_grupoempresarial" datatype="guid" column="grupoempresarial" /> -->
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <!-- <constructoritem required="true">id_grupoempresarial</constructoritem> -->
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" label="Estabelecimento">    
+        <fieldsbrowser>
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" isid="true" unique="true" visible="false" />
+            <fieldbrowser alias="Nome" entitylink="nomefantasia" visible="true" cansearch="true" />
+            <!-- <fieldbrowser  entitylink="id_grupoempresarial" visible="false" cansearch="false"/> -->
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase> 

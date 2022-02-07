@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, height=device-height, initial-scale=1.0" />
+
+        <title>Digite seu usuário e senha</title>
+
+        
+        <link rel="icon" type="image/icon" href="//s3-us-west-2.amazonaws.com/static.nasajon/img/favicon.ico" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="/media/css/nasajon_identidades.css" />
+        <link rel='stylesheet' type='text/css' href='//fonts.googleapis.com/css?family=Lato:400,400italic,700,700italic,300italic,300' />
+         <!--[if lt IE 9]>
+        <link rel="stylesheet" href="/media/css/ie.css" />
+        <![endif]-->
+
+		
+		<meta name="robots" content="noindex, nofollow" />
+
+
+			</head>
+
+	
+	<body  onload="SimpleSAML_focus('username');">
+
+            <div class="navbar">
+                <div class="container">
+                    <div class="navbar-header hidden-snap-in">
+                      <a class="navbar-brand"><img width="165" height="35" border="0" src="//s3-us-west-2.amazonaws.com/static.nasajon/img/logo.png" class="img-responsive"></a>
+                    </div>
+                    
+                     
+                        <div class="navbar-header visible-snap-in">
+                            <a class="navbar-brand">
+                                <img width="32" height="32" border="0" class="img-responsive" src="//s3-us-west-2.amazonaws.com/static.nasajon/img/icons/32x32/http://localhost.png" title="Portal do Funcionário" />                              
+                            </a>
+                            <div class="navbar-text">
+                                Portal do Funcionário                            </div>
+                        </div>
+                                    </div><!-- /.container -->
+            </div><!-- /.navbar -->
+
+		
+	    <div class="container">
+
+			<div class="row row-offcanvas row-offcanvas-right">
+    <form action="?" method="post" name="f" class="loginform">
+        <div class="col-xs-12 col-sm-12 float-none">
+            <div class="text-center">
+                <h1>Para acessar você precisa ter uma Conta Nasajon.</h1>
+                <h2 class="hidden-xs">Caso você não possua, cadastre-se.<br></h2>
+            </div>
+        </div>
+
+        <div class="box-login col-xs-12 center-block clearfix" style="float:none">
+            <div class="bga">
+                <div rel='user-pic'></div>
+            </div>
+            <div class="bgb text-center">
+                                <ul>
+                    <li>
+                        <label for="username" class="ie-label">E-mail</label>
+                        <input type="text" placeholder="E-mail" id="username" tabindex="1" name="username" value="">                    </li>
+                    <li>
+                        <label for="password" class="ie-label">Senha</label>
+                        <input type="password" placeholder="Senha" tabindex="2" name="password">
+                    </li>
+                                        <li>
+                        				<input type="submit" class="btn-navy" tabindex="4" id="regularsubmit" value="Acessar" />                    </li>
+                    <li><a class="btn-indigo" href="https://conta.nasajonsistemas.com.br/cadastro?origem=portalfuncionario&returnto=https://login.nasajonsistemas.com.br/module.php/core/loginuserpass.php?AuthState=_ba039a7e67e12063876063426888bf8dc53bbc66ed%3Ahttps%3A%2F%2Flogin.nasajonsistemas.com.br%2Fsaml2%2Fidp%2FSSOService.php%3Fspentityid%3Dhttp%253A%252F%252Flocalhost%26cookieTime%3D1557865229">CADASTRE-SE</a></li>
+                                        <li><a href="https://login.nasajonsistemas.com.br/module.php/nasajon/recuperar_senha.php?returnto=https://login.nasajonsistemas.com.br/module.php/core/loginuserpass.php?AuthState=_ba039a7e67e12063876063426888bf8dc53bbc66ed%3Ahttps%3A%2F%2Flogin.nasajonsistemas.com.br%2Fsaml2%2Fidp%2FSSOService.php%3Fspentityid%3Dhttp%253A%252F%252Flocalhost%26cookieTime%3D1557865229">recuperar senha</a></li>
+                </ul>
+            </div>
+            <div class="bgc"></div>
+        </div>
+        <input type="hidden" name="AuthState" value="_ba039a7e67e12063876063426888bf8dc53bbc66ed:https://login.nasajonsistemas.com.br/saml2/idp/SSOService.php?spentityid=http%3A%2F%2Flocalhost&amp;cookieTime=1557865229" />    </form>
+
+        </div><!--/.container-->
+</div>
+
+<footer class="footer">
+    <div class="container footer-login">
+        <div class="row" >
+            <div  class="col-sm-6 text-center">
+                <a href="http://www.nasajon.com.br"><strong>www.nasajon.com.br</strong></a>
+            </div>
+            <div class="col-sm-6 text-right">
+                <p><strong>&copy; 2019 Nasajon Sistemas</strong> <br/>
+                    Matriz: Av. Rio Branco, 45 - 18º Centro - Rio de Janeiro - RJ <br/>
+                    Telefone: 0800 021 7070</p>
+            </div>
+        </div>
+    </div>
+</footer>
+<script type="text/javascript" src="/resources/script.js"></script>
+
+</body>
+
+</html>

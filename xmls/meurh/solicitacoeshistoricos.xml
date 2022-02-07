@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="solicitacoeshistoricos" label="solicitacoeshistoricos" project="meurh">
+    <entity schema="meurh" table="solicitacoeshistoricos">
+        <fieldmodel name="solicitacaohistorico" datatype="guid" isid="true" column="solicitacaohistorico" />
+        <fieldmodel name="tipohistorico" datatype="integer" column="tipohistorico">
+            <options type="json">
+            {
+                "0":"Criação"
+                "1":"Aprovação",
+                "2":"Fechamento",
+                "3":"Exclusão",
+                "4":"Reabertura"
+            }
+            </options>
+        </fieldmodel>
+        <fieldmodel name="solicitacao" datatype="guid" column="solicitacao"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="valornovo" datatype="json" column="valornovo" />
+        <fieldmodel name="valorantigo" datatype="json" column="valorantigo" />
+        <fieldmodel name="anexos" datatype="json" column="anexos" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="table" label="Históricos">
+        <filters style="dynamic">
+            <fieldsfilters>
+                <fieldfilter entitylink="solicitacao">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="tipohistorico" >
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser alias="solicitacaohistorico" entitylink="solicitacaohistorico" visible="false" isid="true" cansearch="false" />
+            <fieldbrowser entitylink="descricao"/>
+            <fieldbrowser entitylink="solicitacao"/>
+            <fieldbrowser entitylink="tipohistorico"/>
+            <fieldbrowser entitylink="created_at" indefaultorder="true" direction="desc"/>
+            <fieldbrowser entitylink="created_by"/>
+            <fieldbrowser entitylink="valornovo" />
+            <fieldbrowser entitylink="valorantigo"/>
+            <fieldbrowser entitylink="anexos"/>
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

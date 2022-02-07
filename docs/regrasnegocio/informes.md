@@ -1,0 +1,1 @@
+Visão do colaborador: Apenas listagem e pdf

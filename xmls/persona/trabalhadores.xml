@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="trabalhadores" label="trabalhadores" project="persona">
+    <entity schema="persona" table="trabalhadores">
+        <fieldmodel name="trabalhador" datatype="guid" isid="true" column="trabalhador"/>
+        <fieldmodel name="agencia" datatype="guid" column="agencia" useCaseLink="financas\agencias" entityJoinType="left"  />
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" />
+        <fieldmodel name="numerocontasalario" datatype="string" column="numerocontasalario" />
+        <fieldmodel name="numerocontasalariodv" datatype="string" column="numerocontasalariodv" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="salarioliquidoestimado" datatype="moeda" column="salarioliquidoestimado" />
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" />
+
+        <!-- Endereço -->
+        <fieldmodel name="tipologradouro" datatype="object" column="tipologradouro" useCaseLink="ns\tiposlogradouros" entityJoinType="left" />  
+        <fieldmodel name="municipioresidencia" datatype="string" column="municipioresidencia" />
+        <fieldmodel name="paisresidencia" datatype="string" column="paisresidencia" />
+        <fieldmodel name="logradouro" datatype="string" column="logradouro" />
+        <fieldmodel name="numero" datatype="string" column="numero" />
+        <fieldmodel name="complemento" datatype="string" column="complemento" />
+        <fieldmodel name="bairro" datatype="string" column="bairro" />
+        <fieldmodel name="cidade" datatype="string" column="cidade" />
+        <fieldmodel name="estado" datatype="guid" column="estado" notMapped="true" />
+        <fieldmodel name="cep" datatype="string" column="cep" />
+        <!-- <fieldmodel name="residenciapropria" datatype="boolean" column="residenciapropria" /> -->
+        
+        <!-- Contato -->
+        <fieldmodel name="dddtel" datatype="string" column="dddtel" />
+        <fieldmodel name="telefone" datatype="string" column="telefone" />
+        <fieldmodel name="dddcel" datatype="string" column="dddcel" />
+        <fieldmodel name="celular" datatype="string" column="celular" />
+        <fieldmodel name="email" datatype="boolean" column="email" />
+
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Funcionários" >
+        <fieldsbrowser>
+            <fieldbrowser entitylink="trabalhador" isid="true" visible="false" />
+            <fieldbrowser alias="Agência" entitylink="agencia" visible="false" />
+            <fieldbrowser entitylink="numerocontasalario" visible="false" />
+            <fieldbrowser entitylink="numerocontasalariodv" visible="false" />
+            <fieldbrowser entitylink="salarioliquidoestimado" visible="false" />
+            <fieldbrowser entitylink="estabelecimento" visible="false" />
+        </fieldsbrowser>
+        <filters style="fixed">
+            <fieldsfilters>
+                <fieldfilter entitylink="trabalhador" label="trabalhador" visible="false">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="estabelecimento" label="estabelecimento" visible="false">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+    </viewbrowser>
+</nsjusecase>

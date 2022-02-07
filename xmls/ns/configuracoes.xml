@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="configuracoes" label="configuracoes" project="ns">
+    <entity schema="ns" table="configuracoes">
+        <fieldmodel name="configuracao" datatype="guid" isid="true" column="configuracao"/>
+        <fieldmodel name="valor" datatype="string" column="valor"/>
+        <fieldmodel name="campo" datatype="string" column="campo"/>
+        <fieldmodel name="grupo" datatype="string" column="grupo" />
+        <fieldmodel name="aplicacao" datatype="string" column="aplicacao"/>
+        <fieldmodel name="empresa" datatype="guid" column="empresa"/>
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="inline" label="Configurações" >
+        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="campo" maxoccurs="1" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="grupo" maxoccurs="1" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="aplicacao" maxoccurs="1" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="estabelecimento" maxoccurs="1" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="configuracao" isid="true" visible="false" />
+            <fieldbrowser alias="Valor" entitylink="valor" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Campo" entitylink="campo" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Grupo" entitylink="grupo" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Aplicação" entitylink="aplicacao" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Estabelecimento" entitylink="estabelecimento" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

@@ -1,0 +1,32 @@
+imports:
+    - { resource: config.yml }
+
+#doctrine:
+#    orm:
+#        metadata_cache_driver: apc
+#        result_cache_driver: apc
+#        query_cache_driver: apc
+
+sentry:
+    dsn: "https://0c30edf74356454e8b4ba7e73c6e8bd4:5a5fb70f0d9d4f1393d6e90fb4a8a201@sentry.nasajon.com.br/35"
+    options:
+        environment: '%env(sentry_env)%'
+
+monolog:
+    handlers:
+        main:
+            type: fingers_crossed
+            action_level: error
+            handler: nested
+        nested:
+            type: stream
+            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            level: warning
+        console:
+            type: console
+            level: info
+            process_psr_3_messages: false
+            channels: ['!doctrine', '!console', '!event']   # Inclui todos canais, exceto 'doctrine', 'console', 'event'
+        filter_info:
+            type: service
+            id: cloudwatch_handler

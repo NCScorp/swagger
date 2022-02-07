@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="cargosniveis" label="cargosniveis" project="persona">
+    <entity schema="persona" table="niveiscargos">
+        <fieldmodel name="nivelcargo" datatype="guid" isid="true" column="nivelcargo"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="data" datatype="date" column="data"/>
+        <fieldmodel name="valorsalario" datatype="moeda" column="valorsalario"/>
+        <fieldmodel name="observacao" datatype="string" column="observacao"/>
+        <fieldmodel name="cargo" datatype="guid" column="cargo" useCaseLink="persona\cargos" entityJoinType="left"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">cargo</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="table" target="builtin" label="Níveis">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="nivelcargo" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" indefaultorder="true" cansearch="true" />
+            <fieldbrowser alias="Nivel" entitylink="observacao" visible="true" cansearch="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

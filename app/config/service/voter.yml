@@ -1,0 +1,30 @@
+services:
+
+    AppBundle\Security\Voter\Meurh\SolicitacoesalteracoesenderecosVoter:
+        class : AppBundle\Security\Voter\Meurh\SolicitacoesalteracoesenderecosVoter
+        arguments: 
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+        tags:
+            - { name: security.voter } 
+
+    AppBundle\Security\Voter\Meurh\SolicitacoesalteracoesvtsVoter:
+        class : AppBundle\Security\Voter\Meurh\SolicitacoesalteracoesvtsVoter
+        arguments: 
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+        tags:
+            - { name: security.voter } 
+
+    AppBundle\Security\Voter\Meurh\SolicitacoesfaltasVoter:
+        class : AppBundle\Security\Voter\Meurh\SolicitacoesfaltasVoter
+        arguments: 
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+        tags:
+            - { name: security.voter }
+        
+    AppBundle\Security\Voter\Meurh\SolicitacoesferiasVoter:
+        class : AppBundle\Security\Voter\Meurh\SolicitacoesferiasVoter
+        arguments: 
+            $fixedAttributes: "@nasajon_mda.fixed_attributes"
+        tags:
+            - { name: security.voter } 
+

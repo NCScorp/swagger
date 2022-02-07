@@ -1,1 +1,0 @@
-import angular = require('angular');

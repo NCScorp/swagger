@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="solicitacoes" label="solicitacoes" project="meurh">
+    <entity schema="meurh" table="solicitacoes">
+        <fieldmodel name="solicitacao" datatype="guid" isid="true" column="solicitacao" />
+        <fieldmodel name="trabalhador" datatype="guid" column="trabalhador" useCaseLink="persona\trabalhadores" entityJoinType="left" />
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" />
+        <fieldmodel name="tiposolicitacao" datatype="integer" column="tiposolicitacao">
+            <options type="json">{
+                "0":"Admissão Preliminar", 
+                "1":"Rescisão", 
+                "2":"Adiantamento Avulso", 
+                "3":"VT Adicional", 
+                "4":"Alteração de VT", 
+                "5":"Alteração de endereço",
+                "6":"Falta",
+                "7":"Férias",
+                "8":"Salário sob demanda"
+            }</options>
+        </fieldmodel>
+        <fieldmodel name="codigo" datatype="integer" column="codigo" />
+        <fieldmodel name="justificativa" datatype="string" column="justificativa" />
+        <fieldmodel name="observacao" datatype="string" column="observacao" />
+        <fieldmodel name="origem" datatype="integer" column="origem">
+            <options type="json">
+                {
+                    "1":"Meu RH",
+                    "2":"Meu Trabalho"
+                }
+            </options>
+        </fieldmodel>
+        <fieldmodel name="situacao" datatype="integer" column="situacao">
+            <options type="json">{"-1": "Rascunho","0":"Aberta", "1":"Efetuada", "2":"Cancelada", "3":"Excluída", "4":"Executada" }</options>
+        </fieldmodel>
+        <fieldmodel name="created_at" datatype="date" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="date" column="updated_by" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_at" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <!-- Workflow -->
+        <fieldmodel name="_acoes" datatype="json" column="_acoes" notMapped="true" />
+        <fieldmodel name="_editavel" datatype="boolean" column="_editavel" notMapped="true" />
+        <fieldmodel name="wkf_data" datatype="date" column="wkf_data" />
+        <fieldmodel name="wkf_estado" datatype="string" column="wkf_estado" />
+        <!-- Campo para guardar a descrição/motivo do fechamento/exclusão da solicitação quando pertinente -->
+        <fieldmodel name="descricao" datatype="string" notMapped="true" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="table" label="Solicitações">
+        <filters style="dynamic">
+            <fieldsfilters>
+                <fieldfilter entitylink="estabelecimento" label="estabelecimento" maxoccurs="unbounded">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="situacao" label="situacao">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="created_at" label="data de criacao">
+                    <conditions>
+                        <condition type="gte"/>
+                        <condition type="lte"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="trabalhador" label="trabalhador">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="tiposolicitacao" label="tiposolicitacao">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser alias="solicitacao" entitylink="solicitacao" visible="false" isid="true" cansearch="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" visible="true" indefaultorder="true" direction="desc" />
+            <fieldbrowser alias="Tipo de solicitação" entitylink="tiposolicitacao" visible="true" />
+            <fieldbrowser alias="Trabalhador" entitylink="trabalhador" visible="true" fielddetaillookup="{'nome': 'Trabalhador'}" />
+            <fieldbrowser alias="Situação" entitylink="situacao" visible="true" />
+            <fieldbrowser alias="Solicitada em" entitylink="created_at" visible="true" />
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" visible="false" />
+            <fieldbrowser alias="Solicitante" entitylink="created_by" visible="true" />
+            <fieldbrowser alias="Workflow Data" entitylink="wkf_data" visible="false" />
+            <fieldbrowser alias="Workflow Estado" entitylink="wkf_estado" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell label="Descrição" name="descricao" colspan="12" entitylink="descricao" controltype="textedit" />
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Cancelar</name>
+            <api>
+                <name>SolicitacaoCancelar</name>
+                <fromto valueapi="solicitacao" valueentity="solicitacao" />
+                <fromto valueapi="created_by" valueentity ="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

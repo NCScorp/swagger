@@ -1,0 +1,10 @@
+transformer:
+    source: "xmls"
+    target: "src/Nasajon/MDABundle"
+    fixedAttributes:
+        - "trabalhador"
+    plugins:
+    - symfony
+
+environment:
+    host : "http://localhost"

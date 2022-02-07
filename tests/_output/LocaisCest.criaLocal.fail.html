@@ -1,0 +1,153 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="msapplication-config" content="none" />
+  <meta name="google" content="notranslate">
+
+  <title>Portal do Funcionário - Nasajon Sistemas</title>
+
+  <link rel="icon" href="//s3-us-west-2.amazonaws.com/static.nasajon/img/favicons/favicon-portal-funcionario.ico" />
+
+  <link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/css/bootstrap.css" />
+
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto+Condensed">
+  
+  <link rel="stylesheet" href="//s3-us-west-2.amazonaws.com/static.nasajon/lib/angularjs-toaster/1.1.0/toaster.min.css" />
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+   
+  
+  <base href="//localhost/gednasajon/">
+   
+<script>
+  var CKEDITOR_BASEPATH = 'https://cdn.ckeditor.com/4.11.1/full/'
+</script>
+  <!--[if lt IE 9]>
+    <link rel="stylesheet" href="/css/25c08c0.css" />
+    <![endif]-->
+<link href="/assets/vendor-9088ad.min.css" rel="stylesheet"><link href="/assets/styles-9088ad.min.css" rel="stylesheet"></head>
+
+<body fixed-sidebar ng-app="app" ng-controller="MainController as ctrl" translate="no" class="notranslate">
+  <!--[if lt IE 9]>
+<div class="alerta-navegador">
+<h1>    <img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/suporte-online.png" alt="Multinotas - Nasajon Sistemas">
+</h1>
+
+<h2>Seu navegador está desatualizado!</h2>
+<p>Versões antigas podem apresentar problemas de segurança e, por <br />isso, não são compatíveis com os sistemas Nasajon.</p>
+<p>Para sua comodidade e segurança, copie o link: <br />
+<a class="url-sistema" href="http://multinotas.nasajonsistemas.com.br/gednasajon/admin/?funcao=admin">http://multinotas.nasajonsistemas.com.br/gednasajon/admin/?funcao=admin</a><br />
+e cole na barra de endereço de um dos navegadores indicados<br /> abaixo. Se não tiver nenhum deles, clique e baixe para continuar.</p>
+<div class="navegadores">
+  <div class="browser">
+      <div class="img-b"><img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/navegadores/ico-chrome.png" alt="Google Chrome"></div>
+      Google Chrome<br />
+      <a href="https://www.google.com.br/chrome/browser/desktop/" target="_blank" title="Baixe o Google Chrome">download</a>
+  </div>
+  <div class="browser">
+    <div class="img-b"><img src="https://s3-us-west-2.amazonaws.com/static.nasajon/img/navegadores/ico-firefox.png" alt="Mozilla Firefox"></div>
+    Mozilla Firefox<br />
+    <a href="https://www.mozilla.org/pt-BR/firefox/new/" target="_blank" title="Baixe o Mozilla Firefox">download</a>
+  </div>
+</div>
+<div class="clear"></div>
+</div>
+<![endif]-->
+
+
+
+
+  <div ng-init="appLoad.remove()" class="nsj-app-load">
+        <div class="load-area">
+            <div class="app-load-icon"></div>
+        </div>
+    </div>
+
+  <div id="wrap">
+    <nsj-header user-service="Usuarios">
+
+      <navbar-logo data-src="//s3-us-west-2.amazonaws.com/static.nasajon/img/logo.png"></navbar-logo>
+
+      <navbar-text data-module="Portal do Funcionário" data-system="Nasajon Sistemas"></navbar-text>
+
+      <navbar-dropdown>
+
+        <profile>{{usuario.nome}}</profile>
+       
+        <header-provisoes ng-if="usuario.nome" maintext="{{usuario.nome}}" subtext="{{usuario.email}}">
+        </header-provisoes>
+
+      </navbar-dropdown>
+
+    </nsj-header>
+
+    <nsj-menu>
+      <nsj-menu-list>
+        <nsj-menu-item ng-analytics-directive="Home | click | Home"  data-icon="fa fa-home" data-label="Página Inicial" data-href data-link="home"></nsj-menu-item>
+        <nsj-menu-item ng-analytics-directive="Home | click | Notícias" data-icon="fa fa-newspaper" data-label="Notícias" data-href data-link="noticias"></nsj-menu-item>
+        <nsj-menu-item ng-analytics-directive="Home | click | Colaboradores" data-icon="fa fa-user" data-label="Colaboradores" data-href data-link="colaboradores"></nsj-menu-item>
+        <nsj-menu-item item-dropdown data-icon="fa fa-birthday-cake" data-label="Aniversariantes">
+          <nsj-menu-item ng-analytics-directive="Home | click | Aniversariantes do dia" data-label="Do Dia" data-href data-link="aniversariantes"></nsj-menu-item>
+          <nsj-menu-item ng-analytics-directive="Home | click | Aniversariantes de Tempo de Empresa"  data-label="De Tempo de Empresa" data-href data-link="tempoempresa"></nsj-menu-item>
+        </nsj-menu-item>
+        <nsj-menu-item ng-analytics-directive="Home | click | Agendamentos" data-icon="fa fa-calendar" data-label="Agendamentos" data-href data-link="agendamentos"></nsj-menu-item>
+        <nsj-menu-item ng-analytics-directive="Home | click | Relatórios Liberados" data-icon="fas fa-file-invoice-dollar" data-label="Relatórios Liberados" data-href data-link="relatoriosliberados"></nsj-menu-item>
+      </nsj-menu-list>
+       <nsj-menu-list-bottom>
+          <nsj-menu-item ng-analytics-directive="Home | click | Configurações"  ng-if="ctrl.Usuarios.isAdmin" item-dropdown data-icon="fa fa-cogs" data-label="Configurações">
+          <nsj-menu-item ng-analytics-directive="Home | click | Admin - Notícias"  data-label="Notícias" data-href data-link="admin_noticias"></nsj-menu-item>
+          <nsj-menu-item ng-analytics-directive="Home | click | Recursos "  data-label="Recursos" data-href data-link="recursos"></nsj-menu-item>
+          <nsj-menu-item ng-analytics-directive="Home | click | Locais "  data-label="Locais" data-href data-link="locais"></nsj-menu-item>
+        </nsj-menu-item>  
+       </nsj-menu-list-bottom>
+
+    </nsj-menu>
+
+    <div class="container-fluid main-container" ng-cloak>
+
+      <toaster-container toaster-options="{'time-out': 3000, 'close-button': true, 'animation-class': 'toast-top-center'}"></toaster-container>
+
+      <div class='geral clearfix' ui-view>
+        <div id="divFull" class="divFullSize">
+            <p class="text-center article-loading height-full p-loading-center" ng-class="{'onloading' : true }" ng-if="true"></p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+<script type="text/javascript" src="/assets/vendor-9088ad.min.js"></script><script type="text/javascript" src="/assets/portalfuncionario-9088ad.min.js"></script><script type="text/javascript" src="/assets/styles-9088ad.min.js"></script></body>
+ 
+<script src="//localhost/fosrouting/js/routing?callback=fos.Router.setData"></script>
+<script src="//localhost/gednasajon/globals"></script>
+
+
+
+
+
+<script>
+(function(i,s,o,g,r,a,m) {
+  i['GoogleAnalyticsObject']=r;
+  i[r]=i[r]||function() {
+    (i[r].q = i[r].q || []).push(arguments)}, 
+    i[r].l = 1 * new Date();
+    
+    a = s.createElement(o),
+    m = s.getElementsByTagName(o)[0];
+    
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  
+</script>
+
+</html>
+

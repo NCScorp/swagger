@@ -1,3 +1,0 @@
-app: crm-frontend
-app_version: v1
-ssm_name: crm-frontend

@@ -1,0 +1,5 @@
+configuracoes:
+  type: rest
+  resource: "AppBundle\\Controller\\Web\\ConfiguracoesController"
+  prefix: "/web"
+  name_prefix: "web_configuracoes_"

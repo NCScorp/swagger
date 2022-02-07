@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="documentoscolaboradores" label="documentoscolaboradores" project="persona">
+  <entity schema="persona" table="documentoscolaboradores">
+    <fieldmodel name="documentocolaborador" datatype="guid" isid="true" column="documentocolaborador" />
+    <fieldmodel name="tipodocumentocolaborador" datatype="guid" column="tipodocumentocolaborador" useCaseLink="persona\tiposdocumentoscolaboradores" entityJoinType="inner"/>
+    <fieldmodel name="trabalhador" datatype="guid" column="trabalhador" />
+    <fieldmodel name="solicitacao" datatype="guid" column="solicitacao" />
+    <fieldmodel name="urldocumento" datatype="string" column="urldocumento" />
+    <fieldmodel name="bindocumento" datatype="string" column="bindocumento" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+    <constructoritem required="true">trabalhador</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="table" label="Documentos">
+    <fieldsbrowser>
+      <fieldbrowser alias="documentocolaborador" entitylink="documentocolaborador" visible="false" isid="true" cansearch="false" />
+      <fieldbrowser alias="tipodocumentocolaborador" entitylink="tipodocumentocolaborador" visible="false" cansearch="false" />
+      <fieldbrowser alias="solicitacao" entitylink="solicitacao" visible="false" cansearch="false" />
+      <fieldbrowser alias="urldocumento" entitylink="urldocumento" visible="true" cansearch="false" />
+      <fieldbrowser alias="tenant" entitylink="tenant" visible="false" cansearch="false" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <filters style="dynamic">
+    <fieldsfilters>
+      <fieldfilter entitylink="solicitacao" label="solicitacao">
+        <conditions>
+          <condition type="eq" />
+        </conditions>
+      </fieldfilter>
+    </fieldsfilters>
+  </filters>
+</nsjusecase>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="tiposdocumentoscolaboradores" label="tiposdocumentoscolaboradores" project="persona">
+  <entity schema="persona" table="tiposdocumentoscolaboradores">
+    <fieldmodel name="tipodocumentocolaborador" datatype="guid" isid="true" column="tipodocumentocolaborador" />
+    <fieldmodel name="descricao" datatype="string" column="descricao" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+  </entity>
+  <constructors>
+    <constructoritem>tenant</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="table" label="Documentos">
+    <fieldsbrowser>
+      <fieldbrowser alias="tipodocumentocolaborador" entitylink="tipodocumentocolaborador" visible="false" isid="true" cansearch="false" />
+      <fieldbrowser alias="descricao" entitylink="descricao" visible="true" cansearch="false" />
+      <fieldbrowser alias="tenant" entitylink="tenant" visible="false" cansearch="false" />
+    </fieldsbrowser>
+  </viewbrowser>
+</nsjusecase>

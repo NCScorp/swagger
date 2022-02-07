@@ -1,3 +1,3 @@
-app: crm
+app: meutrabalho
 app_version: v1
-ssm_name: crm
+ssm_name: meutrabalho

@@ -1,0 +1,28 @@
+<svg width="128" height="128" viewBox="0 0 128 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>Group</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(572 927)">
+<g id="Group">
+<g id="Subtract">
+<use xlink:href="#path0_fill" transform="translate(-572 -879.777)" fill="#AF8C2B"/>
+</g>
+<g id="Subtract">
+<use xlink:href="#path1_fill" transform="translate(-572 -927)" fill="#F8C63D"/>
+</g>
+<g id="Ellipse">
+<use xlink:href="#path2_fill" transform="translate(-558.33 -910.845)" fill="#E93E30"/>
+</g>
+<g id="Ellipse">
+<use xlink:href="#path2_fill" transform="translate(-509.864 -909.602)" fill="#377EF0"/>
+</g>
+<g id="Ellipse">
+<use xlink:href="#path2_fill" transform="translate(-550.874 -861.136)" fill="#52B529"/>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" fill-rule="evenodd" d="M 30 0C 13.4315 0 0 13.4315 0 30L 0 50.7767C 0 67.3452 13.4315 80.7767 30 80.7767L 98 80.7767C 114.569 80.7767 128 67.3452 128 50.7767L 128 30C 128 13.4315 114.569 0 98 0L 30 0ZM 102.524 72.0776C 113.849 72.0776 123.029 62.8973 123.029 51.5728C 123.029 40.2483 113.849 31.0679 102.524 31.0679C 91.1997 31.0679 82.0194 40.2483 82.0194 51.5728C 82.0194 62.8973 91.1997 72.0776 102.524 72.0776Z"/>
+<path id="path1_fill" fill-rule="evenodd" d="M 30 0C 13.4315 0 0 13.4315 0 30L 0 91.7864C 0 108.355 13.4315 121.786 30 121.786L 98 121.786C 114.569 121.786 128 108.355 128 91.7864L 128 30C 128 13.4315 114.569 0 98 0L 30 0ZM 102.524 115.573C 113.849 115.573 123.029 106.392 123.029 95.068C 123.029 83.7435 113.849 74.5631 102.524 74.5631C 91.1997 74.5631 82.0194 83.7435 82.0194 95.068C 82.0194 106.392 91.1997 115.573 102.524 115.573Z"/>
+<path id="path2_fill" d="M 39.767 19.8835C 39.767 30.8648 30.8648 39.767 19.8835 39.767C 8.90214 39.767 0 30.8648 0 19.8835C 0 8.90214 8.90214 0 19.8835 0C 30.8648 0 39.767 8.90214 39.767 19.8835Z"/>
+</defs>
+</svg>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="tiposdocumentosrequeridos" label="tiposdocumentosrequeridos" project="meurh">
+	<entity schema="meurh" table="tiposdocumentosrequeridos">
+		<fieldmodel name="tipodocumentorequerido" datatype="guid" isid="true" column="tipodocumentorequerido" />
+		<fieldmodel name="tipodocumentocolaborador" datatype="guid" column="tipodocumentocolaborador" useCaseLink="persona\tiposdocumentoscolaboradores" entityJoinType="left" />
+		<fieldmodel name="tiposolicitacao" datatype="integer" column="tiposolicitacao" />
+		<fieldmodel name="obrigatorio" datatype="boolean" column="obrigatorio" />
+		<fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" />
+		<fieldmodel name="tenant" datatype="integer" column="tenant" />
+		<fieldmodel name="created_at" datatype="datetime" column="created_at" />
+		<fieldmodel name="created_by" datatype="json" column="created_by" />
+		<fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+		<fieldmodel name="updated_by" datatype="json" column="updated_by" />
+  	</entity>
+	<constructors>
+		<constructoritem required="true">tenant</constructoritem>
+		<constructoritem required="true">tiposolicitacao</constructoritem>
+	</constructors>
+	<viewbrowser paginate="true" layout="table" label="Informes de Rendimento">
+		<filters style="dynamic">
+            <fieldsfilters>
+                <fieldfilter entitylink="estabelecimento" label="estabelecimento" maxoccurs="unbounded">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+		<fieldsbrowser>
+			<fieldbrowser alias="tipodocumentorequerido" entitylink="tipodocumentorequerido" visible="false" isid="true" cansearch="false" />
+			<fieldbrowser alias="estabelecimento" entitylink="estabelecimento" visible="false" />
+			<fieldbrowser alias="tipodocumentocolaborador" entitylink="tipodocumentocolaborador" visible="false" cansearch="false" fielddetaillookup="{'tipodocumentocolaborador':'tipodocumentocolaborador', 'descricao': 'descricao'}" />
+			<fieldbrowser alias="tiposolicitacao" entitylink="tiposolicitacao" visible="true" cansearch="false" />
+			<fieldbrowser alias="obrigatorio" entitylink="obrigatorio" visible="false" cansearch="false" />
+			<fieldbrowser alias="tenant" entitylink="tenant" visible="false" cansearch="false" />
+		</fieldsbrowser>
+	</viewbrowser>
+	<forms>
+		<form name="default">
+			<layout>
+			<headerform>
+				<row>
+				<cell name="tipodocumentocolaborador" controltype="lookup" entitylink="tipodocumentocolaborador" label="tipodocumentocolaborador" fielddetaillookup="{'tipodocumentocolaborador':'tipodocumentocolaborador', 'descricao': 'descricao'}" fieldaliaslookup="tipodocumentocolaborador">
+					<validates>
+					<validate type="vnull" displaytext="O campo Tipo de documento não pode ser vazio."/>
+					</validates>
+				</cell>
+				</row>
+				<row>
+				<cell name="obrigatorio" controltype="textedit" entitylink="obrigatorio" colspan="6" label="obrigatorio">
+					<validates>
+					<validate type="vnull" displaytext="O campo Obrigatorio não pode ser vazio."/>
+					</validates>
+				</cell>
+				</row>
+			</headerform>
+			</layout>
+		</form>
+	</forms>
+	<actions>
+		<action>
+		<name>Insert</name>
+		<api>
+			<name>tiposdocumentosrequeridosnovo</name>
+			<fromto valueapi="tipodocumentocolaborador" valueentity="tipodocumentocolaborador" />
+			<fromto valueapi="tiposolicitacao" valueentity="tiposolicitacao" />
+			<fromto valueapi="obrigatorio" valueentity="obrigatorio" />
+			<fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+			<fromto valueapi="tenant" valueentity="tenant" />
+			<fromto valueapi="created_by" valueentity="logged_user" />
+			<fromto valueapi="updated_by" valueentity="logged_user" />
+		</api>
+		</action>
+	</actions>
+</nsjusecase>

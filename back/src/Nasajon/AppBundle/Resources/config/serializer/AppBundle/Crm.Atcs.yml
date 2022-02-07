@@ -1,5 +1,0 @@
-cdvdgfgfgzNasajon\AppBundle\Entity\Crm\Atcs:
-    xml_root_name: atendimentocomercial
-    properties:
-        negocio:
-            exclude: true

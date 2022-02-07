@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - nohup dockerd-entrypoint.sh
+  pre_build:
+    commands:
+      - mkdir app/logs
+      - touch app/logs/test.log
+      - cp app/config/parameters.yml.dist app/config/parameters.yml
+      - cp common.env.dist common.env
+  build:
+    commands:
+      - dck_build -i nasajon/composer:1.7.2 -c "composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs"
+      - dck_build -i nasajon/php-node -c "php vendor/nasajon/mdatransformer/bin/transformer nasajon:mda:builder --nocache" -e "-v $PWD:/build -e NODE_ENV=production -e SYMFONY_DEPRECATIONS_HELPER=disabled"
+      - dck_build -d enable -i postgres:11.5 -c "bash /opt/vendor/nasajon/bancosweb/run_dump /opt/vendor/nasajon/bancosweb/dump"
+      - dck_build -m enable -i nasajon/php:7.1-fpm-symfony-dev -c "bin/console doctrine:migrations:migrate --no-interaction"
+      - dck_build -m enable -i nasajon/php:7.1-fpm-symfony-dev -c "vendor/codeception/codeception/codecept run --fail-fast --no-colors --xml"
+      - dck_build -i nasajon/composer:1.7.2 -c "composer install --prefer-dist --optimize-autoloader --no-scripts --no-dev --ignore-platform-reqs"
+  post_build:
+    commands:
+      - dck_ship meutrabalho
+      - deploy -a meutrabalho -n meutrabalho -p api -t deployment

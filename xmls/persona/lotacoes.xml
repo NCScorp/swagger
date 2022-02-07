@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="lotacoes" label="lotacoes" project="persona">
+    <entity schema="persona" table="lotacoes">
+        <fieldmodel name="lotacao" datatype="guid" isid="true" column="lotacao"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="tipo" datatype="integer" column="tipo"/>
+        <fieldmodel name="enderecodiferente" datatype="boolean" column="enderecodiferente"/>
+        <fieldmodel name="tipologradouro" datatype="string" column="tipologradouro"/>
+        <fieldmodel name="logradouro" datatype="string" column="logradouro"/>
+        <fieldmodel name="numero" datatype="string" column="numero"/>
+        <fieldmodel name="complemento" datatype="string" column="complemento"/>
+        <fieldmodel name="bairro" datatype="string" column="bairro"/>
+        <fieldmodel name="cidade" datatype="string" column="cidade"/>
+        <fieldmodel name="cep" datatype="string" column="cep"/>
+        <fieldmodel name="uf" datatype="string" column="uf"/>
+        <fieldmodel name="municipio" datatype="string" column="municipio"/>
+        <fieldmodel name="empresa" datatype="string" column="empresa"/>
+        <fieldmodel name="estabelecimento" datatype="string" column="estabelecimento"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+        <fieldmodel name="tomador" datatype="string" column="tomador"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Lotações" >
+        <fieldsbrowser>
+            <fieldbrowser entitylink="lotacao" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Nome" entitylink="nome" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Tipo" entitylink="tipo" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="empresa" entitylink="empresa" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Tomador" entitylink="tomador" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+        <filters style="fixed">
+            <fieldsfilters>
+                <fieldfilter entitylink="empresa" label="empresa" visible="false">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+            <fieldsfilters>
+                <fieldfilter entitylink="estabelecimento" label="estabelecimento" visible="false">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+    </viewbrowser>
+</nsjusecase>

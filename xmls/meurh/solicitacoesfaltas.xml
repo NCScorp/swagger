@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="solicitacoesfaltas" label="solicitacoesfaltas" project="meurh">
+    <entity schema="meurh" table="solicitacoesfaltas">
+        <fieldmodel name="solicitacao" datatype="guid" isid="true" column="solicitacao" />
+        <fieldmodel name="trabalhador" datatype="guid" column="trabalhador"/>
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" />
+        <fieldmodel name="tiposolicitacao" datatype="integer" column="tiposolicitacao">
+            <options type="json">{
+                "0":"Admissão Preliminar", 
+                "1":"Rescisão", 
+                "2":"Adiantamento Avulso", 
+                "3":"VT Adicional", 
+                "4":"Alteração de VT", 
+                "5":"Alteração de Dados Cadastrais",
+                "6":"Falta",
+                "7":"Férias" 
+            }</options>
+        </fieldmodel>
+        <fieldmodel name="codigo" datatype="integer" column="codigo" />
+        <fieldmodel name="justificativa" datatype="string" column="justificativa" />
+        <fieldmodel name="observacao" datatype="string" column="observacao" />
+        <fieldmodel name="origem" datatype="integer" column="origem">
+            <options type="json">
+                {
+                    "1":"Meu RH",
+                    "2":"Meu Trabalho"
+                }
+            </options>
+        </fieldmodel>
+        <fieldmodel name="situacao" datatype="integer" column="situacao">
+            <options type="json">{"0":"Aberta", "1":"Efetuada", "2":"Cancelada", "3":"Excluída" }</options>
+        </fieldmodel>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="datas" datatype="string" column="datas" />
+        <fieldmodel name="justificada" datatype="boolean" column="justificada" />
+        <fieldmodel name="tipojustificativa" datatype="integer" column="tipojustificativa">
+          <options type="json">{"0":"Injustificada","1":"Abono", "2":"Compensação", "3":"Outros" }</options>
+        </fieldmodel>
+        <fieldmodel name="descontaponto" datatype="boolean" column="descontaponto" />
+        <fieldmodel name="compensacao" datatype="boolean" column="compensacao" />
+        <fieldmodel name="mesdescontocalculo" datatype="integer" column="mesdescontocalculo" >
+          <options type="json">{
+                  "1": "Janeiro",
+                  "2": "Fevereiro",
+                  "3": "Março",
+                  "4": "Abril",
+                  "5": "Maio",
+                  "6": "Junho",
+                  "7": "Julho",
+                  "8": "Agosto",
+                  "9": "Setembro",
+                  "10": "Outubro",
+                  "11": "Novembro",
+                  "12": "Dezembro"
+                  }
+          </options>
+      </fieldmodel>
+      <fieldmodel name="anodescontocalculo" datatype="integer" column="anodescontocalculo" />
+        <!-- Workflow -->
+        <fieldmodel name="_acoes" datatype="json" column="_acoes" notMapped="true" />
+        <fieldmodel name="_editavel" datatype="boolean" column="_editavel" notMapped="true" />
+        <fieldmodel name="wkf_data" datatype="date" column="wkf_data" />
+        <fieldmodel name="wkf_estado" datatype="string" column="wkf_estado" />
+        <!-- Campo para guardar a descrição/motivo do fechamento/exclusão da solicitação quando pertinente -->
+        <fieldmodel name="descricao" datatype="string" notMapped="true" />
+        <fieldmodel name="valornovo" datatype="json" notMapped="true" />
+        <fieldmodel name="valorantigo" datatype="json" notMapped="true" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">trabalhador</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Solicitação de Falta">
+        <filters style="dynamic">
+            <fieldsfilters>
+                <fieldfilter entitylink="situacao" label="Situação">
+                    <conditions>
+                        <condition type="gte"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="created_at" label="Envio">
+                    <conditions>
+                        <condition type="gte"/>
+                        <condition type="lte"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser alias="solicitacao" entitylink="solicitacao" visible="false" isid="true" cansearch="false" />
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" visible="false"  cansearch="false" />
+            <fieldbrowser alias="codigo" entitylink="codigo" visible="false"  cansearch="true" />
+            <fieldbrowser alias="situacao" entitylink="situacao" visible="false"  cansearch="false" />
+            <fieldbrowser alias="Datas" entitylink="datas" visible="true" cansearch="false" avaliable="true"/>
+            <fieldbrowser alias="envio" entitylink="created_at" visible="true" cansearch="true" indefaultorder="true"  direction="desc"/>
+            <fieldbrowser alias="Workflow Data" entitylink="wkf_data" visible="false" />
+            <fieldbrowser alias="Workflow Estado" entitylink="wkf_estado" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Solicitação de Falta">
+            <layout>
+                <headerform>
+                  <row>
+                        <cell name="situacao" entitylink="situacao" colspan="6" controltype="textedit" label="Situação" >
+                            <validates>
+                                <validate type="vnull" displaytext="A situação deve ser informada." />
+                            </validates>
+                        </cell>
+                  </row>
+                  <row>
+                    <cell name="solicitacao" entitylink="solicitacao" colspan="6" controltype="textedit" label="Solicitação" >
+                        <validates>
+                            <validate type="vnull" displaytext="A solicitação deve ser informada." />
+                        </validates>
+                    </cell>
+                  </row>
+                    <row>
+                        <cell name="trabalhador" entitylink="trabalhador">
+                            <validates>
+                                <validate type="vnull" displaytext="O trabalhador deve ser selecionado."/>
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                      <cell name="datas" entitylink="datas" colspan="6" controltype="textedit" label="Datas" >
+                          <validates>
+                              <validate type="vnull" displaytext="Uma data deve ser selecionada." />
+                          </validates>
+                      </cell>
+                    </row>
+                    <row>
+                      <cell name="justificada" entitylink="justificada" colspan="6" controltype="checkbox" label="justificada" />
+                    </row>
+                    <row>
+                        <cell name="justificativa" entitylink="justificativa" colspan="12" controltype="textarea" 
+                            label="Justificativa" visible="!justificada">
+                            <validates>
+                                <validate displaytext="Uma falta justificada requer justificativa." />
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                      <cell name="descontaponto" entitylink="descontaponto" colspan="6" controltype="checkbox" label="Desconta Ponto"></cell>
+                      <cell name="compensacao" entitylink="compensacao" colspan="6" controltype="checkbox" label="Compensação"></cell>
+                  </row>
+                    <row>
+                      <cell name="tipojustificativa" entitylink="tipojustificativa" colspan="12" controltype="textarea" 
+                          label="tipojustificativa" visible="!justificada">
+                          <validates>
+                              <validate type="vnull" displaytext="Uma falta justificada requer justificativa." />
+                          </validates>
+                      </cell>
+                  </row>
+                  <row>
+                    <cell name="mesdescontocalculo" entitylink="mesdescontocalculo" colspan="12" controltype="textarea" 
+                        label="mesdescontocalculo">
+                    </cell>
+                  </row>
+                  <row>
+                    <cell name="anodescontocalculo" entitylink="anodescontocalculo" colspan="12" controltype="textarea" 
+                        label="anodescontocalculo">
+                    </cell>
+                  </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+          <name>DraftInsert</name>
+          <api>
+              <name>Solicitacaofaltarascunho_v2</name>
+              <fromto valueapi="trabalhador" valueentity="trabalhador"></fromto>
+              <fromto valueapi="tenant" valueentity="tenant"></fromto>
+              <fromto valueapi="estabelecimento" valueentity="estabelecimento"></fromto>
+              <fromto valueapi="origem" valueentity="origem"></fromto>
+              <fromto valueapi="created_by" valueentity ="logged_user" />
+          </api>
+        </action>
+        <action >
+            <name>Insert</name>
+            <api >
+                <name>SolicitacaoFaltaNovo_MT</name>
+                <fromto valueapi="trabalhador" valueentity="trabalhador"/>
+                <fromto valueapi="estabelecimento" valueentity="estabelecimento"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="justificativa" valueentity="justificativa" />
+                <fromto valueapi="datas" valueentity="datas"/>
+                <fromto valueapi="justificada" valueentity="justificada"/>
+                <fromto valueapi="tipojustificativa" valueentity="tipojustificativa"/>
+            </api>
+        </action>
+        <action disable="situacao > 0" label="Editar Solicitação de Falta" icon="fa fa-edit" >
+            <name>Update</name>
+            <api>
+                <name>solicitacaofaltaalterar_MT_v3</name>
+                <fromto valueapi="solicitacao" valueentity="solicitacao"/>
+                <fromto valueapi="trabalhador" valueentity="trabalhador"/>
+                <fromto valueapi="estabelecimento" valueentity="estabelecimento"/>
+                <fromto valueapi="tenant" valueentity="tenant"/>
+                <fromto valueapi="justificativa" valueentity="justificativa" />
+                <fromto valueapi="datas" valueentity="datas"/>
+                <fromto valueapi="justificada" valueentity="justificada"/>
+                <fromto valueapi="tipojustificativa" valueentity="tipojustificativa"/>
+                <fromto valueapi="mesdescontocalculo" valueentity="mesdescontocalculo"/>
+                <fromto valueapi="anodescontocalculo" valueentity="anodescontocalculo"/>
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+                <fromto valueapi="valorantigo" valueentity="valorantigo" />
+                <fromto valueapi="valornovo" valueentity="valornovo" />
+            </api>
+        </action>
+        <action disable="situacao > 0" label="Excluir Solicitação de Falta" icon="fa fa-trash">
+            <name>Delete</name>
+            <api>
+                <name>SolicitacaofaltaExcluir</name>
+                <fromto valueapi="solicitacao" valueentity ="solicitacao" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+           <name>retrieve</name>
+        </action>
+        <action disable="situacao > 0" color="red" appendto="view">
+            <name>Fechar</name>
+            <api>
+                <name>SolicitacaoFechar</name>
+                <fromto valueapi="solicitacao" valueentity="solicitacao" />
+                <fromto valueapi="descricao" valueentity="justificativa" />
+                <fromto valueapi="created_by" valueentity ="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+            <confirm>
+                <title>Fechar Solicitação de Falta</title>
+                <message>Deseja fechar a solicitação de falta?</message>
+                <confirmBtn>Fechar</confirmBtn>
+                <cancelBtn>Cancelar</cancelBtn>
+            </confirm>
+        </action>
+        <action>
+            <name>Cancelar</name>
+            <api>
+                <name>SolicitacaoCancelar</name>
+                <fromto valueapi="solicitacao" valueentity="solicitacao" />
+                <fromto valueapi="created_by" valueentity ="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

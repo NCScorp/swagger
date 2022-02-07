@@ -1,0 +1,25 @@
+
+# Países
+paises:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\PaisesController"
+    name_prefix: "ns_paises_"
+  
+# Municipios
+municipios:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\MunicipiosController"
+    name_prefix: "ns_municipios_"
+
+#Tipos_logradouros
+tiposlogradouros:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Ns\\TiposlogradourosController"
+    name_prefix: "ns_tiposlogradouros_"
+
+#tiposDocumentosColaboradores
+tiposdocumentoscolaboradores:
+    type: rest
+    resource: "Nasajon\\MDABundle\\Controller\\Persona\\TiposdocumentoscolaboradoresController"
+    name_prefix: "persona_tiposdocumentoscolaboradores_"
+    

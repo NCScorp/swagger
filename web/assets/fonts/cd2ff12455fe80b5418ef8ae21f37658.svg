@@ -1,0 +1,30 @@
+<svg width="150" height="125" viewBox="0 0 150 125" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>nsj-movement</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-449 1006)">
+<g id="nsj-movement">
+<g id="Group 2">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="matrix(6.12323e-17 -1 1 6.12323e-17 489.338 -881)" fill="#2C3E50"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path1_fill" transform="matrix(6.12323e-17 -1 1 6.12323e-17 449 -881)" fill="#34495E"/>
+</g>
+</g>
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="matrix(6.12323e-17 -1 1 6.12323e-17 521.427 -931.539)" fill="#2C3E50"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path3_fill" transform="matrix(6.12323e-17 -1 1 6.12323e-17 509.015 -931.539)" fill="#34495E"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" d="M 0 0L 0 6.20585L 74.4608 6.20585L 74.4608 0L 0 0ZM 18.6152 37.2351L 18.6152 43.441L 55.8456 43.441L 55.8456 37.2351L 18.6152 37.2351Z"/>
+<path id="path1_fill" d="M 18.6152 77.5733L 18.6152 40.3382L 0 40.3382L 37.2304 0.00015151L 74.4608 40.3382L 55.8456 40.3382L 55.8456 77.5733L 18.6152 77.5733Z"/>
+<path id="path2_fill" d="M 18.6152 0.00015151L 18.6152 31.0294L 0 31.0294L 0 36.6148L 0 37.2353L 0.193598 37.2353L 37.2304 77.5733L 74.2684 37.2353L 74.4608 36.6148L 74.4608 31.0294L 55.8456 31.0294L 55.8456 0.00015151L 18.6152 0.00015151Z"/>
+<path id="path3_fill" d="M 18.6152 0L 18.6152 6.20585L 18.6152 43.2473L 0 43.2473L 37.2304 83.779L 74.4608 43.2473L 55.8456 43.2473L 55.8456 6.20585L 55.8456 0L 18.6152 0Z"/>
+</defs>
+</svg>

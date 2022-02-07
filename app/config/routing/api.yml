@@ -1,0 +1,94 @@
+#Informes de Rendimentos
+informesrendimentos:
+    type: rest
+    resource: "AppBundle\\Controller\\Meurh\\InformesrendimentosController"
+    name_prefix: "meurh_informesrendimentos_"
+  
+#Recibos de Pagamentos
+recibospagamentos:
+  type: rest
+  resource: "AppBundle\\Controller\\Meurh\\RecibospagamentosController"
+  name_prefix: "meurh_recibospagamentos_"
+
+#Empresas - NSEmpresas - ns empresas
+empresas:
+  type: rest
+  resource: "Nasajon\\MDABundle\\Controller\\Ns\\EmpresasController"
+  name_prefix: "ns_empresas_"
+
+# Salários
+salarios:
+  type: rest
+  resource: "AppBundle\\Controller\\Meurh\\SolicitacoessalariossobdemandaController"
+  prefix: "/solicitacoes/salarios"
+  name_prefix: "meurh_solicitacoessalariossobdemanda_"
+
+#Estabelecimentos
+estabelecimentos:
+  type: rest
+  resource: "Nasajon\\MDABundle\\Controller\\Ns\\EstabelecimentosController"
+  name_prefix: "ns_estabelecimentos_"
+
+#Trabalhadores
+trabalhadores:
+  type: rest
+  resource: "AppBundle\\Controller\\Persona\\TrabalhadoresController"
+  name_prefix: "ns_trabalhadores_"
+
+#SolicitacoesFaltas
+solicitacoesfaltas:
+  type: rest
+  resource: "AppBundle\\Controller\\Meurh\\SolicitacoesfaltasController"
+  prefix: "/solicitacoes/faltas"
+  name_prefix: "meurh_solicitacoesfaltas_"
+
+#Tarifas concessionárias VTs
+tarifasconcessionariasvts:
+  type: rest
+  resource: "AppBundle\\Controller\\Persona\\TarifasconcessionariasvtsController"
+  name_prefix: "persona_tarifasconcessionariasvts_"
+
+#Alterações de VTs tarifas
+solicitacaoalteracaovtstarifas:
+  type: rest
+  resource: "Nasajon\\MDABundle\\Controller\\Meurh\\SolicitacoesalteracoesvtstarifasController"
+  name_prefix: "solicitacaoalteracaovtstarifas_"
+
+#Alterações de VTs
+meurh_solicitacoesalteracoesvts:
+  type: rest
+  resource: "AppBundle\\Controller\\Meurh\\SolicitacoesalteracoesvtsController"
+  prefix: "/solicitacoes/alteracoes-vts"
+  name_prefix: "meurh_solicitacoesalteracoesvts_"
+  
+#Solicitacoes
+solicitacoesalteracoesenderecos:
+  type: rest
+  resource: "AppBundle\\Controller\\Meurh\\SolicitacoesalteracoesenderecosController"
+  prefix: "/solicitacoes/alteracoesenderecos"
+  name_prefix: "meurh_solicitacoesalteracoesenderecos_"
+
+#tiposDocumentosColaboradores
+tiposdocumentoscolaboradores:
+  type: rest
+  resource: "Nasajon\\MDABundle\\Controller\\Persona\\TiposdocumentoscolaboradoresController"
+  name_prefix: "persona_tiposdocumentoscolaboradores_"
+
+#DocumentosColaboradores
+# documentoscolaboradores:
+#   type: rest
+#   resource: "AppBundle\\Controller\\Persona\\DocumentosColaboradoresController"
+#   name_prefix: "persona_documentos_"
+
+#SolicitacoesFerias
+solicitacoesferias:
+  type: rest
+  resource: "AppBundle\\Controller\\Meurh\\SolicitacoesferiasController"
+  prefix: "/solicitacoes/ferias"
+  name_prefix: "meurh_solicitacoesferias_"
+
+#TiposDocumentosRequeridos
+tiposdocumentosrequeridos:
+  type: rest    
+  resource: "AppBundle\\Controller\\Meurh\\TiposdocumentosrequeridosController"
+  name_prefix: "meurh_tiposdocumentosrequeridos_"

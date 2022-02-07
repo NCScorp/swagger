@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="solicitacoesferias" label="solicitacoesferias" project="meurh">
+    <entity schema="meurh" table="solicitacoesferias">
+        <fieldmodel name="solicitacao" datatype="guid" isid="true" column="solicitacao" />
+        <fieldmodel name="trabalhador" datatype="guid" column="trabalhador" />
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento"/>
+        <fieldmodel name="tiposolicitacao" datatype="integer" column="tiposolicitacao">
+            <options type="json">{
+                "0":"Admissão Preliminar", 
+                "1":"Rescisão", 
+                "2":"Adiantamento Avulso", 
+                "3":"VT Adicional", 
+                "4":"Alteração de VT", 
+                "5":"Alteração de Dados Cadastrais",
+                "6":"Falta",
+                "7":"Férias" 
+            }</options>
+        </fieldmodel>
+        <fieldmodel name="codigo" datatype="integer" column="codigo" />
+        <fieldmodel name="justificativa" datatype="string" column="justificativa" />
+        <fieldmodel name="observacao" datatype="string" column="observacao" />
+        <fieldmodel name="origem" datatype="integer" column="origem">
+            <options type="json">
+                {
+                    "1":"Meu RH",
+                    "2":"Meu Trabalho"
+                }
+            </options>
+        </fieldmodel>
+        <fieldmodel name="situacao" datatype="integer" column="situacao">
+            <options type="json">{"-1":"Rascunho","0":"Aberta", "1":"Efetuada", "2":"Cancelada", "3":"Excluída", "4":"Recusada" }</options>
+        </fieldmodel>
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="lastupdate" datatype="datetime" column="lastupdate" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <!-- Campo para guardar a descrição/motivo do fechamento/exclusão da solicitação quando pertinente -->
+        <fieldmodel name="descricao" datatype="string" notMapped="true" />
+        <fieldmodel name="dataaviso" datatype="date" column="dataaviso"/>
+        <fieldmodel name="datainiciogozo" datatype="date" column="datainiciogozo"/>
+        <fieldmodel name="datafimgozo" datatype="date" column="datafimgozo"/>
+        <fieldmodel name="datainicioperiodoaquisitivo" datatype="date" column="datainicioperiodoaquisitivo"/>
+        <fieldmodel name="datafimperiodoaquisitivo" datatype="date" column="datafimperiodoaquisitivo"/>
+        <fieldmodel name="temabonopecuniario" datatype="boolean" column="temabonopecuniario" />
+        <fieldmodel name="diasvendidos" datatype="integer" column="diasvendidos" />
+        <fieldmodel name="diasferiascoletivas" datatype="integer" column="diasferiascoletivas" />
+        <fieldmodel name="adto13nasferias" datatype="boolean" column="adto13nasferias" />
+        <fieldmodel name="valornovo" datatype="json" notMapped="true" />
+        <fieldmodel name="valorantigo" datatype="json" notMapped="true" />
+        <!-- Workflow -->
+        <fieldmodel name="_acoes" datatype="json" column="_acoes" notMapped="true" />
+        <fieldmodel name="_editavel" datatype="boolean" column="_editavel" notMapped="true" />
+        <fieldmodel name="wkf_data" datatype="date" column="wkf_data" />
+        <fieldmodel name="wkf_estado" datatype="string" column="wkf_estado" />
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">trabalhador</constructoritem>
+    </constructors>
+    <viewbrowser paginate="true" layout="list" target="builtin" label="Solicitações de Férias">
+        <filters style="dynamic">
+            <fieldsfilters>
+                <fieldfilter entitylink="estabelecimento" label="estabelecimento" maxoccurs="unbounded">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+                <fieldfilter entitylink="situacao" label="situacao">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser alias="solicitacao" entitylink="solicitacao" visible="false" isid="true" cansearch="false" />
+            <fieldbrowser alias="Data de Aviso" entitylink="dataaviso" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Data Inicio Gozo" entitylink="datainiciogozo" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Data Fim Gozo" entitylink="datafimgozo" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Data Inicio Período Aquisitivo" entitylink="datainicioperiodoaquisitivo" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Data Fim Período Aquisitivo" entitylink="datafimperiodoaquisitivo" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Dias Vendidos" entitylink="diasvendidos" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Dias Férias Coletivas" entitylink="diasferiascoletivas" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="trabalhador" entitylink="trabalhador" visible="false" avaliable="false" cansearch="true" fielddetaillookup="{'nome': 'Trabalhador', 'tipo': 'Tipo'}"/>
+            <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" visible="false" />
+            <fieldbrowser alias="situacao" entitylink="situacao" visible="false" />
+            <fieldbrowser alias="data de criação" entitylink="created_at" visible="false"  cansearch="true" indefaultorder="true"  direction="desc"/>
+            <fieldbrowser alias="Workflow Data" entitylink="wkf_data" visible="false" />
+            <fieldbrowser alias="Workflow Estado" entitylink="wkf_estado" visible="false" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Marcar Férias">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell name="data" controltype="textedit" entitylink="dataaviso" colspan="12" label="Data">
+                        </cell>
+                    </row>
+                    <row>
+                        <cell name="datainiciogozo" controltype="dateedit" entitylink="datainiciogozo" colspan="12" label="Data Inicio Gozo">
+                            <validates>
+                                <validate type="vnull" displaytext="A data de início de gozo não pode ser vazia"/>
+                            </validates>
+                        </cell>
+                        <cell name="datafimgozo" controltype="dateedit" entitylink="datafimgozo" colspan="12" label="Data Fim Gozo">
+                            <validates>
+                                <validate type="vnull" displaytext="A data de fim de gozo não pode ser vazia"/>
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell name="datainicioperiodoaquisitivo" controltype="dateedit" entitylink="datainicioperiodoaquisitivo" colspan="12" label="Data Inicio Periodo Aquisitivo"></cell>
+                        <cell name="datafimperiodoaquisitivo" controltype="dateedit" entitylink="datafimperiodoaquisitivo" colspan="12" label="Data Fim Periodo Aquisitivo"></cell>
+                    </row>
+                    <row>
+                        <cell name="estabelecimento" controltype="textedit" entitylink="estabelecimento" colspan="12" label="Estabelecimento"></cell>
+                    </row>
+                    <row>
+                        <cell name="temabonopecuniario" controltype="textedit" entitylink="temabonopecuniario" colspan="12" label="Tem abono pecuniario"></cell>
+                    </row>
+                    <row>
+                        <cell name="diasvendidos" controltype="textedit" entitylink="diasvendidos" colspan="12" label="Dias Vendidos"></cell>
+                    </row>
+                    <row>
+                        <cell name="trabalhador" controltype="hidden" entitylink="trabalhador" colspan="12" label="Trabalhador">
+                            <validates>
+                                <validate type="vnull" displaytext="O trabalhador não pode ser vazio"/>
+                            </validates>
+                        </cell>
+                    </row>                
+                    <row>
+                        <cell name="diasferiascoletivas" controltype="textedit" entitylink="diasferiascoletivas" colspan="12" label="Dias Férias Coletivas">
+                            <validates>
+                                <validate type="vnull" displaytext="Os dias de férias não podem ser vazios"/>
+                            </validates>
+                        </cell>
+                    </row>
+                    <row>
+                        <cell name="adto13nasferias" controltype="textedit" entitylink="adto13nasferias" colspan="12" label="Opta pelo Adiantamento de 13"></cell>
+                    </row>
+                    <row>
+                        <cell name="situacao" controltype="textedit" entitylink="situacao" colspan="12" label="Situação"></cell>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+            <name>retrieve</name>
+        </action>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>SolicitacaoFeriasNovo_mt</name>
+                <fromto valueapi="trabalhador" valueentity="trabalhador" />
+                <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="dataaviso" valueentity="dataaviso" />
+                <fromto valueapi="datainiciogozo" valueentity="datainiciogozo" />
+                <fromto valueapi="datafimgozo" valueentity="datafimgozo"/>
+                <fromto valueapi="datainicioperiodoaquisitivo" valueentity="datainicioperiodoaquisitivo" />
+                <fromto valueapi="datafimperiodoaquisitivo" valueentity="datafimperiodoaquisitivo" />
+                <fromto valueapi="temabonopecuniario" valueentity="temabonopecuniario" />
+                <fromto valueapi="diasvendidos" valueentity="diasvendidos" />
+                <fromto valueapi="diasferiascoletivas" valueentity="diasferiascoletivas" />
+                <fromto valueapi="adto13nasferias" valueentity="adto13nasferias" />
+                <fromto valueapi="situacao" valueentity="situacao" />
+            </api>
+        </action>
+        <action >
+            <name>Update</name>
+            <api>
+                <name>SolicitacaoFeriasAlterar_mt</name>
+                <fromto valueapi="solicitacao" valueentity="solicitacao" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+                <fromto valueapi="updated_by" valueentity="logged_user" />
+                <fromto valueapi="dataaviso" valueentity="dataaviso" />
+                <fromto valueapi="datainiciogozo" valueentity="datainiciogozo" />
+                <fromto valueapi="datafimgozo" valueentity="datafimgozo" />
+                <fromto valueapi="datainicioperiodoaquisitivo" valueentity="datainicioperiodoaquisitivo"/>
+                <fromto valueapi="datafimperiodoaquisitivo" valueentity="datafimperiodoaquisitivo" />
+                <fromto valueapi="temabonopecuniario" valueentity="temabonopecuniario" />
+                <fromto valueapi="diasvendidos" valueentity="diasvendidos" />
+                <fromto valueapi="diasferiascoletivas" valueentity="diasferiascoletivas" />
+                <fromto valueapi="adto13nasferias" valueentity="adto13nasferias" />
+                <fromto valueapi="valornovo" valueentity="valornovo"/>
+                <fromto valueapi="valorantigo" valueentity="valorantigo"/>
+                <fromto valueapi="situacao" valueentity="situacao" />
+            </api>
+        </action>
+        <action successMsg="Solicitação excluída com sucesso!" failMsg="Ocorreu um erro ao excluir solicitação.">
+            <name>Delete</name>
+            <api>
+                <name>SolicitacaoExcluir</name>
+                <fromto valueapi="solicitacao" valueentity ="solicitacao" />
+                <fromto valueapi="descricao" valueentity="descricao" />
+                <fromto valueapi="created_by" valueentity ="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action disable="situacao > 0">
+            <name>Cancelar</name>
+            <api>
+                <name>SolicitacaoCancelar</name>
+                <fromto valueapi="solicitacao" valueentity="solicitacao" />
+                <fromto valueapi="created_by" valueentity ="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

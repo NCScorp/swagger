@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="municipios" label="municipios" project="ns">
+    <entity schema="ns" table="municipios">       
+        <fieldmodel name="ibge" datatype="guid" isid="true" column="ibge"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="uf" datatype="string" column="uf"/>
+    </entity>
+    <viewbrowser paginate="true" layout="table" target="builtin" label="Municípios">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="ibge" isid="true" visible="false" />
+            <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true" avaliable="true"/>
+            <fieldbrowser alias="Estado" entitylink="uf" visible="true" cansearch="true" avaliable="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

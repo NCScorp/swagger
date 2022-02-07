@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="Solicitações de Adiantamentos de Salário" label="solicitacoessalariossobdemanda" project="meurh" >
+    <entity schema="meurh" table="solicitacoessalariossobdemanda">
+        <fieldmodel name="solicitacao" datatype="guid" isid="true" column="solicitacao"/>
+        <fieldmodel name="trabalhador" datatype="guid" column="trabalhador" useCaseLink="persona\trabalhadores" />
+        <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" />
+        <fieldmodel name="valor" datatype="moeda" column="valor"/>
+        <fieldmodel name="custoefetivo" datatype="moeda" column="custoefetivo"/>
+        <fieldmodel name="provedorestabelecimento" datatype="boolean" column="provedorestabelecimento"/>
+        <fieldmodel name="tarifa" datatype="moeda" column="tarifa"/>
+        <fieldmodel name="situacao" datatype="integer" column="situacao">
+            <options type="json">
+                {
+                    "0": "Em análise",
+                    "1": "Aprovada",
+                    "2": "Reprovada"
+                }
+            </options>
+        </fieldmodel>
+        <fieldmodel name="created_by" datatype="json" column="created_by" />
+        <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+        <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+        <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+        <constructoritem required="true">trabalhador</constructoritem>
+    </constructors>
+    <viewbrowser target="window" label="Adiantar Salário" paginate="true">
+        <fieldsbrowser>
+            <fieldbrowser alias="solicitacao" entitylink="solicitacao" isid="true" visible="false" />
+            <fieldbrowser alias="Data de Solicitação" entitylink="created_at" indefaultorder="true" direction="desc" visible="true" />
+            <fieldbrowser alias="Atencipação Solicitada" entitylink="valor" visible="true" />
+            <fieldbrowser entitylink="provedorestabelecimento" visible="false" />
+            <fieldbrowser alias="Situação" entitylink="situacao" style="label" labelcolors = "{ 'yellow': 'situacao == 0', 'green': 'situacao == 1', 'red': 'situacao == 2' }" width="16" visible="true" />
+            <fieldbrowser entitylink="trabalhador" unique="true" visible="false" fielddetaillookup="{'numerocontasalario':'Número Conta Salário', 'numerocontasalariodv': 'Número Conta Salário DV', 'agencia': 'Agência'}" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Adiantar Salário">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell name="valor" controltype="money"  label="Valor Solicitado" colspan="4" entitylink="valor">
+                            <validates>
+                                <validate type="greaterthan" value="0" displaytext="Por favor, solicite um valor maior que 0." />
+                            </validates>
+                        </cell>
+                        <cell name="provedorestabelecimento" controltype="textedit" label="provedorestabelecimento" colspan="4" entitylink="provedorestabelecimento">
+                        </cell>
+                        <cell name="tarifa" controltype="money" label="Tarifa" colspan="4" entitylink="tarifa">
+                        </cell>
+                    </row>
+                    <row>
+                        <cell name="custoefetivo" controltype="money" label="Custo Efetivo" colspan="4" entitylink="custoefetivo" defaultvalue="0">
+                        </cell>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>SolicitacoesSalariosSobDemandaNovo</name>
+                <fromto valueapi="estabelecimento" valueentity="estabelecimento" />
+                <fromto valueapi="trabalhador" valueentity="trabalhador" />
+                <fromto valueapi="valor" valueentity="valor" />
+                <fromto valueapi="custoefetivo" valueentity="custoefetivo" />
+                <fromto valueapi="tarifa" valueentity="tarifa" />
+                <fromto valueapi="provedorestabelecimento" valueentity="provedorestabelecimento" />
+                <fromto valueapi="created_by" valueentity="logged_user" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

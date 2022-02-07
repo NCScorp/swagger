@@ -1,4 +1,5 @@
 node('aws-codebuild') {
+
     stage('Clean') {
         deleteDir()
     }
@@ -15,113 +16,62 @@ node('aws-codebuild') {
         sh "auto_config"
     }
 
-    dir("back") {
-
-        stage('Config Backend'){
-            sh 'mkdir app/logs'
-            sh 'touch app/logs/test.log'
-            sh 'cp app/config/parameters.yml.dist app/config/parameters.yml'
-            sh 'cp common.env.dist common.env'
-        }
-    
- 
-
-        stage('Composer-dev Backend'){
-            docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
-                sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
-            }
-            post {
-                always {
-                    emailext body: 'A Test EMail', subject: 'Test'
-                }
-            }             
-        }
-    
-        stage('MDA') {
-            docker.image('nasajon/php-node').inside("-v /root/.ssh:/root/.ssh -e NODE_ENV=production -e SYMFONY_DEPRECATIONS_HELPER=disabled") {
-                sh 'php vendor/nasajon/mdatransformer/bin/transformer nasajon:mda:builder --nocache'
-            }
-        }
-
-        stage('Tests') {
-            docker.image('postgres:11.5').withRun('-e "POSTGRES_DB=integratto2" -e "POSTGRES_USER=postgres"') { c ->
-                    docker.image('postgres:11.5').inside("--link ${c.id}:postgres -e POSTGRES_DB=integratto2 -e POSTGRES_USER=postgres -e PGPASSWORD=postgres") {
-                        sh "bash $WORKSPACE/back/vendor/nasajon/bancosweb/run_dump $WORKSPACE/back/vendor/nasajon/bancosweb/dump"
-                    }
-                    docker.image('nasajon/php:7.1-fpm-symfony-dev').inside("--link ${c.id}:postgres --env-file $WORKSPACE/back/common.env -e SYMFONY_DEPRECATIONS_HELPER=disabled -e sp_metadata=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/idp-FederationMetadata.xml -e sp_certificate_crt=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.crt -e sp_certificate_pem=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.pem") {
-                        sh 'app/console doctrine:migrations:migrate --no-interaction'
-                        sh 'vendor/codeception/codeception/codecept run --fail-fast --no-colors --xml'
-                    }
-                }
-        }
-
-        stage('Composer Backend'){
-            docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
-                sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --no-dev --ignore-platform-reqs'
-            }
-        }
-
+    stage('Config'){
+        sh 'mkdir app/logs'
+        sh 'touch app/logs/test.log'
+        sh 'cp app/config/parameters.yml.dist app/config/parameters.yml'
+        sh 'cp common.env.dist common.env'
     }
 
-    dir("front") {
+    stage('Composer-dev'){
+        docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
+            sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
+        }
+    }
 
-         stage('Config') {
-                sh "cp config/rotasSistema.json.dist config/rotasSistema.json"
-            if (env.BRANCH_NAME == 'production') {
-                sh "sed -i 's?api.dev.nasajonsistemas.com.br?api.nasajon.com.br?g' config/rotasSistema.json"
-                sh "sed -i 's?crmapi.dev.nasajonsistemas.com.br?api.nasajon.com.br?g' config/rotasSistema.json"
-                sh "sed -i 's?auth.dev.nasajonsistemas.com.br?auth.nasajon.com.br?g' config/rotasSistema.json"
-                sh "sed -i 's?DEV?master?g' config/rotasSistema.json"
+    stage('MDA') {
+        docker.image('nasajon/php-node').inside("-v /root/.ssh:/root/.ssh -e NODE_ENV=production -e SYMFONY_DEPRECATIONS_HELPER=disabled") {
+            sh 'php vendor/nasajon/mdatransformer/bin/transformer nasajon:mda:builder --nocache'
+        }
+    }
+
+    stage('Tests') {
+        docker.image('postgres:11.5').withRun('-e "POSTGRES_DB=integratto2" -e "POSTGRES_USER=postgres"') { c ->
+            docker.image('postgres:11.5').inside("--link ${c.id}:postgres -e POSTGRES_DB=integratto2 -e POSTGRES_USER=postgres -e PGPASSWORD=postgres") {
+                sh "bash $WORKSPACE/vendor/nasajon/bancosweb/run_dump $WORKSPACE/vendor/nasajon/bancosweb/dump"
             }
-            else if (env.BRANCH_NAME == 'master') {
-                sh "sed -i 's?api.dev.nasajonsistemas.com.br?api.nasajonsistemas.com.br?g' config/rotasSistema.json"
-                sh "sed -i 's?crmapi.dev.nasajonsistemas.com.br?api.nasajonsistemas.com.br?g' config/rotasSistema.json"
-                sh "sed -i 's?auth.dev.nasajonsistemas.com.br?auth.nasajonsistemas.com.br?g' config/rotasSistema.json"
-                sh "sed -i 's?DEV?QA?g' config/rotasSistema.json"
+            docker.image('nasajon/php:7.1-fpm-symfony-dev').inside("--link ${c.id}:postgres --env-file $WORKSPACE/common.env -e SYMFONY_DEPRECATIONS_HELPER=disabled -e sp_metadata=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/idp-FederationMetadata.xml -e sp_certificate_crt=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.crt -e sp_certificate_pem=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.pem") {
+                sh 'bin/console doctrine:migrations:migrate --no-interaction'
+                sh 'vendor/codeception/codeception/codecept run --fail-fast --no-colors --xml'
             }
         }
+    } 
 
-        stage('Build Frontend'){
-            docker.image("nasajon/yarn:1.9.4").inside("-v /root/.ssh:/root/.ssh") {
-                sh "yarn install"
-            }
+    stage('Composer'){
+        docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
+            sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --no-dev --ignore-platform-reqs'
         }
-
-        stage('Webpack'){
-            docker.image("nasajon/yarn:1.9.4").inside("-v /root/.ssh:/root/.ssh -e NODE_ENV=production") {
-                sh "node node_modules/.bin/webpack"
-            }
-        }
-
     }
 
     if (env.BRANCH_NAME == 'development') {
         stage('Deploy Dev'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/back env=dev'"
-            sh "cp ${WORKSPACE}/ci/ansible_vars-front.yml /opt/ansible_vars.yml"
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/front env=dev'"
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=dev'"
         }
     }
     else if (env.BRANCH_NAME == 'master') {
         stage('Deploy QA'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/back env=qa'"
-            sh "cp ${WORKSPACE}/ci/ansible_vars-front.yml /opt/ansible_vars.yml"
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/front env=qa'"
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=qa'"
         }
     }
     else if (env.BRANCH_NAME == 'production') {
         stage('Pipeline Prod'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/back env=prod'"
-            sh "cp ${WORKSPACE}/ci/ansible_vars-front.yml /opt/ansible_vars.yml"
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/front env=prod'"
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=prod'"
         }
     }
     else {
         stage('Build Docker Image'){
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/back env=test'"
-            sh "cp ${WORKSPACE}/ci/ansible_vars-front.yml /opt/ansible_vars.yml"
-            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE}/front env=test'"
+            sh "ansible-playbook ${PLAYBOOK} -e 'build_path=${WORKSPACE} env=test'"
         }
     }
-
+    
 }

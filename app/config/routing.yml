@@ -1,0 +1,65 @@
+ekreative_health_check:
+    resource: "@EkreativeHealthCheckBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+api:
+  resource: "routing/api.yml"
+  type: rest
+  prefix:   /{tenant}/{estabelecimento}/{trabalhador}/
+  options:
+      expose: true
+
+profile:
+    resource: "@AppBundle/LoginBundle/Controller/ProfileController.php"
+    type: annotation
+    prefix: /
+    options:
+        expose: true
+
+login_bundle_auth_config:
+    resource: "@NasajonLoginBundle/Controller/KeycloakController.php"
+    type:     annotation
+    prefix: /
+    options:
+        expose: true
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+    prefix: /fosrouting
+
+oneup_uploader:
+  resource: .
+  type: uploader
+  options:
+      expose: true
+
+globals:
+    type: rest
+    resource: "AppBundle\\Controller\\GlobalsController"
+    options:
+       expose: true
+
+options:  
+    path: /{html5mode}
+    methods:  ["OPTIONS"]
+    defaults:
+        _controller: "AppBundle\\Controller\\DefaultController::optionsAction"
+        html5mode: 'home'
+    requirements:
+        html5mode: .+
+
+
+globals_api:
+    resource: "routing/globals.yml"
+    type: rest
+    prefix:   /{tenant}/
+    options:
+        expose: true
+
+globals_estabelecimento_api:
+    resource: "routing/globals_estabelecimento.yml"
+    type: "rest"
+    prefix: /{tenant}/{estabelecimento}/
+    options:
+        expose: true

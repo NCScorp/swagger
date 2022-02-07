@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="solicitacoesalteracoesvtstarifas" label="solicitacoesalteracoesvtstarifas" orphan="false" project="meurh">
+    <entity schema="meurh" table="solicitacoesalteracoesvtstarifas">
+        <fieldmodel name="solicitacaoalteracaovttarifa" datatype="guid" column="solicitacaoalteracaovttarifa" isid="true" />
+        <fieldmodel name="solicitacaoalteracaovt" datatype="guid" column="solicitacao" />
+        <fieldmodel name="quantidade" datatype="integer" column="quantidade" />
+        <fieldmodel name="tarifaconcessionariavt" datatype="guid" useCaseLink="persona\tarifasconcessionariasvts" entityJoinType="inner" column="tarifaconcessionariavt" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    </entity>
+    <constructors>
+        <constructoritem>solicitacaoalteracaovt</constructoritem>
+        <constructoritem>tenant</constructoritem>
+    </constructors>
+    <viewbrowser layout="list" target="window" label="Tarifas">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="solicitacaoalteracaovttarifa" isid="true" visible="false" />
+            <fieldbrowser entitylink="tarifaconcessionariavt" alias="Tarifa" visible="true" fielddetaillookup="{'descricao': 'Tarifa', 'valor': 'Valor'}"></fieldbrowser>
+            <fieldbrowser entitylink="quantidade" alias="Quantidade" visible="true"></fieldbrowser>
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Detalhamento das tarifas">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell colspan="9" label="Tarifa" name="tarifaconcessionariavt" entitylink="tarifaconcessionariavt" controltype="lookup" browserlookup="persona\tarifasconcessionariasvts" fieldlookup="tarifaconcessionariavt" fieldaliaslookup="tarifaconcessionariavt" fielddetaillookup="descricao">
+                            <validates>
+                                <validate type="vnull" displaytext="É necessário selecionar uma tarifa"/>
+                            </validates>
+                        </cell>
+                        <cell colspan="3" label="Quantidade" name="quantidade" entitylink="quantidade" controltype="number">
+                            <validates>
+                                <validate type="vnull" displaytext="O campo quantidade não pode estar em branco"></validate>
+                                <validate type="number" displaytext="Quantidade precisa ser um número válido"></validate>
+                                <validate type="greaterthan" value="0" displaytext="Quantidade precisa ser um número maior que zero"></validate>
+                            </validates>
+                        </cell>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>SolicitacaoAlteracaoVtTarifaNovo</name>
+                <fromto valueapi="solicitacaoalteracaovt" valueentity="solicitacaoalteracaovt" />
+                <fromto valueapi="tarifaconcessionariavt" valueentity="tarifaconcessionariavt" />
+                <fromto valueapi="quantidade" valueentity="quantidade" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+        <action>
+            <name>Delete</name>
+            <api>
+                <name>SolicitacaoAlteracaoVtTarifaExcluir</name>
+                <fromto valueapi="solicitacaoalteracaovttarifa" valueentity="solicitacaoalteracaovttarifa" />
+                <fromto valueapi="tenant" valueentity="tenant" />
+            </api>
+        </action>
+    </actions>
+</nsjusecase>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="tiposlogradouros" label="tiposlogradouros" project="ns">
+    <entity schema="ns" table="tiposlogradouros">       
+        <fieldmodel name="tipologradouro" datatype="guid" isid="true" column="tipologradouro"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="lastupdate" datatype="date" column="lastupdate"/>
+    </entity>
+    <viewbrowser paginate="true" layout="table" target="inline" label="CBOs">
+        <fieldsbrowser>
+            <fieldbrowser entitylink="tipologradouro" isid="true" visible="false" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" cansearch="true" avaliable="true"/>
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="cargos" label="cargos" project="persona">
+  <entity schema="persona" table="cargos">       
+    <fieldmodel name="cargo" datatype="guid" isid="true" column="cargo"/>
+    <fieldmodel name="codigo" datatype="string" column="codigo"/>
+    <fieldmodel name="nome" datatype="string" column="nome"/>
+    <fieldmodel name="descricao" datatype="string" column="descricao"/>
+    <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="table" target="builtin" label="Cargos">
+    <fieldsbrowser>
+      <fieldbrowser entitylink="cargo" isid="true" visible="false" />
+      <fieldbrowser alias="Código" entitylink="codigo" visible="true" cansearch="true" />
+      <fieldbrowser alias="Nome" entitylink="nome" visible="true" cansearch="true" />
+      <fieldbrowser alias="Descrição" entitylink="descricao" visible="true" cansearch="true" />
+    </fieldsbrowser>
+  </viewbrowser>
+</nsjusecase>

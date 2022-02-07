@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="configuracoes" label="configuracoes" project="web">
+    <entity schema="web" table="configuracoes">
+        <fieldmodel name="configuracao" datatype="guid" isid="true" column="configuracao" />
+        <fieldmodel name="chave" datatype="string" column="chave" />
+        <fieldmodel name="valor" datatype="string" column="valor" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant" />
+        <fieldmodel name="sistema" datatype="string" column="sistema" />
+        <fieldmodel name="id_grupoempresarial" datatype="guid" column="id_grupoempresarial"/>
+    </entity>
+    <constructors>
+        <constructoritem>tenant</constructoritem>
+        <!-- <constructoritem filtervalue="CRMWEB">sistema</constructoritem> -->
+    </constructors>
+    <viewbrowser label="Configurações" layout="list" paginate="false" target="builtin">
+        <filters>
+            <fieldsfilters>
+                <fieldfilter entitylink="chave" maxoccurs="1" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+
+                <fieldfilter entitylink="valor" maxoccurs="1" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+
+                <fieldfilter entitylink="sistema" maxoccurs="1" visible="true">
+                    <conditions>
+                        <condition type="eq"></condition>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="configuracao" isid="true" visible="true" />
+            <fieldbrowser entitylink="chave" isid="false" visible="true" />
+            <fieldbrowser entitylink="valor" isid="false" visible="true" />
+            <fieldbrowser entitylink="tenant" isid="false" visible="true" />
+            <fieldbrowser entitylink="sistema" isid="false" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+    <forms>
+        <form name="default" label="Configuração">
+            <layout>
+                <headerform>
+                    <row>
+                        <cell name="valor" controltype="textedit" entitylink="valor" colspan="12" label="Valor"></cell>
+                    </row>
+                </headerform>
+            </layout>
+        </form>
+    </forms>
+    <actions>
+        <action>
+            <name>Insert</name>
+            <api>
+                <name>inserir_configuracao</name>
+                <fromto valueapi="_tenant" valueentity="tenant"/>
+                <fromto valueapi="_sistema" valueentity="sistema"/>
+                <fromto valueapi="_chave" valueentity="chave"/>
+                <fromto valueapi="_valor" valueentity="valor"/>
+                <fromto valueapi="_id_grupoempresarial" valueentity="id_grupoempresarial"/>
+            </api>
+        </action> 
+    </actions>
+</nsjusecase>

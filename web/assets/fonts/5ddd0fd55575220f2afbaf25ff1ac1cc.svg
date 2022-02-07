@@ -1,0 +1,49 @@
+<svg width="117" height="122" viewBox="0 0 117 122" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>nsj-elements-tree</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(-283 1006)">
+<g id="nsj-elements-tree">
+<g id="Subtract">
+<use xlink:href="#path0_fill" transform="translate(283 -968.692)" fill="#6C6C6C"/>
+</g>
+<g id="Subtract">
+<use xlink:href="#path0_fill" transform="translate(283 -906.511)" fill="#6C6C6C"/>
+</g>
+<g id="Subtract">
+<use xlink:href="#path1_fill" transform="translate(283 -1006)" fill="#6C6C6C"/>
+</g>
+<g id="nsj-folder-green">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(349.3 -982.022)" fill="#27AE60"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path3_fill" transform="translate(349.3 -990.455)" fill="#27AE60"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(349.3 -984.13)" fill="#2ECC71"/>
+</g>
+</g>
+</g>
+<g id="nsj-folder-green">
+<g id="Group">
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(349.3 -919.841)" fill="#27AE60"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path3_fill" transform="translate(349.3 -928.274)" fill="#27AE60"/>
+</g>
+<g id="Vector">
+<use xlink:href="#path2_fill" transform="translate(349.3 -921.949)" fill="#2ECC71"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<path id="path0_fill" fill-rule="evenodd" d="M 0 6.21808L 6.42355 6.21808L 6.42355 0L 0 0L 0 6.21808ZM 12.8471 6.21808L 19.2706 6.21808L 19.2706 0L 12.8471 0L 12.8471 6.21808ZM 25.6941 6.21808L 32.1177 6.21808L 32.1177 0L 25.6941 0L 25.6941 6.21808ZM 38.5412 6.21808L 44.9647 6.21808L 44.9647 0L 38.5412 0L 38.5412 6.21808ZM 51.3882 6.21808L 54.6 6.21808L 54.6 0L 51.3882 0L 51.3882 6.21808Z"/>
+<path id="path1_fill" fill-rule="evenodd" d="M 0 6.21808L 0 0L 6.5 0L 6.5 6.21808L 0 6.21808ZM 0 18.6542L 0 12.4362L 6.5 12.4362L 6.5 18.6542L 0 18.6542ZM 0 31.0903L 0 24.8723L 6.5 24.8723L 6.5 31.0903L 0 31.0903ZM 0 43.5265L 0 37.3084L 6.5 37.3084L 6.5 43.5265L 0 43.5265ZM 0 55.9626L 0 49.7445L 6.5 49.7445L 6.5 55.9626L 0 55.9626ZM 0 68.3987L 0 62.1807L 6.5 62.1807L 6.5 68.3987L 0 68.3987ZM 0 80.8348L 0 74.6168L 6.5 74.6168L 6.5 80.8348L 0 80.8348ZM 0 93.271L 0 87.0529L 6.5 87.0529L 6.5 93.271L 0 93.271ZM 0 105.707L 0 99.489L 6.5 99.489L 6.5 105.707L 0 105.707Z"/>
+<path id="path2_fill" d="M 25.35 5.1472e-05C 25.35 2.31918 23.4593 4.21664 21.125 4.21664L 10.5625 4.21664L 4.225 4.21664C 1.89153 4.21664 0 6.11411 0 8.43323L 0 25.2996L 0 31.6245C 0 33.9436 1.8916 35.8411 4.225 35.8411L 46.475 35.8411C 48.8093 35.8411 50.7 33.9436 50.7 31.6245L 50.7 25.2996L 50.7 4.21664C 50.7 1.89752 48.8093 5.1472e-05 46.475 5.1472e-05L 25.35 5.1472e-05Z"/>
+<path id="path3_fill" d="M 4.225 0C 1.89153 0 0 1.88777 0 4.21659L 0 14.7581L 21.125 14.7581L 21.125 16.8664L 50.7 16.8664L 50.7 6.32488C 50.7 3.99606 48.8093 2.10829 46.475 2.10829L 24.7564 2.10829C 24.0255 0.849854 22.6883 0 21.125 0L 4.225 0Z"/>
+</defs>
+</svg>

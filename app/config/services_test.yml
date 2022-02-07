@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        public: true
+        autowire: true
+
+    Nasajon\LoginBundle\Provider\SamlProvider:
+        class: "Mock\\SamlProviderMock"
+
+    Stevenmaguire\OAuth2\Client\Provider\Keycloak:
+        class: "Mock\\KeycloakProviderMock"

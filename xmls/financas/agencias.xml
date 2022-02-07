@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="Agências" label="agencias" project="financas">
+    <entity schema="financas" table="agencias">
+        <fieldmodel name="agencia" datatype="guid" isid="true" column="agencia"/>
+        <fieldmodel name="banco" datatype="guid" column="banco" useCaseLink="financas\bancos" entityJoinType="left" />
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="numero" datatype="string" column="agencianumero"/>
+        <fieldmodel name="digitoverificador" datatype="string" column="digitoverificador"/>
+        <fieldmodel name="logradouro" datatype="string" column="logradouro"/>
+        <fieldmodel name="numerologradouro" datatype="string" column="numero"/>
+        <fieldmodel name="complementologradouro" datatype="string" column="complemento"/>
+        <fieldmodel name="bairrologradouro" datatype="string" column="bairro"/>
+        <fieldmodel name="ceplogradouro" datatype="cep" column="cep"/>
+        <fieldmodel name="cidadelogradouro" datatype="string" column="cidade"/>
+        <fieldmodel name="uflogradouro" datatype="string" column="estado"/>
+        <fieldmodel name="contato" datatype="string" column="contato"/>
+        <fieldmodel name="dddcontato" datatype="string" column="dddtel"/>
+        <fieldmodel name="telefonecontato" datatype="string" column="telefone"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false">
+        <filters style="fixed">
+            <fieldsfilters>
+                <fieldfilter entitylink="banco" label="banco" visible="false">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="agencia" isid="true" />
+            <fieldbrowser alias="Banco" entitylink="banco" unique="true" visible="true" fielddetaillookup="{'nome':'Nome', 'banco':'Banco'}" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="16" unique="true" indefaultorder="true" cansearch="true" visible="true" />
+            <fieldbrowser alias="Nome" entitylink="nome" width="80" cansearch="true" visible="true" />
+            <fieldbrowser alias="Número" entitylink="numero" width="16" cansearch="true" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

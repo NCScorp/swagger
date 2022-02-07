@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="Manutencão de Bancos" label="bancos" orphan="false" project="financas"> 
+    <entity schema="financas" table="bancos">
+        <fieldmodel name="banco" datatype="guid" isid="true" column="banco"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="nome" datatype="string" column="nome"/>
+        <fieldmodel name="numero" datatype="string" column="numero"/>
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem required="true">tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false">
+        <filters style="fixed">
+            <fieldsfilters>
+                <fieldfilter entitylink="banco" label="banco" visible="false">
+                    <conditions>
+                        <condition type="eq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser alias="ID" entitylink="banco" isid="true" />
+            <fieldbrowser alias="Código" entitylink="codigo" width="1" unique="true" indefaultorder="true" cansearch="true" visible="true" />
+            <fieldbrowser alias="Nome" entitylink="nome"  width="8" unique="false" indefaultorder="false" cansearch="true" visible="true" />
+            <fieldbrowser alias="Número" entitylink="numero"  width="1" unique="true" indefaultorder="false" cansearch="true" visible="true" />
+            <fieldbrowser alias="banco" entitylink="banco"  width="1" unique="true" indefaultorder="false" cansearch="true" visible="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

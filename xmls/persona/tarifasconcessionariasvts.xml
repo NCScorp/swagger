@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="tarifasconcessionariasvts" label="tarifasconcessionariasvts" orphan="false" project="persona">
+    <entity schema="persona" table="tarifasconcessionariasvts">
+        <fieldmodel name="tarifaconcessionariavt" datatype="guid" isid="true" column="tarifaconcessionariavt"/>
+        <fieldmodel name="codigo" datatype="string" column="codigo"/>
+        <fieldmodel name="descricao" datatype="string" column="descricao"/>
+        <fieldmodel name="tipo" datatype="integer" column="tipo"/>
+        <fieldmodel name="valor" datatype="moeda" column="valor"/>
+        <fieldmodel name="concessionariavt" datatype="guid" column="concessionariavt" />
+        <fieldmodel name="tenant" datatype="integer" column="tenant"/>
+    </entity>
+    <constructors>
+        <constructoritem>tenant</constructoritem>
+    </constructors>
+    <viewbrowser paginate="false" layout="list" target="builtin" label="Tarifas Concessionárias VT" >
+        <filters style="dynamic">
+            <fieldsfilters>
+                <fieldfilter entitylink="tarifaconcessionariavt" label="tarifaconcessionariavt">
+                    <conditions>
+                        <condition type="neq"/>
+                    </conditions>
+                </fieldfilter>
+            </fieldsfilters>
+        </filters>
+        <fieldsbrowser>
+            <fieldbrowser entitylink="tarifaconcessionariavt" isid="true" visible="false" />
+            <fieldbrowser alias="Código" entitylink="codigo" cansearch="true" visible="false" avaliable="true" />
+            <fieldbrowser alias="Descrição" entitylink="descricao" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Tipo" entitylink="tipo" cansearch="true" visible="true" avaliable="true" />
+            <fieldbrowser alias="Valor" entitylink="valor" cansearch="true" visible="true" avaliable="true" />
+        </fieldsbrowser>
+    </viewbrowser>
+</nsjusecase>

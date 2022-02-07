@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="recibospagamentos" label="recibospagamentos" project="meurh">
+  <entity schema="meurh" table="recibospagamentos">
+    <fieldmodel name="recibopagamento" datatype="guid" isid="true" column="recibopagamento" />
+    <fieldmodel name="trabalhador" datatype="guid" column="trabalhador" />
+    <fieldmodel name="calculo" datatype="string" column="calculo">
+      <options type="json">{"13":"13º Salário", "13c":"Complemento de 13º Salário", "Ad":"Adiantamento de Salário",  "Ad13":"Adiantamento de 13º Salário",  "Cfe":"Complemento de férias",  "Fe":"Férias",  "Fo":"Folha",  "Foc":"Folha Corretiva",  "PPLR":"PPLR",  "Re":"Rescisão",  "Sin":"Sindical", }</options>
+    </fieldmodel>
+    <fieldmodel name="mes" datatype="integer" column="mes" />
+    <fieldmodel name="ano" datatype="integer" column="ano" />
+    <fieldmodel name="caminhodocumento" datatype="string" column="caminhodocumento" />
+    <fieldmodel name="cargo" datatype="object" column="cargo" useCaseLink="persona\cargos" entityJoinType="left" />
+    <fieldmodel name="nivelcargo" datatype="guid" column="nivelcargo" useCaseLink="persona\cargosniveis" entityJoinType="left" />
+    <fieldmodel name="liquido" datatype="moeda" column="liquido" />
+    <fieldmodel name="aberto" datatype="boolean" column="aberto" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+    <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+    <constructoritem required="true">trabalhador</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="table" label="Recibos de Pagamentos">
+    <fieldsbrowser>
+      <fieldbrowser alias="recibopagamento" entitylink="recibopagamento" visible="false" isid="true" />
+      <fieldbrowser entitylink="trabalhador" visible="false" />
+      <fieldbrowser alias="calculo" entitylink="calculo" visible="false" />
+      <fieldbrowser entitylink="ano" indefaultorder="true" direction="desc" visible="true" cansearch="true" />
+      <fieldbrowser entitylink="mes" indefaultorder="true" visible="true" cansearch="true" />
+      <fieldbrowser alias="caminhododocumento" entitylink="caminhodocumento" visible="true" isid="false" />
+      <fieldbrowser alias="liquido" entitylink="liquido" visible="true" isid="false" />
+      <fieldbrowser alias="cargo" entitylink="cargo" visible="true" fielddetaillookup="{'nome': 'Nome'}" />
+      <fieldbrowser alias="nivelcargo" entitylink="nivelcargo" visible="true" fielddetaillookup="{'observacao': 'Nivel'}" />
+      <fieldbrowser entitylink="aberto" visible="true" cansearch="true" />
+    </fieldsbrowser>
+  </viewbrowser>
+</nsjusecase>

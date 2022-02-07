@@ -1,0 +1,46 @@
+version: "2.0"
+
+services:
+                  
+  app:
+    image: nasajon/php:7.1-fpm-symfony-dev
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+        - $PWD:/var/www/html
+        - ./nginx:/etc/nginx/conf.d    
+    env_file:
+        - common.env
+
+  transformer:
+    image: nasajon/php-node
+    volumes:
+          - $PWD:/var/www/html
+    working_dir: /var/www/html
+    environment: 
+        - "NODE_ENV=development"
+    entrypoint: php vendor/nasajon/mdatransformer/bin/transformer nasajon:mda:builder --nocache -vvv --cleardir
+        
+  postgres:
+    image: postgres:11.5
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - $PWD/vendor/nasajon/bancosweb/dump:/docker-entrypoint-initdb.d/
+      - $PWD/scripts:/scripts
+    environment:
+      - "POSTGRES_DB=integratto2"
+      - "POSTGRES_USER=postgres"
+      - "POSTGRES_PASSWORD=postgres" 
+  
+  redis:
+    image: redis
+    expose:
+      - "6379"
+    restart: always
+         
+volumes:
+  esdata1:
+    driver: local

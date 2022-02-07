@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="informesrendimentos" label="informesrendimentos" project="meurh">
+  <entity schema="meurh" table="informesrendimentos">
+    <fieldmodel name="informerendimento" datatype="guid" isid="true" column="informerendimento" />
+    <fieldmodel name="trabalhador" datatype="guid" column="trabalhador" />  
+    <fieldmodel name="ano" datatype="integer" column="ano" />
+    <fieldmodel name="caminhodocumento" datatype="string" column="caminhodocumento" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="updated_at" datatype="datetime" column="updated_at" />
+    <fieldmodel name="updated_by" datatype="json" column="updated_by" />
+    <fieldmodel name="anocalendario" datatype="integer" column="anocalendario" />
+    <fieldmodel name="anoexercicio" datatype="integer" column="anoexercicio" />
+    <fieldmodel name="aberto" datatype="boolean" column="aberto" />
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+    <constructoritem required="true">trabalhador</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="table" target="window" label="Informes de Rendimento">
+    <fieldsbrowser>
+      <fieldbrowser alias="informerendimento" entitylink="informerendimento" visible="false" isid="true" />
+      <fieldbrowser alias="trabalhador" entitylink="trabalhador" visible="false" />
+      <fieldbrowser alias="Ano" entitylink="ano" indefaultorder="true" direction="desc" visible="true"/>
+      <fieldbrowser alias="caminhododocumento" entitylink="caminhodocumento" visible="false"/>
+      <fieldbrowser alias="created_at" entitylink="created_at" visible="false" />
+      <fieldbrowser alias="anocalendario" entitylink="anocalendario" visible="false" cansearch="false" />
+      <fieldbrowser alias="anoexercicio" entitylink="anoexercicio" visible="false" cansearch="false" />
+      <fieldbrowser entitylink="aberto" visible="true" cansearch="true" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <actions>
+    <action layer="front" label="Visualizar"  icon="fa fa-eye">
+      <name>Visualizar</name>
+      <api>
+        <name>Visualizar</name>
+        <fromto valueapi="visualizar" valueentity="visualizar"/>
+      </api>
+    </action>
+    <action layer="front" label="Download" icon="fas fa-file-download">
+      <name>Download</name>
+      <api>
+        <name>Download</name>
+        <fromto valueapi="download" valueentity="download"/>
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

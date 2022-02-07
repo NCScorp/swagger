@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "skipLibCheck": true,
+    "lib": [
+      "es6",
+      "dom",
+      "es2018"
+    ]
+  },
+  "include":[
+    "assets"
+  ]
+}

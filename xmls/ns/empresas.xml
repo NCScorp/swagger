@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="empresas" label="empresas" project="ns">
+
+	<entity schema="ns" table="empresas">
+		<fieldmodel name="empresa" datatype="guid" isid="true" column="empresa" />
+		<fieldmodel name="codigo" datatype="string" column="codigo" />
+		<fieldmodel name="razaosocial" datatype="string" column="razaosocial" />
+		<fieldmodel name="tenant" datatype="integer" column="tenant" />
+	</entity>
+
+	<constructors>
+		<constructoritem required="true">tenant</constructoritem>
+	</constructors>
+
+	<viewbrowser paginate="true" layout="list" target="inline" label="Empresas">
+		<fieldsbrowser>
+			<fieldbrowser alias="empresa" entitylink="empresa" isid="true" visible="false" />
+			<fieldbrowser alias="codigo" entitylink="codigo" visible="true" cansearch="true" />
+			<fieldbrowser alias="razaosocial" entitylink="razaosocial" visible="true" cansearch="true" />
+			<fieldbrowser alias="tenant" entitylink="tenant" visible="false" />
+		</fieldsbrowser>
+	</viewbrowser>
+
+	<forms>
+		<form name="default">
+			<layout>
+				<headerform>
+					<row>
+					</row>
+				</headerform>
+			</layout>
+		</form>
+	</forms>
+
+	<actions>
+		<action>
+			<name>Retrieve</name>
+		</action>
+	</actions>
+</nsjusecase>

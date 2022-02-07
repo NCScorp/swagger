@@ -1,0 +1,40 @@
+security:
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain:  true    
+
+    providers:
+        nasajon_provider:
+            id: Nasajon\LoginBundle\Provider\SamlProvider
+
+    firewalls:
+        healthcheck:
+            pattern: ^/healthcheck
+            security: false 
+
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js|fosrouting)/
+            security: false
+
+        api:
+            anonymous: ~
+            methods: [GET, HEAD, POST, PUT, DELETE, CONNECT, TRACE, PATCH]
+            pattern: ^/
+            stateless: true
+            provider: nasajon_provider
+            simple_preauth:
+                authenticator: Nasajon\LoginBundle\Security\Authentication\BearerTokenAuthenticator
+
+        options:
+            methods: [OPTIONS]
+            security: false
+
+
+    access_control:
+        - { path: '^/', methods: [OPTIONS],  roles: IS_AUTHENTICATED_ANONYMOUSLY }     
+        - { path: '^/profile', methods: [OPTIONS],  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/fosrouting', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/healthcheck',  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/auth', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: '^/.*/estabelecimentos', allow_if: "has_role('ROLE_SISTEMA') or has_role('ROLE_USER')" }
+        - { path: '^/', roles: IS_AUTHENTICATED_FULLY }

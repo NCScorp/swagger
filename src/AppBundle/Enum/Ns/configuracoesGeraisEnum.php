@@ -1,0 +1,13 @@
+<?php
+
+namespace AppBundle\Enum\Ns;
+
+abstract class configuracoesGeraisEnum {
+
+  const APLICACAO_PERSONA = 1;
+  const CAMPOSGERAIS_DIAS_PARA_CALCULO = 0;
+  const GRUPO_PERSONALIZACAO_CLIENTE = 2;
+  const SOLIC_SAL_SOBDEMANDA_MIN = 'SOLICITACAO_SALARIO_SOBDEMANDA_VALOR_MIN';
+  const SOLIC_SAL_SOBDEMANDA_PROVEDOR = 'SOLICITACAO_SALARIO_SOBDEMANDA_PROVEDOR';
+  const SALARIO_SOB_DEMANDA = 'salariosobdemanda';
+}

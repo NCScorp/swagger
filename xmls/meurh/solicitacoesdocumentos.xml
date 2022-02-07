@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="solicitacoesdocumentos" label="solicitacoesdocumentos" project="meurh">
+  <entity schema="meurh" table="solicitacoesdocumentos">
+    <fieldmodel name="solicitacaodocumento" datatype="guid" isid="true" column="solicitacaodocumento" />
+    <fieldmodel name="solicitacao" datatype="guid" column="solicitacao" />
+    <fieldmodel name="caminhodocumento" datatype="string" column="caminhodocumento" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="conteudo" datatype="string" column="conteudo" notMapped="true" />
+    <fieldmodel name="tipodocumentocolaborador" datatype="guid" column="tipodocumentocolaborador" useCaseLink="persona\tiposdocumentoscolaboradores" entityjointype="left" />
+    <fieldmodel name="solicitacaohistorico" datatype="guid" notMapped="true" />
+    <fieldmodel name="anexos" datatype="json" notMapped="true" />
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+  </constructors>
+
+  <viewbrowser paginate="true" layout="table" label="Solicitacoes de Documentos">
+    <filters style="dynamic">
+      <fieldsfilters>
+        <fieldfilter entitylink="solicitacaodocumento" label="solicitacaodocumento">
+          <conditions>
+            <condition type="eq" />
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="solicitacao" label="solicitacao">
+          <conditions>
+            <condition type="eq" />
+          </conditions>
+        </fieldfilter>
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser alias="solicitacaodocumento" entitylink="solicitacaodocumento" visible="false" isid="true" cansearch="false" />
+      <fieldbrowser alias="solicitacao" entitylink="solicitacao" visible="false" cansearch="false" />
+      <fieldbrowser alias="caminhodocumento" entitylink="caminhodocumento" visible="true" cansearch="false" />
+      <fieldbrowser alias="caminhododocumento" entitylink="caminhodocumento" visible="false" cansearch="false" />
+      <fieldbrowser alias="created_at" entitylink="created_at" visible="false" cansearch="false" />
+      <fieldbrowser alias="tenant" entitylink="tenant" visible="false" cansearch="false" />
+      <fieldbrowser alias="tipodocumentocolaborador" entitylink="tipodocumentocolaborador" visible="true" fielddetaillookup="{'tipodocumentocolaborador': 'tipodocumentocolaborador', 'descricao': 'descricao'}" />
+    </fieldsbrowser>
+  </viewbrowser>
+  <forms>
+    <form name="default">
+      <layout>
+        <headerform>
+          <row>
+            <cell name="solicitacao" controltype="textedit" entitylink="solicitacao" label="Solicitação">
+              <validates>
+                <validate type="vnull" displaytext="O campo solicitação não pode ser vazio." />
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell name="conteudo" controltype="textedit" entitylink="conteudo" colspan="6" label="Conteúdo">
+              <validates>
+                <validate type="vnull" displaytext="O campo Conteúdo não pode ser vazio." />
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell name="tipodocumentocolaborador" controltype="lookup" entitylink="tipodocumentocolaborador" label="Tipo de Documento do Colaborador" fielddetaillookup="{'tipodocumentocolaborador': 'tipodocumentocolaborador'}" fieldaliaslookup="tipodocumentocolaborador">
+              <validates>
+                <validate type="vnull" displaytext="O campo Tipo de Documento do Colaborador não pode ser vazio."/>
+              </validates>
+            </cell>
+          </row>
+          <row>
+            <cell name="solicitacaohistorico" controltype="textedit" entitylink="solicitacaohistorico" colspan="6" label="Histórico de Solicitação"></cell>
+          </row>
+        </headerform>
+      </layout>
+    </form>
+  </forms>
+  <actions>
+    <action layer="back">
+      <name>Insert</name>
+      <api>
+        <name>SolicitacoesdocumentosNovo_v3</name>
+        <fromto valueapi="solicitacao" valueentity="solicitacao" />
+        <fromto valueapi="caminhodocumento" valueentity="caminhodocumento" />
+        <fromto valueapi="tipodocumentocolaborador" valueentity="tipodocumentocolaborador" />
+        <fromto valueapi="created_by" valueentity="logged_user" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+      </api>
+    </action>
+    <action layer="back">
+      <name>Delete</name>
+      <api>
+        <name>SolicitacoesdocumentosExcluir_v2</name>
+        <fromto valueapi="solicitacaodocumento" valueentity="solicitacaodocumento" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="solicitacaohistorico" valueentity="solicitacaohistorico" />
+        <fromto valueapi="anexos" valueentity="anexos" />
+      </api>
+    </action>
+    <action layer="back">
+      <name>Update</name>
+      <api>
+        <name>SolicitacoesdocumentosAlterar_v2</name>
+        <fromto valueapi="solicitacaodocumento" valueentity="solicitacaodocumento" />
+        <fromto valueapi="caminhodocumento" valueentity="caminhodocumento" />
+        <fromto valueapi="tenant" valueentity="tenant" />
+        <fromto valueapi="solicitacaohistorico" valueentity="solicitacaohistorico" />
+        <fromto valueapi="anexos" valueentity="anexos" />
+      </api>
+    </action>
+  </actions>
+</nsjusecase>

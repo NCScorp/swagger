@@ -1,9 +1,0 @@
-.git
-.gitignore
-composer.phar
-app/config/parameters.yml
-app/cache/*
-app/logs/*
-build.xml
-Dockerfile
-web/app_dev.php

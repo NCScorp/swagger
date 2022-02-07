@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<nsjusecase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../vendor/nasajon/mdatransformer/schemas/nsjusecase.xsd" name="valoressolicitacoesporperiodo" label="valoressolicitacoesporperiodo" project="meurh">
+  <entity schema="meurh" table="valoressolicitacoesporperiodo">
+    <fieldmodel name="valorsolicitacaoporperiodo" datatype="guid" isid="true" column="valorsolicitacaoporperiodo" />
+    <fieldmodel name="estabelecimento" datatype="guid" column="estabelecimento" />
+    <fieldmodel name="trabalhador" datatype="guid" column="trabalhador" />
+    <fieldmodel name="valoraprovado" datatype="guid" column="valoraprovado" />
+    <fieldmodel name="valorpendente" datatype="guid" column="valorpendente" />
+    <fieldmodel name="valordisponivel" datatype="guid" column="valordisponivel" />
+    <fieldmodel name="valorbloqueado" datatype="guid" column="valorbloqueado" />
+    <fieldmodel name="mes" datatype="guid" column="mes" />
+    <fieldmodel name="ano" datatype="integer" column="ano" />
+    <fieldmodel name="tenant" datatype="integer" column="tenant" />
+    <fieldmodel name="created_at" datatype="datetime" column="created_at" />
+    <fieldmodel name="created_by" datatype="json" column="created_by" />
+  </entity>
+  <constructors>
+    <constructoritem required="true">tenant</constructoritem>
+  </constructors>
+  <viewbrowser paginate="true" layout="table" target="window" label="Valores das Solicitações por Período">
+    <filters style="dynamic">
+      <fieldsfilters>
+        <fieldfilter entitylink="trabalhador" label="trabalhador">
+          <conditions>
+            <condition type="eq" />
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="mes" label="mes">
+          <conditions>
+            <condition type="eq" />
+          </conditions>
+        </fieldfilter>
+        <fieldfilter entitylink="ano" label="ano">
+          <conditions>
+            <condition type="eq" />
+          </conditions>
+        </fieldfilter>
+      </fieldsfilters>
+    </filters>
+    <fieldsbrowser>
+      <fieldbrowser alias="valorsolicitacaoporperiodo" entitylink="valorsolicitacaoporperiodo" visible="false" isid="true" />
+      <fieldbrowser alias="estabelecimento" entitylink="estabelecimento" visible="false" />
+      <fieldbrowser alias="trabalhador" entitylink="trabalhador" visible="false" />
+      <fieldbrowser alias="valoraprovado" entitylink="valoraprovado" visible="false" />
+      <fieldbrowser alias="valorpendente" entitylink="valorpendente" visible="false" />
+      <fieldbrowser alias="valordisponivel" entitylink="valordisponivel" visible="false" />
+      <fieldbrowser alias="valorbloqueado" entitylink="valorbloqueado" visible="false" />
+      <fieldbrowser alias="mes" entitylink="mes" visible="false" />
+      <fieldbrowser alias="Ano" entitylink="ano" visible="true" />
+    </fieldsbrowser>
+  </viewbrowser>
+</nsjusecase>

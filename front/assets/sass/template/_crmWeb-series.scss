@@ -1,8 +1,0 @@
-//Display do botão criar em diferentes telas
-.series-lg-button {
-    display: none;
-  
-    @media screen and (max-width: $max-xs) {
-      display: block;
-    }
-  }
