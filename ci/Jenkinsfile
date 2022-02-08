@@ -30,8 +30,7 @@ node('aws-codebuild') {
             sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
         }
             docker.image("jakzal/phpqa").inside("-v /root/.ssh:/root/.ssh") {
-                
-            
+     
             }   
         parallel (
             "PHPCodeSniffer": {
@@ -68,8 +67,9 @@ node('aws-codebuild') {
             
         )
         stage('email') {
-               sh 'apt-get install zip'
-               sh 'zip -r teste.zip build/logs/'
+                echo "ZIP"
+                zip zipFile: 'teste.zip', dir:'build/logs/'
+                echo "END - ZIP"
             emailext(
                 to: "thiagobento@nasajon.com.br",
                 subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
