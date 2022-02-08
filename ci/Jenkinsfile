@@ -67,11 +67,16 @@ node('aws-codebuild') {
 
             
         )
-        emailext(
-            to: "thiagobento@nasajon.com.br",
-            subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
-        )        
+        stage('email') {
+               sh 'apt-get install zip'
+               sh 'zip -r teste.zip build/logs/'
+            emailext(
+                to: "thiagobento@nasajon.com.br",
+                subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                attachmentsPattern: 'teste.zip',
+                body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+            )      
+        }          
  
 
     }
