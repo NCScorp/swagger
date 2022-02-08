@@ -105,7 +105,5 @@ def notifySuccessful() {
     )
 
     
-}finally {
-        archiveArtifacts artifacts: 'app/logs/test.log', fingerprint: true
-    }
+}
 echo "Passoou"
