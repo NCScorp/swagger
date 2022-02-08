@@ -67,7 +67,7 @@ node('aws-codebuild') {
 
             
         )
-        
+
         stage('zip') {
             steps{
                sh 'apt-get install zip'
@@ -99,11 +99,6 @@ def publishHTMLReport(reportDir, file, reportName) {
             reportFiles          : file,
             reportName           : reportName
         ])
-        emailext(
-            to: "thiagobento@nasajon.com.br",
-            subject: "teste2: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-            attachmentsPattern: "'${reportDir}/${file}'",
-            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
         )  
     }
     
