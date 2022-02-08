@@ -89,10 +89,6 @@ def replaceFilePath(filePath) {
 }
 
 
-echo "Passoou1!"
+echo "Passoou"
 
 
-
-
-
-echo "Passoou2!"
