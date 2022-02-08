@@ -83,6 +83,12 @@ def replaceFilePath(filePath) {
 
 def publishHTMLReport(reportDir, file, reportName) {
     if (fileExists("${reportDir}/${file}")) {
+        emailext(
+            to: "thiagobento@nasajon.com.br",
+            subject: "teste2: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            attachmentsPattern: "'${reportDir}/${file}'",
+            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+        )        
         publishHTML(target: [
             allowMissing         : true,
             alwaysLinkToLastBuild: true,
@@ -91,12 +97,7 @@ def publishHTMLReport(reportDir, file, reportName) {
             reportFiles          : file,
             reportName           : reportName
         ])
-        emailext(
-            to: "thiagobento@nasajon.com.br",
-            subject: "teste2: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-            attachmentsPattern: "'${reportDir}/${file}'",
-            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
-        )  
+  
     }
     emailext(
         to: "thiagobento@nasajon.com.br",
@@ -107,12 +108,6 @@ def publishHTMLReport(reportDir, file, reportName) {
 
     
 }
-emailext(
-    to: "thiagobento@nasajon.com.br",
-    subject: "teste4: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-    attachmentsPattern: "'${reportDir}/${file}'",
-    body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
-)  
 
 
 
