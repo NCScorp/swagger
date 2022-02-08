@@ -67,14 +67,24 @@ node('aws-codebuild') {
 
             
         )
+        emailext(
+            to: "thiagobento@nasajon.com.br",
+            subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+        )        
  
 
     }
+    stage('email Alex!'){
     emailext(
-        to: "${env.EMAIL_BUILD_SUCCESS}",
-        subject: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-        body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+        body: 'your component is released',
+        attachmentsPattern: '**/*.md',
+        from: env.DEFAULT_REPLYTO,
+        replyTo: env.DEFAULT_REPLYTO,
+        subject: 'teste2',
+        to: 'thiagobento@nasajon.com.br'
     )
+    }
     
 }
 def replaceFilePath(filePath) {
