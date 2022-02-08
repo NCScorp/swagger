@@ -86,13 +86,12 @@ def publishHTMLReport(reportDir, file, reportName) {
             reportFiles          : file,
             reportName           : reportName
         ]
-    }
-    success {
         mail(from: "jenkins@nasajon.com.br",
-                to: "thiagobento@nasajon.com.br",
-                subject: "That build passed.",
-                body: "Nothing to see here")
+        to: "thiagobento@nasajon.com.br",
+        subject: "That build passed.",
+        body: "Nothing to see here")
     }
+
 }
 
 
