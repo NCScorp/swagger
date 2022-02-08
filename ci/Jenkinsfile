@@ -104,8 +104,8 @@ def notifySuccessful() {
         body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
     )
 
-    finally {
+    
+}finally {
         archiveArtifacts artifacts: 'app/logs/test.log', fingerprint: true
     }
-}
 echo "Passoou"
