@@ -29,10 +29,9 @@ node('aws-codebuild') {
         docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
             sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
         }
-            docker.image("jakzal/phpqa").inside("-v /root/.ssh:/root/.ssh") {
-                
-            
+            docker.image("jakzal/phpqa").inside("-v /root/.ssh:/root/.ssh") {                           
             }   
+        
         parallel (
             "PHPCodeSniffer": {
                 sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR2 --encoding=UTF-8 --ignore="*.js" src/  || exit 0'
@@ -63,29 +62,26 @@ node('aws-codebuild') {
                 sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
                 replaceFilePath('build/logs/pmd-cpd.xml')
                 dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
-            }
-
-            
+            }           
         )
-        emailext(
-            to: "thiagobento@nasajon.com.br",
-            subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
-        )        
- 
-
     }
 }      
 
 def replaceFilePath(filePath) {
     sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
+    emailext(
+        to: "thiagobento@nasajon.com.br",
+        subject: "teste2: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+        attachmentsPattern: "'${reportDir}/${file}'",
+        body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+    ) 
 }
 
 def publishHTMLReport(reportDir, file, reportName) {
     if (fileExists("${reportDir}/${file}")) {
         emailext(
             to: "thiagobento@nasajon.com.br",
-            subject: "teste2: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            subject: "teste3: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
             attachmentsPattern: "'${reportDir}/${file}'",
             body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
         )        
@@ -97,16 +93,13 @@ def publishHTMLReport(reportDir, file, reportName) {
             reportFiles          : file,
             reportName           : reportName
         ])
-  
     }
     emailext(
         to: "thiagobento@nasajon.com.br",
-        subject: "teste3: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+        subject: "teste4: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
         attachmentsPattern: "'${reportDir}/${file}'",
         body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
-    )         
-
-    
+    )             
 }
 
 
