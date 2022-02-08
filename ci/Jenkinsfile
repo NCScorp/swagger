@@ -59,11 +59,22 @@ node('aws-codebuild') {
             },
 
             "PHPCopyPasteDetector": {
-                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
+                sh 'docker run --rm -v $(pwd):$(pwd):/project  -w /project jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
                 replaceFilePath('build/logs/pmd-cpd.xml')
                 dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
             }           
         )
+        stage('zip') {
+            steps{
+               sh 'apt-get install zip'
+               sh 'zip -r teste.zip build/logs/'
+            }        
+        emailext(
+            to: "thiagobento@nasajon.com.br",
+            subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            attachmentsPattern: 'teste.zip',
+            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+        )         
     }
 }      
 
@@ -76,6 +87,9 @@ def replaceFilePath(filePath) {
         body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
     ) 
 }
+
+
+echo "Passoou1!"
 
 def publishHTMLReport(reportDir, file, reportName) {
     if (fileExists("${reportDir}/${file}")) {
@@ -104,4 +118,4 @@ def publishHTMLReport(reportDir, file, reportName) {
 
 
 
-echo "Passoou"
+echo "Passoou2!"
