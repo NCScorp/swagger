@@ -70,6 +70,11 @@ node('aws-codebuild') {
  
 
     }
+    emailext(
+        to: "${env.EMAIL_BUILD_SUCCESS}",
+        subject: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+        body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+    )
     
 }
 def replaceFilePath(filePath) {
@@ -87,23 +92,10 @@ def publishHTMLReport(reportDir, file, reportName) {
             reportName           : reportName
         ])
     }
-}
-
-def notifyStarted() { /* .. */ }
-
-def notifySuccessful() {
-  slackSend (color: '#00FF00', message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
-
-  hipchatSend (color: 'GREEN', notify: true,
-      message: "SUCCESSFUL: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
-    )
-
-    emailext(
-        to: "${env.EMAIL_BUILD_SUCCESS}",
-        subject: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-        body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
-    )
+    
 
     
 }
+
+
 echo "Passoou"
