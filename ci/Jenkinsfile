@@ -75,17 +75,7 @@ node('aws-codebuild') {
  
 
     }
-    stage('email Alex!'){
-    emailext(
-        body: 'your component is released',
-        attachmentsPattern: '**/*.md',
-        from: env.DEFAULT_REPLYTO,
-        replyTo: env.DEFAULT_REPLYTO,
-        subject: 'teste2',
-        to: 'thiagobento@nasajon.com.br'
-    )
-    }
-    
+      
 }
 def replaceFilePath(filePath) {
     sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
@@ -106,6 +96,11 @@ def publishHTMLReport(reportDir, file, reportName) {
 
     
 }
+emailext(
+    to: "thiagobento@nasajon.com.br",
+    subject: "teste2: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+    body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+)  
 
 
 echo "Passoou"

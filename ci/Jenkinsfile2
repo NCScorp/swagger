@@ -1,0 +1,164 @@
+node('code-build') {
+    try {
+        stage('Clean') {
+            deleteDir()
+        }
+    
+        stage('Fetch') {
+            timeout(time: 60, unit: 'SECONDS') {
+                checkout scm
+            }
+        }
+    
+        stage('Config'){
+            sh 'mkdir app/logs'
+            sh 'touch app/logs/test.log'
+            sh 'cp app/config/parameters.yml.dist app/config/parameters.yml'
+            sh 'cp common.env.dist common.env'
+        }
+    
+        stage('Composer-dev'){
+            sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
+        }
+    
+        stage('NodeDeps') {
+                sh 'yarn install'
+        }     
+    
+        docker.image('nasajon/php-node').inside("-e NODE_ENV=production -e SYMFONY_DEPRECATIONS_HELPER=disabled") {
+            stage('MDA') {
+                sh 'php vendor/nasajon/mdatransformer/bin/transformer nasajon:mda:builder --nocache'
+            }
+        }
+
+        stage('Tests') {
+            docker.image('postgres:11.5').withRun('-e "POSTGRES_DB=integratto2" -e "POSTGRES_USER=postgres"') { c ->
+                docker.image('postgres:11.5').inside("--link ${c.id}:postgres -e POSTGRES_DB=integratto2 -e POSTGRES_USER=postgres -e PGPASSWORD=postgres") {
+                    sh "bash $WORKSPACE/vendor/nasajon/bancosweb/run_dump $WORKSPACE/vendor/nasajon/bancosweb/dump"
+                }
+                docker.image('nasajon/php:7.1-fpm-symfony-dev').inside("--link ${c.id}:postgres --env-file $WORKSPACE/common.env -e SYMFONY_DEPRECATIONS_HELPER=disabled -e sp_metadata=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/idp-FederationMetadata.xml -e sp_certificate_crt=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.crt -e sp_certificate_pem=vendor/nasajon/login-bundle/Nasajon/LoginBundle/Resources/server.pem") {
+                    sh 'bin/console doctrine:migrations:migrate --no-interaction'
+                    sh 'vendor/codeception/codeception/codecept run --fail-fast --no-colors --xml'
+                }
+            }
+        } 
+    
+        stage('Composer'){
+            sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --no-dev --ignore-platform-reqs'
+        }    
+    
+        if(env.BRANCH_NAME == 'master') {
+            def buildName = (env.BRANCH_NAME != 'master') ? "${env.BRANCH_NAME}-${BUILD_NUMBER}" : "${BUILD_NUMBER}"
+            stage('Docker Ship') {
+                sh "docker build --no-cache --rm -t hub.nasajon.com.br/meutrabalho:${buildName} ."
+                sh "docker push hub.nasajon.com.br/meutrabalho:${buildName}"
+                sh "docker rmi -f hub.nasajon.com.br/meutrabalho:${buildName}"
+            }
+
+            stage('SonarQube analysis') {
+                def scannerHome = tool 'SonarQube';
+                withSonarQubeEnv('Sonar') {
+                sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+            
+            stage('Cluster QA') {
+              docker.image('hub.nasajon.com.br/aws-eks-qa:v1.0').inside("-u root:root") {
+                  sh "kubectl -n meutrabalho set image deployment app app=hub.nasajon.com.br/meutrabalho:${buildName}"
+              }
+            }
+
+            emailext(
+                to: "${env.EMAIL_BUILD_SUCCESS}",
+                subject: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+            )
+
+        } 
+    } finally {
+        archiveArtifacts artifacts: 'app/logs/test.log', fingerprint: true
+    }  
+    stage('Composer-dev'){
+        docker.image("nasajon/composer:1.7.2").inside("-v /root/.ssh:/root/.ssh") {
+            sh 'composer install --prefer-dist --optimize-autoloader --no-scripts --ignore-platform-reqs'
+        }
+            docker.image("jakzal/phpqa").inside("-v /root/.ssh:/root/.ssh") {
+                
+            
+            }   
+        parallel (
+            "PHPCodeSniffer": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcs --report=checkstyle --report-file=build/logs/checkstyle.xml --standard=PSR2 --encoding=UTF-8 --ignore="*.js" src/  || exit 0'
+                replaceFilePath('build/logs/checkstyle.xml')
+                checkstyle pattern: 'build/logs/checkstyle.xml'
+            },
+
+            "PHPStan": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpstan analyse src/ || exit 0'
+            },
+
+            "PhpMetrics": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmetrics --report-html=build/logs/phpmetrics.html src/ || exit 0'
+                publishHTMLReport('build/logs', 'phpmetrics.html', 'PHPMetrics')
+            },
+
+            "PHPMessDetector": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmd src/ xml cleancode,codesize,unusedcode --reportfile build/logs/pmd.xml || exit 0'
+                replaceFilePath('build/logs/pmd.xml')
+                pmd canRunOnFailed: true, pattern: 'build/logs/pmd.xml'
+            },
+
+            "PHPMagicNumberDetector": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpmnd src/ --exclude=tests --progress --non-zero-exit-on-violation --ignore-strings=return,condition,switch_case,default_parameter,operation || exit 0'
+            },
+
+            "PHPCopyPasteDetector": {
+                sh 'docker run --rm -v $(pwd):/project -w /project jakzal/phpqa phpcpd --log-pmd build/logs/pmd-cpd.xml src/ || exit 0'
+                replaceFilePath('build/logs/pmd-cpd.xml')
+                dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
+            }
+
+            
+        )
+        emailext(
+            to: "thiagobento@nasajon.com.br",
+            subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+            body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+        )        
+ 
+
+    }
+
+    stage('email Alex!'){
+    emailext(
+        body: 'your component is released',
+        attachmentsPattern: '**/*.md',
+        from: env.DEFAULT_REPLYTO,
+        replyTo: env.DEFAULT_REPLYTO,
+        subject: 'teste2',
+        to: 'thiagobento@nasajon.com.br'
+    )
+    }
+    
+
+    def replaceFilePath(filePath) {
+        sh "sed -i 's#/project/#${workspace}/#g' ${filePath}"
+    }
+
+    def publishHTMLReport(reportDir, file, reportName) {
+        if (fileExists("${reportDir}/${file}")) {
+            publishHTML(target: [
+                allowMissing         : true,
+                alwaysLinkToLastBuild: true,
+                keepAll              : true,
+                reportDir            : reportDir,
+                reportFiles          : file,
+                reportName           : reportName
+            ])
+        }
+        
+
+        
+    }
+    
+}
