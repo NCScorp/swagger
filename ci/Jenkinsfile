@@ -69,7 +69,7 @@ node('aws-codebuild') {
                 zip zipFile: 'analise.zip', dir:'build/logs/'
                 echo "Criação do arquivo concluída."
             emailext(
-                to: "thiagobento@nasajon.com.br",
+                to: "thiagobento@nasajon.com.br, nicolasscorpelini@nasajon.com.br",
                 subject: "Analise arquivos PHP: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 attachmentsPattern: 'analise.zip',
                 body: "Segue em anexo os XML's do resultado.: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
