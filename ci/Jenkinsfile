@@ -63,18 +63,15 @@ node('aws-codebuild') {
                 replaceFilePath('build/logs/pmd-cpd.xml')
                 dry canRunOnFailed: true, pattern: 'build/logs/pmd-cpd.xml'
             }
-
-            
         )
         stage('email') {
-                echo "ZIP"
-                zip zipFile: 'teste.zip', dir:'build/logs/'
-                echo "END - ZIP"
+                zip zipFile: 'anaise.zip', dir:'build/logs/'
+
             emailext(
                 to: "thiagobento@nasajon.com.br",
                 subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                attachmentsPattern: 'teste.zip',
-                body: "Build Publicado em QA: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+                attachmentsPattern: 'analise.zip',
+                body: "Relatorio de analise arquivos PHP: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
             )      
         }          
     }
@@ -99,7 +96,3 @@ def publishHTMLReport(reportDir, file, reportName) {
 
     
 }
-
-
-
-echo "Passoou"
