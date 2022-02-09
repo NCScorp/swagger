@@ -65,13 +65,14 @@ node('aws-codebuild') {
             }
         )
         stage('email') {
-                zip zipFile: 'anaise.zip', dir:'build/logs/'
-
+                echo "ZIP"
+                zip zipFile: 'analise.zip', dir:'build/logs/'
+                echo "END - ZIP"
             emailext(
                 to: "thiagobento@nasajon.com.br",
-                subject: "teste1: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                subject: "Analise arquivos PHP: '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
                 attachmentsPattern: 'analise.zip',
-                body: "Relatorio de analise arquivos PHP: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
+                body: "Segue em anexo os XML's do resultado.: '${env.JOB_NAME} [${env.BUILD_NUMBER}]' - Alterações: '${env.BUILD_URL}/changes'"
             )      
         }          
     }
@@ -96,3 +97,7 @@ def publishHTMLReport(reportDir, file, reportName) {
 
     
 }
+
+
+
+echo "Passoou"
